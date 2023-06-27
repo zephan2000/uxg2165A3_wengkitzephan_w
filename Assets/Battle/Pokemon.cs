@@ -8,21 +8,21 @@ public class Pokemon
 	// scales enemy stats based on level may not need this
 	public PokemonBase _base;
     public int level;
-	public List<Move> skillslist;
+	public List<Move> Moves;
 	public int HP { get; set; } // creates a private variable behind the scenes, 10:54 of part 6
     public Pokemon(PokemonBase pbase, int plevel)
 	{
 		_base = pbase;
 		level = plevel;
 		HP = MaxHP; 
-		skillslist = new List<Move>();
+		Moves = new List<Move>();
 		foreach (var currentskill in _base.GetLearnableSkills())
 		{
 			if(currentskill.GetLevel() <= level) // testing out conditions for learning skills may remove
 			{
-				skillslist.Add(new Move(currentskill.GetSkillBase()));
+				Moves.Add(new Move(currentskill.GetSkillBase()));
 			}
-			if(skillslist.Count >= 4)
+			if(Moves.Count >= 4)
 			{
 
 			}

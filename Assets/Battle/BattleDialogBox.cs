@@ -5,10 +5,19 @@ using UnityEngine.UI;
 
 namespace pattayaA3
 {
+	
 	public class BattleDialogBox : MonoBehaviour
 	{
 		[SerializeField] Text dialogText;
+		[SerializeField] GameObject actionSelector;
+		[SerializeField] GameObject moveSelector;
+		[SerializeField] GameObject moveDetails;
 
+		[SerializeField] List<Text> actionTexts;
+		[SerializeField] List<Text> moveTexts;
+
+		[SerializeField] Text cooldownText;
+		[SerializeField] Color highlightedColor;
 		public void SetDialog(string dialog)
 		{
 			dialogText.text = dialog;
@@ -21,6 +30,56 @@ namespace pattayaA3
 			{
 				dialogText.text += letter;
 				yield return new WaitForSeconds(1f / 30);
+			}
+		}
+
+		public void EnableDialogText(bool enabled)
+		{
+			dialogText.enabled = enabled;
+		}
+		public void EnableActionSelector(bool enabled)
+		{
+			actionSelector.SetActive(enabled);
+		}
+		public void EnableMoveSelector(bool enabled)
+		{
+			moveSelector.SetActive(enabled);
+			moveDetails.SetActive(enabled);
+		}
+		public void UpdateActionSelection(int selectedAction)
+		{
+			for(int i=0; i<actionTexts.Count; i++)
+			{
+				if (i == selectedAction)
+				{
+					actionTexts[i].color = highlightedColor;
+				}
+				else
+					actionTexts[i].color = Color.black;
+
+			}
+		}
+		public void UpdateMoveSelection(int selectedMove, Move move)
+		{
+			for (int i = 0; i < moveTexts.Count; i++)
+			{
+				if (i == selectedMove)
+				{
+					moveTexts[i].color = highlightedColor;
+				}
+				else
+					moveTexts[i].color = Color.black;
+			}
+			cooldownText.text = $"Cooldown {move.numberofuses}/ {move.moveBase.Getnumberofuses()}";
+		}
+		public void SetMoveName(List<Move> moves)
+		{
+			for(int i = 0; i<moveTexts.Count; i++)
+			{
+				if (i < moves.Count)
+					moveTexts[i].text = moves[i].moveBase.name;
+				else
+					moveTexts[i].text = "-";
 			}
 		}
 	} 

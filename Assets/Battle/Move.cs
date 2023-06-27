@@ -7,9 +7,9 @@ public class Move
 	public MoveBase moveBase {get; set;}
 	public int numberofuses { get; set; }
 
-	public Move(MoveBase skillBase)
+	public Move(MoveBase Base)
 	{
-		this.moveBase = skillBase;
-		numberofuses = skillBase.Getnumberofuses(); 
+		this.moveBase = Base;
+		numberofuses = Base.Getnumberofuses(); 
 	}
 }
