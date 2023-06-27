@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pokemon : MonoBehaviour
+public class Pokemon
 {
 	// This is akin to the Pokemon class
 	// scales enemy stats based on level may not need this

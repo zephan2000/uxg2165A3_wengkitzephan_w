@@ -24,7 +24,7 @@ namespace pattayaA3
 			enemyUnit.Setup();
 			playerHud.SetData(playerUnit.Pokemon);
 			enemyHud.SetData(enemyUnit.Pokemon);
-			dialogueBox.SetDialog($"A wild {enemyUnit.Pokemon._base.GetName()} has appeared");
+			StartCoroutine(dialogueBox.TypeDialog($"A wild {enemyUnit.Pokemon._base.GetName()} has appeared."));
 		}	
 	}
 }

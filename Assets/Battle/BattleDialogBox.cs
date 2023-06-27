@@ -20,6 +20,7 @@ namespace pattayaA3
 			foreach (var letter in dialog.ToCharArray()) 
 			{
 				dialogText.text += letter;
+				yield return new WaitForSeconds(1f / 30);
 			}
 		}
 	} 
