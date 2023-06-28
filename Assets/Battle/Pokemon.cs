@@ -35,7 +35,7 @@ public class Pokemon
 	}
 	public int MaxHP // MaxHP is a property that changes based on level
 	{
-		get { return Mathf.FloorToInt((_base.GetMaxHp() * level / 100f) + 10); }
+		get { return Mathf.FloorToInt((_base.GetMaxHp() * level / 10f) + 10); }
 	}
 	public bool TakeDamage(Move move, Pokemon attacker)
 	{

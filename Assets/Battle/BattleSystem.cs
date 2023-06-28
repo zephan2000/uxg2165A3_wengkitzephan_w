@@ -57,7 +57,7 @@ namespace pattayaA3
 			yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._base.GetName()} used {move.moveBase.GetName()}");
 			yield return new WaitForSeconds(1f);
 			bool isFainted = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
-			enemyHud.UpdateHP();
+			yield return enemyHud.UpdateHP();
 			if (isFainted)
 			{
 				yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._base.GetName()} Fainted");
@@ -75,7 +75,7 @@ namespace pattayaA3
 			yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._base.GetName()} used {move.moveBase.GetName()}");
 			yield return new WaitForSeconds(1f);
 			bool isFainted = playerUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
-			playerHud.UpdateHP();
+			yield return playerHud.UpdateHP();
 			if (isFainted)
 			{
 				yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._base.GetName()} Fainted");

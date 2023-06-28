@@ -18,14 +18,14 @@ namespace pattayaA3
 			nameText.text = pokemon._base.GetName();
 			levelText.text = "Lvl" + pokemon.level;
 			hpBar.SetHP((float)pokemon.HP / pokemon.MaxHP);
-			hptrack = (float)pokemon.HP;
-			Debug.Log(hptrack);
+			//hptrack = (float)pokemon.HP;
+			//Debug.Log(hptrack);
 		}
-		public void UpdateHP()
+		public IEnumerator UpdateHP()
 		{
-			hpBar.SetHP((float)_pokemon.HP / _pokemon.MaxHP);
-			hptrack = (float)_pokemon.HP;
-			Debug.Log(hptrack);
+			yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHP);
+			//hptrack = (float)_pokemon.HP;
+			//Debug.Log(hptrack);
 		}
 	}
 }

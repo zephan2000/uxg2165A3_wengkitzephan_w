@@ -15,6 +15,17 @@ namespace pattayaA3
 		{
 			health.transform.localScale = new Vector3(hpNormalized, 1f);
 		}
+		public IEnumerator SetHPSmooth (float newHp)
+		{
+			float curHp = health.transform.localScale.x;
+			float changeAmt = curHp - newHp;
+			while(curHp - newHp > Mathf.Epsilon) //mathf.epsilon is the smallest value that a float can have different from zero
+			{
+				curHp -= changeAmt * Time.deltaTime;
+				health.transform.localScale = new Vector3(curHp, 1f);
+				yield return null;
+			}
+		}
 	}
 }
 
