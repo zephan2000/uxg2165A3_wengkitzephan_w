@@ -11,7 +11,6 @@ namespace pattayaA3
 	{
 		private PlayerScript player;
 		private GameSceneController currentSceneController;
-
 		public string initialScene = "StartScreen";
 		public GameObject gameOverScreen;
 		public GameObject pauseScreen;

@@ -2,6 +2,7 @@ using pattayaA3;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace pattayaA3
 {
@@ -15,6 +16,7 @@ namespace pattayaA3
 		[SerializeField] BattleHud enemyHud;
 		[SerializeField] BattleDialogBox dialogBox;
 		private bool isStarted;
+		private bool playerWon;
 
 		BattleState state;
 		int currentAction;
@@ -71,6 +73,9 @@ namespace pattayaA3
 			if (isFainted)
 			{
 				yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._base.GetName()} Fainted");
+				playerWon = true;
+				yield return new WaitForSeconds(2f);
+				ExitLevel("Town");
 			}
 			else
 			{
@@ -89,6 +94,9 @@ namespace pattayaA3
 			if (isFainted)
 			{
 				yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._base.GetName()} Fainted");
+				playerWon = false;
+				yield return new WaitForSeconds(1.2f);
+				ExitLevel("Town");
 			}
 			else
 			{
@@ -130,7 +138,8 @@ namespace pattayaA3
 				}
 				else if (currentAction == 1)
 				{
-
+					playerWon = false;
+					ExitLevel("Town");
 				}
 			}
 		}
@@ -168,7 +177,12 @@ namespace pattayaA3
 				dialogBox.EnableDialogText(true);
 				StartCoroutine(PerformPlayerMove());
 			}
-		}	
+		}
+		public void ExitLevel(string aScene)
+		{
+			gameController.LoadScene(aScene);
+			gameController.RemoveScene(sceneName);
+		}
 	}
 }
 

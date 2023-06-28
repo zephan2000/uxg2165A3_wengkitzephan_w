@@ -33,7 +33,7 @@ public class Pokemon
 	{
 		get { return Mathf.FloorToInt((_base.Getattack() * level / 100f) + 5); }
 	}
-	public int MaxHP // MaxHP is a property that changes based on level
+	public int MaxHP // MaxHP is a property that changes based on level, if damage looks weird check here
 	{
 		get { return Mathf.FloorToInt((_base.GetMaxHp() * level / 10f) + 10); }
 	}
