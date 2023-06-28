@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,6 @@ namespace pattayaA3
 		public LayerMask portalLayer;
 		//protected ContactFilter2D buildingFilter;
 		//protected ContactFilter2D portalFilter;
-		private string newLevel;
 		public void MovePlayer(Vector2 moveDir)
 		{
 			//set player direction is done in GameController
@@ -53,7 +53,6 @@ namespace pattayaA3
 		{
 			if (playerCol.IsTouchingLayers(portalLayer) == true)
 			{
-				Debug.Log("Portal");
 				return true;
 			}
 			else
@@ -96,23 +95,6 @@ namespace pattayaA3
 			//	//detect end point
 			//	if (collision.gameObject.GetComponent<EndPointScript>() != null && !levelController.CheckGameOver())
 			//		levelController.SetGameOver(true, true);
-		}
-
-		private void UpdateHealthDisplay()
-		{
-			float healthPercent = (float)currHealth / (float)initHealth;
-			healthBar.localScale = new Vector3(healthPercent, healthPercent, 1f);
-		}
-
-		private void TakeDamage(int dmg)
-		{
-			currHealth -= dmg;
-			UpdateHealthDisplay();
-
-			//if (currHealth <= 0)
-			//{
-			//	levelController.SetGameOver(true, false);
-			//}
 		}
 	}
 }

@@ -14,7 +14,6 @@ public class DataManager : MonoBehaviour
     public void LoadRefData()
     {
         string filePath = Path.Combine(Application.dataPath, "export.json");
-
         string dataString = File.ReadAllText(filePath);
         Debug.Log(dataString);
 

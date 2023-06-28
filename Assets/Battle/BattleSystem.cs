@@ -8,11 +8,13 @@ namespace pattayaA3
 	public enum BattleState { Start, PlayerAction, PlayerMove, EnemyMove, Busy } //busy is for when either enemy or player are making moves
 	public class BattleSystem : GameSceneController
 	{
+		private Camera mainCamera;
 		[SerializeField] BattleUnit enemyUnit;
 		[SerializeField] BattleUnit playerUnit;
 		[SerializeField] BattleHud playerHud;
 		[SerializeField] BattleHud enemyHud;
 		[SerializeField] BattleDialogBox dialogBox;
+		private bool isStarted;
 
 		BattleState state;
 		int currentAction;
@@ -20,6 +22,14 @@ namespace pattayaA3
 		private void Start()
 		{
 			StartCoroutine(SetupBattle());
+		}
+
+		public override void Initialize(GameController aController)
+		{
+			isStarted = false;
+			base.Initialize(aController);
+			mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+			isStarted = true;
 		}
 
 		public IEnumerator SetupBattle()
@@ -86,7 +96,7 @@ namespace pattayaA3
 			}
 		}
 
-		private void Update()
+		public void Update()
 		{
 			if (state == BattleState.PlayerAction)
 			{
