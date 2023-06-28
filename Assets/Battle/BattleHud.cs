@@ -10,12 +10,22 @@ namespace pattayaA3
 		[SerializeField] Text nameText;
 		[SerializeField] Text levelText;
 		[SerializeField] HPBar hpBar;
-
-		public void SetData(Pokemon enemy)
+		float hptrack;
+		Pokemon _pokemon;
+		public void SetData(Pokemon pokemon)
 		{
-			nameText.text = enemy._base.GetName();
-			levelText.text = "Lvl" + enemy.level;
-			hpBar.SetHP((float)enemy.HP / enemy.MaxHP);
+			_pokemon = pokemon;
+			nameText.text = pokemon._base.GetName();
+			levelText.text = "Lvl" + pokemon.level;
+			hpBar.SetHP((float)pokemon.HP / pokemon.MaxHP);
+			hptrack = (float)pokemon.HP;
+			Debug.Log(hptrack);
+		}
+		public void UpdateHP()
+		{
+			hpBar.SetHP((float)_pokemon.HP / _pokemon.MaxHP);
+			hptrack = (float)_pokemon.HP;
+			Debug.Log(hptrack);
 		}
 	}
 }

@@ -50,6 +50,42 @@ namespace pattayaA3
 			dialogBox.EnableDialogText(false);
 			dialogBox.EnableMoveSelector(true);
 		}	
+
+		IEnumerator PerformPlayerMove()
+		{
+			var move = playerUnit.Pokemon.Moves[currentMove];
+			yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._base.GetName()} used {move.moveBase.GetName()}");
+			yield return new WaitForSeconds(1f);
+			bool isFainted = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
+			enemyHud.UpdateHP();
+			if (isFainted)
+			{
+				yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._base.GetName()} Fainted");
+			}
+			else
+			{
+				StartCoroutine(EnemyMove());
+			}		
+		}
+
+		IEnumerator EnemyMove() // reverse of PerformPlayerMove()
+		{
+			state = BattleState.EnemyMove;
+			var move = enemyUnit.Pokemon.GetRandomMove();
+			yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._base.GetName()} used {move.moveBase.GetName()}");
+			yield return new WaitForSeconds(1f);
+			bool isFainted = playerUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
+			playerHud.UpdateHP();
+			if (isFainted)
+			{
+				yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._base.GetName()} Fainted");
+			}
+			else
+			{
+				PlayerAction();
+			}
+		}
+
 		private void Update()
 		{
 			if (state == BattleState.PlayerAction)
@@ -96,7 +132,6 @@ namespace pattayaA3
 				if (currentMove < playerUnit.Pokemon.Moves.Count - 1)
 				{
 					++currentMove;
-					Debug.Log("right");
 				}
 					
 			}
@@ -115,7 +150,14 @@ namespace pattayaA3
 				if (currentMove > 1)
 					currentMove -= 2;
 			}
-			dialogBox.UpdateMoveSelection(currentAction, playerUnit.Pokemon.Moves[currentMove]); //Moves is the list of moves
+			dialogBox.UpdateMoveSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]); //Moves is the list of moves
+
+			if (Input.GetKeyDown(KeyCode.Return))
+			{
+				dialogBox.EnableMoveSelector(false);
+				dialogBox.EnableDialogText(true);
+				StartCoroutine(PerformPlayerMove());
+			}
 		}	
 	}
 }

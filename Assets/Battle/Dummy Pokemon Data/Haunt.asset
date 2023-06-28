@@ -16,4 +16,4 @@ MonoBehaviour:
   description: 
   damage: 10
   accuracy: 100
-  numberofuses: 0
+  numberofuses: 3

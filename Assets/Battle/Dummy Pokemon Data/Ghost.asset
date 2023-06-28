@@ -15,7 +15,7 @@ MonoBehaviour:
   nameText: Ghost
   description: 
   PokemonSprite: {fileID: -317502491, guid: 3115b5ad51550d548943f5329c5fe389, type: 3}
-  maxHp: 30
+  maxHp: 100
   attack: 10
   defense: 5
   skill:

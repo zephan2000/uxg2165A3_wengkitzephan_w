@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77cb984d1608c44ebdad1730765deb2, type: 3}
   m_Name: Slap
   m_EditorClassIdentifier: 
-  nameText: Haunt
+  nameText: Slap
   description: 
   damage: 10
   accuracy: 100

@@ -33,8 +33,26 @@ public class Pokemon
 	{
 		get { return Mathf.FloorToInt((_base.Getattack() * level / 100f) + 5); }
 	}
-	public int MaxHP
+	public int MaxHP // MaxHP is a property that changes based on level
 	{
 		get { return Mathf.FloorToInt((_base.GetMaxHp() * level / 100f) + 10); }
+	}
+	public bool TakeDamage(Move move, Pokemon attacker)
+	{
+		int damage = move.moveBase.Getdamage();
+
+		HP -= damage;
+		if(HP <= 0) // catering for when the pokemon faints
+		{
+			HP = 0; //so that UI does not show negative damage
+			return true;
+		}
+		return false;
+	}
+
+	public Move GetRandomMove() // for enemy battle strategy
+	{
+		int r = Random.Range(0, Moves.Count);
+		return Moves[r];
 	}
 }
