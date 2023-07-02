@@ -512,6 +512,13 @@ MonoBehaviour:
   pauseScreen: {fileID: 1362238179}
   warningText: {fileID: 914029975}
   progressHUD: {fileID: 986593468}
+  isMoving: 0
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &125510650
 MonoBehaviour:
   m_ObjectHideFlags: 0

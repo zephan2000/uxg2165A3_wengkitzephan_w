@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Portal
+  - Building
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -12,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Portal
-  - 
-  - 
+  - Interactable
+  - Player
   - 
   - 
   - 
@@ -38,9 +41,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Ground
+    uniqueID: 1817235879
+    locked: 0
+  - name: Aesthetics
+    uniqueID: 1402877919
     locked: 0
   - name: Building
     uniqueID: 762589065
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0

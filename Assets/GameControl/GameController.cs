@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 namespace pattayaA3
 {
 	//Zephan
+	//public enum GameState { FreeRoam, Dialog}
 	public class GameController : MonoBehaviour
 	{
 		private PlayerScript player;
@@ -18,7 +20,7 @@ namespace pattayaA3
 		public GameObject progressHUD;
 		private bool isGameOver;
 		private bool isPaused;
-
+		GameState state;
 		void Start()
 		{
 			//set initial state
@@ -27,30 +29,34 @@ namespace pattayaA3
 
 			//load initial scene
 			LoadScene(initialScene);
+
+			//DialogManager.Instance.OnShowDialog += () =>
+			//{
+			//	state = GameState.Dialog;
+			//};
+
+			//DialogManager.Instance.OnCloseDialog += () =>
+			//{
+			//	if(state == GameState.Dialog) //for cases where you want to go to battle straight after dialog
+			//	state = GameState.FreeRoam;
+			//};
 		}
 
-		void Update()
-		{
-			if (player != null && !isGameOver && Input.GetKeyDown(KeyCode.Escape))
-			{
-				TogglePause();
-			}
-		}
-
-		void FixedUpdate()
-		{
-
-			if (player != null && !isGameOver && !isPaused)
-			{
-				Vector2 moveDir = Vector2.zero;
-				if (Input.GetKey(KeyCode.W)) moveDir += Vector2.up;
-				if (Input.GetKey(KeyCode.S)) moveDir += Vector2.down;
-				if (Input.GetKey(KeyCode.A)) { moveDir += Vector2.left; player.GetComponent<SpriteRenderer>().flipX = true; } // flipSprite when moving left
-				if (Input.GetKey(KeyCode.D)) { moveDir += Vector2.right; player.GetComponent<SpriteRenderer>().flipX = false; }
-					//move player position
-					player.MovePlayer(moveDir.normalized * Time.fixedDeltaTime);
-			}
-		}
+		//private void Update()
+		//{
+		//	//if (player != null && !isGameOver && Input.GetKeyDown(KeyCode.Escape))
+		//	//{
+		//	//	TogglePause();
+		//	//}	
+		//	if(state == GameState.FreeRoam && player != null)
+		//	{
+		//		player.HandleUpdate();
+		//	}
+		//	else if (state == GameState.Dialog)
+		//	{
+		//		DialogManager.Instance.HandleUpdate();
+		//	}
+		//}
 
 		
 		public void ShowWarning(bool aShow, float outOfBoundsDuration, float outOfBoundsTimer)
@@ -98,7 +104,8 @@ namespace pattayaA3
 		public void StartLevel(PlayerScript playerScript)
 		{
 			player = playerScript;
-
+			// check what is the current player position
+			//playerobj.transform.position = playerScript.currentposition;
 			//set game ongoing
 			SetGameOver(false, false, 0, 0);
 			SetPause(false);
@@ -186,3 +193,18 @@ namespace pattayaA3
 		}
 	}
 }
+
+//void FixedUpdate() // old movement codes
+//{
+
+//	if (player != null && !isGameOver && !isPaused)
+//	{
+//		Vector2 moveDir = Vector2.zero;
+//		if (Input.GetKey(KeyCode.W)) { moveDir += Vector2.up; }
+//		if (Input.GetKey(KeyCode.S)) { moveDir += Vector2.down;}
+//		if (Input.GetKey(KeyCode.A)) { moveDir += Vector2.left; player.GetComponent<SpriteRenderer>().flipX = true; } // flipSprite when moving left
+//		if (Input.GetKey(KeyCode.D)) { moveDir += Vector2.right; player.GetComponent<SpriteRenderer>().flipX = false; }
+//			//move player position
+//			player.MovePlayer(moveDir.normalized * Time.fixedDeltaTime);
+//	}
+//}
