@@ -512,6 +512,7 @@ MonoBehaviour:
   pauseScreen: {fileID: 1362238179}
   warningText: {fileID: 914029975}
   progressHUD: {fileID: 986593468}
+  initActor: actor04
 --- !u!114 &125510650
 MonoBehaviour:
   m_ObjectHideFlags: 0

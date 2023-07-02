@@ -8,6 +8,25 @@ namespace pattayaA3
 	//Zephan
 	public class PlayerScript : MonoBehaviour
 	{
+
+		//Raiyan's Code
+		private player player;
+		private actor playerActor;
+        public string currentActor;
+        public string id;
+
+		public int playerVit;
+        public int playerPow;
+        public int playerExp;
+        public int playerXp;
+        public int playerGold;
+        public string playerImage;
+
+		
+		//private bool isDirty;
+        
+
+
 		private LevelController levelController;
 		public GameController gameController;
 		public Transform initialPosition;
@@ -95,6 +114,43 @@ namespace pattayaA3
 			//	//detect end point
 			//	if (collision.gameObject.GetComponent<EndPointScript>() != null && !levelController.CheckGameOver())
 			//		levelController.SetGameOver(true, true);
+
+			//Raiyan's Code
+			player = Game.GetPlayer();
+
+			UpdatePlayerStats();
+
+			initHealth = playerVit * 10;
+
 		}
-	}
+
+		
+		//Raiyan's Code
+		public void UpdatePlayerStats()
+		{
+			player.UpdateStats();
+			
+			playerVit = player.getVitality();
+            playerPow = player.getPower();
+            playerExp = player.getExp();
+            playerXp = player.getXp();
+            playerGold = player.getGold();
+			playerImage = player.getImg();
+
+			
+			
+			AssetManager.LoadSprite(playerImage + ".png", (Sprite s) =>
+			{
+				this.GetComponent<SpriteRenderer>().sprite = s;
+			});
+			
+			/*
+            AssetManager.LoadSprite(playerImage + ".png", (Sprite s) =>
+            {
+                this.GetComponent<SpriteRenderer>().sprite = s;
+            });
+			*/
+        }
+		
+    }
 }

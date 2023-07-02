@@ -1,76 +1,103 @@
 {
-    "enemydummy": [
+    "actor": [
         {
-            "enemyId": "enemy01",
+            "actorId": "actor01",
+            "actorType": "enemyWizard",
             "displayName": "Wizard",
-            "healthMax": "100",
-            "enemyattk": "40"
+            "vitality": "100",
+            "power": "40",
+            "expertise": "40",
+            "exp": "100",
+            "gold": "100",
+            "displaySpritePath": ""
         },
         {
-            "enemyId": "enemy02",
+            "actorId": "actor02",
+            "actorType": "enemyBat",
             "displayName": "Bat",
-            "healthMax": "5",
-            "enemyattk": "1"
+            "vitality": "5",
+            "power": "1",
+            "expertise": "1",
+            "exp": "10",
+            "gold": "5",
+            "displaySpritePath": ""
         },
         {
-            "enemyId": "enemy03",
+            "actorId": "actor03",
+            "actorType": "enemyGhost",
             "displayName": "Ghost",
-            "healthMax": "10",
-            "enemyattk": "5"
-        }
-    ],
-    "items": [
-        {
-            "itemId": "item_01",
-            "displayName": "Sword Of Destiny",
-            "class": "Warrior",
-            "vitalityBuff": "1",
-            "powerBuff": "5",
-            "expertiseBuff": "0",
-            "cost": "50"
+            "vitality": "10",
+            "power": "5",
+            "expertise": "5",
+            "exp": "20",
+            "gold": "10",
+            "displaySpritePath": ""
         },
         {
-            "itemId": "item_02",
-            "displayName": "Pike of Shame",
-            "class": "Warrior",
-            "vitalityBuff": "2",
-            "powerBuff": "3",
-            "expertiseBuff": "0",
-            "cost": "30"
+            "actorId": "actor04",
+            "actorType": "playerWarrior",
+            "displayName": "Warrior",
+            "vitality": "10",
+            "power": "1",
+            "expertise": "1",
+            "exp": "0",
+            "gold": "0",
+            "displaySpritePath": "tester2"
         },
         {
-            "itemId": "item_03",
-            "displayName": "Whip of Destruction",
-            "class": "Warrior",
-            "vitalityBuff": "0",
-            "powerBuff": "4",
-            "expertiseBuff": "0",
-            "cost": "40"
+            "actorId": "actor05",
+            "actorType": "playerWizard",
+            "displayName": "Wizard",
+            "vitality": "5",
+            "power": "1",
+            "expertise": "3",
+            "exp": "0",
+            "gold": "0",
+            "displaySpritePath": ""
         },
         {
-            "itemId": "item_04",
-            "displayName": "Bow of Discord",
-            "class": "Warrior",
-            "vitalityBuff": "0",
-            "powerBuff": "5",
-            "expertiseBuff": "0",
-            "cost": "40"
+            "actorId": "actor06",
+            "actorType": "playerArcher",
+            "displayName": "Archer",
+            "vitality": "5",
+            "power": "3",
+            "expertise": "1",
+            "exp": "0",
+            "gold": "0",
+            "displaySpritePath": ""
         },
         {
-            "itemId": "item_05",
-            "displayName": "Shield of Light",
-            "class": "Warrior",
-            "vitalityBuff": "5",
-            "powerBuff": "1",
-            "expertiseBuff": "0",
-            "cost": "50"
-        }
-    ],
-    "player": [
+            "actorId": "actor07",
+            "actorType": "npcVillageHead",
+            "displayName": "Village Head",
+            "vitality": "10",
+            "power": "0",
+            "expertise": "0",
+            "exp": "0",
+            "gold": "0",
+            "displaySpritePath": ""
+        },
         {
-            "name": "john michael quick",
-            "maxhp": "10",
-            "atkdmg": "2"
+            "actorId": "actor08",
+            "actorType": "npcShopkeeper",
+            "displayName": "Shopkeeper",
+            "vitality": "10",
+            "power": "0",
+            "expertise": "0",
+            "exp": "0",
+            "gold": "0",
+            "displaySpritePath": ""
+        },
+        {
+            "actorId": "actor09",
+            "actorType": "npcTraining",
+            "displayName": "Trainer",
+            "vitality": "10",
+            "power": "0",
+            "expertise": "0",
+            "exp": "0",
+            "gold": "0",
+            "displaySpritePath": ""
         }
     ]
 }

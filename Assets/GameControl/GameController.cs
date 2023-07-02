@@ -19,11 +19,25 @@ namespace pattayaA3
 		private bool isGameOver;
 		private bool isPaused;
 
+		//Raiyan's Code
+		public string initActor;
+
+
 		void Start()
 		{
 			//set initial state
 			SetGameOver(false, false, 0, 0);
 			SetPause(false);
+
+			//Raiyan's Code
+			DataManager dataManager = GetComponent<DataManager>();
+			dataManager.LoadRefData();
+
+			Game.SetPlayer(new player("1", initActor));
+
+			
+
+			Debug.Log(Game.GetPlayer().GetCurrentActor());
 
 			//load initial scene
 			LoadScene(initialScene);

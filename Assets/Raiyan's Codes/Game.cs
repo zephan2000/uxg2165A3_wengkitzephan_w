@@ -1,3 +1,4 @@
+using pattayaA3;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,18 @@ public static class Game
     private static List<items> itemlist;
     private static List<player> playerlist;
     private static List<EnemyBaseData> enemylist;
+    private static List<actor> actorList;
+    private static player mainPlayer;
+
+    public static player GetPlayer()
+    {
+        return mainPlayer;
+    }
+
+    public static void SetPlayer(player player)
+    {
+        mainPlayer = player;
+    }
 
     public static List<items> GetItemList()
     {
@@ -21,6 +34,20 @@ public static class Game
     public static List<EnemyBaseData> GetEnemyList()
     {
         return enemylist;
+    }
+
+    public static List<actor> GetActorList()
+    {
+        return actorList;
+    }
+
+    public static actor Getactorbyid(string id)
+    {
+        foreach (actor aactor in actorList)
+        {
+            if (aactor.actorId == id) return aactor;
+        }
+        return null;
     }
 
     public static items Getitemsbyid(string id)
@@ -45,5 +72,10 @@ public static class Game
     public static void SetEnemyList(List<EnemyBaseData> aenemy)
     {
         enemylist = aenemy;
+    }
+
+    public static void SetActorList(List<actor> aactor)
+    {
+        actorList = aactor;
     }
 }

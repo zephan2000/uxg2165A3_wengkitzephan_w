@@ -8,5 +8,6 @@ public class DemoData
     public List<RefItems> items;
     public List<RefPlayer> player;
     public List<RefEnemies> enemydummy;
+    public List<refActor> actor;
     
 }
