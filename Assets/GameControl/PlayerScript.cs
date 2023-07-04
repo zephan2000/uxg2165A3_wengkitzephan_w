@@ -132,7 +132,7 @@ namespace pattayaA3
 			//player.UpdateStats();
 
 			//Debug.Log(Game.Getactorbytype("Player").displaySpritePath);
-            playerImage = Game.Getactorbytype("Player").displaySpritePath ;
+            playerImage = Game.Getactorbytype("playerWarrior").displaySpritePath ;
 
 			//Sprite tileSprite = Resources.Load("Assets/ArtAssets/Tilemap_packed_100") as Sprite;
 			

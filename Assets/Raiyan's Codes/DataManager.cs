@@ -34,18 +34,21 @@ public class DataManager : MonoBehaviour
 
         //process data
         ProcessDemoData(demoData);
-        actor best = Game.Getactorbytype("Player");
-        Debug.Log(best.power);
+        //actor best = Game.Getactorbytype("Player");
+        //Debug.Log(best.power);
         //Debug.Log("Yes");
-        //Debug.Log(Game.GetActorList().Count);
+        //Debug.Log(Game.GetItemList());
+        Game.ListdownSkills();
     }
 
     private void ProcessDemoData(DemoData demoData)
     {
-        //List<items> itemList = new List<items>();
+        List<items> itemList = new List<items>();
         //List<EnemyBaseData> enemyList = new List<EnemyBaseData>();
         //List<player> playerList = new List<player>();
         List<actor> actorList = new List<actor>();
+        List<skills> skillList = new List<skills>();
+        List<session> sessionList = new List<session>();
 
         foreach (refActor refactor in demoData.actor)
         {
@@ -56,39 +59,32 @@ public class DataManager : MonoBehaviour
         }
         Game.SetActorList(actorList);
         
-        /*
         foreach (RefItems refItem in demoData.items)
         {
-            items item = new items(refItem.itemId, refItem.displayName,
-                refItem.cLass, refItem.vitalityBuff, refItem.powerBuff,
-                refItem.expertiseBuff, refItem.cost);
+            items item = new items(refItem.itemId, refItem.itemType,
+                refItem.actorType, refItem.displayName, refItem.defenseBuff,
+                refItem.physicaldmgBuff, refItem.magicdmgBuff, refItem.cost);
 
             itemList.Add(item);
         }
         Game.SetItemList(itemList);
-        */
-
-        /*
-        foreach (RefEnemies refenemy in demoData.enemydummy)
+        
+        foreach (refSkills refskills in demoData.skills)
         {
-            EnemyBaseData enemy = new EnemyBaseData(refenemy.enemyId, refenemy.displayName, refenemy.healthMax, refenemy.enemyattk);
+            skills skill = new skills(refskills.skillid, refskills.actorType, refskills.category, refskills.skillname, refskills.dmg, refskills.hpgain, refskills.accuracy, refskills.priority, refskills.maxuses);
 
-            //itemList.Add(item);
-            enemyList.Add(enemy);
+            skillList.Add(skill);
         }
-        Game.SetEnemyList(enemyList);
-        */
+        Game.SetSkillList(skillList);
 
-        /*
-        foreach (RefPlayer refplayer in demoData.player)
+        foreach (refSession refsession in demoData.session)
         {
-            player pLayer = new player(refplayer.name, refplayer.maxhp, refplayer.atkdmg);
+            session asession = new session(refsession.seshname, refsession.actorType, refsession.maxhp, refsession.defense, refsession.physicaldmg, refsession.magicdmg, refsession.vitality,
+                refsession.power, refsession.intelligence, refsession.speed, refsession.exp, refsession.gold, refsession.weapon, refsession.helmet, refsession.armour, refsession.displaySpritePath);
 
-            //itemList.Add(item);
-            //enemyList.Add(enemy);
-            playerList.Add(pLayer);
+            sessionList.Add(asession);
         }
-        Game.SetPlayerList(playerList);
-        */
+        Game.SetSessionList(sessionList);
+
     }
 }

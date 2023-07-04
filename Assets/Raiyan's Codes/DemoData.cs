@@ -9,5 +9,7 @@ public class DemoData
     public List<RefPlayer> player;
     public List<RefEnemies> enemydummy;
     public List<refActor> actor;
+    public List<refSkills> skills;
+    public List<refSession> session;
     
 }

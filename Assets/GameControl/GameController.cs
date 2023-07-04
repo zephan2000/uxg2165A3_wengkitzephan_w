@@ -19,9 +19,6 @@ namespace pattayaA3
 		private bool isGameOver;
 		private bool isPaused;
 
-		//Raiyan's Code
-		public string initActor;
-
 
 		void Start()
 		{

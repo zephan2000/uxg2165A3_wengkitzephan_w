@@ -36,9 +36,7 @@ public class PokemonBase : ScriptableObject
 	}
 	public int Getattack()
 	{
-		Debug.Log(Game.Getactorbytype(GetName()).displayName);
-        return Game.Getactorbytype(GetName()).power;
-        //return attack;
+        return attack;
 	}
 	public int Getdefense()
 	{

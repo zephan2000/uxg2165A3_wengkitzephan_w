@@ -6,10 +6,11 @@ using UnityEngine;
 public class RefItems
 {
     public string itemId;
+    public string itemType;
+    public string actorType;
     public string displayName;
-    public string cLass;
-    public int vitalityBuff;
-    public int powerBuff;
-    public int expertiseBuff;
+    public int defenseBuff;
+    public int physicaldmgBuff;
+    public int magicdmgBuff;
     public int cost;
 }
