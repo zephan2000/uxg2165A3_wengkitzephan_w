@@ -5,11 +5,11 @@ using UnityEngine;
 public class Move
 {
 	public MoveBase moveBase {get; set;}
-	public int numberofuses { get; set; }
+	public int UsesLeft { get; set; }
 
 	public Move(MoveBase Base)
 	{
 		this.moveBase = Base;
-		numberofuses = Base.Getnumberofuses(); 
+		UsesLeft = Base.GetMaxUses(); 
 	}
 }

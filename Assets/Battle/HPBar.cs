@@ -19,12 +19,26 @@ namespace pattayaA3
 		{
 			float curHp = health.transform.localScale.x;
 			float changeAmt = curHp - newHp;
-			while(curHp - newHp > Mathf.Epsilon) //mathf.epsilon is the smallest value that a float can have different from zero
+			if(changeAmt >= 0)
 			{
-				curHp -= changeAmt * Time.deltaTime;
-				health.transform.localScale = new Vector3(curHp, 1f);
-				yield return null;
+				while (curHp - newHp > Mathf.Epsilon) //mathf.epsilon is the smallest value that a float can have different from zero
+				{
+					curHp -= changeAmt * Time.deltaTime;
+					health.transform.localScale = new Vector3(curHp, 1f);
+					yield return null;
+				}
 			}
+			else
+			{
+				while (curHp - newHp < Mathf.Epsilon)
+				{
+					curHp += changeAmt * -1 * Time.deltaTime;
+					health.transform.localScale = new Vector3(curHp, 1f);
+					yield return null;
+				}
+			}
+
+			
 		}
 	}
 }

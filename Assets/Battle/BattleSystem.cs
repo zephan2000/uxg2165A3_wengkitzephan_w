@@ -6,14 +6,13 @@ using UnityEngine.UIElements;
 
 namespace pattayaA3
 {
-	public enum BattleState { Start, PlayerAction, PlayerMove, EnemyMove, Busy } //busy is for when either enemy or player are making moves
+	public enum BattleState { Start,ActionSelection,MoveSelection,ExecuteTurn,Busy, BattleOver} //busy is for when either enemy or player are making moves
+	public enum BattleAction {Move, UseItem, Run} //UseItem is able to add potions if needed, can use this state for upgrade skills or view stats during battle
 	public class BattleSystem : GameSceneController
 	{
 		private Camera mainCamera;
 		[SerializeField] BattleUnit enemyUnit;
 		[SerializeField] BattleUnit playerUnit;
-		[SerializeField] BattleHud playerHud;
-		[SerializeField] BattleHud enemyHud;
 		[SerializeField] BattleDialogBox dialogBox;
 		private bool isStarted;
 		private bool playerWon;
@@ -36,81 +35,145 @@ namespace pattayaA3
 
 		public IEnumerator SetupBattle()
 		{
-			playerUnit.Setup();
+			playerUnit.Setup(); 
 			enemyUnit.Setup();
-			playerHud.SetData(playerUnit.Pokemon);
-			enemyHud.SetData(enemyUnit.Pokemon);
 
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
-			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon._base.GetName()} has appeared.");
+			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.GetName()} has appeared.");
 			yield return new WaitForSeconds (1f);
 
-			PlayerAction();
-		}	
+			ActionSelection();
+		}
 
-		void PlayerAction()
+		void ActionSelection()
 		{
-			state = BattleState.PlayerAction;
+			state = BattleState.ActionSelection;
 			StartCoroutine(dialogBox.TypeDialog("Choose an action"));
 			dialogBox.EnableActionSelector(true);
 		}
 
-		void PlayerMove()
+		void MoveSelection()
 		{
-			state = BattleState.PlayerMove;
+			state = BattleState.MoveSelection;
 			dialogBox.EnableActionSelector(false);
 			dialogBox.EnableDialogText(false);
 			dialogBox.EnableMoveSelector(true);
 		}	
-
-		IEnumerator PerformPlayerMove()
+		// comment here for battle architecture, to be able to keep track of state machine
+		IEnumerator RunTurns(BattleAction playerAction)
 		{
-			var move = playerUnit.Pokemon.Moves[currentMove];
-			yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._base.GetName()} used {move.moveBase.GetName()}");
-			yield return new WaitForSeconds(1f);
-			bool isFainted = enemyUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
-			yield return enemyHud.UpdateHP();
-			if (isFainted)
+			state = BattleState.ExecuteTurn;
+
+			if(playerAction == BattleAction.Move)
 			{
-				yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._base.GetName()} Fainted");
+				playerUnit.Pokemon.CurrentMove = playerUnit.Pokemon.Moves[currentMove];
+				enemyUnit.Pokemon.CurrentMove = enemyUnit.Pokemon.GetRandomMove();
+
+				int playerMovePriority = playerUnit.Pokemon.CurrentMove.moveBase.GetPriority();
+				int enemyMovePriority = enemyUnit.Pokemon.CurrentMove.moveBase.GetPriority();
+
+
+				// check who goes first, Replaced ChooseFirstTurn()
+				bool playerGoesFirst = true;
+				if(enemyMovePriority > playerMovePriority) //checking based on priority
+				{
+					playerGoesFirst = false;
+				}
+				else if (enemyMovePriority ==  playerMovePriority)
+				{
+					playerGoesFirst = playerUnit.Pokemon.Speed >= enemyUnit.Pokemon.Speed; // returns true if playerUnit is faster
+				}
+				Debug.Log(playerGoesFirst);
+				var fasterUnit = (playerGoesFirst) ? playerUnit : enemyUnit;
+				//slowerUnit is to dictate who goes second to pass into RunMove() not to determine who is faster
+				var slowerUnit = (playerGoesFirst) ? enemyUnit : playerUnit; 
+				
+				//First Turn
+				yield return RunMove(fasterUnit, slowerUnit, fasterUnit.Pokemon.CurrentMove);
+				if (state == BattleState.BattleOver) yield break;
+				//Second Turn
+				yield return RunMove(slowerUnit,fasterUnit, slowerUnit.Pokemon.CurrentMove);
+				if (state == BattleState.BattleOver) yield break;
+
+				ActionSelection();
+			}
+		}
+		// sourceUnit is the attacker, targetUnit is the victim of the move
+		IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
+		{ 
+			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.GetName()} used {move.moveBase.GetName()}");
+			move.UsesLeft--;
+			yield return new WaitForSeconds(1f);
+			if(move.moveBase.GetCategory() == MoveCategory.Passive) // status = passive, may remove if no effect since heal function is already done
+			{
+				yield return StartCoroutine(RunMoveEffects(sourceUnit.Pokemon, targetUnit.Pokemon, move)); ;
+			}
+			else
+			{
+				yield return StartCoroutine(CheckForHeal(sourceUnit, targetUnit, move)); 
+			}
+			
+			if (targetUnit.Pokemon.HP <= 0)
+			{
+				yield return dialogBox.TypeDialog($"{targetUnit.Pokemon.Base.GetName()} Fainted");
 				playerWon = true;
 				yield return new WaitForSeconds(2f);
-				ExitLevel("Town");
+				CheckForBattleOver(targetUnit);
 			}
-			else
-			{
-				StartCoroutine(EnemyMove());
-			}		
 		}
 
-		IEnumerator EnemyMove() // reverse of PerformPlayerMove()
+		IEnumerator CheckForHeal(BattleUnit sourceUnit, BattleUnit targetUnit, Move move) // Initialises the move and checks for heal
 		{
-			state = BattleState.EnemyMove;
-			var move = enemyUnit.Pokemon.GetRandomMove();
-			yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon._base.GetName()} used {move.moveBase.GetName()}");
-			yield return new WaitForSeconds(1f);
-			bool isFainted = playerUnit.Pokemon.TakeDamage(move, playerUnit.Pokemon);
-			yield return playerHud.UpdateHP();
-			if (isFainted)
+			if (move.moveBase.GetTarget() == MoveTarget.Self) // for heal
 			{
-				yield return dialogBox.TypeDialog($"{playerUnit.Pokemon._base.GetName()} Fainted");
-				playerWon = false;
-				yield return new WaitForSeconds(1.2f);
-				ExitLevel("Town");
+				sourceUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
+				yield return sourceUnit.Hud.UpdateHP();
 			}
 			else
 			{
-				PlayerAction();
+				targetUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
+				yield return targetUnit.Hud.UpdateHP();
 			}
+		}
+		IEnumerator RunMoveEffects( Pokemon sourceUnit, Pokemon targetUnit, Move move) // encapsulation so that status changes can be added
+		{
+			var effects = move.moveBase.GetEffects();
+			if (effects.Boosts != null)
+			{
+				if (move.moveBase.GetTarget() == MoveTarget.Self)
+					sourceUnit.ApplyBoosts(effects.Boosts);
+				else
+					targetUnit.ApplyBoosts(effects.Boosts);
+			}
+			yield return null;
+		}
+
+		void CheckForBattleOver(BattleUnit faintedUnit)
+		{
+			if(faintedUnit.IsPlayerUnit)
+			{
+				BattleOver(false);
+			}
+			else
+			{
+				BattleOver(true);
+			}
+
+		}
+		void BattleOver(bool battleStatus)
+		{
+			playerWon = battleStatus;
+			state = BattleState.BattleOver;
+			ExitLevel("Town");
 		}
 
 		public void Update()
 		{
-			if (state == BattleState.PlayerAction)
+			if (state == BattleState.ActionSelection)
 			{
 				HandleActionSelection();
 			}
-			else if (state == BattleState.PlayerMove)
+			else if (state == BattleState.MoveSelection)
 			{
 				HandleMoveSelection();
 			}
@@ -134,7 +197,7 @@ namespace pattayaA3
 			{
 				if(currentAction == 0)
 				{
-					PlayerMove();
+					MoveSelection();
 				}
 				else if (currentAction == 1)
 				{
@@ -143,7 +206,7 @@ namespace pattayaA3
 				}
 			}
 		}
-		// video #8 done but there something might be wrong with the playerunit or scripatble object do a check
+		// video #8 done but there something might be wrong with the playerunit or scripatble object do a check, so far so good
 		void HandleMoveSelection() 
 		{
 			if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -173,9 +236,12 @@ namespace pattayaA3
 
 			if (Input.GetKeyDown(KeyCode.Return))
 			{
+				var move = playerUnit.Pokemon.Moves[currentMove];
+				if (move.UsesLeft == 0) return;
+
 				dialogBox.EnableMoveSelector(false);
 				dialogBox.EnableDialogText(true);
-				StartCoroutine(PerformPlayerMove());
+				StartCoroutine(RunTurns(BattleAction.Move));
 			}
 		}
 		public void ExitLevel(string aScene)

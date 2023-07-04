@@ -10,15 +10,23 @@ public class BattleUnit : MonoBehaviour
 	[SerializeField] PokemonBase _base;
 	[SerializeField] int level;
 	[SerializeField] bool isPlayerUnit;
+	[SerializeField] BattleHud hud;
+	public bool IsPlayerUnit
+	{
+		get { return isPlayerUnit; }
+	}
+	public BattleHud Hud
+	{
+		get { return hud; }
+	}
 
 	public Pokemon Pokemon { get; set; }
 	public void Setup()
 	{
 		Pokemon = new Pokemon(_base, level);
-		GetComponent<Image>().sprite = Pokemon._base.GetPokemonSprite();
+		GetComponent<Image>().sprite = Pokemon.Base.GetPokemonSprite();
 
-		Debug.Log(Pokemon._base.GetName());
-        Debug.Log(Pokemon.MaxHP);
-        Debug.Log(Pokemon.Attack);
-    }
+		hud.SetData(Pokemon);
+		// pokemon enter animation will be done here
+	}
 }

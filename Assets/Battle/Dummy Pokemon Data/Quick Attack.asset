@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f77cb984d1608c44ebdad1730765deb2, type: 3}
-  m_Name: Haunt
+  m_Name: Quick Attack
   m_EditorClassIdentifier: 
-  nameText: Haunt
+  nameText: Quick Attack
   description: 
-  damage: 50
+  damage: 20
   Hpgain: 0
   accuracy: 100
-  priority: 0
-  MaxUses: 2
+  priority: 1
+  MaxUses: 10
   category: 0
   effects:
     boosts: []

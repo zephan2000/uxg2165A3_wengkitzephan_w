@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 namespace pattayaA3
 {
@@ -31,59 +33,104 @@ namespace pattayaA3
 		private LevelController levelController;
 		public GameController gameController;
 		public Transform initialPosition;
-		public float speed = 6f;
-		public int initHealth = 5;
-		public Transform healthBar;
-		private int currHealth;
 		public SpriteRenderer sprite;
-		//public LayerMask buildingLayer; // only use if implementing physics2d.OverlapCircle
-		public Collider2D playerCol;
+		public BoxCollider2D playerCol;
+		public LayerMask interactableLayer;
+		public LayerMask buildingLayer;
 		public LayerMask portalLayer;
-		//protected ContactFilter2D buildingFilter;
-		//protected ContactFilter2D portalFilter;
-		public void MovePlayer(Vector2 moveDir)
+		public Portal portal;
+		public Vector3 currentposition;
+		public Collider2D triggerCol;
+		private GameObject gameObj;
+		Rigidbody2D rb;
+		public ContactFilter2D movementFilter;
+		List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+		public float collisionOffset = 0.05f;
+		private void Start()
 		{
-			//set player direction is done in GameController
+			rb = GetComponent<Rigidbody2D>();
+		}
+		public void HandleUpdate()
+		{
+			Vector2 moveDir = Vector2.zero;
+			if (Input.GetKey(KeyCode.W)) { moveDir += Vector2.up; }
+			if (Input.GetKey(KeyCode.S)) { moveDir += Vector2.down; }
+			if (Input.GetKey(KeyCode.A)) { moveDir += Vector2.left; this.GetComponent<SpriteRenderer>().flipX = true; } // flipSprite when moving left
+			if (Input.GetKey(KeyCode.D)) { moveDir += Vector2.right; this.GetComponent<SpriteRenderer>().flipX = false; }
 			//move player position
-			if(IsPortal())
+			//Debug.Log(IsWalkable((Vector3)moveDir));
+			if(moveDir != Vector2.zero)
 			{
-				levelController.StartNewLevel("Battle View"); // will change this to start battle sequence
+				MovePlayer(moveDir);
 			}
-			//if (IsWalkable((Vector3)moveDir))
-				this.transform.position += (Vector3)moveDir * speed;
 
+			if (IsInteractable() && Input.GetKeyDown(KeyCode.Z))
+			{
+				Debug.Log("Press");
+				if (GetGameObject().name == "Portal")
+				{
+					portal.Interact();
+				}
+				else
+				{
+					//Debug.Log(GetGameObject().name);
+					GetGameObject().GetComponent<NPC>()?.Interact();
+				}
 
+			}
+		}
+		public void MovePlayer(Vector2 moveDir) // old movement codes
+		{
+			int count = rb.Cast(moveDir, movementFilter, castCollisions, 5.5f * Time.fixedDeltaTime + collisionOffset);
+
+			if (count == 0)
+				rb.MovePosition(rb.position + moveDir * 5.5f * Time.fixedDeltaTime);
 		}
 
-		//private bool IsWalkable(Vector3 targetPos)
-		//{
-
-		//	if (Physics2D.OverlapCircle(targetPos, 0.2f, buildingLayer) != null)
-		//	{
-		//		Debug.Log("Wall");
-		//		return false;
-		//	}
-
-
-		//	else
-		//		return true;
-		//}
-
-		private bool IsPortal()
+		private bool IsInteractable()
 		{
-			if (playerCol.IsTouchingLayers(portalLayer) == true)
+			var facingDir = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+			var interactPos = transform.position + facingDir;
+			if (Physics2D.OverlapCircle(interactPos, 0.16f, interactableLayer) != null)
 			{
-				return true;
+				Debug.Log("Interact?");
+				return false;
 			}
 			else
-				return false;
+				return true;
+		}
+
+		public GameObject GetGameObject()
+		{
+			GameObject collider = null;
+			RaycastHit2D hit = Physics2D.BoxCast(playerCol.bounds.center, new Vector2(3f, 3f), 0, Vector2.up, 0, portalLayer | interactableLayer);
+			if (hit.collider != null)
+			{
+				//Debug.Log("Found");
+				if (hit.collider.gameObject.CompareTag("NPC") || hit.collider.gameObject.CompareTag("Portal"))
+				{
+					//Debug.Log(hit.collider.gameObject.name);
+					collider = hit.transform.gameObject;
+				}
+			}
+			return collider;
+		}
+		private void OnDrawGizmos()
+		{
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireCube(playerCol.bounds.center, new Vector2(3f, 3f));
+			Gizmos.DrawWireCube(playerCol.bounds.center, playerCol.bounds.size);
+
+		}
+		
+		public Vector3 GetCurrentPosition()
+		{
+			return currentposition = this.transform.position;
 		}
 
 		public void Initialize(LevelController aController)
 		{
 			levelController = aController;
-
-			//set to initial position
 			this.transform.position = initialPosition.transform.position;
 			//buildingFilter.useTriggers = false;
 			//buildingFilter.SetLayerMask(buildingLayer); // only use if implementing physics2d.OverlapCircle

@@ -17,6 +17,7 @@ namespace pattayaA3
 		[SerializeField] List<Text> moveTexts;
 
 		[SerializeField] Text cooldownText;
+		[SerializeField] Text typeText;
 		[SerializeField] Color highlightedColor;
 		public void SetDialog(string dialog)
 		{
@@ -29,7 +30,7 @@ namespace pattayaA3
 			foreach (var letter in dialog.ToCharArray()) 
 			{
 				dialogText.text += letter;
-				yield return new WaitForSeconds(1f / 30);
+					yield return new WaitForSeconds(1f / 30);
 			}
 		}
 
@@ -70,7 +71,12 @@ namespace pattayaA3
 				else
 					moveTexts[i].color = Color.black;
 			}
-			cooldownText.text = $"Cooldown {move.numberofuses}/ {move.moveBase.Getnumberofuses()}";
+			cooldownText.text = $"Uses {move.UsesLeft}/ {move.moveBase.GetMaxUses()}";
+			typeText.text = $"{move.moveBase.GetCategory()}";
+			if (move.UsesLeft == 0)
+				cooldownText.color = Color.red;
+			else
+				cooldownText.color = Color.black;
 		}
 		public void SetMoveName(List<Move> moves)
 		{

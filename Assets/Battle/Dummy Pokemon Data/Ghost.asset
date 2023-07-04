@@ -16,8 +16,15 @@ MonoBehaviour:
   description: 
   PokemonSprite: {fileID: -317502491, guid: 3115b5ad51550d548943f5329c5fe389, type: 3}
   maxHp: 100
-  attack: 10
   defense: 5
+  physicaldamage: 0
+  magicdamage: 0
+  vitality: 0
+  power: 0
+  intelligence: 10
+  speed: 100
+  exp: 0
+  gold: 0
   skill:
   - skillBase: {fileID: 11400000, guid: 0cb7a781b4998354886e7618a35ffc0f, type: 2}
     level: 0

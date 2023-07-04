@@ -6,6 +6,7 @@ using UnityEngine;
 namespace pattayaA3
 {
 	//Zephan
+	public enum GameState { FreeRoam, Dialog }
 	public class LevelController : GameSceneController
 	{
 		private Camera mainCamera;
@@ -19,7 +20,37 @@ namespace pattayaA3
 		private bool isPaused;
 		public float outOfBoundsDuration = 3f;
 		private float outOfBoundsTimer;
+		public GameObject playerobj;
+		GameState state;
 
+		void Start()
+		{
+			DialogManager.Instance.OnShowDialog += () =>
+			{
+				state = GameState.Dialog;
+			};
+
+			DialogManager.Instance.OnCloseDialog += () =>
+			{
+				if (state == GameState.Dialog) //for cases where you want to go to battle straight after dialog
+					state = GameState.FreeRoam;
+			};
+		}
+		private void Update()
+		{
+			//if (player != null && !isGameOver && Input.GetKeyDown(KeyCode.Escape))
+			//{
+			//	TogglePause();
+			//}	
+			if (state == GameState.FreeRoam && player != null)
+			{
+				player.HandleUpdate();
+			}
+			else if (state == GameState.Dialog)
+			{
+				DialogManager.Instance.HandleUpdate();
+			}
+		}
 		public override void Initialize(GameController aController)
 		{
 			isStarted = false;
@@ -28,18 +59,17 @@ namespace pattayaA3
 
 			mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
-			//clear auto destroy objects
-			//foreach (DamagerScript autoDestroy in FindObjectsOfType<DamagerScript>())
-			//{
-			//	autoDestroy.DestroyDamager();
-			//}
-
 			//initialize player script
 			if (player == null) player = FindObjectOfType<PlayerScript>();
 			if (player != null) player.Initialize(this);
-
+			if(player.currentposition != Vector3.zero) // need more work on this
+			{
+				Debug.Log("ran");
+				player.currentposition = playerobj.transform.position;
+			}
 			
-			gameController.StartLevel(player);
+
+			gameController.StartLevel(player); // check what is the current player position
 
 
 			isStarted = true;
@@ -57,6 +87,7 @@ namespace pattayaA3
 		}
 		public void StartNewLevel(string aScene)
 		{
+			player.currentposition = player.GetCurrentPosition(); // check what is the current player position
 			gameController.LoadScene(aScene);
 			gameController.RemoveScene(sceneName);
 		}
