@@ -68,7 +68,7 @@ public class DialogManager : MonoBehaviour
 				dialogText.text = line;
 				Skip = false;
 				SkipText.SetActive(false);
-				yield return new WaitForSeconds(1.2f);
+				//yield return new WaitForSeconds(1.2f);
 				NextText.SetActive(true);
 				break;
 			}
@@ -76,7 +76,7 @@ public class DialogManager : MonoBehaviour
 			yield return new WaitForSeconds(1f / 30);
 		}
 		SkipText.SetActive(false);
-		yield return new WaitForSeconds(1.2f);
+		//yield return new WaitForSeconds(1.2f);
 		NextText.SetActive(true);
 		isTyping = false;
 	}

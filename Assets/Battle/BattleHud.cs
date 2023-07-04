@@ -15,8 +15,8 @@ namespace pattayaA3
 		public void SetData(Pokemon pokemon)
 		{
 			_pokemon = pokemon;
-			nameText.text = pokemon._base.GetName();
-			levelText.text = "Lvl" + pokemon.level;
+			nameText.text = pokemon.Base.GetName();
+			levelText.text = "Lvl" + pokemon.Level;
 			hpBar.SetHP((float)pokemon.HP / pokemon.MaxHP);
 			//hptrack = (float)pokemon.HP;
 			//Debug.Log(hptrack);

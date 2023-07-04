@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: Slap
   description: 
-  damage: 10
+  damage: 40
   accuracy: 100
   numberofuses: 0

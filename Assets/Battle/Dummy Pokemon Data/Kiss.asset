@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77cb984d1608c44ebdad1730765deb2, type: 3}
   m_Name: Kiss
   m_EditorClassIdentifier: 
-  nameText: Slap
+  nameText: Kiss
   description: 
-  damage: 10
+  damage: 100
   accuracy: 100
   numberofuses: 0

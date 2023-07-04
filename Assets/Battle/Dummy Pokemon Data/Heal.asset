@@ -10,10 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f77cb984d1608c44ebdad1730765deb2, type: 3}
-  m_Name: Haunt
+  m_Name: Heal
   m_EditorClassIdentifier: 
-  nameText: Haunt
+  nameText: Heal
   description: 
-  damage: 50
-  accuracy: 100
-  numberofuses: 3
+  damage: 0
+  Hpgain: 100
+  accuracy: 0
+  numberofuses: 1
+  category: 1
+  effects:
+    boosts: []
+  target: 1

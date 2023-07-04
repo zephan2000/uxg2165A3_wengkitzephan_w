@@ -70,7 +70,11 @@ namespace pattayaA3
 				else
 					moveTexts[i].color = Color.black;
 			}
-			cooldownText.text = $"Cooldown {move.numberofuses}/ {move.moveBase.Getnumberofuses()}";
+			cooldownText.text = $"Uses {move.UsesLeft}/ {move.moveBase.GetMaxUses()}";
+			if (move.UsesLeft == 0)
+				cooldownText.color = Color.red;
+			else
+				cooldownText.color = Color.black;
 		}
 		public void SetMoveName(List<Move> moves)
 		{

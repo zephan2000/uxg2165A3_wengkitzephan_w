@@ -12,8 +12,13 @@ public class MoveBase : ScriptableObject
 	[TextArea]
 	[SerializeField] string description;
 	[SerializeField] int damage;
+	[SerializeField] int Hpgain;
 	[SerializeField] int accuracy;
-	[SerializeField] int numberofuses;
+	[SerializeField] int priority;
+	[SerializeField] int MaxUses;
+	[SerializeField] MoveCategory category;
+	[SerializeField] MoveEffects effects;
+	[SerializeField] MoveTarget target;
 
 	public string GetName() // will be loading data from sheets
 	{
@@ -31,8 +36,53 @@ public class MoveBase : ScriptableObject
 	{
 		return accuracy;
 	}
-	public int Getnumberofuses()
+	public int GetPriority()
 	{
-		return numberofuses;
+		return priority;
 	}
+	public int GetMaxUses()
+	{
+		return MaxUses;
+	}
+	public int GetHpGain()
+	{
+		return Hpgain;
+	}
+	public MoveCategory GetCategory()
+	{
+		return category;
+	}
+	public MoveEffects GetEffects()
+	{
+		return effects;
+	}
+	public MoveTarget GetTarget()
+	{
+		return target;
+	}
+}
+[System.Serializable]
+// for passive effects like stat boosting, heal etc.
+public class MoveEffects
+{
+	[SerializeField] List<StatBoost> boosts;
+
+	public List<StatBoost> Boosts // may need to be a function
+	{ get { return boosts; } }	
+}
+[System.Serializable]
+public class StatBoost
+{
+	public Stat stat;
+	public int boost;
+}
+
+public enum MoveCategory
+{
+	Physical, Magic , Passive
+}
+
+public enum MoveTarget
+{
+	Foe,Self
 }
