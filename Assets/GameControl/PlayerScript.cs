@@ -66,6 +66,7 @@ namespace pattayaA3
 
 			if (IsInteractable() && Input.GetKeyDown(KeyCode.Z))
 			{
+				Debug.Log(IsInteractable());
 				Debug.Log("Press");
 				if (GetGameObject().name == "Portal")
 				{
@@ -91,13 +92,25 @@ namespace pattayaA3
 		{
 			var facingDir = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 			var interactPos = transform.position + facingDir;
-			if (Physics2D.OverlapCircle(interactPos, 0.16f, interactableLayer) != null)
+			var collision = Physics2D.OverlapCircle(interactPos, 0.25f, interactableLayer);
+			if (collision != null)
 			{
-				Debug.Log("Interact?");
+				//Debug.Log(collision.gameObject.name);
+				StartCoroutine(InteractablePing(collision));
+				//Debug.Log(IsInteractable());
 				return false;
 			}
 			else
+			{
 				return true;
+			}
+		}
+
+		IEnumerator InteractablePing(Collider2D collision)
+		{
+			collision.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+			yield return new WaitForSeconds(0.7f);
+			collision.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 		}
 
 		public GameObject GetGameObject()
@@ -181,8 +194,8 @@ namespace pattayaA3
 			//Debug.Log(Game.Getactorbytype("Player").displaySpritePath);
             playerImage = Game.Getactorbytype("playerWarrior").displaySpritePath ;
 
-			//Sprite tileSprite = Resources.Load("Assets/ArtAssets/Tilemap_packed_100") as Sprite;
-			
+			Sprite tileSprite = Resources.Load(playerImage) as Sprite;
+
 			AssetManager.LoadSprite(playerImage, (Sprite s) =>
 			{
 				this.GetComponent<SpriteRenderer>().sprite = s;

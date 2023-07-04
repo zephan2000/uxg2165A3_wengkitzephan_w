@@ -120,15 +120,15 @@ public static class Game
     }
     public static void ListdownSkills()
     {
-        foreach (skills askill in skillslist)
-        {
-            Debug.Log("===Start===");
-            Debug.Log(askill.skillid);
-            Debug.Log(askill.actorType);
-            Debug.Log(askill.category);
-            Debug.Log(askill.skillname);
-            Debug.Log("===End===");
-        }
+        //foreach (skills askill in skillslist)
+        //{
+        //    Debug.Log("===Start===");
+        //    Debug.Log(askill.skillid);
+        //    Debug.Log(askill.actorType);
+        //    Debug.Log(askill.category);
+        //    Debug.Log(askill.skillname);
+        //    Debug.Log("===End===");
+        //}
     }
 
 
