@@ -17,7 +17,8 @@ MonoBehaviour:
   damage: 0
   Hpgain: 100
   accuracy: 0
-  numberofuses: 1
+  priority: 0
+  MaxUses: 1
   category: 1
   effects:
     boosts: []

@@ -17,6 +17,7 @@ namespace pattayaA3
 		[SerializeField] List<Text> moveTexts;
 
 		[SerializeField] Text cooldownText;
+		[SerializeField] Text typeText;
 		[SerializeField] Color highlightedColor;
 		public void SetDialog(string dialog)
 		{
@@ -71,6 +72,7 @@ namespace pattayaA3
 					moveTexts[i].color = Color.black;
 			}
 			cooldownText.text = $"Uses {move.UsesLeft}/ {move.moveBase.GetMaxUses()}";
+			typeText.text = $"{move.moveBase.GetCategory()}";
 			if (move.UsesLeft == 0)
 				cooldownText.color = Color.red;
 			else

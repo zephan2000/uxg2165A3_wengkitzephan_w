@@ -15,5 +15,11 @@ MonoBehaviour:
   nameText: Kiss
   description: 
   damage: 100
+  Hpgain: 0
   accuracy: 100
-  numberofuses: 0
+  priority: 0
+  MaxUses: 4
+  category: 0
+  effects:
+    boosts: []
+  target: 0

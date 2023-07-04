@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77cb984d1608c44ebdad1730765deb2, type: 3}
   m_Name: Quick Attack
   m_EditorClassIdentifier: 
-  nameText: 
+  nameText: Quick Attack
   description: 
-  damage: 0
+  damage: 20
   Hpgain: 0
-  accuracy: 0
-  priority: 0
-  Uses: 0
+  accuracy: 100
+  priority: 1
+  MaxUses: 10
   category: 0
   effects:
     boosts: []
