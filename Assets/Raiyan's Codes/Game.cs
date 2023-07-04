@@ -41,11 +41,12 @@ public static class Game
         return actorList;
     }
 
-    public static actor Getactorbyid(string id)
+
+    public static actor Getactorbytype(string type)
     {
         foreach (actor aactor in actorList)
         {
-            if (aactor.actorId == id) return aactor;
+            if (aactor.actorType == type) return aactor;
         }
         return null;
     }

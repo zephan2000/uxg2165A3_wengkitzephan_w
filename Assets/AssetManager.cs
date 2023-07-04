@@ -8,7 +8,6 @@ using UnityEngine.AddressableAssets;
 
 public static class AssetManager
 {
-    
 
     private static string imagePath = "Assets/ArtAssets/{0}";
     //private static string testpath = "Assets/ArtAssets/{0}";

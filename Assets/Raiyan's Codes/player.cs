@@ -40,7 +40,7 @@ public class player
 
         isDirty = true;
     }
-
+    /*
     public bool UpdateStats()
     {
         if (!isDirty) return false;
@@ -50,43 +50,43 @@ public class player
 
         playerVit = playerActor.vitality;
         playerPow = playerActor.power;
-        playerExp = playerActor.expertise;
-        playerXp = playerActor.exp;
-        playerGold = playerActor.gold;
-        playerImage = playerActor.displaySpritePath;
+        //playerExp = playerActor.expertise;
+        //playerXp = playerActor.exp;
+        //playerGold = playerActor.gold;
+        //playerImage = playerActor.displaySpritePath;
 
         isDirty = false;
         return true;
-    }
+    }*/
 
     public int getPower()
     {
-        UpdateStats();
+        //UpdateStats();
         return playerPow;
     }
     public int getVitality()
     {
-        UpdateStats();
+        //UpdateStats();
         return playerVit;
     }
     public int getExp()
     {
-        UpdateStats();
+        //UpdateStats();
         return playerExp;
     }
     public int getXp()
     {
-        UpdateStats();
+        //UpdateStats();
         return playerXp;
     }
     public int getGold()
     {
-        UpdateStats();
+        //UpdateStats();
         return playerGold;
     }
     public string getImg()
     {
-        UpdateStats();
+        //UpdateStats();
         return playerImage;
     }
 }

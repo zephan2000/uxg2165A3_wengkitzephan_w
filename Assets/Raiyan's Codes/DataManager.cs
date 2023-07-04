@@ -34,8 +34,8 @@ public class DataManager : MonoBehaviour
 
         //process data
         ProcessDemoData(demoData);
-        actor best = Game.Getactorbyid("actor03");
-        //Debug.Log(best.displayName);
+        actor best = Game.Getactorbytype("Player");
+        Debug.Log(best.power);
         //Debug.Log("Yes");
         //Debug.Log(Game.GetActorList().Count);
     }
@@ -49,9 +49,8 @@ public class DataManager : MonoBehaviour
 
         foreach (refActor refactor in demoData.actor)
         {
-            actor aCtor = new actor(refactor.actorId, refactor.actorType, refactor.displayName,
-                refactor.vitality, refactor.power, refactor.expertise, refactor.exp,
-                refactor.gold, refactor.displaySpritePath);
+            actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.maxhp, refactor.defense, refactor.physicaldmg, refactor.magicdmg,
+                refactor.vitality, refactor.power, refactor.intelligence, refactor.speed, refactor.exp, refactor.gold, refactor.displaySpritePath);
 
             actorList.Add(aCtor);
         }

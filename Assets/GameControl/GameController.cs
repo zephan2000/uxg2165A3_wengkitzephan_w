@@ -33,11 +33,11 @@ namespace pattayaA3
 			DataManager dataManager = GetComponent<DataManager>();
 			dataManager.LoadRefData();
 
-			Game.SetPlayer(new player("1", initActor));
+			//Game.SetPlayer(new player("1", initActor));
 
-			
 
-			Debug.Log(Game.GetPlayer().GetCurrentActor());
+
+			//Debug.Log(Game.GetPlayer().GetCurrentActor());
 
 			//load initial scene
 			LoadScene(initialScene);

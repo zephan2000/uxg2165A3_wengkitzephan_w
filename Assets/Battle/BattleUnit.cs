@@ -17,5 +17,8 @@ public class BattleUnit : MonoBehaviour
 		Pokemon = new Pokemon(_base, level);
 		GetComponent<Image>().sprite = Pokemon._base.GetPokemonSprite();
 
-	}
+		Debug.Log(Pokemon._base.GetName());
+        Debug.Log(Pokemon.MaxHP);
+        Debug.Log(Pokemon.Attack);
+    }
 }

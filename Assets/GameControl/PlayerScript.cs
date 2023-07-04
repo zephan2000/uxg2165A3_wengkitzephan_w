@@ -2,15 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace pattayaA3
 {
 	//Zephan
 	public class PlayerScript : MonoBehaviour
 	{
-
+		
 		//Raiyan's Code
-		private player player;
+		private player player2;
 		private actor playerActor;
         public string currentActor;
         public string id;
@@ -21,7 +22,7 @@ namespace pattayaA3
         public int playerXp;
         public int playerGold;
         public string playerImage;
-
+		
 		
 		//private bool isDirty;
         
@@ -115,31 +116,27 @@ namespace pattayaA3
 			//	if (collision.gameObject.GetComponent<EndPointScript>() != null && !levelController.CheckGameOver())
 			//		levelController.SetGameOver(true, true);
 
-			//Raiyan's Code
-			player = Game.GetPlayer();
+			
 
 			UpdatePlayerStats();
 
-			initHealth = playerVit * 10;
+			
 
 		}
 
 		
 		//Raiyan's Code
+		
 		public void UpdatePlayerStats()
 		{
-			player.UpdateStats();
-			
-			playerVit = player.getVitality();
-            playerPow = player.getPower();
-            playerExp = player.getExp();
-            playerXp = player.getXp();
-            playerGold = player.getGold();
-			playerImage = player.getImg();
+			//player.UpdateStats();
 
+			//Debug.Log(Game.Getactorbytype("Player").displaySpritePath);
+            playerImage = Game.Getactorbytype("Player").displaySpritePath ;
+
+			//Sprite tileSprite = Resources.Load("Assets/ArtAssets/Tilemap_packed_100") as Sprite;
 			
-			
-			AssetManager.LoadSprite(playerImage + ".png", (Sprite s) =>
+			AssetManager.LoadSprite(playerImage, (Sprite s) =>
 			{
 				this.GetComponent<SpriteRenderer>().sprite = s;
 			});
@@ -150,6 +147,7 @@ namespace pattayaA3
                 this.GetComponent<SpriteRenderer>().sprite = s;
             });
 			*/
+			
         }
 		
     }

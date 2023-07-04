@@ -18,6 +18,7 @@ public class PokemonBase : ScriptableObject
 	[SerializeField] List<LearnableSkill> skill;
 	public string GetName() // will be loading data from sheets
 	{
+		//return Game.Getactorbytype
 		return nameText;
 	}
 	public string GetDescription()
@@ -35,7 +36,9 @@ public class PokemonBase : ScriptableObject
 	}
 	public int Getattack()
 	{
-		return attack;
+		Debug.Log(Game.Getactorbytype(GetName()).displayName);
+        return Game.Getactorbytype(GetName()).power;
+        //return attack;
 	}
 	public int Getdefense()
 	{
