@@ -194,13 +194,57 @@ PrefabInstance:
       propertyPath: buildingLayer.m_Bits
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5968146904175973973, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968146904175973973, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968146904175973973, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968146904175973973, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968146904175973973, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968146904175973973, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 7071160480235571944, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
       propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071160480235571946, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2048360522, guid: 3115b5ad51550d548943f5329c5fe389, type: 3}
+    - target: {fileID: 7071160480235571946, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_DrawMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071160480235571946, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_SpriteSortPoint
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7071160480235571948, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071160480235571948, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071160480235571948, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7071160480235571948, guid: 25b7c71478e9a6a47ac4aea5d6e068cb, type: 3}
       propertyPath: m_LocalPosition.x
