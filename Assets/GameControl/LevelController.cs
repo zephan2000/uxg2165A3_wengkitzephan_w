@@ -6,7 +6,7 @@ using UnityEngine;
 namespace pattayaA3
 {
 	//Zephan
-	public enum GameState { FreeRoam, Dialog }
+	public enum GameState { FreeRoam, Dialog, Shop }
 	public class LevelController : GameSceneController
 	{
 		private Camera mainCamera;
