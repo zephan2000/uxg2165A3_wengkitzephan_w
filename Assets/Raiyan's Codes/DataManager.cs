@@ -38,7 +38,13 @@ public class DataManager : MonoBehaviour
         //Debug.Log(best.power);
         //Debug.Log("Yes");
         //Debug.Log(Game.GetItemList());
-        Game.ListdownSkills();
+        //Game.ListdownSkills();
+        //Game.AssignAllSkillListToActor();
+        //Game.ListdownSkills();
+        //Game.ListdownSkills("enemyBat");
+        Game.AssignAllSkillListToActor();
+        //Game.ListdownSkills("enemyBat");
+
     }
 
     private void ProcessDemoData(DemoData demoData)
@@ -49,15 +55,6 @@ public class DataManager : MonoBehaviour
         List<actor> actorList = new List<actor>();
         List<skills> skillList = new List<skills>();
         List<session> sessionList = new List<session>();
-
-        foreach (refActor refactor in demoData.actor)
-        {
-            actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.maxhp, refactor.defense, refactor.physicaldmg, refactor.magicdmg,
-                refactor.vitality, refactor.power, refactor.intelligence, refactor.speed, refactor.exp, refactor.gold, refactor.displaySpritePath);
-
-            actorList.Add(aCtor);
-        }
-        Game.SetActorList(actorList);
         
         foreach (RefItems refItem in demoData.items)
         {
@@ -71,7 +68,7 @@ public class DataManager : MonoBehaviour
         
         foreach (refSkills refskills in demoData.skills)
         {
-            skills skill = new skills(refskills.skillid, refskills.actorType, refskills.category, refskills.skillname, refskills.dmg, refskills.hpgain, refskills.accuracy, refskills.priority, refskills.maxuses);
+            skills skill = new skills(refskills.skillid, refskills.actorType, refskills.category, refskills.target, refskills.skillname, refskills.dmg, refskills.hpgain, refskills.accuracy, refskills.priority, refskills.maxuses);
 
             skillList.Add(skill);
         }
@@ -86,5 +83,23 @@ public class DataManager : MonoBehaviour
         }
         Game.SetSessionList(sessionList);
 
+        foreach (refActor refactor in demoData.actor)
+        {
+            List<skills> skillListtemp = Game.GetListOfSkillsByType(refactor.actorType);
+            string stringSkillList = "";
+            foreach (skills askill in skillListtemp)
+            {
+                stringSkillList += askill.skillid + "%1,";
+            }
+            refactor.skillslist = stringSkillList;
+
+            actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.maxhp, refactor.defense, refactor.physicaldmg, refactor.magicdmg,
+                refactor.vitality, refactor.power, refactor.intelligence, refactor.speed, refactor.skillslist, refactor.exp, refactor.gold, refactor.displaySpritePath);
+
+            actorList.Add(aCtor);
+        }
+        Game.SetActorList(actorList);
+
+        //Game.AssignAllSkillListToActor();
     }
 }

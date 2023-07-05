@@ -16,12 +16,13 @@ public class actor
     //public int expertise { get; }
     public int intelligence { get; }
     public int speed { get; }
+    public string skillslist { get; }
     public int exp { get; }
     public int gold { get; }
     public string displaySpritePath { get; }
 
     public actor(string actorType,string displayName, int maxhp, int defense, int physicaldmg, int magicdmg,
-        int vitality,int power,int intelligence, int speed,int exp,int gold,
+        int vitality,int power,int intelligence, int speed, string skillslist, int exp,int gold,
         string displaySpritePath)
     {
         //this.actorId = actorId;
@@ -36,6 +37,7 @@ public class actor
         //this.expertise = expertise;
         this.intelligence = intelligence;
         this.speed = speed;
+        this.skillslist = skillslist;
         this.exp = exp;
         this.gold = gold;
         this.displaySpritePath = displaySpritePath;

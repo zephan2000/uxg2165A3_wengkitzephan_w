@@ -1,6 +1,7 @@
 using pattayaA3;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class Game
@@ -106,6 +107,18 @@ public static class Game
         }
         return null;
     }
+    public static List<skills> GetListOfSkillsByType(string type)
+    {
+        List<skills> nskills = new List<skills>();
+        foreach (skills askill in skillslist)
+        {
+            if (askill.actorType == type)
+            {
+                nskills.Add(askill);
+            }
+        }
+        return nskills;
+    }
     public static List<skills> GetskillsbyCategory(string category)
     {
         List<skills> nskills = new List<skills>();
@@ -118,19 +131,14 @@ public static class Game
         }
         return nskills;
     }
-    public static void ListdownSkills()
+    public static void ListdownSkills(string type)
     {
-        //foreach (skills askill in skillslist)
-        //{
-        //    Debug.Log("===Start===");
-        //    Debug.Log(askill.skillid);
-        //    Debug.Log(askill.actorType);
-        //    Debug.Log(askill.category);
-        //    Debug.Log(askill.skillname);
-        //    Debug.Log("===End===");
-        //}
+        Debug.Log("===Start===");
+        Debug.Log(Game.Getactorbytype(type).displayName);
+        Debug.Log(Game.Getactorbytype(type).actorType);
+        Debug.Log(Game.Getactorbytype(type).skillslist);
+        Debug.Log("===End===");
     }
-
 
     public static void SetItemList(List<items> alist)
     {
@@ -157,5 +165,21 @@ public static class Game
         sessionlist = asession;
     }
 
-    
+    public static void AssignAllSkillListToActor()
+    {
+        foreach (actor aactor in actorList)
+        {
+            //Debug.Log("yes");
+            List<skills> skillList = GetListOfSkillsByType(aactor.actorType);
+            string stringSkillList = "";
+            foreach (skills askill in skillList)
+            {
+                //Debug.Log("yes");
+                stringSkillList += askill.skillid + "%1,";
+            }
+            //Debug.Log(stringSkillList);
+            //stringSkillList.Remove(stringSkillList.Length - 1, 1);
+            //aactor.skillslist = stringSkillList;
+        }
+    }
 }
