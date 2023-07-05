@@ -91,7 +91,7 @@ public static class Game
         return aitems;
     }
 
-    public static skills GetskillbyId(string id)
+    public static skills GetSkillById(string id)
     {
         foreach (skills askill in skillslist)
         {
@@ -99,15 +99,19 @@ public static class Game
         }
         return null;
     }
-    public static skills GetskillbyName(string name)
+    public static string GetSkillByType(string type)
     {
-        foreach (skills askill in skillslist)
-        {
-            if (askill.skillname == name) return askill;
-        }
-        return null;
+        return Game.Getactorbytype(type).skillslist;
     }
-    public static List<skills> GetListOfSkillsByType(string type)
+	public static skills GetskillbyName(string name)
+	{
+		foreach (skills askill in skillslist)
+		{
+			if (askill.skillname == name) return askill;
+		}
+		return null;
+	}
+	public static List<skills> GetListOfSkillsByType(string type)
     {
         List<skills> nskills = new List<skills>();
         foreach (skills askill in skillslist)

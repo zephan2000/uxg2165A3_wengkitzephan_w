@@ -70,7 +70,7 @@ public class PokemonBase : ScriptableObject
 		return intelligence;
 	}
 	
-	public List<LearnableSkill> GetLearnableSkills()
+	public List<LearnableSkill> GetLearnableSkillList()
 	{
 		return skill;
 	}
@@ -110,9 +110,11 @@ public class LearnableSkill
 	[SerializeField] MoveBase moveBase;
 	[SerializeField] int level;
 
-	//public LearnableSkill()
+	//public LearnableSkill(string mbID, int reflevel) //continue from here, need to create moveBase constructor
 	//{
-		//
+		//skills newskill = GetSkillById(mbID);
+		//moveBase = new MoveBase(mb);
+		//level = reflevel
 	//}
 	
 	public MoveBase GetSkillBase()
@@ -128,13 +130,18 @@ public class LearnableSkill
 
 	//public List<LearnableSkill> GetListOfLearnableSkillByType(string actorType)
 	//{
-		//List<skill> a = Game.GetListOfSkillsByType(actorType);
+		//string BLSstring = Game.GetSkillByType(actorType);
+		//string [] BLSarray = BLSstring.Split(','); // this will turn BLSstring into a list, now we turn this into a list of LearnableSkill
 		//List<LearnableSkill> ListOfLS = new List<LearnableSkill>();
-		//foreach(var LS in a)
+		//foreach(var LS in BLSarray)
 		//{
 			//Split into MoveBase and Level
-			//string LS.Split(
+			//string [] LSarray = BLSarray.Split('%');
+			//LearnableSkill newLS = new LearnableSkill(LSarray[0], LSarray[1]);
+			//ListOfLS.Add(newLS);
 		//}
+		//return ListOfLS;
+		
 
 	//}
 }

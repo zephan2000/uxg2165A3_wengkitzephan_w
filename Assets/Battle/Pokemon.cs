@@ -22,7 +22,7 @@ public class Pokemon
 		level = plevel;
 		//Move = GetListOfMovesByActorType(actorType) // return a list of skills,
 		Moves = new List<Move>();
-		foreach (var move in _base.GetLearnableSkills())
+		foreach (var move in _base.GetLearnableSkillList()) //GetLearnableSkills(should change to GetListOfLearnableSkills
 		{
 			if(move.GetLevel() <= level) // testing out conditions for learning skills may remove
 			{
