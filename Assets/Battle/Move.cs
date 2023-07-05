@@ -10,6 +10,20 @@ public class Move
 	public Move(MoveBase Base)
 	{
 		this.moveBase = Base;
-		UsesLeft = Base.GetMaxUses(); 
+		UsesLeft = Base.GetMaxUsesFromSkill(); 
 	}
+
+	//public List<Move> GetListOfMovesByType(string actorType)
+	//{
+	//var listOfMoves = new List<Move>();
+	//var listOfLearnableMoves = GetListOfLearnableMovesByType(string actorType);
+	//
+	//}
+
+	//public List<Move> GetListOfMovesByType(string actorType)
+	//{
+	//var listOfMoves = new List<Move>();
+	//var listOfLearnableMoves = GetListOfLearnableMovesByType(string actorType);
+	//
+	//}
 }

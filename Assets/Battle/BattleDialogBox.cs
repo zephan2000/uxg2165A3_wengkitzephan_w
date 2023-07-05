@@ -72,9 +72,9 @@ namespace pattayaA3
 				else
 					moveTexts[i].color = Color.black;
 			}
-			cooldownText.text = $"Uses {move.UsesLeft}/ {move.moveBase.GetMaxUses()}";
-			priorityText.text = $"Priority: {move.moveBase.GetPriority()}";
-			typeText.text = $"{move.moveBase.GetCategory()}";
+			cooldownText.text = $"Uses {move.UsesLeft}/ {move.moveBase.GetMaxUsesFromSkill()}";
+			priorityText.text = $"Priority: {move.moveBase.GetPriorityFromSkill()}";
+			typeText.text = $"{move.moveBase.GetCategoryFromSkill()}";
 			if (move.UsesLeft == 0)
 				cooldownText.color = Color.red;
 			else

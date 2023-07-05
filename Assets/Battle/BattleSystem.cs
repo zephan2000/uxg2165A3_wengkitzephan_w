@@ -69,8 +69,8 @@ namespace pattayaA3
 				playerUnit.Pokemon.CurrentMove = playerUnit.Pokemon.Moves[currentMove];
 				enemyUnit.Pokemon.CurrentMove = enemyUnit.Pokemon.GetRandomMove();
 
-				int playerMovePriority = playerUnit.Pokemon.CurrentMove.moveBase.GetPriority();
-				int enemyMovePriority = enemyUnit.Pokemon.CurrentMove.moveBase.GetPriority();
+				int playerMovePriority = playerUnit.Pokemon.CurrentMove.moveBase.GetPriorityFromSkill();
+				int enemyMovePriority = enemyUnit.Pokemon.CurrentMove.moveBase.GetPriorityFromSkill();
 
 
 				// check who goes first, Replaced ChooseFirstTurn()
@@ -101,10 +101,10 @@ namespace pattayaA3
 		// sourceUnit is the attacker, targetUnit is the victim of the move
 		IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
 		{ 
-			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.GetName()} used {move.moveBase.GetName()}");
+			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.GetName()} used {move.moveBase.GetNameFromSkill()}");
 			move.UsesLeft--;
 			yield return new WaitForSeconds(1f);
-			if(move.moveBase.GetCategory() == MoveCategory.Passive) // status = passive, may remove if no effect since heal function is already done
+			if(move.moveBase.GetCategoryFromSkill() == MoveCategory.Passive) // status = passive, may remove if no effect since heal function is already done
 			{
 				yield return StartCoroutine(RunMoveEffects(sourceUnit.Pokemon, targetUnit.Pokemon, move)); ;
 			}
@@ -124,7 +124,7 @@ namespace pattayaA3
 
 		IEnumerator CheckForHeal(BattleUnit sourceUnit, BattleUnit targetUnit, Move move) // Initialises the move and checks for heal
 		{
-			if (move.moveBase.GetTarget() == MoveTarget.Self) // for heal
+			if (move.moveBase.GetMoveTargetFromSkill() == MoveTarget.Self) // for heal
 			{
 				sourceUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
 				yield return sourceUnit.Hud.UpdateHP();
@@ -140,7 +140,7 @@ namespace pattayaA3
 			var effects = move.moveBase.GetEffects();
 			if (effects.Boosts != null)
 			{
-				if (move.moveBase.GetTarget() == MoveTarget.Self)
+				if (move.moveBase.GetMoveTargetFromSkill() == MoveTarget.Self)
 					sourceUnit.ApplyBoosts(effects.Boosts);
 				else
 					targetUnit.ApplyBoosts(effects.Boosts);

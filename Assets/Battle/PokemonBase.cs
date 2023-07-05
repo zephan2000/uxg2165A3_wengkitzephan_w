@@ -25,6 +25,7 @@ public class PokemonBase : ScriptableObject
 	[SerializeField] int gold;
 
 	[SerializeField] List<LearnableSkill> skill;
+
 	public string GetName() // will be loading data from sheets
 	{
 		//return Game.Getactorbytype
@@ -102,18 +103,40 @@ public enum Stat
 }
 
 
+
 [System.Serializable] //allows data to be save locally and reloaded later
 public class LearnableSkill
 {
-	[SerializeField] MoveBase skillBase;
+	[SerializeField] MoveBase moveBase;
 	[SerializeField] int level;
 
+	//public LearnableSkill()
+	//{
+		//
+	//}
+	
 	public MoveBase GetSkillBase()
 	{
-		return skillBase;
+		//Game.GetLSFromSkill(skillname).movebase;
+		return moveBase;
 	}
 	public int GetLevel() 
-	{ 
+	{
+		//Game.GetLSFromSkill(skillname).level;
 		return level;
 	}
+
+	//public List<LearnableSkill> GetListOfLearnableSkillByType(string actorType)
+	//{
+		//List<skill> a = Game.GetListOfSkillsByType(actorType);
+		//List<LearnableSkill> ListOfLS = new List<LearnableSkill>();
+		//foreach(var LS in a)
+		//{
+			//Split into MoveBase and Level
+			//string LS.Split(
+		//}
+
+	//}
 }
+
+

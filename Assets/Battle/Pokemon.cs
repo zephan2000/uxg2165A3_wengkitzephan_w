@@ -20,6 +20,7 @@ public class Pokemon
 	{
 		_base = pbase;
 		level = plevel;
+		//Move = GetListOfMovesByActorType(actorType) // return a list of skills,
 		Moves = new List<Move>();
 		foreach (var move in _base.GetLearnableSkills())
 		{
@@ -126,12 +127,12 @@ public class Pokemon
 
 	public bool InitMove(Move move, Pokemon attacker)
 	{
-		float attack = (move.moveBase.GetCategory() == MoveCategory.Magic)? attacker.MagicDamage : attacker.PhysicalDamage;
-		int damage = move.moveBase.Getdamage() + (int)attack;
+		float attack = (move.moveBase.GetCategoryFromSkill() == MoveCategory.Magic)? attacker.MagicDamage : attacker.PhysicalDamage;
+		int damage = move.moveBase.GetDamageFromSkill() + (int)attack;
 		Debug.Log($"This is {this.Base.GetName()} before MoveHP: {HP}");
 		HP -= damage;
 		//Debug.Log($"This is before Heal: {HP}");
-		HP = Mathf.Clamp(HP + move.moveBase.GetHpGain(), 0, this.MaxHP);
+		HP = Mathf.Clamp(HP + move.moveBase.GetHpGainFromSkill(), 0, this.MaxHP);
 		Debug.Log($"This is {this.Base.GetName()} current HP: {HP}");
 
 		if (HP <= 0) // catering for when the pokemon faints
