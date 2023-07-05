@@ -31,14 +31,15 @@ namespace pattayaA3
 			DataManager dataManager = GetComponent<DataManager>();
 			dataManager.LoadRefData();
 
-			//Game.SetPlayer(new player("1", initActor));
+
+            //Game.SetPlayer(new player("1", initActor));
 
 
 
-			//Debug.Log(Game.GetPlayer().GetCurrentActor());
+            //Debug.Log(Game.GetPlayer().GetCurrentActor());
 
-			//load initial scene
-			LoadScene(initialScene);
+            //load initial scene
+            LoadScene(initialScene);
 
 			//DialogManager.Instance.OnShowDialog += () =>
 			//{
@@ -119,7 +120,7 @@ namespace pattayaA3
 			//set game ongoing
 			SetGameOver(false, false, 0, 0);
 			SetPause(false);
-		}
+        }
 		public PlayerScript getPlayer()
 		{
 			return player;
