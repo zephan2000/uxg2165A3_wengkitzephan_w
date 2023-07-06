@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Zephan
 [CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new Pokemon")]
 public class PokemonBase : ScriptableObject
 {
@@ -72,6 +72,7 @@ public class PokemonBase : ScriptableObject
 	
 	public List<LearnableSkill> GetLearnableSkillList()
 	{
+		//return skill.GetListOfLearnableSkillByType(actorType);
 		return skill;
 	}
 	public int GetSpeed()
@@ -113,11 +114,11 @@ public class LearnableSkill
 	//public LearnableSkill(string mbID, int reflevel) //continue from here, need to create moveBase constructor
 	//{
 		//skills newskill = GetSkillById(mbID);
-		//moveBase = new MoveBase(mb);
+		//moveBase = new MoveBase(mbID); 
 		//level = reflevel
 	//}
 	
-	public MoveBase GetSkillBase()
+	public MoveBase GetMoveBase()
 	{
 		//Game.GetLSFromSkill(skillname).movebase;
 		return moveBase;
@@ -137,7 +138,7 @@ public class LearnableSkill
 		//{
 			//Split into MoveBase and Level
 			//string [] LSarray = BLSarray.Split('%');
-			//LearnableSkill newLS = new LearnableSkill(LSarray[0], LSarray[1]);
+			//LearnableSkill newLS = new LearnableSkill(LSarray[0], LSarray[1]); // returning ID of move here and level that it can be learnt at
 			//ListOfLS.Add(newLS);
 		//}
 		//return ListOfLS;

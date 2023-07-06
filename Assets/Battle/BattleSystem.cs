@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+// Zephan
 namespace pattayaA3
 {
 	public enum BattleState { Start,ActionSelection,MoveSelection,ExecuteTurn,Busy, BattleOver} //busy is for when either enemy or player are making moves
@@ -101,7 +102,7 @@ namespace pattayaA3
 		// sourceUnit is the attacker, targetUnit is the victim of the move
 		IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
 		{ 
-			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.GetName()} used {move.moveBase.GetNameFromSkill()}");
+			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.GetName()} used {move.moveBase.GetMBNameFromSkill()}");
 			move.UsesLeft--;
 			yield return new WaitForSeconds(1f);
 			if(move.moveBase.GetCategoryFromSkill() == MoveCategory.Passive) // status = passive, may remove if no effect since heal function is already done

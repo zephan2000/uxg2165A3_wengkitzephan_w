@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+// Zephan
 public class DialogManager : MonoBehaviour
 {
 	[SerializeField] GameObject dialogBox;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Zephan
 [CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new Move")]
 public class MoveBase : ScriptableObject
 {
@@ -29,17 +29,17 @@ public class MoveBase : ScriptableObject
 	[SerializeField] MoveEffects effects;
 	[SerializeField] MoveTarget movetarget;
 
-	//public MoveBase(string MoveBaseName) // for optimisation, create general functions so that it does not return twice
+	//public MoveBase(string mbID) // for optimisation, create general functions so that it does not return twice
 	//{
-		//skills skillid = GetskillbyName(MoveBaseName);
-		//GetMBNameFromSkill(skillid);
-		//GetMBDamageFromSkill(skillid);
-		//GetMBAccuracyFromSkill(skillid);
-		//GetMBPriorityFromSkill(skillid);
-		//GetMBMaxUsesFromSkill(skillid);
-		//GetMBHpGainFromSkill(skillid);
-		//GetMBCategoryFromSkill(skillid);
-		//GetMBMoveTargetFromSkill(skillid);
+	//skills skillid = GetSkillById(mbID);
+	//GetMBNameFromSkill(mbID);
+	//GetMBDamageFromSkill(mbID);
+	//GetMBAccuracyFromSkill(mbID);
+	//GetMBPriorityFromSkill(mbID);
+	//GetMBMaxUsesFromSkill(mdID);
+	//GetMBHpGainFromSkill(mbID);
+	//GetMBCategoryFromSkill(mbID);
+	//GetMBMoveTargetFromSkill(mbID);
 
 	//}
 	//public MoveBase(string MoveBaseName) // assigning twice but keeping as backup
@@ -55,7 +55,20 @@ public class MoveBase : ScriptableObject
 	//	this.movetarget = GetMoveTarget(MoveBaseName);
 
 	//}
-	public string GetNameFromSkill() // will be loading data from sheets
+
+	//public void GetMBNameFromSkill(mbID) // will be loading data from sheets
+	//{
+	//	//nameText = Game.GetSkillById(skillid).skillname;
+	//}
+	//public void GetMBDamageFromSkill(mbID) // need to change to void
+	//{
+	//	//damage = Game.GetSkillById(mbID).dmg;
+	//}
+	//public void GetMBDamageFromSkill(mbID) // need to change to void
+	//{
+	//	//accuracy = Game.GetSkillById(skillid).accuracy;
+	//}
+	public string GetMBNameFromSkill() // will be loading data from sheets
 	{
 		//nameText = Game.GetskillbyName(skillid).skillname;
 		return nameText;

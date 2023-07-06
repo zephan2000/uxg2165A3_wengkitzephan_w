@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Zephan
 public class Pokemon
 {
 	// This is akin to the Pokemon class
@@ -26,7 +26,7 @@ public class Pokemon
 		{
 			if(move.GetLevel() <= level) // testing out conditions for learning skills may remove
 			{
-				Moves.Add(new Move(move.GetSkillBase()));
+				Moves.Add(new Move(move.GetMoveBase()));
 			}
 			if(Moves.Count >= 4)
 			{
