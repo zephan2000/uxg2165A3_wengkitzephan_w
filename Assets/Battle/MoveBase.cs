@@ -68,6 +68,32 @@ public class MoveBase : ScriptableObject
 	//{
 	//	//accuracy = Game.GetSkillById(skillid).accuracy;
 	//}
+	//public void GetMBAccuracyFromSkill(mbID) // need to change to void
+	//{
+	//	//accuracy = Game.GetSkillById(skillid).accuracy;
+	//}
+	//public void GetMBPriorityFromSkill(mbID) // need to change to void
+	//{
+	//	//accuracy = Game.GetSkillById(skillid).priority;
+	//}
+	//public void GetMBMaxUsesFromSkill(mbID) // need to change to void
+	//{
+	//	//accuracy = Game.GetSkillById(skillid).maxuses;
+	//}
+	//public void GetMBHpgainFromSkill(mbID) // need to change to void
+	//{
+	//	//accuracy = Game.GetSkillById(skillid).Hpgain;
+	//}
+	//public void GetMBCategoryFromSkill(mbID) // need to change to void
+	//{
+	//	// var categoryfromdata = Game.GetskillbyId(skillid).category;
+	//MoveCategory category = Enum.Parse<MoveCategory>(categoryfromdata);
+	//}
+	//public void GetMBTargetFromSkill(mbID) // need to change to void
+	//{
+	//	// var targetfromdata = Game.GetskillbyId(skillid).target;
+		//MoveTarget moveTarget = Enum.Parse<MoveTarget>(targetfromdata);
+	//}
 	public string GetMBNameFromSkill() // will be loading data from sheets
 	{
 		//nameText = Game.GetskillbyName(skillid).skillname;
