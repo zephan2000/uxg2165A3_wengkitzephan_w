@@ -29,10 +29,13 @@ public class BattleUnit : MonoBehaviour
 		Debug.Log("passing in name and type");
 		this._base = new PokemonBase(actorName, actorType);
 		Debug.Log("created base");
-		Pokemon = new Pokemon(_base, level); //
+		Pokemon = new Pokemon(_base, level); 
+		//Sprite pokemonSprite = Resources.Load<Sprite>(_base.pokemonSpritePath); 
+		//this.GetComponent<Image>().sprite = Resources.Load<Sprite>(_base.pokemonSpritePath);
 		AssetManager.LoadSprite(_base.pokemonSpritePath, (Sprite s) =>
 		{
-			this.GetComponent<SpriteRenderer>().sprite = s;
+			Debug.Log(_base.pokemonSpritePath);
+			this.GetComponent<Image>().sprite = s;
 		});
 		//GetComponent<Image>().sprite = Pokemon.Base.GetPokemonSprite();
 

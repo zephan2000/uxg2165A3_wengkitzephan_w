@@ -2,6 +2,7 @@ using pattayaA3;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class Game
@@ -99,7 +100,7 @@ public static class Game
         }
         return null;
     }
-    public static string GetSkillByType(string type)
+    public static string GetSkillListByType(string type)
     {
         return Game.Getactorbytype(type).skillslist;
     }
@@ -113,15 +114,16 @@ public static class Game
 	}
 	public static List<skills> GetListOfSkillsByType(string type)
     {
-        List<skills> nskills = new List<skills>();
+        List<skills> listofskillsbyType = new List<skills>();
+        int i = 0;
         foreach (skills askill in skillslist)
         {
             if (askill.actorType == type)
             {
-                nskills.Add(askill);
+                listofskillsbyType.Add(askill);
             }
         }
-        return nskills;
+        return listofskillsbyType;
     }
     public static List<skills> GetskillsbyCategory(string category)
     {
@@ -171,19 +173,20 @@ public static class Game
 
     public static void AssignAllSkillListToActor()
     {
-        foreach (actor aactor in actorList)
+        for (int i = 0; i < actorList.ToArray().Length-3; i++)
         {
             //Debug.Log("yes");
-            List<skills> skillList = GetListOfSkillsByType(aactor.actorType);
+            List<skills> skillList = GetListOfSkillsByType(actorList.ToArray()[i].actorType);
             string stringSkillList = "";
             foreach (skills askill in skillList)
             {
                 //Debug.Log("yes");
-                stringSkillList += askill.skillid + "%1,";
+                stringSkillList += askill.skillid + ",";
             }
-            //Debug.Log(stringSkillList);
-            //stringSkillList.Remove(stringSkillList.Length - 1, 1);
-            //aactor.skillslist = stringSkillList;
+            string stringskillList2 = stringSkillList.Remove(stringSkillList.Length - 1);
+            Debug.Log(stringskillList2);
+			//stringSkillList.Remove(stringSkillList.Length - 1, 1);
+			actorList.ToArray()[i].skillslist = stringskillList2;
         }
     }
 }

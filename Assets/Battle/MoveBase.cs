@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //Zephan
 [CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new Move")]
-public class MoveBase : ScriptableObject
+public class MoveBase
 {
 	//this script is akin to movebase meant to store data
 	// using scriptableObjects first for testing, SerializeFields will be removed
@@ -29,39 +29,39 @@ public class MoveBase : ScriptableObject
 	[SerializeField] MoveEffects effects;
 	[SerializeField] MoveTarget movetarget;
 
-	public MoveBase(string mbID) // for optimisation, create general functions so that it does not return twice
+	public MoveBase(string lsID) // for optimisation, create general functions so that it does not return twice
 	{
-		skills skillid = Game.GetSkillById(mbID);
-		GetMBNameFromSkill(mbID);
-		GetMBDamageFromSkill(mbID);
-		GetMBAccuracyFromSkill(mbID);
-		GetMBPriorityFromSkill(mbID);
-		GetMBMaxUsesFromSkill(mbID);
-		GetMBHpGainFromSkill(mbID);
-		GetMBCategoryFromSkill(mbID);
-		GetMBTargetFromSkill(mbID);
+		skills skillid = Game.GetSkillById(lsID);
+		GetMBNameFromSkill(lsID);
+		GetMBDamageFromSkill(lsID);
+		GetMBHpGainFromSkill(lsID);
+		GetMBAccuracyFromSkill(lsID);
+		GetMBPriorityFromSkill(lsID);
+		GetMBMaxUsesFromSkill(lsID);
+		GetMBCategoryFromSkill(lsID);
+		GetMBTargetFromSkill(lsID);
 
 	}
 
-	public void GetMBNameFromSkill(string mbID) // will be loading data from sheets
+	public void GetMBNameFromSkill(string lsID) // will be loading data from sheets
 	{
-		nameText = Game.GetSkillById(mbID).skillname;
+		nameText = Game.GetSkillById(lsID).skillname;
 	}
-	public void GetMBDamageFromSkill(string mbID) // need to change to void
+	public void GetMBDamageFromSkill(string lsID) // need to change to void
 	{
-		damage = Game.GetSkillById(mbID).dmg;
+		damage = Game.GetSkillById(lsID).dmg;
 	}
-	public void GetMBAccuracyFromSkill(string mbID) // need to change to void
+	public void GetMBAccuracyFromSkill(string lsID) // need to change to void
 	{
-		accuracy = Game.GetSkillById(mbID).accuracy;
+		accuracy = Game.GetSkillById(lsID).accuracy;
 	}
-	public void GetMBPriorityFromSkill(string mbID) // need to change to void
+	public void GetMBPriorityFromSkill(string lsID) // need to change to void
 	{
-		priority = Game.GetSkillById(mbID).priority;
+		priority = Game.GetSkillById(lsID).priority;
 	}
-	public void GetMBMaxUsesFromSkill(string mbID) // need to change to void
+	public void GetMBMaxUsesFromSkill(string lsID) // need to change to void
 	{
-		MaxUses = Game.GetSkillById(mbID).maxuses;
+		MaxUses = Game.GetSkillById(lsID).maxuses;
 	}
 	public void GetMBHpGainFromSkill(string mbID) // need to change to void
 	{
@@ -71,13 +71,13 @@ public class MoveBase : ScriptableObject
 	{
 		var categoryfromdata = Game.GetSkillById(mbID).category;
 		Debug.Log(categoryfromdata);
-		category = MoveCategory.Parse<MoveCategory>(" ");
+		category = MoveCategory.Parse<MoveCategory>(categoryfromdata);
 	}
 	public void GetMBTargetFromSkill(string mbID) // need to change to void
 	{
 		var targetfromdata = Game.GetSkillById(mbID).target;
-		Debug.Log(targetfromdata);
-		movetarget = MoveTarget.Parse<MoveTarget>(" ");
+		Debug.Log(targetfromdata);	
+		movetarget = MoveTarget.Parse<MoveTarget>(targetfromdata);
 	}
 	//public string GetMBNameFromSkill() // will be loading data from sheets
 	//{

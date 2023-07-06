@@ -85,7 +85,7 @@ namespace pattayaA3
 			for(int i = 0; i<moveTexts.Count; i++)
 			{
 				if (i < moves.Count)
-					moveTexts[i].text = moves[i].moveBase.name;
+					moveTexts[i].text = moves[i].moveBase.moveName;
 				else
 					moveTexts[i].text = "-";
 			}

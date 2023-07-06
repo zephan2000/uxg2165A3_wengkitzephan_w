@@ -86,12 +86,12 @@ public class DataManager : MonoBehaviour
         foreach (refActor refactor in demoData.actor)
         {
             List<skills> skillListtemp = Game.GetListOfSkillsByType(refactor.actorType);
-            string stringSkillList = "";
-            foreach (skills askill in skillListtemp)
-            {
-                stringSkillList += askill.skillid + "%1,";
-            }
-            refactor.skillslist = stringSkillList;
+            //string stringSkillList = "";
+            //foreach (skills askill in skillListtemp)
+            //{
+            //    stringSkillList += askill.skillid;
+            //}
+            //refactor.skillslist = stringSkillList;
 
             actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.maxhp, refactor.defense, refactor.physicaldmg, refactor.magicdmg,
                 refactor.vitality, refactor.power, refactor.intelligence, refactor.attspeed, refactor.skillslist, refactor.exp, refactor.gold, refactor.displaySpritePath);

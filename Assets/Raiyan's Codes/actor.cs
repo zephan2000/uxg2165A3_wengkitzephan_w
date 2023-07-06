@@ -16,7 +16,7 @@ public class actor
     //public int expertise { get; }
     public int intelligence { get; }
     public int attSpeed { get; }
-    public string skillslist { get; }
+    public string skillslist { get; set; }
     public int exp { get; }
     public int gold { get; }
     public string displaySpritePath { get; }

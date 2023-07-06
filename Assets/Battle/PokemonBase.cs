@@ -46,7 +46,7 @@ public class PokemonBase
 	public PokemonBase(string actorName, string actorType) // for optimisation, create general functions so that it does not return twice
 	{
 		GetPokemonNameFromActorName(actorName);
-		GetPokemonSpriteFromActorName(actorName);
+		GetPokemonSpritePathFromActorName(actorName);
 		GetPokemonMaxHpFromActorName(actorName);
 		GetPokemonDefenseFromActorName(actorName);
 		GetPokemonPhysicalDamageFromActorName(actorName);
@@ -62,9 +62,9 @@ public class PokemonBase
 	{
 		nameText = Game.GetActorByName(actorName).displayName;
 	}
-	public void GetPokemonSpriteFromActorName(string actorName)
+	public void GetPokemonSpritePathFromActorName(string actorName)
 	{
-		string actorSpritePath = Game.GetActorByName(actorName).displaySpritePath;
+		actorSpritePath = Game.GetActorByName(actorName).displaySpritePath;
 	}
 	public void GetPokemonMaxHpFromActorName(string actorName)
 	{
@@ -113,15 +113,14 @@ public class PokemonBase
 	public List<LearnableSkill> GetListOfLearnableSkillByType(string actorType)
 	{
 		Debug.Log("Running List of LS function");
-		string BLSstring = Game.GetSkillByType(actorType);
-		Debug.Log("Finding List of LS");
+		string BLSstring = Game.GetSkillListByType(actorType);
+		Debug.Log(BLSstring);
 		string[] BLSarray = BLSstring.Split(','); // this will turn BLSstring into a list, now we turn this into a list of LearnableSkill
 		List<LearnableSkill> ListOfLS = new List<LearnableSkill>();
 		foreach (var LS in BLSarray)
 		{
 			//Split into MoveBase and Level
-			string[] LSarray = LS.Split('%');
-			LearnableSkill newLS = new LearnableSkill(LSarray[0], (string)LSarray[1]); // returning ID of move here and level has to be casted as int later
+			LearnableSkill newLS = new LearnableSkill(LS); // returning ID of move here and level has to be casted as int later
 			ListOfLS.Add(newLS);
 		}
 		return ListOfLS;
@@ -213,10 +212,11 @@ public class LearnableSkill
 	[SerializeField] MoveBase moveBase;
 	[SerializeField] int level;
 
-	public LearnableSkill(string mbID, string reflevel) //continue from here, need to create moveBase constructor
+	public LearnableSkill(string lsID) //continue from here, need to create moveBase constructor
 	{
-		moveBase = new MoveBase(mbID);
-		level = int.Parse(reflevel);
+		moveBase = new MoveBase(lsID);
+		string[] LSarray = lsID.Split('_');
+		level = int.Parse(LSarray[1]);
 	}
 
 	public MoveBase GetMoveBase()
