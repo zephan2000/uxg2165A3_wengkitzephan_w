@@ -2,91 +2,193 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //Zephan
-[CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new Pokemon")]
-public class PokemonBase : ScriptableObject
+//[CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new Pokemon")]
+public class PokemonBase
 {
-    //this script is akin to pokemonbase meant to store data
-    // if no scaling than this will be the only class used
-    // using scriptableObjects first for testing, SerializeFields will be removed
-    [SerializeField] string nameText;
-	[TextArea] [SerializeField] string description;
-	[SerializeField] Sprite PokemonSprite;
+	//this script is akin to pokemonbase meant to store data
+	// if no scaling than this will be the only class used
+	// using scriptableObjects first for testing, SerializeFields will be removed
+
+	public string pokemonName { get { return nameText; } }
+	public int MaxHp { get { return maxHp; } }
+	public string pokemonSpritePath { get { return actorSpritePath; } } //need to change the current PokemonSprite to actorSprite so that it will reference the correct var
+	public int pokemonPhysicalDmg { get { return physicaldamage; } }
+	public int pokemonMagicDmg { get { return magicdamage; } }
+	public int pokemonDefense { get { return defense; } }
+	public int pokemonVitality { get { return vitality; } }
+	public int pokemonPower { get { return power; } }
+	public int pokemonIntelligence { get { return intelligence; } }
+	public int pokemonAttSpeed { get { return attspeed; } }
+	public int pokemonExp { get { return exp; } }
+	public int pokemonGold { get { return gold; } }
+	public List<LearnableSkill> pokemonListOfLearnableSkill { get { return listofskills; } }
+
+
+
+	[SerializeField] string nameText;
+	[TextArea][SerializeField] string description;
+	[SerializeField] string actorSpritePath;
 	//attack = vitality or strength, spAttack = intelligence, defense is shield/ additional health, speed is implemented to facilitate the priority system
 	// may or may not add accuracy, accuracy affects the probability of the attack landing
 	[SerializeField] int maxHp;
-	[SerializeField] int defense; //extra hp
-	[SerializeField] int physicaldamage; // affects physical skills
+	[SerializeField] int physicaldamage;
 	[SerializeField] int magicdamage; // affects magic skills
+	[SerializeField] int defense; //extra hp
 	[SerializeField] int vitality;
 	[SerializeField] int power; // affects physical damage
 	[SerializeField] int intelligence; // affects magicdamage
-	[SerializeField] int speed; // affects priority
+	[SerializeField] int attspeed; // affects priority
 	[SerializeField] int exp;
 	[SerializeField] int gold;
 
-	[SerializeField] List<LearnableSkill> skill;
+	[SerializeField] List<LearnableSkill> listofskills;
 
-	public string GetName() // will be loading data from sheets
+	public PokemonBase(string actorName, string actorType) // for optimisation, create general functions so that it does not return twice
 	{
-		//return Game.Getactorbytype
-		return nameText;
-	}
-	public string GetDescription()
-	{
-		return description;
-	}
-	
-	public Sprite GetPokemonSprite()
-	{
-		return PokemonSprite;
-	}
-	public int GetMaxHp()
-	{
-		return maxHp;
-	}
-	public int GetDefense()
-	{
-		return defense;
-	}
-	public int GetPhysicalDamage() // affects physical skills
-	{
-		return physicaldamage;
-	}
-	public int GetMagicDamage() // affects magic skills
-	{
-		return magicdamage;
-	}
-	public int GetVitality()
-	{
-		return vitality;
-	}
-	public int GetPower()  // affects physical damage
-	{
-		return power;
+		GetPokemonNameFromActorName(actorName);
+		GetPokemonSpriteFromActorName(actorName);
+		GetPokemonMaxHpFromActorName(actorName);
+		GetPokemonDefenseFromActorName(actorName);
+		GetPokemonPhysicalDamageFromActorName(actorName);
+		GetPokemonMagicDamageFromActorName(actorName);
+		GetPokemonVitalityFromActorName(actorName);
+		GetPokemonPowerFromActorName(actorName);
+		GetPokemonIntelligenceFromActorName(actorName);
+		GetPokemonSpeedFromActorType(actorName);
+		GetPokemonListOfLSFromActorType(actorType);
 	}
 
-	public int GetIntelligence()  // affects magic damage
+	public void GetPokemonNameFromActorName(string actorName)
 	{
-		return intelligence;
+		nameText = Game.GetActorByName(actorName).displayName;
 	}
+	public void GetPokemonSpriteFromActorName(string actorName)
+	{
+		string actorSpritePath = Game.GetActorByName(actorName).displaySpritePath;
+	}
+	public void GetPokemonMaxHpFromActorName(string actorName)
+	{
+		maxHp = Game.GetActorByName(actorName).maxhp;
+	}
+	public void GetPokemonDefenseFromActorName(string actorName)
+	{
+		defense = Game.GetActorByName(actorName).defense;
+	}
+	public void GetPokemonPhysicalDamageFromActorName(string actorName)
+	{
+		physicaldamage = Game.GetActorByName(actorName).physicaldmg;
+	}
+	public void GetPokemonMagicDamageFromActorName(string actorName)
+	{
+		magicdamage = Game.GetActorByName(actorName).magicdmg;
+	}
+	public void GetPokemonVitalityFromActorName(string actorName)
+	{
+		vitality = Game.GetActorByName(actorName).vitality;
+	}
+	public void GetPokemonPowerFromActorName(string actorName)
+	{
+		power = Game.GetActorByName(actorName).power;
+	}
+	public void GetPokemonIntelligenceFromActorName(string actorName)
+	{
+		intelligence = Game.GetActorByName(actorName).intelligence;
+	}
+	public void GetPokemonListOfLSFromActorType(string actorType) //revist this
+	{
+		listofskills = GetListOfLearnableSkillByType(actorType);
+	}
+	public void GetPokemonSpeedFromActorType(string actorName)
+	{
+		attspeed = Game.GetActorByName(actorName).attSpeed;
+	}
+	public void GetPokemonExpFromActorType(string actorName)
+	{
+		exp = Game.GetActorByName(actorName).exp;
+	}
+	public void GetPokemonGoldFromActorType(string actorName)
+	{
+		gold = Game.GetActorByName(actorName).gold;
+	}
+	public List<LearnableSkill> GetListOfLearnableSkillByType(string actorType)
+	{
+		Debug.Log("Running List of LS function");
+		string BLSstring = Game.GetSkillByType(actorType);
+		Debug.Log("Finding List of LS");
+		string[] BLSarray = BLSstring.Split(','); // this will turn BLSstring into a list, now we turn this into a list of LearnableSkill
+		List<LearnableSkill> ListOfLS = new List<LearnableSkill>();
+		foreach (var LS in BLSarray)
+		{
+			//Split into MoveBase and Level
+			string[] LSarray = LS.Split('%');
+			LearnableSkill newLS = new LearnableSkill(LSarray[0], (string)LSarray[1]); // returning ID of move here and level has to be casted as int later
+			ListOfLS.Add(newLS);
+		}
+		return ListOfLS;
+	}
+
+
+	//public string GetName() // will be loading data from sheets
+	//{
+	//	//return Game.Getactorbytype
+	//	return pokemonName;
+	//}
+	//public string GetDescription()
+	//{
+	//	return description;
+	//}
 	
-	public List<LearnableSkill> GetLearnableSkillList()
-	{
-		//return skill.GetListOfLearnableSkillByType(actorType);
-		return skill;
-	}
-	public int GetSpeed()
-	{
-		return speed;
-	}
-	public int GetExp()
-	{
-		return exp;
-	}
-	public int GetGold()
-	{
-		return gold;
-	}
+	//public Sprite GetPokemonSprite()
+	//{
+	//	return pokemonSprite;
+	//}
+	//public int GetMaxHp()
+	//{
+	//	return pokemonPhysicalDmg;
+	//}
+	//public int GetDefense()
+	//{
+	//	return pokemonDefense;
+	//}
+	//public int GetPhysicalDamage() // affects physical skills
+	//{
+	//	return physicaldamage;
+	//}
+	//public int GetMagicDamage() // affects magic skills
+	//{
+	//	return pokemonMagicDmg;
+	//}
+	//public int GetVitality()
+	//{
+	//	return pokemonVitality;
+	//}
+	//public int GetPower()  // affects physical damage
+	//{
+	//	return pokemonPower;
+	//}
+
+	//public int GetIntelligence()  // affects magic damage
+	//{
+	//	return pokemonIntelligence;
+	//}
+	
+	//public List<LearnableSkill> GetLearnableSkillList()
+	//{
+	//	//return skill.GetListOfLearnableSkillByType(actorType);
+	//	return pokemonListOfLearnableSkill;
+	//}
+	//public int GetSpeed()
+	//{
+	//	return pokemonSpeed;
+	//}
+	//public int GetExp()
+	//{
+	//	return pokemonExp;
+	//}
+	//public int GetGold()
+	//{
+	//	return pokemonGold;
+	//}
 }
 
 public enum Stat
@@ -111,13 +213,12 @@ public class LearnableSkill
 	[SerializeField] MoveBase moveBase;
 	[SerializeField] int level;
 
-	//public LearnableSkill(string mbID, int reflevel) //continue from here, need to create moveBase constructor
-	//{
-		//skills newskill = GetSkillById(mbID);
-		//moveBase = new MoveBase(mbID); 
-		//level = reflevel
-	//}
-	
+	public LearnableSkill(string mbID, string reflevel) //continue from here, need to create moveBase constructor
+	{
+		moveBase = new MoveBase(mbID);
+		level = int.Parse(reflevel);
+	}
+
 	public MoveBase GetMoveBase()
 	{
 		//Game.GetLSFromSkill(skillname).movebase;
@@ -128,23 +229,6 @@ public class LearnableSkill
 		//Game.GetLSFromSkill(skillname).level;
 		return level;
 	}
-
-	//public List<LearnableSkill> GetListOfLearnableSkillByType(string actorType)
-	//{
-		//string BLSstring = Game.GetSkillByType(actorType);
-		//string [] BLSarray = BLSstring.Split(','); // this will turn BLSstring into a list, now we turn this into a list of LearnableSkill
-		//List<LearnableSkill> ListOfLS = new List<LearnableSkill>();
-		//foreach(var LS in BLSarray)
-		//{
-			//Split into MoveBase and Level
-			//string [] LSarray = BLSarray.Split('%');
-			//LearnableSkill newLS = new LearnableSkill(LSarray[0], LSarray[1]); // returning ID of move here and level that it can be learnt at
-			//ListOfLS.Add(newLS);
-		//}
-		//return ListOfLS;
-		
-
-	//}
 }
 
 

@@ -8,14 +8,14 @@ public class MoveBase : ScriptableObject
 	//this script is akin to movebase meant to store data
 	// using scriptableObjects first for testing, SerializeFields will be removed
 
-	//public string pokemonName { get {return nameText;} }
-	//public int pokemonDamage { get {return damage;} }
-	//public int pokemonAccuracy { get {return accuracy;} }
-	//public int pokemonPriority { get {return priority;} }
-	//public int pokemonMaxUses { get {return MaxUses;} }
-	//public int pokemonHpGain { get {return Hpgain;} }
-	//public int pokemonCategory { get {return category;} }
-	//public int pokemonMoveTarget { get {return movetarget;} }
+	public string moveName { get { return nameText; } }
+	public int moveDamage { get { return damage; } }
+	public int moveAccuracy { get { return accuracy; } }
+	public int movePriority { get { return priority; } }
+	public int moveMaxUses { get { return MaxUses; } }
+	public int moveHpGain { get { return Hpgain; } }
+	public MoveCategory moveCategory { get { return category; } }
+	public MoveTarget moveTarget { get { return movetarget; } }
 
 	[SerializeField] string nameText; // change to private when ready
 	[TextArea]
@@ -29,121 +29,106 @@ public class MoveBase : ScriptableObject
 	[SerializeField] MoveEffects effects;
 	[SerializeField] MoveTarget movetarget;
 
-	//public MoveBase(string mbID) // for optimisation, create general functions so that it does not return twice
-	//{
-	//skills skillid = GetSkillById(mbID);
-	//GetMBNameFromSkill(mbID);
-	//GetMBDamageFromSkill(mbID);
-	//GetMBAccuracyFromSkill(mbID);
-	//GetMBPriorityFromSkill(mbID);
-	//GetMBMaxUsesFromSkill(mdID);
-	//GetMBHpGainFromSkill(mbID);
-	//GetMBCategoryFromSkill(mbID);
-	//GetMBMoveTargetFromSkill(mbID);
+	public MoveBase(string mbID) // for optimisation, create general functions so that it does not return twice
+	{
+		skills skillid = Game.GetSkillById(mbID);
+		GetMBNameFromSkill(mbID);
+		GetMBDamageFromSkill(mbID);
+		GetMBAccuracyFromSkill(mbID);
+		GetMBPriorityFromSkill(mbID);
+		GetMBMaxUsesFromSkill(mbID);
+		GetMBHpGainFromSkill(mbID);
+		GetMBCategoryFromSkill(mbID);
+		GetMBTargetFromSkill(mbID);
 
-	//}
-	//public MoveBase(string MoveBaseName) // assigning twice but keeping as backup
-	//{
-	//	skills skillid = GetskillbyName(MoveBaseName);
-	//	this.nameText = GetNameFromSkill(skillid);
-	//	this.damage = GetDamage(skillid);
-	//	this.accuracy = GetAccuracy(MoveBaseName);
-	//	this.priority = GetPriority(MoveBaseName);
-	//	this.MaxUses = GetMaxUses(MoveBaseName);
-	//	this.Hpgain = GetHpGain(MoveBaseName);
-	//	this.category = GetCategory(MoveBaseName);
-	//	this.movetarget = GetMoveTarget(MoveBaseName);
+	}
 
-	//}
-
-	//public void GetMBNameFromSkill(mbID) // will be loading data from sheets
+	public void GetMBNameFromSkill(string mbID) // will be loading data from sheets
+	{
+		nameText = Game.GetSkillById(mbID).skillname;
+	}
+	public void GetMBDamageFromSkill(string mbID) // need to change to void
+	{
+		damage = Game.GetSkillById(mbID).dmg;
+	}
+	public void GetMBAccuracyFromSkill(string mbID) // need to change to void
+	{
+		accuracy = Game.GetSkillById(mbID).accuracy;
+	}
+	public void GetMBPriorityFromSkill(string mbID) // need to change to void
+	{
+		priority = Game.GetSkillById(mbID).priority;
+	}
+	public void GetMBMaxUsesFromSkill(string mbID) // need to change to void
+	{
+		MaxUses = Game.GetSkillById(mbID).maxuses;
+	}
+	public void GetMBHpGainFromSkill(string mbID) // need to change to void
+	{
+		Hpgain = Game.GetSkillById(mbID).hpgain;
+	}
+	public void GetMBCategoryFromSkill(string mbID) // need to change to void
+	{
+		var categoryfromdata = Game.GetSkillById(mbID).category;
+		Debug.Log(categoryfromdata);
+		category = MoveCategory.Parse<MoveCategory>(" ");
+	}
+	public void GetMBTargetFromSkill(string mbID) // need to change to void
+	{
+		var targetfromdata = Game.GetSkillById(mbID).target;
+		Debug.Log(targetfromdata);
+		movetarget = MoveTarget.Parse<MoveTarget>(" ");
+	}
+	//public string GetMBNameFromSkill() // will be loading data from sheets
 	//{
-	//	//nameText = Game.GetSkillById(skillid).skillname;
+	//	//nameText = Game.GetskillbyName(skillid).skillname;
+	//	return pokemonName;
 	//}
-	//public void GetMBDamageFromSkill(mbID) // need to change to void
+	//public string GetDescription() // need to change to void
 	//{
-	//	//damage = Game.GetSkillById(mbID).dmg;
+	//	return description;
 	//}
-	//public void GetMBDamageFromSkill(mbID) // need to change to void
+	//public int GetDamageFromSkill() // need to change to void
 	//{
-	//	//accuracy = Game.GetSkillById(skillid).accuracy;
+	//	//damage = Game.GetskillbyName(skillid).dmg;
+	//	return pokemonDamage;
 	//}
-	//public void GetMBAccuracyFromSkill(mbID) // need to change to void
+	//public int GetAccuracyFromSkill() // need to change to void
 	//{
-	//	//accuracy = Game.GetSkillById(skillid).accuracy;
+	//	//accuracy = Game.GetskillbyName(skillid).accuracy;
+	//	return pokemonAccuracy;
 	//}
-	//public void GetMBPriorityFromSkill(mbID) // need to change to void
+	//public int GetPriorityFromSkill() // need to change to void
 	//{
-	//	//accuracy = Game.GetSkillById(skillid).priority;
+	//	//priority = Game.GetskillbyName(skillid).priority;
+	//	return pokemonPriority;
 	//}
-	//public void GetMBMaxUsesFromSkill(mbID) // need to change to void
+	//public int GetMaxUsesFromSkill() // need to change to void
 	//{
-	//	//accuracy = Game.GetSkillById(skillid).maxuses;
+	//	//MaxUses= Game.GetskillbyName(skillid).maxuses;
+	//	return pokemonMaxUses;
 	//}
-	//public void GetMBHpgainFromSkill(mbID) // need to change to void
+	//public int GetHpGainFromSkill() // need to change to void
 	//{
-	//	//accuracy = Game.GetSkillById(skillid).Hpgain;
+	//	//Hpgain = Game.GetskillbyName(skillid).hpgain;
+	//	return pokemonHpGain;
 	//}
-	//public void GetMBCategoryFromSkill(mbID) // need to change to void
+	//public MoveCategory GetCategoryFromSkill()
 	//{
-	//	// var categoryfromdata = Game.GetskillbyId(skillid).category;
-	//MoveCategory category = Enum.Parse<MoveCategory>(categoryfromdata);
+	//	// var categoryfromdata = Game.GetskillbyName(skillid).category;
+	//	//MoveCategory category = Enum.Parse<MoveCategory>(categoryfromdata);
+	//	return pokemonCategory;
 	//}
-	//public void GetMBTargetFromSkill(mbID) // need to change to void
+	//public MoveEffects GetEffects()
 	//{
-	//	// var targetfromdata = Game.GetskillbyId(skillid).target;
-		//MoveTarget moveTarget = Enum.Parse<MoveTarget>(targetfromdata);
+	//	return effects;
 	//}
-	public string GetMBNameFromSkill() // will be loading data from sheets
-	{
-		//nameText = Game.GetskillbyName(skillid).skillname;
-		return nameText;
-	}
-	public string GetDescription() // need to change to void
-	{
-		return description;
-	}
-	public int GetDamageFromSkill() // need to change to void
-	{
-		//damage = Game.GetskillbyName(skillid).dmg;
-		return damage;
-	}
-	public int GetAccuracyFromSkill() // need to change to void
-	{
-		//accuracy = Game.GetskillbyName(skillid).accuracy;
-		return accuracy;
-	}
-	public int GetPriorityFromSkill() // need to change to void
-	{
-		//priority = Game.GetskillbyName(skillid).priority;
-		return priority;
-	}
-	public int GetMaxUsesFromSkill() // need to change to void
-	{
-		//MaxUses= Game.GetskillbyName(skillid).maxuses;
-		return MaxUses;
-	}
-	public int GetHpGainFromSkill() // need to change to void
-	{
-		//Hpgain = Game.GetskillbyName(skillid).hpgain;
-		return Hpgain;
-	}
-	public MoveCategory GetCategoryFromSkill()
-	{
-		// var categoryfromdata = Game.GetskillbyName(skillid).category;
-		//MoveCategory category = Enum.Parse<MoveCategory>(categoryfromdata);
-		return category;
-	}
-	public MoveEffects GetEffects()
-	{
-		return effects;
-	}
-	public MoveTarget GetMoveTargetFromSkill()
-	{
-		// var targetfromdata = Game.GetskillbyName(skillid).target;
-		//MoveTarget moveTarget = Enum.Parse<MoveTarget>(targetfromdata);
-		return movetarget;
-	}
+	//public MoveTarget GetMoveTargetFromSkill()
+	//{
+	//	// var targetfromdata = Game.GetskillbyName(skillid).target;
+	//	//MoveTarget moveTarget = Enum.Parse<MoveTarget>(targetfromdata);
+	//	return pokemonMoveTarget;
+	//}
 }
 [System.Serializable]
 // for passive effects like stat boosting, heal etc.
@@ -170,3 +155,16 @@ public enum MoveTarget
 {
 	Foe,Self
 }
+//public MoveBase(string MoveBaseName) // assigning twice but keeping as backup
+//{
+//	skills skillid = GetskillbyName(MoveBaseName);
+//	this.nameText = GetNameFromSkill(skillid);
+//	this.damage = GetDamage(skillid);
+//	this.accuracy = GetAccuracy(MoveBaseName);
+//	this.priority = GetPriority(MoveBaseName);
+//	this.MaxUses = GetMaxUses(MoveBaseName);
+//	this.Hpgain = GetHpGain(MoveBaseName);
+//	this.category = GetCategory(MoveBaseName);
+//	this.movetarget = GetMoveTarget(MoveBaseName);
+
+//}

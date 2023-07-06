@@ -23,25 +23,36 @@ namespace pattayaA3
 		int currentMove;
 		private void Start()
 		{
-			StartCoroutine(SetupBattle());
+			StartCoroutine(SetupBossBattle());
 		}
 
 		public override void Initialize(GameController aController)
 		{
 			isStarted = false;
 			base.Initialize(aController);
-			mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 			isStarted = true;
 		}
 
-		public IEnumerator SetupBattle()
+		//public IEnumerator SetupBattle()
+		//{
+		//	playerUnit.Setup(); 
+		//	enemyUnit.Setup();
+
+		//	dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
+		//	yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");
+		//	yield return new WaitForSeconds (1f);
+
+		//	ActionSelection();
+		//}
+		public IEnumerator SetupBossBattle()
 		{
-			playerUnit.Setup(); 
-			enemyUnit.Setup();
+			Debug.Log("Setting up");
+			playerUnit.BattleUnitSetupForBoss("Warrior","playerWarrior");
+			enemyUnit.BattleUnitSetupForBoss("Wizard", "enemyWizard");
 
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
-			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.GetName()} has appeared.");
-			yield return new WaitForSeconds (1f);
+			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");
+			yield return new WaitForSeconds(1f);
 
 			ActionSelection();
 		}
@@ -70,8 +81,8 @@ namespace pattayaA3
 				playerUnit.Pokemon.CurrentMove = playerUnit.Pokemon.Moves[currentMove];
 				enemyUnit.Pokemon.CurrentMove = enemyUnit.Pokemon.GetRandomMove();
 
-				int playerMovePriority = playerUnit.Pokemon.CurrentMove.moveBase.GetPriorityFromSkill();
-				int enemyMovePriority = enemyUnit.Pokemon.CurrentMove.moveBase.GetPriorityFromSkill();
+				int playerMovePriority = playerUnit.Pokemon.CurrentMove.moveBase.movePriority;
+				int enemyMovePriority = enemyUnit.Pokemon.CurrentMove.moveBase.movePriority;
 
 
 				// check who goes first, Replaced ChooseFirstTurn()
@@ -102,10 +113,10 @@ namespace pattayaA3
 		// sourceUnit is the attacker, targetUnit is the victim of the move
 		IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
 		{ 
-			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.GetName()} used {move.moveBase.GetMBNameFromSkill()}");
+			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.pokemonName} used {move.moveBase.moveName}");
 			move.UsesLeft--;
 			yield return new WaitForSeconds(1f);
-			if(move.moveBase.GetCategoryFromSkill() == MoveCategory.Passive) // status = passive, may remove if no effect since heal function is already done
+			if(move.moveBase.moveCategory == MoveCategory.Passive) // status = passive, may remove if no effect since heal function is already done
 			{
 				yield return StartCoroutine(RunMoveEffects(sourceUnit.Pokemon, targetUnit.Pokemon, move)); ;
 			}
@@ -116,7 +127,7 @@ namespace pattayaA3
 			
 			if (targetUnit.Pokemon.HP <= 0)
 			{
-				yield return dialogBox.TypeDialog($"{targetUnit.Pokemon.Base.GetName()} Fainted");
+				yield return dialogBox.TypeDialog($"{targetUnit.Pokemon.Base.pokemonName} Fainted");
 				playerWon = true;
 				yield return new WaitForSeconds(2f);
 				CheckForBattleOver(targetUnit);
@@ -125,7 +136,7 @@ namespace pattayaA3
 
 		IEnumerator CheckForHeal(BattleUnit sourceUnit, BattleUnit targetUnit, Move move) // Initialises the move and checks for heal
 		{
-			if (move.moveBase.GetMoveTargetFromSkill() == MoveTarget.Self) // for heal
+			if (move.moveBase.moveTarget == MoveTarget.Self) // for heal
 			{
 				sourceUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
 				yield return sourceUnit.Hud.UpdateHP();
@@ -138,14 +149,14 @@ namespace pattayaA3
 		}
 		IEnumerator RunMoveEffects( Pokemon sourceUnit, Pokemon targetUnit, Move move) // encapsulation so that status changes can be added
 		{
-			var effects = move.moveBase.GetEffects();
-			if (effects.Boosts != null)
-			{
-				if (move.moveBase.GetMoveTargetFromSkill() == MoveTarget.Self)
-					sourceUnit.ApplyBoosts(effects.Boosts);
-				else
-					targetUnit.ApplyBoosts(effects.Boosts);
-			}
+			//var effects = move.moveBase.GetEffects();
+			//if (effects.Boosts != null)
+			//{
+			//	if (move.moveBase.GetMoveTargetFromSkill() == MoveTarget.Self)
+			//		sourceUnit.ApplyBoosts(effects.Boosts);
+			//	else
+			//		targetUnit.ApplyBoosts(effects.Boosts);
+			//}
 			yield return null;
 		}
 

@@ -966,7 +966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 511624ae48e06ec4e93def2d9a91ef6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _base: {fileID: 11400000, guid: 1188f755f9fac444bbcf99ac9c6f7148, type: 2}
+  _base: {fileID: 0}
   level: 5
   isPlayerUnit: 1
   hud: {fileID: 1313962764}

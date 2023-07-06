@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // Zephan
-public class Pokemon
+public class Pokemon 
 {
 	// This is akin to the Pokemon class
 	// scales enemy stats based on level may not need this
@@ -16,17 +16,17 @@ public class Pokemon
 	public int HP { get; set; } // creates a private variable behind the scenes, 10:54 of part 6
     public Dictionary<Stat,int> Stats { get; private set; }	
 	public Dictionary<Stat, int> StatBoosts { get; private set; }
-	public Pokemon(PokemonBase pbase, int plevel)
+	public Pokemon(PokemonBase pbase, int plevel) //pass in actorName, actorType and, Pokemon level
 	{
-		_base = pbase;
-		level = plevel;
+		_base = pbase; //pass in actorName and actorType
+		level = plevel; //pass in Pokemon Level, have not implemented a way to get the level of the pokemon yet
 		//Move = GetListOfMovesByActorType(actorType) // return a list of skills,
 		Moves = new List<Move>();
-		foreach (var move in _base.GetLearnableSkillList()) //GetLearnableSkills(should change to GetListOfLearnableSkills
+		foreach (LearnableSkill LS in _base.pokemonListOfLearnableSkill) //GetLearnableSkills(should change to GetListOfLearnableSkills
 		{
-			if(move.GetLevel() <= level) // testing out conditions for learning skills may remove
+			if(LS.GetLevel() <= level) // testing out conditions for learning skills may remove
 			{
-				Moves.Add(new Move(move.GetMoveBase()));
+				Moves.Add(new Move(LS.GetMoveBase()));
 			}
 			if(Moves.Count >= 4)
 			{
@@ -52,17 +52,17 @@ public class Pokemon
 	void CalculateStats()
 	{
 		Stats = new Dictionary<Stat,int>();
-		Stats.Add(Stat.Defense, Mathf.FloorToInt((_base.GetDefense() +(_base.GetVitality() * level / 100f) + 5)));
-		Stats.Add(Stat.PhysicalDamage, Mathf.FloorToInt((_base.GetPhysicalDamage() + (_base.GetPower() * level / 100f) + 5)));
-		Stats.Add(Stat.MagicDamage, Mathf.FloorToInt((_base.GetMagicDamage() + (_base.GetIntelligence() * level / 100f) + 5)));
-		Stats.Add(Stat.Vitality, Mathf.FloorToInt((_base.GetVitality() * level / 100f) + 5));
-		Stats.Add(Stat.Power, Mathf.FloorToInt((_base.GetPower() * level / 100f) + 5));
-		Stats.Add(Stat.Intelligence, Mathf.FloorToInt((_base.GetIntelligence() * level / 100f) + 5));
-		Stats.Add(Stat.Speed, Mathf.FloorToInt((_base.GetSpeed() * level / 100f) + 5));
-		Stats.Add(Stat.Exp,_base.GetExp());
-		Stats.Add(Stat.Gold,_base.GetGold());
+		Stats.Add(Stat.Defense, Mathf.FloorToInt((_base.pokemonDefense +(_base.pokemonDefense * level / 100f) + 5)));
+		Stats.Add(Stat.PhysicalDamage, Mathf.FloorToInt((_base.pokemonPhysicalDmg + (_base.pokemonPower * level / 100f) + 5)));
+		Stats.Add(Stat.MagicDamage, Mathf.FloorToInt((_base.pokemonMagicDmg + (_base.pokemonIntelligence * level / 100f) + 5)));
+		Stats.Add(Stat.Vitality, Mathf.FloorToInt((_base.pokemonVitality * level / 100f) + 5));
+		Stats.Add(Stat.Power, Mathf.FloorToInt((_base.pokemonPower * level / 100f) + 5));
+		Stats.Add(Stat.Intelligence, Mathf.FloorToInt((_base.pokemonIntelligence * level / 100f) + 5));
+		Stats.Add(Stat.Speed, Mathf.FloorToInt((_base.pokemonAttSpeed * level / 100f) + 5));
+		Stats.Add(Stat.Exp,_base.pokemonExp);
+		Stats.Add(Stat.Gold,_base.pokemonGold);
 
-		MaxHP = Mathf.FloorToInt((_base.GetMaxHp() * level) + 10 + level + (_base.GetVitality() * level / 100f) + 5);
+		MaxHP = Mathf.FloorToInt((_base.MaxHp * level) + 10 + level + (_base.pokemonVitality * level / 100f) + 5);
 	}
 	int GetStat(Stat stat)
 	{
@@ -127,13 +127,13 @@ public class Pokemon
 
 	public bool InitMove(Move move, Pokemon attacker)
 	{
-		float attack = (move.moveBase.GetCategoryFromSkill() == MoveCategory.Magic)? attacker.MagicDamage : attacker.PhysicalDamage;
-		int damage = move.moveBase.GetDamageFromSkill() + (int)attack;
-		Debug.Log($"This is {this.Base.GetName()} before MoveHP: {HP}");
+		float attack = (move.moveBase.moveCategory == MoveCategory.Magic)? attacker.MagicDamage : attacker.PhysicalDamage;
+		int damage = move.moveBase.moveDamage + (int)attack;
+		Debug.Log($"This is {this.Base.pokemonName} before MoveHP: {HP}");
 		HP -= damage;
 		//Debug.Log($"This is before Heal: {HP}");
-		HP = Mathf.Clamp(HP + move.moveBase.GetHpGainFromSkill(), 0, this.MaxHP);
-		Debug.Log($"This is {this.Base.GetName()} current HP: {HP}");
+		HP = Mathf.Clamp(HP + move.moveBase.moveHpGain, 0, this.MaxHP);
+		Debug.Log($"This is {this.Base.pokemonName} current HP: {HP}");
 
 		if (HP <= 0) // catering for when the pokemon faints
 		{

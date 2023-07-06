@@ -10,7 +10,7 @@ public class Move
 	public Move(MoveBase Base)
 	{
 		this.moveBase = Base;
-		UsesLeft = Base.GetMaxUsesFromSkill();
+		UsesLeft = Base.moveMaxUses;
 	}
 
 	//public List<Move> GetListOfMovesByType(string actorType)

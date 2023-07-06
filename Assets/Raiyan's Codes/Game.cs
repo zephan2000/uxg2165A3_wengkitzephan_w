@@ -53,7 +53,7 @@ public static class Game
         }
         return null;
     }
-    public static actor GetactorbyName(string name)
+    public static actor GetActorByName(string name)
     {
         foreach (actor aactor in actorList)
         {

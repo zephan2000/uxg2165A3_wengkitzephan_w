@@ -16,7 +16,7 @@ public class refActor
     public int power;
     //public int expertise;
     public int intelligence;
-    public int speed;
+    public int attspeed;
     public string skillslist;
     public int exp;
     public int gold;

@@ -94,7 +94,7 @@ public class DataManager : MonoBehaviour
             refactor.skillslist = stringSkillList;
 
             actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.maxhp, refactor.defense, refactor.physicaldmg, refactor.magicdmg,
-                refactor.vitality, refactor.power, refactor.intelligence, refactor.speed, refactor.skillslist, refactor.exp, refactor.gold, refactor.displaySpritePath);
+                refactor.vitality, refactor.power, refactor.intelligence, refactor.attspeed, refactor.skillslist, refactor.exp, refactor.gold, refactor.displaySpritePath);
 
             actorList.Add(aCtor);
         }
