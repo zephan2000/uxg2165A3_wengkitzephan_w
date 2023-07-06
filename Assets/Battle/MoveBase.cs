@@ -63,20 +63,20 @@ public class MoveBase
 	{
 		MaxUses = Game.GetSkillById(lsID).maxuses;
 	}
-	public void GetMBHpGainFromSkill(string mbID) // need to change to void
+	public void GetMBHpGainFromSkill(string lsID) // need to change to void
 	{
-		Hpgain = Game.GetSkillById(mbID).hpgain;
+		Hpgain = Game.GetSkillById(lsID).hpgain;
 	}
-	public void GetMBCategoryFromSkill(string mbID) // need to change to void
+	public void GetMBCategoryFromSkill(string lsID) // need to change to void
 	{
-		var categoryfromdata = Game.GetSkillById(mbID).category;
-		Debug.Log(categoryfromdata);
+		var categoryfromdata = Game.GetSkillById(lsID).category;
+		//Debug.Log(categoryfromdata);
 		category = MoveCategory.Parse<MoveCategory>(categoryfromdata);
 	}
-	public void GetMBTargetFromSkill(string mbID) // need to change to void
+	public void GetMBTargetFromSkill(string lsID) // need to change to void
 	{
-		var targetfromdata = Game.GetSkillById(mbID).target;
-		Debug.Log(targetfromdata);	
+		var targetfromdata = Game.GetSkillById(lsID).target;
+		//Debug.Log(targetfromdata);	
 		movetarget = MoveTarget.Parse<MoveTarget>(targetfromdata);
 	}
 	//public string GetMBNameFromSkill() // will be loading data from sheets

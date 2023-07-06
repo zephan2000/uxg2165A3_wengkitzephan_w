@@ -137,14 +137,14 @@ public static class Game
         }
         return nskills;
     }
-    public static void ListdownSkills(string type)
-    {
-        Debug.Log("===Start===");
-        Debug.Log(Game.Getactorbytype(type).displayName);
-        Debug.Log(Game.Getactorbytype(type).actorType);
-        Debug.Log(Game.Getactorbytype(type).skillslist);
-        Debug.Log("===End===");
-    }
+    //public static void ListdownSkills(string type)
+    //{
+    //    Debug.Log("===Start===");
+    //    Debug.Log(Game.Getactorbytype(type).displayName);
+    //    Debug.Log(Game.Getactorbytype(type).actorType);
+    //    Debug.Log(Game.Getactorbytype(type).skillslist);
+    //    Debug.Log("===End===");
+    //}
 
     public static void SetItemList(List<items> alist)
     {
@@ -184,7 +184,7 @@ public static class Game
                 stringSkillList += askill.skillid + ",";
             }
             string stringskillList2 = stringSkillList.Remove(stringSkillList.Length - 1);
-            Debug.Log(stringskillList2);
+            //Debug.Log(stringskillList2);
 			//stringSkillList.Remove(stringSkillList.Length - 1, 1);
 			actorList.ToArray()[i].skillslist = stringskillList2;
         }

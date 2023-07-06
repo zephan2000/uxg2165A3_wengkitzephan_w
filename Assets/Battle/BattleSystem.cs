@@ -47,6 +47,7 @@ namespace pattayaA3
 		public IEnumerator SetupBossBattle()
 		{
 			Debug.Log("Setting up");
+			//Set a new background for boss battle
 			playerUnit.BattleUnitSetupForBoss("Warrior","playerWarrior");
 			enemyUnit.BattleUnitSetupForBoss("Wizard", "enemyWizard");
 

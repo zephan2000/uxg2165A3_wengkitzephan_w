@@ -100,6 +100,7 @@ public class PokemonBase
 	}
 	public void GetPokemonSpeedFromActorType(string actorName)
 	{
+		Debug.Log(Game.GetActorByName(actorName).attSpeed);
 		attspeed = Game.GetActorByName(actorName).attSpeed;
 	}
 	public void GetPokemonExpFromActorType(string actorName)
@@ -112,9 +113,9 @@ public class PokemonBase
 	}
 	public List<LearnableSkill> GetListOfLearnableSkillByType(string actorType)
 	{
-		Debug.Log("Running List of LS function");
+		//Debug.Log("Running List of LS function");
 		string BLSstring = Game.GetSkillListByType(actorType);
-		Debug.Log(BLSstring);
+		//Debug.Log(BLSstring);
 		string[] BLSarray = BLSstring.Split(','); // this will turn BLSstring into a list, now we turn this into a list of LearnableSkill
 		List<LearnableSkill> ListOfLS = new List<LearnableSkill>();
 		foreach (var LS in BLSarray)
@@ -125,69 +126,6 @@ public class PokemonBase
 		}
 		return ListOfLS;
 	}
-
-
-	//public string GetName() // will be loading data from sheets
-	//{
-	//	//return Game.Getactorbytype
-	//	return pokemonName;
-	//}
-	//public string GetDescription()
-	//{
-	//	return description;
-	//}
-	
-	//public Sprite GetPokemonSprite()
-	//{
-	//	return pokemonSprite;
-	//}
-	//public int GetMaxHp()
-	//{
-	//	return pokemonPhysicalDmg;
-	//}
-	//public int GetDefense()
-	//{
-	//	return pokemonDefense;
-	//}
-	//public int GetPhysicalDamage() // affects physical skills
-	//{
-	//	return physicaldamage;
-	//}
-	//public int GetMagicDamage() // affects magic skills
-	//{
-	//	return pokemonMagicDmg;
-	//}
-	//public int GetVitality()
-	//{
-	//	return pokemonVitality;
-	//}
-	//public int GetPower()  // affects physical damage
-	//{
-	//	return pokemonPower;
-	//}
-
-	//public int GetIntelligence()  // affects magic damage
-	//{
-	//	return pokemonIntelligence;
-	//}
-	
-	//public List<LearnableSkill> GetLearnableSkillList()
-	//{
-	//	//return skill.GetListOfLearnableSkillByType(actorType);
-	//	return pokemonListOfLearnableSkill;
-	//}
-	//public int GetSpeed()
-	//{
-	//	return pokemonSpeed;
-	//}
-	//public int GetExp()
-	//{
-	//	return pokemonExp;
-	//}
-	//public int GetGold()
-	//{
-	//	return pokemonGold;
-	//}
 }
 
 public enum Stat
@@ -212,7 +150,7 @@ public class LearnableSkill
 	[SerializeField] MoveBase moveBase;
 	[SerializeField] int level;
 
-	public LearnableSkill(string lsID) //continue from here, need to create moveBase constructor
+	public LearnableSkill(string lsID)
 	{
 		moveBase = new MoveBase(lsID);
 		string[] LSarray = lsID.Split('_');
@@ -221,12 +159,10 @@ public class LearnableSkill
 
 	public MoveBase GetMoveBase()
 	{
-		//Game.GetLSFromSkill(skillname).movebase;
 		return moveBase;
 	}
 	public int GetLevel() 
 	{
-		//Game.GetLSFromSkill(skillname).level;
 		return level;
 	}
 }

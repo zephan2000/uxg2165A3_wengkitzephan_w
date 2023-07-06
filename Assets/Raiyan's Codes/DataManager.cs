@@ -92,7 +92,7 @@ public class DataManager : MonoBehaviour
             //    stringSkillList += askill.skillid;
             //}
             //refactor.skillslist = stringSkillList;
-
+            Debug.Log($"This is {refactor.actorType}'s speed {refactor.attspeed}");
             actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.maxhp, refactor.defense, refactor.physicaldmg, refactor.magicdmg,
                 refactor.vitality, refactor.power, refactor.intelligence, refactor.attspeed, refactor.skillslist, refactor.exp, refactor.gold, refactor.displaySpritePath);
 
