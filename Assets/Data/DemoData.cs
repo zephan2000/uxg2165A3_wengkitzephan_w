@@ -11,5 +11,6 @@ public class DemoData
     public List<refActor> actor;
     public List<refSkills> skills;
     public List<refSession> session;
+    public List<refDialogue> dialogue;
     
 }

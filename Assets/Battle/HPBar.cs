@@ -18,21 +18,21 @@ namespace pattayaA3
 		public IEnumerator SetHPSmooth (float newHp)
 		{
 			float curHp = health.transform.localScale.x;
-			float changeAmt = curHp - newHp;
-			if(changeAmt >= 0)
+			float HpDecrease = curHp - newHp;
+			if(HpDecrease >= 0)
 			{
-				while (curHp - newHp > Mathf.Epsilon) //mathf.epsilon is the smallest value that a float can have different from zero
+				while (curHp - newHp >= 0) //mathf.epsilon is the smallest value that a float can have different from zero
 				{
-					curHp -= changeAmt * Time.deltaTime;
+					curHp -= HpDecrease * Time.deltaTime;
 					health.transform.localScale = new Vector3(curHp, 1f);
 					yield return null;
 				}
 			}
 			else
 			{
-				while (curHp - newHp < Mathf.Epsilon)
+				while (curHp - newHp <= 0)
 				{
-					curHp += changeAmt * -1 * Time.deltaTime;
+					curHp += HpDecrease * -1 * Time.deltaTime;
 					health.transform.localScale = new Vector3(curHp, 1f);
 					yield return null;
 				}

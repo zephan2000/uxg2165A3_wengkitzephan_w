@@ -48,8 +48,8 @@ namespace pattayaA3
 		{
 			Debug.Log("Setting up");
 			//Set a new background for boss battle
-			playerUnit.BattleUnitSetupForBoss("Warrior","playerWarrior");
-			enemyUnit.BattleUnitSetupForBoss("Wizard", "enemyWizard");
+			playerUnit.BattleUnitSetupForBoss("Wizard","playerWizard");
+			enemyUnit.BattleUnitSetupForBoss("Dark Wizard", "enemyWizard");
 
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
 			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");

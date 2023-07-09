@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using UnityEditor.AddressableAssets;
-
+using System.ComponentModel;
 
 public class DataManager : MonoBehaviour
 {
@@ -55,6 +55,7 @@ public class DataManager : MonoBehaviour
         List<actor> actorList = new List<actor>();
         List<skills> skillList = new List<skills>();
         List<session> sessionList = new List<session>();
+        List<dialog1> dialogList = new List<dialog1>();
         
         foreach (RefItems refItem in demoData.items)
         {
@@ -92,7 +93,7 @@ public class DataManager : MonoBehaviour
             //    stringSkillList += askill.skillid;
             //}
             //refactor.skillslist = stringSkillList;
-            Debug.Log($"This is {refactor.actorType}'s speed {refactor.attspeed}");
+            //Debug.Log($"This is {refactor.actorType}'s speed {refactor.attspeed}");
             actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.maxhp, refactor.defense, refactor.physicaldmg, refactor.magicdmg,
                 refactor.vitality, refactor.power, refactor.intelligence, refactor.attspeed, refactor.skillslist, refactor.exp, refactor.gold, refactor.displaySpritePath);
 
@@ -100,6 +101,13 @@ public class DataManager : MonoBehaviour
         }
         Game.SetActorList(actorList);
 
-        //Game.AssignAllSkillListToActor();
+        //Zephan
+        foreach(refDialogue dialogue in demoData.dialogue)
+        {
+            dialog1 diAlogue = new dialog1(dialogue.dialogueId, dialogue.nextdialogueId, dialogue.dialogueType, dialogue.currentSpeakerName,
+                dialogue.displaySpritePathLeft, dialogue.displaySpritePathRight, dialogue.dialogueText, dialogue.choices);
+            dialogList.Add(diAlogue);
+        }
+        Game.SetDialogList(dialogList);
     }
 }

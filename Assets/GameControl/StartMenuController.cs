@@ -7,6 +7,8 @@ namespace pattayaA3
 	//Zephan
 	public class StartMenuController : GameSceneController
 	{
+		public GameObject IntroDialogue;
+		public GameObject StartMenu;
 		public override void Initialize(GameController aController)
 		{
 			base.Initialize(aController);
@@ -16,6 +18,13 @@ namespace pattayaA3
 		{
 			gameController.LoadScene(aScene);
 			gameController.RemoveScene(sceneName);
+		}
+
+		public void StartIntroduction()
+		{
+			IntroDialogue.SetActive(true);
+			StartCoroutine(IntroDialogue.GetComponent<IntroductionDialogManager>().ShowDialog("INTRO"));
+			StartMenu.SetActive(false);
 		}
 	}
 }

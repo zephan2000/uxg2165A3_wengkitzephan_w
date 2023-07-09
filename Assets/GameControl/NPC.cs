@@ -5,9 +5,9 @@ using UnityEngine;
 //Zephan
 public class NPC : MonoBehaviour, Interactable
 {
-	[SerializeField] Dialog dialog;
+	//[SerializeField] Dialog dialog;
 	public void Interact()
 	{
-		StartCoroutine(DialogManager.Instance.ShowDialog(dialog));
+		StartCoroutine(TownDialogManager.Instance.ShowDialog("QUEST"));
 	}
 }

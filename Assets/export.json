@@ -2,7 +2,7 @@
     "actor": [
         {
             "actorType": "enemyWizard",
-            "displayName": "Wizard",
+            "displayName": "Dark Wizard",
             "maxhp": "100",
             "defense": "40",
             "physicaldmg": "40",
@@ -10,7 +10,7 @@
             "vitality": "10",
             "power": "10",
             "intelligence": "10",
-            "speed": "100",
+            "attspeed": "100",
             "skillslist": "",
             "exp": "100",
             "gold": "100",
@@ -26,7 +26,7 @@
             "vitality": "2",
             "power": "2",
             "intelligence": "2",
-            "speed": "20",
+            "attspeed": "20",
             "skillslist": "",
             "exp": "10",
             "gold": "5",
@@ -42,7 +42,7 @@
             "vitality": "5",
             "power": "5",
             "intelligence": "5",
-            "speed": "40",
+            "attspeed": "40",
             "skillslist": "",
             "exp": "20",
             "gold": "10",
@@ -58,7 +58,7 @@
             "vitality": "1",
             "power": "1",
             "intelligence": "1",
-            "speed": "20",
+            "attspeed": "20",
             "skillslist": "",
             "exp": "0",
             "gold": "0",
@@ -74,7 +74,7 @@
             "vitality": "1",
             "power": "1",
             "intelligence": "1",
-            "speed": "10",
+            "attspeed": "10",
             "skillslist": "",
             "exp": "0",
             "gold": "0",
@@ -90,7 +90,7 @@
             "vitality": "1",
             "power": "1",
             "intelligence": "1",
-            "speed": "42",
+            "attspeed": "42",
             "skillslist": "",
             "exp": "0",
             "gold": "0",
@@ -106,7 +106,7 @@
             "vitality": "0",
             "power": "0",
             "intelligence": "0",
-            "speed": "0",
+            "attspeed": "0",
             "skillslist": "",
             "exp": "0",
             "gold": "0",
@@ -122,7 +122,7 @@
             "vitality": "0",
             "power": "0",
             "intelligence": "0",
-            "speed": "0",
+            "attspeed": "0",
             "skillslist": "",
             "exp": "0",
             "gold": "0",
@@ -138,11 +138,403 @@
             "vitality": "0",
             "power": "0",
             "intelligence": "0",
-            "speed": "0",
+            "attspeed": "0",
             "skillslist": "",
             "exp": "0",
             "gold": "0",
             "displaySpritePath": "tilemap_packed.png[tilemap_packed_87]"
+        }
+    ],
+    "dialogue": [
+        {
+            "dialogueId": "INTRO0001",
+            "nextdialogueId": "INTRO0002",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Wake up...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0002",
+            "nextdialogueId": "INTRO0003",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Huh... Wha...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0003",
+            "nextdialogueId": "INTRO0004",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "*Woah* Who is this really old man...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0004",
+            "nextdialogueId": "INTRO0005",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Hey! I heard that...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0005",
+            "nextdialogueId": "INTRO0006",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Sorry... I'm a little groggy...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0006",
+            "nextdialogueId": "INTRO0007",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "But who are you... and why does my head hurt so bad...?",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0007",
+            "nextdialogueId": "INTRO0008",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "I am Tiny Town's Village Head! The Dark Wizard has taken everyone in the town hostage to zap them of their power. You must defeat him, only you can save Tiny Town.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0008",
+            "nextdialogueId": "INTRO0009",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Wha....?",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0009",
+            "nextdialogueId": "INTRO0010",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "It seems your injuries are much worse than before.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0010",
+            "nextdialogueId": "INTRO0011",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "My what?",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0011",
+            "nextdialogueId": "INTRO0012",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "It's not the first time I had to drag you out of battle. ",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0012",
+            "nextdialogueId": "INTRO0013",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Me... B...Battle?",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0013",
+            "nextdialogueId": "INTRO0014",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Do you not know who you are?",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0014",
+            "nextdialogueId": "INTRO0015",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "I...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0015",
+            "nextdialogueId": "INTRO0016",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "....don't... know...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0016",
+            "nextdialogueId": "INTRO0017",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Crap... guess we are starting over. We have a lot of catching up to do.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0017",
+            "nextdialogueId": "INTRO0018",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Let's start with choosing your class.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0018",
+            "nextdialogueId": "-2",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Would you like to be a Warrior, Wizard or Archer?",
+            "choices": "I want to be a Warrior.#INTRO0019@I want to be a Magician.#INTRO0020@I want to be an Archer.#INTRO0021@Huh...#INTRO0022"
+        },
+        {
+            "dialogueId": "INTRO0019",
+            "nextdialogueId": "INTRO0029",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "I want to be a Warrior.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0020",
+            "nextdialogueId": "INTRO0030",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "I want to be a Magician.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0021",
+            "nextdialogueId": "INTRO0031",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "I want to be an Archer.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0022",
+            "nextdialogueId": "-2",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Hmm...",
+            "choices": "What's a Warrior?#INTRO0023@What's a Wizard?#INTRO0024@What's an Archer?#INTRO0025"
+        },
+        {
+            "dialogueId": "INTRO0023",
+            "nextdialogueId": "INTRO0026",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "What's a Warrior?",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0024",
+            "nextdialogueId": "INTRO0027",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "What's a Wizard?",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0025",
+            "nextdialogueId": "INTRO0028",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "What's an Archer?",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0026",
+            "nextdialogueId": "INTRO0036",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Warriors are known to be the most durable of fighters. With high vitality, defense and MaxHP they can take on the most damage and last the longest in battle.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0027",
+            "nextdialogueId": "INTRO0036",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Wizards are a crafty bunch. With high intelligence and the ability to heal, they are able to use their wide range of skills to battle.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0028",
+            "nextdialogueId": "INTRO0036",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Archers are extremely fast and deal large amounts of physical and magic damage. With high attack speed and a good balance of magic and physical attacks, they are very proficient in battle. They don't last long however...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0029",
+            "nextdialogueId": "-2",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Are you sure you want to be a Warrior?",
+            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
+        },
+        {
+            "dialogueId": "INTRO0030",
+            "nextdialogueId": "-2",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Are you sure you want to be a Wizard?",
+            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
+        },
+        {
+            "dialogueId": "INTRO0031",
+            "nextdialogueId": "-2",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Are you sure you want to be an Archer?",
+            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
+        },
+        {
+            "dialogueId": "INTRO0032",
+            "nextdialogueId": "INTRO0033",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Hmm... let me choose again.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0033",
+            "nextdialogueId": "INTRO0018",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Sure. Let's try this again.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0034",
+            "nextdialogueId": "INTRO0035",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "You",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Yes I'm sure.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0035",
+            "nextdialogueId": "-1",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "Nice! Let the training begin.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0036",
+            "nextdialogueId": "INTRO0018",
+            "dialogueType": "INTRO",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
+            "dialogueText": "So...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0037",
+            "nextdialogueId": "INTRO0038",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_84]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Hello!",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0038",
+            "nextdialogueId": "INTRO0039",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_84]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Go eat sandwiches",
+            "choices": ""
+        },
+        {
+            "dialogueId": "INTRO0039",
+            "nextdialogueId": "-1",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_84]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Coolio",
+            "choices": ""
         }
     ],
     "items": [
@@ -297,9 +689,9 @@
             "cost": "40"
         }
     ],
-    "session": [
+    "playerSession": [
         {
-            "name": "john",
+            "seshname": "john",
             "actorType": "playerWarrior",
             "maxhp": "0",
             "defense": "0",
@@ -547,7 +939,7 @@
             "maxuses": "20"
         },
         {
-            "skillid": "skill20_00",
+            "skillid": "skill20_01",
             "actorType": "enemyWizard",
             "category": "Magic",
             "target": "Foe",
@@ -559,7 +951,7 @@
             "maxuses": "20"
         },
         {
-            "skillid": "skill21_00",
+            "skillid": "skill21_02",
             "actorType": "enemyWizard",
             "category": "Magic",
             "target": "Foe",
@@ -571,7 +963,7 @@
             "maxuses": "20"
         },
         {
-            "skillid": "skill22_00",
+            "skillid": "skill22_03",
             "actorType": "enemyWizard",
             "category": "Magic",
             "target": "Foe",

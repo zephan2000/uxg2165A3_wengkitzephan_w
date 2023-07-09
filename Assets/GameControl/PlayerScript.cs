@@ -187,14 +187,15 @@ namespace pattayaA3
 		
 		//Raiyan's Code
 		
-		public void UpdatePlayerStats() // will need to include this for BattleUnits
+		public void UpdatePlayerStats() 
 		{
 			//player.UpdateStats();
-
+			Debug.Log("Running");
 			//Debug.Log(Game.Getactorbytype("Player").displaySpritePath);
-            playerImage = Game.Getactorbytype("playerWarrior").displaySpritePath ;
+            playerImage = Game.Getactorbytype("playerWizard").displaySpritePath ;
+			Debug.Log(playerImage);
 
-			//Sprite tileSprite = Resources.Load(playerImage) as Sprite;
+			Sprite tileSprite = Resources.Load(playerImage) as Sprite;
 
 			AssetManager.LoadSprite(playerImage, (Sprite s) =>
 			{

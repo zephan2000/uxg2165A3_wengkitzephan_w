@@ -34,7 +34,7 @@ public class BattleUnit : MonoBehaviour
 		//this.GetComponent<Image>().sprite = Resources.Load<Sprite>(_base.pokemonSpritePath);
 		AssetManager.LoadSprite(_base.pokemonSpritePath, (Sprite s) =>
 		{
-			//Debug.Log(_base.pokemonSpritePath);
+			Debug.Log(_base.pokemonSpritePath);
 			this.GetComponent<Image>().sprite = s;
 		});
 		Debug.Log($"{_base.pokemonName} is {_base.pokemonAttSpeed}");

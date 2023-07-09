@@ -2,6 +2,7 @@ using pattayaA3;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public static class Game
     private static player mainPlayer;
     private static List<skills> skillslist;
     private static List<session> sessionlist;
+    private static List<dialog1> dialogList;
 
     public static player GetPlayer()
     {
@@ -50,9 +52,14 @@ public static class Game
     {
         foreach (actor aactor in actorList)
         {
-            if (aactor.actorType == type) return aactor;
+            if (aactor.actorType == type)
+            {
+                Debug.Log(aactor.actorType);
+				Debug.Log(aactor.displaySpritePath);
+				return aactor;
+			}
         }
-        return null;
+		return null;
     }
     public static actor GetActorByName(string name)
     {
@@ -137,16 +144,64 @@ public static class Game
         }
         return nskills;
     }
-    //public static void ListdownSkills(string type)
-    //{
-    //    Debug.Log("===Start===");
-    //    Debug.Log(Game.Getactorbytype(type).displayName);
-    //    Debug.Log(Game.Getactorbytype(type).actorType);
-    //    Debug.Log(Game.Getactorbytype(type).skillslist);
-    //    Debug.Log("===End===");
-    //}
+	//public static void ListdownSkills(string type)
+	//{
+	//    Debug.Log("===Start===");
+	//    Debug.Log(Game.Getactorbytype(type).displayName);
+	//    Debug.Log(Game.Getactorbytype(type).actorType);
+	//    Debug.Log(Game.Getactorbytype(type).skillslist);
+	//    Debug.Log("===End===");
+	//}
+	#region Zephan's Data
+	public static List<dialog1> GetDialogByType(string type)
+    {
+        List<dialog1> ndialog = new List<dialog1>();
+        foreach(dialog1 adialog in dialogList)
+        {
+            if(adialog.dialogueType == type)
+            {
+                ndialog.Add(adialog);
+            }
+        }
+        return ndialog;
+    }
 
-    public static void SetItemList(List<items> alist)
+    public static dialog1 GetDialogByDialogId(string dialogId)
+    {
+        foreach(dialog1 adialog in dialogList)
+        {
+            if (adialog.dialogueId == dialogId)
+                return adialog;
+        }
+        return null;
+    }
+	public static dialog1 GetDialogByDialogList(string dialogId, List<dialog1> dialogList) //for optimisation, in the event where there is a ton of dialog to run through
+	{
+		foreach (dialog1 adialog in dialogList)
+		{
+			if (adialog.dialogueId == dialogId)
+				return adialog;
+		}
+		return null;
+	}
+    public static List<dialog1> GetListOfChoicesByDialog(dialog1 currentDialog)
+    {
+        string[] textdialogIdArray = currentDialog.choices.Split('@');
+        List<dialog1> choices = new List<dialog1>();
+        for(int i =0; i < textdialogIdArray.Length; i++)
+        {
+            string[] choicedialogArray = textdialogIdArray[i].Split('#');
+			Debug.Log(GetDialogByDialogId(choicedialogArray[1]).dialogueId);
+			choices.Add(GetDialogByDialogId(choicedialogArray[1]));
+        }
+        return choices;
+    }
+	public static void SetDialogList(List<dialog1> adialog)
+	{
+		dialogList = adialog;
+	}
+	#endregion
+	public static void SetItemList(List<items> alist)
     {
         itemlist = alist;
     }
@@ -170,8 +225,9 @@ public static class Game
     {
         sessionlist = asession;
     }
+	
 
-    public static void AssignAllSkillListToActor()
+	public static void AssignAllSkillListToActor()
     {
         for (int i = 0; i < actorList.ToArray().Length-3; i++)
         {

@@ -25,12 +25,12 @@ namespace pattayaA3
 
 		void Start()
 		{
-			DialogManager.Instance.OnShowDialog += () =>
+			TownDialogManager.Instance.OnShowDialog += () =>
 			{
 				state = GameState.Dialog;
 			};
 
-			DialogManager.Instance.OnCloseDialog += () =>
+			TownDialogManager.Instance.OnCloseDialog += () =>
 			{
 				if (state == GameState.Dialog) //for cases where you want to go to battle straight after dialog
 					state = GameState.FreeRoam;
@@ -48,7 +48,7 @@ namespace pattayaA3
 			}
 			else if (state == GameState.Dialog)
 			{
-				DialogManager.Instance.HandleUpdate();
+				TownDialogManager.Instance.HandleUpdate();
 			}
 		}
 		public override void Initialize(GameController aController)
