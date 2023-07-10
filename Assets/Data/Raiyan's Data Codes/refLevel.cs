@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class refSession
+public class refLevel
 {
-    public string seshname;
+    public string levelId;
     public string actorType;
-    public string levelid;
+    public int expToGain;
+    public int maxExp;
     public int maxhp;
     public int defense;
     public int physicaldmg;
@@ -16,10 +17,5 @@ public class refSession
     public int power;
     public int intelligence;
     public int attspeed;
-    public int exp;
-    public int gold;
-    public string weapon;
-    public string helmet;
-    public string armour;
-    public string displaySpritePath;
+
 }

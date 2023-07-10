@@ -6,7 +6,7 @@ using UnityEngine;
 namespace pattayaA3
 {
 	//Zephan
-	public enum GameState { FreeRoam, Dialog, Shop }
+	public enum GameState { FreeRoam, Dialog, Shop, Inventory }
 	public class LevelController : GameSceneController
 	{
 		private Camera mainCamera;
@@ -23,7 +23,11 @@ namespace pattayaA3
 		public GameObject playerobj;
 		GameState state;
 
-		void Start()
+        public GameObject inventory;
+		public inventorybox inventorybox;
+		private bool isOpenInventory;
+
+        void Start()
 		{
 			TownDialogManager.Instance.OnShowDialog += () =>
 			{
@@ -35,6 +39,10 @@ namespace pattayaA3
 				if (state == GameState.Dialog) //for cases where you want to go to battle straight after dialog
 					state = GameState.FreeRoam;
 			};
+
+			inventorybox = inventory.GetComponent<inventorybox>();
+			inventorybox.SetInventoryText();
+            inventory.SetActive(false);
 		}
 		private void Update()
 		{
@@ -50,8 +58,27 @@ namespace pattayaA3
 			{
 				TownDialogManager.Instance.HandleUpdate();
 			}
-		}
-		public override void Initialize(GameController aController)
+			else if (state == GameState.Inventory)
+			{
+
+			}
+
+			//Raiyan
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+				ToggleInventory();
+				if (isOpenInventory)
+				{
+					state = GameState.Inventory;
+				}
+				else
+				{
+					state = GameState.FreeRoam;
+				}
+            }
+			inventorybox.CheckMenu();
+        }
+        public override void Initialize(GameController aController)
 		{
 			isStarted = false;
 
@@ -101,5 +128,23 @@ namespace pattayaA3
 		{
 			return isStarted;
 		}
-	}
+
+        public void SetInventory(bool aInventory)
+        {
+            isOpenInventory = aInventory;
+            if (isOpenInventory == true)
+            {
+                inventory.SetActive(true);
+            }
+            else
+            {
+                inventory.SetActive(false);
+            }
+        }
+        public void ToggleInventory()
+        {
+            SetInventory(!isOpenInventory);
+        }
+
+    }
 }

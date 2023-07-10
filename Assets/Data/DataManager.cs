@@ -5,6 +5,8 @@ using System.IO;
 using System;
 using UnityEditor.AddressableAssets;
 using System.ComponentModel;
+using pattayaA3;
+using System.Net.NetworkInformation;
 
 public class DataManager : MonoBehaviour
 {
@@ -44,7 +46,20 @@ public class DataManager : MonoBehaviour
         //Game.ListdownSkills("enemyBat");
         Game.AssignAllSkillListToActor();
         //Game.ListdownSkills("enemyBat");
-
+        //Debug.Log(Game.GetActorByName("Warrior").skillslist);
+        //Debug.Log(Game.GetEquipment(Game.GetSession().actorType));
+/*        List<string> testString = Game.GetListOfSkillsPartOne(Game.GetSession().actorType);
+        List<string> testString2 = new List<string>();
+        foreach (var test in testString)
+        {
+            //Debug.Log(test);
+            string[] LSarray = test.Split('_');
+            testString2.Add(LSarray[0]);
+        }
+        foreach (var test in testString2)
+        {
+            Debug.Log(test);
+        }*/
     }
 
     private void ProcessDemoData(DemoData demoData)
@@ -56,6 +71,7 @@ public class DataManager : MonoBehaviour
         List<skills> skillList = new List<skills>();
         List<session> sessionList = new List<session>();
         List<dialog1> dialogList = new List<dialog1>();
+        List<level> levelList = new List<level>();
         
         foreach (RefItems refItem in demoData.items)
         {
@@ -75,14 +91,18 @@ public class DataManager : MonoBehaviour
         }
         Game.SetSkillList(skillList);
 
+        /*
         foreach (refSession refsession in demoData.session)
         {
             session asession = new session(refsession.seshname, refsession.actorType, refsession.maxhp, refsession.defense, refsession.physicaldmg, refsession.magicdmg, refsession.vitality,
-                refsession.power, refsession.intelligence, refsession.speed, refsession.exp, refsession.gold, refsession.weapon, refsession.helmet, refsession.armour, refsession.displaySpritePath);
+                refsession.power, refsession.intelligence, refsession.attspeed, refsession.exp, refsession.gold, refsession.weapon, refsession.helmet, refsession.armour, refsession.displaySpritePath);
 
             sessionList.Add(asession);
         }
-        Game.SetSessionList(sessionList);
+        Game.SetSessionList(sessionList);*/
+        session asession = new session(demoData.session[0].seshname, demoData.session[0].actorType, demoData.session[0].levelid, demoData.session[0].maxhp, demoData.session[0].defense, demoData.session[0].physicaldmg, demoData.session[0].magicdmg, demoData.session[0].vitality,
+                demoData.session[0].power, demoData.session[0].intelligence, demoData.session[0].attspeed, demoData.session[0].exp, demoData.session[0].gold, demoData.session[0].weapon, demoData.session[0].helmet, demoData.session[0].armour, demoData.session[0].displaySpritePath);
+        Game.SetSession(asession);
 
         foreach (refActor refactor in demoData.actor)
         {
@@ -101,6 +121,14 @@ public class DataManager : MonoBehaviour
         }
         Game.SetActorList(actorList);
 
+        foreach (refLevel reflevel in demoData.level)
+        {
+            level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.maxhp, reflevel.defense,
+                reflevel.physicaldmg, reflevel.magicdmg, reflevel.vitality, reflevel.power, reflevel.intelligence, reflevel.attspeed);
+            levelList.Add(lEvel);
+        }
+        Game.SetLevelList(levelList);
+
         //Zephan
         foreach(refDialogue dialogue in demoData.dialogue)
         {
@@ -109,5 +137,7 @@ public class DataManager : MonoBehaviour
             dialogList.Add(diAlogue);
         }
         Game.SetDialogList(dialogList);
+
+
     }
 }

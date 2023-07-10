@@ -12,5 +12,6 @@ public class DemoData
     public List<refSkills> skills;
     public List<refSession> session;
     public List<refDialogue> dialogue;
+    public List<refLevel> level;
     
 }

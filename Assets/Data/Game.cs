@@ -14,8 +14,12 @@ public static class Game
     private static List<actor> actorList;
     private static player mainPlayer;
     private static List<skills> skillslist;
+    
     private static List<session> sessionlist;
+    private static session mainsession;
+
     private static List<dialog1> dialogList;
+    private static List<level> levellist;
 
     public static player GetPlayer()
     {
@@ -54,8 +58,8 @@ public static class Game
         {
             if (aactor.actorType == type)
             {
-                Debug.Log(aactor.actorType);
-				Debug.Log(aactor.displaySpritePath);
+                //Debug.Log(aactor.actorType);
+				//Debug.Log(aactor.displaySpritePath);
 				return aactor;
 			}
         }
@@ -119,6 +123,18 @@ public static class Game
 		}
 		return null;
 	}
+
+    public static string GetEquipment(string type)
+    {
+        
+        return Game.Getactorbytype(type).skillslist;
+    }
+
+    public static session GetSession()
+    {
+        return mainsession;
+    }
+
 	public static List<skills> GetListOfSkillsByType(string type)
     {
         List<skills> listofskillsbyType = new List<skills>();
@@ -225,7 +241,14 @@ public static class Game
     {
         sessionlist = asession;
     }
-	
+    public static void SetSession(session asession2)
+    {
+        mainsession = asession2;
+    }
+    public static void SetLevelList(List<level> alevel)
+    {
+        levellist = alevel;
+    }
 
 	public static void AssignAllSkillListToActor()
     {
@@ -245,4 +268,6 @@ public static class Game
 			actorList.ToArray()[i].skillslist = stringskillList2;
         }
     }
+
+    
 }
