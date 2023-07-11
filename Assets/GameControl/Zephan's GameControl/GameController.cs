@@ -31,13 +31,6 @@ namespace pattayaA3
 			DataManager dataManager = GetComponent<DataManager>();
 			dataManager.LoadRefData();
 
-
-            //Game.SetPlayer(new player("1", initActor));
-
-
-
-            //Debug.Log(Game.GetPlayer().GetCurrentActor());
-
             //load initial scene
             LoadScene(initialScene);
 
@@ -52,22 +45,6 @@ namespace pattayaA3
 			//	state = GameState.FreeRoam;
 			//};
 		}
-
-		//private void Update()
-		//{
-		//	//if (player != null && !isGameOver && Input.GetKeyDown(KeyCode.Escape))
-		//	//{
-		//	//	TogglePause();
-		//	//}	
-		//	if(state == GameState.FreeRoam && player != null)
-		//	{
-		//		player.HandleUpdate();
-		//	}
-		//	else if (state == GameState.Dialog)
-		//	{
-		//		DialogManager.Instance.HandleUpdate();
-		//	}
-		//}
 
 		
 		public void ShowWarning(bool aShow, float outOfBoundsDuration, float outOfBoundsTimer)

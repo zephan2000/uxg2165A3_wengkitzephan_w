@@ -21,7 +21,9 @@ public static class Game
     private static List<Dialog> dialogList;
     private static List<level> levellist;
 
-    public static player GetPlayer()
+    private static string chosenenemyName;
+    private static string chosenenemyType;
+	public static player GetPlayer()
     {
         return mainPlayer;
     }
@@ -51,8 +53,27 @@ public static class Game
         return actorList;
     }
 
+    public static string GetChosenEnemyName()
+    {
+        return chosenenemyName;
+    }
+    public static string GetChosenEnemyType()
+    {
+        return chosenenemyType;
+    }
 
-    public static actor Getactorbytype(string type)
+    public static void SetChosenEnemyName(string enemyName)
+    {
+        chosenenemyName = enemyName;
+    }
+	public static void SetChosenEnemyType(string enemyType)
+	{
+		chosenenemyType= enemyType;
+	}
+
+
+
+	public static actor Getactorbytype(string type)
     {
         foreach (actor aactor in actorList)
         {
@@ -207,9 +228,9 @@ public static class Game
         for(int i =0; i < textdialogIdArray.Length; i++)
         {
             string[] choicedialogArray = textdialogIdArray[i].Split('#');
-            //Debug.Log(GetDialogByDialogId(choicedialogArray[0]).dialogueId);
-            //Debug.Log(choicedialogArray[1]);
-			choices.Add(GetDialogByDialogId(choicedialogArray[0]));
+            Debug.Log(GetDialogByDialogId(choicedialogArray[1]).dialogueId);
+            //Debug.Log(choicedialogArray[0]);
+            choices.Add(GetDialogByDialogId(choicedialogArray[1]));
         }
         return choices;
     }

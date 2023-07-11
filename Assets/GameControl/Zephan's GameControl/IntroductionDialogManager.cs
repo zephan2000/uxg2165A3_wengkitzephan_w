@@ -159,6 +159,7 @@ public class IntroductionDialogManager : MonoBehaviour
 			if (i < choices.Count)
 			{
 				choiceButtons[i].SetActive(true);
+				//Debug.Log(choices[i].dialogueText);
 				choiceButtons[i].GetComponent<Text>().text = choices[i].dialogueText;
 				//Debug.Log(dialogState);
 			}
@@ -181,6 +182,7 @@ public class IntroductionDialogManager : MonoBehaviour
 	{
 		dialogState = DialogState.SelectingChoice;
 		dialogChoiceList = Game.GetListOfChoicesByDialog(currentDialog);
+		//Debug.Log(dialogChoiceList[0].dialogueId);
 		SkipText.SetActive(false);
 		NextText.SetActive(false);
 		ChoiceText.SetActive(true);
