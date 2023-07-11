@@ -130,6 +130,7 @@ public static class Game
         return Game.Getactorbytype(type).skillslist;
     }
 
+
     public static session GetSession()
     {
         return mainsession;

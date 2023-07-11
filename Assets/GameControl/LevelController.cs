@@ -77,6 +77,8 @@ namespace pattayaA3
 				}
             }
 			inventorybox.CheckMenu();
+			//inventorybox.UpdateEquipment();
+			//Debug.Log(Game.GetSession().weapon);
         }
         public override void Initialize(GameController aController)
 		{
