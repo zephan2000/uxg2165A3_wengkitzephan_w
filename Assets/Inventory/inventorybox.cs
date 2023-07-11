@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public enum Inventory
 {
@@ -291,6 +292,10 @@ namespace pattayaA3
             stat4Object.SetActive(enabled);
         }
 
+        public void UpdateEquipment()
+        {
+
+        }
         public void ItemPress()
         {
             currentmenu = Inventory.item;
@@ -355,6 +360,13 @@ namespace pattayaA3
                 testString2.Add(LSarray[0]);
             }
             return testString2;
+        }
+
+        public void ChangeWeapon()
+        {
+            session currentsession = Game.GetSession();
+            Game.SetSessionWeaponVariable("item02");
+
         }
     }
 }

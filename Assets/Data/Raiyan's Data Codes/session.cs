@@ -17,7 +17,7 @@ public class session
     public int attspeed { get; }
     public int exp { get; }
     public int gold { get; }
-    public string weapon { get; }
+    public string weapon { get; set; }
     public string helmet { get; }
     public string armour { get; }
     public string displaySpritePath { get; }

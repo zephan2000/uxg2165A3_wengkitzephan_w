@@ -48,7 +48,7 @@ namespace pattayaA3
 		{
 			Debug.Log("Setting up");
 			//Set a new background for boss battle
-			playerUnit.BattleUnitSetupForBoss("Wizard","playerWizard");
+			playerUnit.BattleUnitSetupForBoss("Warrior","playerWarrior");
 			enemyUnit.BattleUnitSetupForBoss("Dark Wizard", "enemyWizard");
 
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
