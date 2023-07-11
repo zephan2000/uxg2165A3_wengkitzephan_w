@@ -17,12 +17,12 @@ public class TownDialogManager : MonoBehaviour
 	bool isTyping;
 	private bool Skip;
 	private bool lastDialog;
-	private dialog1 currentDialog;
+	private Dialog currentDialog;
 	private void Awake()
 	{
 		Instance = this; 
 	}
-	List<dialog1> dialog1s;
+	List<Dialog> dialog1s;
 	int currentLine = 0;
 	public void HandleUpdate()
 	{

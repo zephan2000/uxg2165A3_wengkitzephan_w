@@ -21,15 +21,15 @@ public class IntroductionDialogManager : MonoBehaviour
 	public event Action OnCloseDialog;
 	//public static TownDialogManager Instance {  get; private set; }
 	private bool Skip;
-	private dialog1 currentDialog;
+	private Dialog currentDialog;
 	[SerializeField] StartMenuController startMenuController;
 	//private void Awake()
 	//{
 	//	Instance = this; 
 	//}
 	DialogState dialogState;
-	List<dialog1> dialog1s;
-	List<dialog1> dialogChoiceList;
+	List<Dialog> dialog1s;
+	List<Dialog> dialogChoiceList;
 	int currentChoice;
 	public void Update()
 	{
@@ -139,7 +139,7 @@ public class IntroductionDialogManager : MonoBehaviour
 			
 		}
 	}
-	public void UpdateChoiceSelection(int selectedChoice, dialog1 dialogChoice)
+	public void UpdateChoiceSelection(int selectedChoice, Dialog dialogChoice)
 	{
 		for (int i = 0; i < choiceButtons.Count; i++)
 		{
@@ -152,7 +152,7 @@ public class IntroductionDialogManager : MonoBehaviour
 		}
 		//dialog Text is handled in TypeDialog already
 	}
-	public void SetDialogChoice(List<dialog1> choices)
+	public void SetDialogChoice(List<Dialog> choices)
 	{
 		for (int i = 0; i < choiceButtons.Count; i++)
 		{

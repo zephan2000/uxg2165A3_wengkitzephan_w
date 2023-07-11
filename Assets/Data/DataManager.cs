@@ -70,7 +70,7 @@ public class DataManager : MonoBehaviour
         List<actor> actorList = new List<actor>();
         List<skills> skillList = new List<skills>();
         List<session> sessionList = new List<session>();
-        List<dialog1> dialogList = new List<dialog1>();
+        List<Dialog> dialogList = new List<Dialog>();
         List<level> levelList = new List<level>();
         
         foreach (RefItems refItem in demoData.items)
@@ -132,7 +132,7 @@ public class DataManager : MonoBehaviour
         //Zephan
         foreach(refDialogue dialogue in demoData.dialogue)
         {
-            dialog1 diAlogue = new dialog1(dialogue.dialogueId, dialogue.nextdialogueId, dialogue.dialogueType, dialogue.currentSpeakerName,
+            Dialog diAlogue = new Dialog(dialogue.dialogueId, dialogue.nextdialogueId, dialogue.dialogueType, dialogue.currentSpeakerName,
                 dialogue.displaySpritePathLeft, dialogue.displaySpritePathRight, dialogue.dialogueText, dialogue.choices);
             dialogList.Add(diAlogue);
         }

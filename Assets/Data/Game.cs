@@ -18,7 +18,7 @@ public static class Game
     private static List<session> sessionlist;
     private static session mainsession;
 
-    private static List<dialog1> dialogList;
+    private static List<Dialog> dialogList;
     private static List<level> levellist;
 
     public static player GetPlayer()
@@ -169,10 +169,10 @@ public static class Game
 	//    Debug.Log("===End===");
 	//}
 	#region Zephan's Data
-	public static List<dialog1> GetDialogByType(string type)
+	public static List<Dialog> GetDialogByType(string type)
     {
-        List<dialog1> ndialog = new List<dialog1>();
-        foreach(dialog1 adialog in dialogList)
+        List<Dialog> ndialog = new List<Dialog>();
+        foreach(Dialog adialog in dialogList)
         {
             if(adialog.dialogueType == type)
             {
@@ -182,37 +182,38 @@ public static class Game
         return ndialog;
     }
 
-    public static dialog1 GetDialogByDialogId(string dialogId)
+    public static Dialog GetDialogByDialogId(string dialogId)
     {
-        foreach(dialog1 adialog in dialogList)
+        foreach(Dialog adialog in dialogList)
         {
             if (adialog.dialogueId == dialogId)
                 return adialog;
         }
         return null;
     }
-	public static dialog1 GetDialogByDialogList(string dialogId, List<dialog1> dialogList) //for optimisation, in the event where there is a ton of dialog to run through
+	public static Dialog GetDialogByDialogList(string dialogId, List<Dialog> dialogList) //for optimisation, in the event where there is a ton of dialog to run through
 	{
-		foreach (dialog1 adialog in dialogList)
+		foreach (Dialog adialog in dialogList)
 		{
 			if (adialog.dialogueId == dialogId)
 				return adialog;
 		}
 		return null;
 	}
-    public static List<dialog1> GetListOfChoicesByDialog(dialog1 currentDialog)
+    public static List<Dialog> GetListOfChoicesByDialog(Dialog currentDialog)
     {
         string[] textdialogIdArray = currentDialog.choices.Split('@');
-        List<dialog1> choices = new List<dialog1>();
+        List<Dialog> choices = new List<Dialog>();
         for(int i =0; i < textdialogIdArray.Length; i++)
         {
             string[] choicedialogArray = textdialogIdArray[i].Split('#');
-			Debug.Log(GetDialogByDialogId(choicedialogArray[1]).dialogueId);
-			choices.Add(GetDialogByDialogId(choicedialogArray[1]));
+            //Debug.Log(GetDialogByDialogId(choicedialogArray[0]).dialogueId);
+            //Debug.Log(choicedialogArray[1]);
+			choices.Add(GetDialogByDialogId(choicedialogArray[0]));
         }
         return choices;
     }
-	public static void SetDialogList(List<dialog1> adialog)
+	public static void SetDialogList(List<Dialog> adialog)
 	{
 		dialogList = adialog;
 	}
