@@ -17,9 +17,9 @@ public class session
     public int attspeed { get; }
     public int exp { get; }
     public int gold { get; }
-    public string weapon { get; }
-    public string helmet { get; }
-    public string armour { get; }
+    public string weapon { get; set; }
+    public string helmet { get; set; }
+    public string armour { get; set; }
     public string displaySpritePath { get; }
 
     public session(string seshname, string actorType, string levelid, int maxhp, int defense, int physicaldmg, int magicdmg, int vitality, int power, int intelligence, int attspeed, int exp, int gold, string weapon, string helmet, string armour, string displaySpritePath)

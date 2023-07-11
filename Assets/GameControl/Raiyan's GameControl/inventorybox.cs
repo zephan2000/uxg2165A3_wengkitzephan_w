@@ -60,6 +60,8 @@ namespace pattayaA3
         //Skills
         List<skills> skillList = new List<skills>();
 
+        session mainsession = Game.GetSession();
+
         public void SetInventoryText()
         {
             session currentsession = Game.GetSession();
@@ -355,6 +357,36 @@ namespace pattayaA3
                 testString2.Add(LSarray[0]);
             }
             return testString2;
+        }
+
+        public void UpdateEquiptment()
+        {
+            session currentsession = Game.GetSession();
+            List<string> ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
+            item1.text = Game.GetitemsbyName(currentsession.weapon).displayName;
+            item2.text = Game.GetitemsbyName(currentsession.helmet).displayName;
+            item3.text = Game.GetitemsbyName(currentsession.armour).displayName;
+            //item1.text = Game.Getcurrentsession.weapon;
+            //item2.text = currentsession.helmet;
+            //item3.text = currentsession.armour;
+
+
+            skill1.text = Game.GetSkillById(ListOfSkillsGroup[0]).skillname;
+            skill2.text = Game.GetSkillById(ListOfSkillsGroup[1]).skillname;
+            skill3.text = Game.GetSkillById(ListOfSkillsGroup[2]).skillname;
+            skill4.text = Game.GetSkillById(ListOfSkillsGroup[3]).skillname;
+
+            stat1.text = "Vitality:" + currentsession.vitality;
+            stat2.text = "Power:" + currentsession.power;
+            stat3.text = "Intelligence:" + currentsession.intelligence;
+            stat4.text = "Attack Speed:" + currentsession.attspeed;
+        }
+
+        public void ChangeWeapon()
+        {
+            session currentsession = Game.GetSession();
+            Game.SetSessionWeaponVariable("item02");
+
         }
     }
 }

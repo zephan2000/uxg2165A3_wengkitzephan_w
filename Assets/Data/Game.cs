@@ -291,5 +291,8 @@ public static class Game
         }
     }
 
-    
+    public static void SetSessionWeaponVariable(string change)
+    {
+        mainsession.weapon = Game.Getitemsbyid(change).displayName;
+    }
 }
