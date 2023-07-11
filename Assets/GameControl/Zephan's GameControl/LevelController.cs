@@ -40,9 +40,11 @@ namespace pattayaA3
 					state = GameState.FreeRoam;
 			};
 
-			inventorybox = inventory.GetComponent<inventorybox>();
-			inventorybox.SetInventoryText();
-            inventory.SetActive(false);
+			
+			//inventorybox = inventory.GetComponent<inventorybox>();
+			//inventorybox.SetInventoryText();
+            //inventory.SetActive(false);
+
 		}
 		private void Update()
 		{
@@ -76,7 +78,8 @@ namespace pattayaA3
 					state = GameState.FreeRoam;
 				}
             }
-			inventorybox.CheckMenu();			
+            
+            //inventorybox.CheckMenu();			
         }
         public override void Initialize(GameController aController)
 		{

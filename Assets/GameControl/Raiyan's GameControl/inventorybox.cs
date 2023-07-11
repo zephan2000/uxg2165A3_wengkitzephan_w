@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public enum Inventory
 {
-    item, skills, stats
+    item, skills, stats, itemEquipment, itemItems
 }
 
 namespace pattayaA3
@@ -62,8 +62,13 @@ namespace pattayaA3
 
         session mainsession = Game.GetSession();
 
-		private void Update()
+        private void Start()
+        {
+            SetInventoryText();
+        }
+        private void Update()
 		{
+            CheckMenu();
 			UpdateEquipment();
 			//Debug.Log("Session Weapon:" + Game.Getitemsbyid(Game.GetitemsbyName(mainsession.weapon).itemId).displayName);
 			Debug.Log(mainsession.weapon);
@@ -298,6 +303,51 @@ namespace pattayaA3
             stat3Object.SetActive(enabled);
             stat4Object.SetActive(enabled);
         }
+        public void EnableEquipmentMenu(bool enabled)
+        {
+            //Text
+            charactername.enabled = enabled;
+            menuchoice.enabled = enabled;
+            itemchoice.enabled = enabled;
+            skillchoice.enabled = enabled;
+            statchoice.enabled = enabled;
+            //Item boxes
+            item1.enabled = !enabled;
+            item2.enabled = !enabled;
+            item3.enabled = !enabled;
+            //Skill boxes
+            skill1.enabled = !enabled;
+            skill2.enabled = !enabled;
+            skill3.enabled = !enabled;
+            skill4.enabled = !enabled;
+            //Stat boxes
+            stat1.enabled = enabled;
+            stat2.enabled = enabled;
+            stat3.enabled = enabled;
+            stat4.enabled = enabled;
+
+            //Objects
+            character.SetActive(enabled);
+            charactersprite.SetActive(enabled);
+            itemObject.SetActive(enabled);
+            skillchoiceObject.SetActive(enabled);
+            statchoiceObject.SetActive(enabled);
+            menuchoiceObject.SetActive(enabled);
+            //Item object
+            item1Object.SetActive(!enabled);
+            item2Object.SetActive(!enabled);
+            item3Object.SetActive(!enabled);
+            //Skill object
+            skill1Object.SetActive(!enabled);
+            skill2Object.SetActive(!enabled);
+            skill3Object.SetActive(!enabled);
+            skill4Object.SetActive(!enabled);
+            //Stat object
+            stat1Object.SetActive(enabled);
+            stat2Object.SetActive(enabled);
+            stat3Object.SetActive(enabled);
+            stat4Object.SetActive(enabled);
+        }
 
         public void ItemPress()
         {
@@ -328,6 +378,14 @@ namespace pattayaA3
                     EnableStatMenu(true);
                     menuchoice.text = "Stats";
                     break;
+                case Inventory.itemEquipment:
+                    EnableStatMenu(true);
+                    menuchoice.text = "Stats";
+                    break;
+                case Inventory.itemItems:
+                    EnableStatMenu(true);
+                    menuchoice.text = "Stats";
+                    break;
                 default:
                     EnableItemMenu(true);
                     menuchoice.text = "Item";
@@ -337,7 +395,7 @@ namespace pattayaA3
 
         public static List<string> GetListOfSkillsPartOne(string actorType)
         {
-            //Debug.Log("Running List of LS function");
+            Debug.Log("Running List of LS function");
             string listingString = Game.GetSkillListByType(actorType);
             //Debug.Log(BLSstring);
             string[] listingArray = listingString.Split(','); // this will turn BLSstring into a list, now we turn this into a list of LearnableSkill
@@ -368,10 +426,12 @@ namespace pattayaA3
         public void UpdateEquipment()
         {
             session currentsession = Game.GetSession();
-            List<string> ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
-            item1.text = Game.GetitemsbyName(currentsession.weapon).displayName;
-            item2.text = Game.GetitemsbyName(currentsession.helmet).displayName;
-            item3.text = Game.GetitemsbyName(currentsession.armour).displayName;
+            List<string> ListOfSkillsGroup;
+            Debug.Log("Actor Type: " + currentmenu);
+            ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
+            item1.text = Game.Getitemsbyid(currentsession.weapon).displayName;
+            item2.text = Game.Getitemsbyid(currentsession.helmet).displayName;
+            item3.text = Game.Getitemsbyid(currentsession.armour).displayName;
             //item1.text = Game.Getcurrentsession.weapon;
             //item2.text = currentsession.helmet;
             //item3.text = currentsession.armour;
