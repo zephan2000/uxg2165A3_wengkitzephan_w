@@ -76,8 +76,7 @@ namespace pattayaA3
 					state = GameState.FreeRoam;
 				}
             }
-			inventorybox.CheckMenu();
-			inventorybox.UpdateEquiptment();
+			inventorybox.CheckMenu();			
         }
         public override void Initialize(GameController aController)
 		{

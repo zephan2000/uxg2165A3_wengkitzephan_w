@@ -62,7 +62,13 @@ namespace pattayaA3
 
         session mainsession = Game.GetSession();
 
-        public void SetInventoryText()
+		private void Update()
+		{
+			UpdateEquipment();
+			//Debug.Log("Session Weapon:" + Game.Getitemsbyid(Game.GetitemsbyName(mainsession.weapon).itemId).displayName);
+			Debug.Log(mainsession.weapon);
+		}
+		public void SetInventoryText()
         {
             session currentsession = Game.GetSession();
             List<string> ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
@@ -359,7 +365,7 @@ namespace pattayaA3
             return testString2;
         }
 
-        public void UpdateEquiptment()
+        public void UpdateEquipment()
         {
             session currentsession = Game.GetSession();
             List<string> ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
