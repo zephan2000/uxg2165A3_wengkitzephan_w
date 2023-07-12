@@ -26,7 +26,7 @@ namespace pattayaA3
         public string playerImage;
 		
 		
-		//private bool isDirty;
+		public bool inventoryOpen = false;
         
 
 
@@ -59,7 +59,7 @@ namespace pattayaA3
 			if (Input.GetKey(KeyCode.D)) { moveDir += Vector2.right; this.GetComponent<SpriteRenderer>().flipX = false; }
 			//move player position
 			//Debug.Log(IsWalkable((Vector3)moveDir));
-			if(moveDir != Vector2.zero)
+			if(moveDir != Vector2.zero && !inventoryOpen)
 			{
 				MovePlayer(moveDir);
 			}
@@ -79,7 +79,19 @@ namespace pattayaA3
 				}
 
 			}
-		}
+            else if (Input.GetKeyDown(KeyCode.K))
+            {
+                if (inventoryOpen)
+                {
+                    inventoryOpen = !inventoryOpen;
+                }
+				else
+				{
+                    inventoryOpen = !inventoryOpen;
+                }
+            }
+
+        }
 		public void MovePlayer(Vector2 moveDir) // old movement codes
 		{
 			int count = rb.Cast(moveDir, movementFilter, castCollisions, 5.5f * Time.fixedDeltaTime + collisionOffset);

@@ -8,6 +8,7 @@ TagManager:
   - Building
   - NPC
   - Canvas
+  - ItemList
   layers:
   - Default
   - TransparentFX

@@ -101,7 +101,7 @@ public class DataManager : MonoBehaviour
         }
         Game.SetSessionList(sessionList);*/
         session asession = new session(demoData.session[0].seshname, demoData.session[0].actorType, demoData.session[0].levelid, demoData.session[0].maxhp, demoData.session[0].defense, demoData.session[0].physicaldmg, demoData.session[0].magicdmg, demoData.session[0].vitality,
-                demoData.session[0].power, demoData.session[0].intelligence, demoData.session[0].attspeed, demoData.session[0].exp, demoData.session[0].gold, demoData.session[0].weapon, demoData.session[0].helmet, demoData.session[0].armour, demoData.session[0].displaySpritePath);
+                demoData.session[0].power, demoData.session[0].intelligence, demoData.session[0].attspeed, demoData.session[0].exp, demoData.session[0].gold, demoData.session[0].weapon, demoData.session[0].helmet, demoData.session[0].armour, demoData.session[0].inventory, demoData.session[0].displaySpritePath);
         Game.SetSession(asession);
 
         foreach (refActor refactor in demoData.actor)

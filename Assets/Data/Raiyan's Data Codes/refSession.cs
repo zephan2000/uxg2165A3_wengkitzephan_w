@@ -21,5 +21,6 @@ public class refSession
     public string weapon;
     public string helmet;
     public string armour;
+    public string inventory;
     public string displaySpritePath;
 }

@@ -20,9 +20,10 @@ public class session
     public string weapon { get; set; }
     public string helmet { get; set; }
     public string armour { get; set; }
+    public string inventory { get; set; }
     public string displaySpritePath { get; }
 
-    public session(string seshname, string actorType, string levelid, int maxhp, int defense, int physicaldmg, int magicdmg, int vitality, int power, int intelligence, int attspeed, int exp, int gold, string weapon, string helmet, string armour, string displaySpritePath)
+    public session(string seshname, string actorType, string levelid, int maxhp, int defense, int physicaldmg, int magicdmg, int vitality, int power, int intelligence, int attspeed, int exp, int gold, string weapon, string helmet, string armour, string inventory, string displaySpritePath)
     {
         this.seshname = seshname;
         this.actorType = actorType;
@@ -40,6 +41,7 @@ public class session
         this.weapon = weapon;
         this.helmet = helmet;
         this.armour = armour;
+        this.inventory = inventory;
         this.displaySpritePath = displaySpritePath;
     }
 }

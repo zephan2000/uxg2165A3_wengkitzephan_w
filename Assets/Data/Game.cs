@@ -21,6 +21,8 @@ public static class Game
     private static List<Dialog> dialogList;
     private static List<level> levellist;
 
+    private static EachItem eachitem;
+
     private static string chosenenemyName;
     private static string chosenenemyType;
 	public static player GetPlayer()
@@ -294,5 +296,24 @@ public static class Game
     public static void SetSessionWeaponVariable(string change)
     {
         mainsession.weapon = Game.Getitemsbyid(change).displayName;
+    }
+
+    public static void AddItemToInventory(string itemid)
+    {
+        if (mainsession.inventory == "")
+        {
+            mainsession.inventory += itemid;
+            //eachitem.realcount++;
+        }
+        else
+        {
+            mainsession.inventory += "," + itemid;
+            //eachitem.realcount++;
+        }
+    }
+
+    public static EachItem GetEachItem()
+    {
+        return eachitem;
     }
 }
