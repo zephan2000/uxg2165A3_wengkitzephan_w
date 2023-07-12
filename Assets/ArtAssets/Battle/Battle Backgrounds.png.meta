@@ -129,16 +129,16 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Battle Backgrounds_0
+      name: Battle Backgrounds_
       rect:
         serializedVersion: 2
-        x: 0
-        y: 438.75
-        width: 258.33334
-        height: 146.25
+        x: 261
+        y: 168
+        width: 160
+        height: 122
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 1}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -400,8 +400,8 @@ TextureImporter:
       Battle Backgrounds_7: 1135556729
       Battle Backgrounds_4: 4272426
       Battle Backgrounds_10: 1202409285
+      Battle Backgrounds_: -356652460
       Battle Backgrounds_1: 1507842778
-      Battle Backgrounds_0: -356652460
       Battle Backgrounds_9: 1658812028
   spritePackingTag: 
   pSDRemoveMatte: 0
