@@ -1750,7 +1750,7 @@
             "maxuses": "1"
         },
         {
-            "skillid": "skill14_05",
+            "skillid": "skill14_01",
             "actorType": "enemyBat",
             "category": "Physical",
             "target": "Foe",
@@ -1762,7 +1762,7 @@
             "maxuses": "20"
         },
         {
-            "skillid": "skill15_05",
+            "skillid": "skill15_03",
             "actorType": "enemyBat",
             "category": "Physical",
             "target": "Foe",

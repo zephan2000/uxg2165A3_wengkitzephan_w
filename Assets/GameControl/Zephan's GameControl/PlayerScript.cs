@@ -97,7 +97,7 @@ namespace pattayaA3
         }
 		public void MovePlayer(Vector2 moveDir) // old movement codes
 		{
-			int count = rb.Cast(moveDir, movementFilter, castCollisions, 5.5f * Time.fixedDeltaTime + collisionOffset);
+			int count = rb.Cast(moveDir, movementFilter, castCollisions, 6.5f * Time.fixedDeltaTime + collisionOffset);
 
 			if (count == 0)
 				rb.MovePosition(rb.position + moveDir * 5.5f * Time.fixedDeltaTime);
