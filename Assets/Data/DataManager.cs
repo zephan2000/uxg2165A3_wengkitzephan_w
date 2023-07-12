@@ -48,18 +48,27 @@ public class DataManager : MonoBehaviour
         //Game.ListdownSkills("enemyBat");
         //Debug.Log(Game.GetActorByName("Warrior").skillslist);
         //Debug.Log(Game.GetEquipment(Game.GetSession().actorType));
-/*        List<string> testString = Game.GetListOfSkillsPartOne(Game.GetSession().actorType);
-        List<string> testString2 = new List<string>();
-        foreach (var test in testString)
+        /*        List<string> testString = Game.GetListOfSkillsPartOne(Game.GetSession().actorType);
+                List<string> testString2 = new List<string>();
+                foreach (var test in testString)
+                {
+                    //Debug.Log(test);
+                    string[] LSarray = test.Split('_');
+                    testString2.Add(LSarray[0]);
+                }
+                foreach (var test in testString2)
+                {
+                    Debug.Log(test);
+                }*/
+        if (Game.Getactorbytype("enemyBat").skillslist == null)
         {
-            //Debug.Log(test);
-            string[] LSarray = test.Split('_');
-            testString2.Add(LSarray[0]);
+            Debug.Log(Game.Getactorbytype("enemyBat").actorType);
         }
-        foreach (var test in testString2)
+        else
         {
-            Debug.Log(test);
-        }*/
+            Debug.Log(Game.Getactorbytype("enemyBat").skillslist);
+        }
+        
     }
 
     private void ProcessDemoData(DemoData demoData)

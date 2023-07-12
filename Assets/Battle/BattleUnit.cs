@@ -49,6 +49,11 @@ public class BattleUnit : MonoBehaviour
 			this.GetComponent<Image>().sprite = s;
 		});
 		Debug.Log($"{_base.pokemonName} is {_base.pokemonAttSpeed}");
+		foreach (var a in _base.pokemonListOfLearnableSkill)
+		{
+			Debug.Log(a.GetMoveBase().moveName);
+
+        }
 		hud.SetData(Pokemon);
 		// pokemon enter animation will be done here
 	}
