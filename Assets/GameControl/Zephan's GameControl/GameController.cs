@@ -24,6 +24,7 @@ namespace pattayaA3
 		void Start()
 		{
 			//set initial state
+			SetGameOver(false, false, 0, 0);
 			SetPause(false);
 
 			//Raiyan's Code
@@ -45,11 +46,24 @@ namespace pattayaA3
 			//};
 		}
 
+		
+		public void ShowWarning(bool aShow, float outOfBoundsDuration, float outOfBoundsTimer)
+		{
+			//countdown if player is offscreen
+			warningText.SetActive(aShow);
+			warningText.GetComponent<Text>().text = "Out of Bounds!\nGame Over in " + Mathf.CeilToInt(outOfBoundsDuration - outOfBoundsTimer) + "s";
+		}
+
 		public void LoadScene(string aScene)
 		{
 			AsyncOperation loadSceneOp = SceneManager.LoadSceneAsync(aScene, LoadSceneMode.Additive);
 			loadSceneOp.completed += (result) =>
 			{
+				//Get the newly-loaded scene using GetSceneByName in SceneManager. 
+				//Get root game objects in the scene using GetRootGameObjects function.
+				//Loop through the root game objects and set currentSceneController to any GameSceneController found.
+				//You can use GetComponentInChild for this. The scene should contain only 1 GameSceneController.
+				//Run Initialize function on the GameSceneController found
 				var getRootObj = SceneManager.GetSceneByName(aScene).GetRootGameObjects();
 				for (int i = 0; i < getRootObj.Length; i++)
 				{
@@ -65,12 +79,24 @@ namespace pattayaA3
 
 		public void RemoveScene(string aScene)
 		{
+			//Unload the scene of the name given by aScene.
+			//Use the UnloadSceneAsync function in SceneManager.
 			AsyncOperation UnloadScene = SceneManager.UnloadSceneAsync(aScene);
 		}
+
+		public void RestartLevel()
+		{
+			if (currentSceneController != null) currentSceneController.Initialize(this);
+		}
+
 		public void StartLevel(PlayerScript playerScript)
 		{
 			player = playerScript;
-			//SetPause(false);
+			// check what is the current player position
+			//playerobj.transform.position = playerScript.currentposition;
+			//set game ongoing
+			SetGameOver(false, false, 0, 0);
+			SetPause(false);
         }
 		public PlayerScript getPlayer()
 		{
@@ -78,6 +104,7 @@ namespace pattayaA3
 		}
 		public void GoToLevelSelect()
 		{
+			SetGameOver(false, false, 0, 0);
 			SetPause(false);
 
 			if (currentSceneController != null) RemoveScene(currentSceneController.sceneName);
@@ -85,9 +112,7 @@ namespace pattayaA3
 		}
 		public string getactiveSceneName()
 		{
-			if (currentSceneController != null) return currentSceneController.sceneName;
-			else
-				return null;
+			return currentSceneController.sceneName;
 		}
 
 		public void TogglePause()
@@ -97,6 +122,9 @@ namespace pattayaA3
 
 		public void SetPause(bool aPause)
 		{
+			//Set the boolean isPaused according to the input aPause.
+			//Set Time.timeScale to 0 if paused, and 1f if unpaused.
+			//Set pauseScreen gameObject to active if paused and inactive if unpaused.
 			isPaused = aPause;
 			if (isPaused == true)
 			{
@@ -109,6 +137,33 @@ namespace pattayaA3
 				pauseScreen.SetActive(false);
 			}
 		}
+
+		public void SetGameOver(bool aGameOver, bool aWin, int numCollected, int numTotal)
+		{
+			//set game over state
+			isGameOver = aGameOver;
+
+			ShowWarning(false, 0, 0);
+			if (isGameOver) Time.timeScale = 0;
+
+			//show game over screen if game over
+			if (!aWin)
+			{
+				if (numTotal > 0)
+				{
+					gameOverScreen.GetComponentInChildren<Text>().text = "Game Over\nProgress: " + numCollected + "/" + numTotal;
+				}
+				else
+				{
+					gameOverScreen.GetComponentInChildren<Text>().text = "Game Over\nOut of Bounds";
+				}
+			}
+			else
+				gameOverScreen.GetComponentInChildren<Text>().text = "Level Completed!";
+
+			gameOverScreen.SetActive(isGameOver);
+		}
+
 		public bool CheckGameOver()
 		{
 			//check if game over
@@ -126,3 +181,18 @@ namespace pattayaA3
 		}
 	}
 }
+
+//void FixedUpdate() // old movement codes
+//{
+
+//	if (player != null && !isGameOver && !isPaused)
+//	{
+//		Vector2 moveDir = Vector2.zero;
+//		if (Input.GetKey(KeyCode.W)) { moveDir += Vector2.up; }
+//		if (Input.GetKey(KeyCode.S)) { moveDir += Vector2.down;}
+//		if (Input.GetKey(KeyCode.A)) { moveDir += Vector2.left; player.GetComponent<SpriteRenderer>().flipX = true; } // flipSprite when moving left
+//		if (Input.GetKey(KeyCode.D)) { moveDir += Vector2.right; player.GetComponent<SpriteRenderer>().flipX = false; }
+//			//move player position
+//			player.MovePlayer(moveDir.normalized * Time.fixedDeltaTime);
+//	}
+//}

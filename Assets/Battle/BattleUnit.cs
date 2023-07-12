@@ -1,5 +1,4 @@
 using pattayaA3;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -25,22 +24,12 @@ public class BattleUnit : MonoBehaviour
 
 	public Pokemon Pokemon { get; set; }
 	
-	public void BattleUnitSetup(string actorName, string actorType)
+	public void BattleUnitSetupForBoss(string actorName, string actorType)
 	{
 		Debug.Log("passing in name and type");
 		this._base = new PokemonBase(actorName, actorType);
 		Debug.Log("created base");
-		if(actorName == "Dark Wizard")
-		{
-			Pokemon = new Pokemon(_base, level);
-		}
-		else
-		{
-			Debug.Log(Game.GetPokemonLevel());
-			Debug.Log(level);
-			Pokemon = new Pokemon(_base, Game.GetPokemonLevel());
-		}
-		
+		Pokemon = new Pokemon(_base, level); 
 		//Sprite pokemonSprite = Resources.Load<Sprite>(_base.pokemonSpritePath); 
 		//this.GetComponent<Image>().sprite = Resources.Load<Sprite>(_base.pokemonSpritePath);
 		AssetManager.LoadSprite(_base.pokemonSpritePath, (Sprite s) =>
