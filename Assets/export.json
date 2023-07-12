@@ -434,7 +434,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
             "dialogueText": "Are you sure you want to be a Warrior?",
-            "choices": "Yes I'm sure.#INTRO0038@Hmm... let me choose again.#INTRO0033"
+            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
         },
         {
             "dialogueId": "INTRO0030",
@@ -444,7 +444,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
             "dialogueText": "Are you sure you want to be a Wizard?",
-            "choices": "Yes I'm sure.#INTRO0038@Hmm... let me choose again.#INTRO0033"
+            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
         },
         {
             "dialogueId": "INTRO0031",
@@ -454,7 +454,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
             "dialogueText": "Are you sure you want to be an Archer?",
-            "choices": "Yes I'm sure.#INTRO0038@Hmm... let me choose again.#INTRO0033"
+            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
         },
         {
             "dialogueId": "INTRO0032",
@@ -523,7 +523,7 @@
             "currentSpeakerName": "NPC",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_84]",
             "displaySpritePathRight": "",
-            "dialogueText": "Coolio",
+            "dialogueText": "Choose your Training Monster!",
             "choices": ""
         }
     ],

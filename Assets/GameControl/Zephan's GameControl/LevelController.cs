@@ -6,15 +6,11 @@ using UnityEngine;
 namespace pattayaA3
 {
 	//Zephan
-	public enum GameState { FreeRoam, Dialog, Shop, Inventory }
+	public enum GameState { FreeRoam, Dialog, Shop, Inventory, Training}
 	public class LevelController : GameSceneController
 	{
 		private Camera mainCamera;
 		private PlayerScript player;
-		//private List<EnemyScript> enemyList;
-		//private List<CollectibleScript> collectibleList;
-		//private EndPointScript endPoint;
-		private int collectedCount;
 		private bool isStarted;
 		private bool isGameOver;
 		private bool isPaused;
@@ -26,6 +22,9 @@ namespace pattayaA3
         public GameObject inventory;
 		public inventorybox inventorybox;
 		private bool isOpenInventory;
+		private bool isOpenTrainingCenter;
+
+		public GameObject trainingCenterBackground;
 
         void Start()
 		{
@@ -43,6 +42,7 @@ namespace pattayaA3
 			inventorybox = inventory.GetComponent<inventorybox>();
 			inventorybox.SetInventoryText();
             inventory.SetActive(false);
+			trainingCenterBackground.SetActive(false);
 		}
 		private void Update()
 		{
@@ -62,9 +62,21 @@ namespace pattayaA3
 			{
 
 			}
-
+			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z))
+			{
+				ToggleTrainingCenter();
+				if (isOpenTrainingCenter)
+				{
+					state = GameState.Training;
+				}
+				else
+				{
+					state = GameState.FreeRoam;
+				}
+				
+			}
 			//Raiyan
-            if (Input.GetKeyDown(KeyCode.I))
+			if (Input.GetKeyDown(KeyCode.I))
             {
 				ToggleInventory();
 				if (isOpenInventory)
@@ -76,7 +88,7 @@ namespace pattayaA3
 					state = GameState.FreeRoam;
 				}
             }
-			inventorybox.CheckMenu();			
+			inventorybox.CheckMenu();	
         }
         public override void Initialize(GameController aController)
 		{
@@ -100,11 +112,6 @@ namespace pattayaA3
 
 
 			isStarted = true;
-		}
-
-		public void SetGameOver(bool aGameOver, bool isWin)
-		{
-			//gameController.SetGameOver(aGameOver, isWin, collectedCount, collectibleList.Count);
 		}
 
 		public bool CheckGameOver()
@@ -145,6 +152,23 @@ namespace pattayaA3
         {
             SetInventory(!isOpenInventory);
         }
+		public void SetTrainingCenter(bool aInventory)
+		{
+			isOpenTrainingCenter = aInventory;
+			if (isOpenTrainingCenter == true)
+			{
+				trainingCenterBackground.GetComponent<TrainingCenterControl>().Interact();
+			}
+			else
+			{
+				trainingCenterBackground.GetComponent<TrainingCenterControl>().OffTrainingCenter();
+				player.isTouchingDoor = false;
+			}
+		}
+		public void ToggleTrainingCenter()
+		{
+			SetTrainingCenter(!isOpenTrainingCenter);
+		}
 
-    }
+	}
 }

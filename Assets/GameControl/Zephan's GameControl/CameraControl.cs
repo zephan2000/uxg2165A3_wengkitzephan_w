@@ -13,19 +13,24 @@ namespace pattayaA3
 		private Vector3 offset = new Vector3(0f, 0f, -10f);
 		private float smoothTime = 0.1f;
 		private Vector3 velocity = Vector3.zero;
+		public Vector3 targetPos { get; set; }
 
-		private void FixedUpdate()
+		private void Update()
 		{
 			//Smooth camera follow
-			if(gameController.getactiveSceneName() == "Town")
+			if (gameController.getactiveSceneName() != null)
 			{
-				Vector3 targetPos = gameController.getPlayer().transform.position + offset; //target is player, get ref to player from gameController
-				transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
-			}
-			else
-			{
+				if (gameController.getactiveSceneName() == "Town")
+				{
+					targetPos = gameController.getPlayer().transform.position + offset; //target is player, get ref to player from gameController
+					transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
+				}
+				else
+				{
 
+				}
 			}
+			
 				
 		}
 
