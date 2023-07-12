@@ -15,6 +15,7 @@ namespace pattayaA3
 		[SerializeField] BattleUnit enemyUnit;
 		[SerializeField] BattleUnit playerUnit;
 		[SerializeField] BattleDialogBox dialogBox;
+		[SerializeField] Image battleBackground;
 		private bool isStarted;
 		private bool playerWon;
 
@@ -23,7 +24,7 @@ namespace pattayaA3
 		int currentMove;
 		private void Start()
 		{
-			StartCoroutine(SetupBossBattle());
+			StartCoroutine(SetupBattle());
 		}
 
 		public override void Initialize(GameController aController)
@@ -32,24 +33,15 @@ namespace pattayaA3
 			base.Initialize(aController);
 			isStarted = true;
 		}
-
-		//public IEnumerator SetupBattle()
-		//{
-		//	playerUnit.Setup(); 
-		//	enemyUnit.Setup();
-
-		//	dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
-		//	yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");
-		//	yield return new WaitForSeconds (1f);
-
-		//	ActionSelection();
-		//}
-		public IEnumerator SetupBossBattle()
+		public IEnumerator SetupBattle()
 		{
 			Debug.Log("Setting up");
 			//Set a new background for boss battle
-			playerUnit.BattleUnitSetupForBoss("Wizard","playerWizard");
-			enemyUnit.BattleUnitSetupForBoss("Dark Wizard", "enemyWizard");
+			//Debug.Log($"{Game.sessionactorName},{Game.sessionactorType}");
+			Debug.Log($"{Game.chosenenemyName},{Game.chosenenemyType}");
+			//playerUnit.BattleUnitSetup(Game.sessionactorName,Game.sessionactorType);
+			playerUnit.BattleUnitSetup("Warrior", "playerWarrior");
+			enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType);
 
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
 			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");

@@ -1,4 +1,5 @@
 using pattayaA3;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,15 @@ public static class Game
 
     private static List<Dialog> dialogList;
     private static List<level> levellist;
+    private static int enemyPokemonLevel = 1;
 
     private static EachItem eachitem;
 
-    private static string chosenenemyName;
-    private static string chosenenemyType;
+
+    public static string chosenenemyName { get; set; }
+    public static string chosenenemyType { get; set; }
+    public static string sessionactorName { get; set; }
+    public static string sessionactorType { get; set; }
 	public static player GetPlayer()
     {
         return mainPlayer;
@@ -54,24 +59,6 @@ public static class Game
     {
         return actorList;
     }
-
-    public static string GetChosenEnemyName()
-    {
-        return chosenenemyName;
-    }
-    public static string GetChosenEnemyType()
-    {
-        return chosenenemyType;
-    }
-
-    public static void SetChosenEnemyName(string enemyName)
-    {
-        chosenenemyName = enemyName;
-    }
-	public static void SetChosenEnemyType(string enemyType)
-	{
-		chosenenemyType= enemyType;
-	}
 
 
 
@@ -183,15 +170,14 @@ public static class Game
         }
         return nskills;
     }
-	//public static void ListdownSkills(string type)
-	//{
-	//    Debug.Log("===Start===");
-	//    Debug.Log(Game.Getactorbytype(type).displayName);
-	//    Debug.Log(Game.Getactorbytype(type).actorType);
-	//    Debug.Log(Game.Getactorbytype(type).skillslist);
-	//    Debug.Log("===End===");
-	//}
 	#region Zephan's Data
+
+	public static void SetPlayerActorBySession()
+	{
+		sessionactorName = Getactorbytype(mainsession.actorType).displayName;
+		sessionactorType = mainsession.actorType;
+	}
+
 	public static List<Dialog> GetDialogByType(string type)
     {
         List<Dialog> ndialog = new List<Dialog>();
@@ -239,6 +225,15 @@ public static class Game
 	public static void SetDialogList(List<Dialog> adialog)
 	{
 		dialogList = adialog;
+	}
+
+    public static int SetPokemonLevel(string pokemonLevel)
+    {
+        return enemyPokemonLevel = Int32.Parse(pokemonLevel);
+    }
+	public static int GetPokemonLevel()
+	{
+        return enemyPokemonLevel;
 	}
 	#endregion
 	public static void SetItemList(List<items> alist)
