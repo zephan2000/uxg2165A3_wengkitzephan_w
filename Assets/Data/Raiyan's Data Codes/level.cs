@@ -8,7 +8,9 @@ public class level
     public string actorType { get; }
     public int expToGain { get; }
     public int maxExp { get; }
-    public int maxhp { get; }
+	public int expGain { get; }
+	public int goldGain { get; }
+	public int maxhp { get; }
     public int defense { get; }
     public int physicaldmg { get; }
     public int magicdmg { get; }
@@ -17,12 +19,14 @@ public class level
     public int intelligence { get; }
     public int attspeed { get; }
 
-    public level(string levelId, string actorType, int expToGain, int maxExp, int maxhp, int defense, int physicaldmg, int magicdmg, int vitality, int power, int intelligence, int attspeed)
+    public level(string levelId, string actorType, int expToGain, int maxExp, int expGain, int goldGain, int maxhp, int defense, int physicaldmg, int magicdmg, int vitality, int power, int intelligence, int attspeed)
     {
         this.levelId = levelId;
         this.actorType = actorType;
         this.expToGain = expToGain;
         this.maxExp = maxExp;
+        this.expGain = expGain;
+        this.goldGain = goldGain;
         this.maxhp = maxhp;
         this.defense = defense;
         this.physicaldmg = physicaldmg;

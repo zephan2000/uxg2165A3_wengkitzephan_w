@@ -25,10 +25,11 @@ public class BattleUnit : MonoBehaviour
 
 	public Pokemon Pokemon { get; set; }
 	
-	public void BattleUnitSetup(string actorName, string actorType)
+	public void BattleUnitSetup(string actorName, string actorType, int level)
 	{
 		Debug.Log("passing in name and type");
-		this._base = new PokemonBase(actorName, actorType);
+		string levelId = actorType + "_" + level;	
+		this._base = new PokemonBase(actorName, actorType, levelId);
 		Debug.Log("created base");
 		if(actorName == "Dark Wizard")
 		{
@@ -36,9 +37,9 @@ public class BattleUnit : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log(Game.GetPokemonLevel());
+			Debug.Log(Game.GetEnemyPokemonLevel());
 			Debug.Log(level);
-			Pokemon = new Pokemon(_base, Game.GetPokemonLevel());
+			Pokemon = new Pokemon(_base, Game.GetEnemyPokemonLevel());
 		}
 		
 		//Sprite pokemonSprite = Resources.Load<Sprite>(_base.pokemonSpritePath); 
@@ -49,11 +50,6 @@ public class BattleUnit : MonoBehaviour
 			this.GetComponent<Image>().sprite = s;
 		});
 		Debug.Log($"{_base.pokemonName} is {_base.pokemonAttSpeed}");
-		foreach (var a in _base.pokemonListOfLearnableSkill)
-		{
-			Debug.Log(a.GetMoveBase().moveName);
-
-        }
 		hud.SetData(Pokemon);
 		// pokemon enter animation will be done here
 	}

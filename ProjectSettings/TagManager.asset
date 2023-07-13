@@ -9,6 +9,7 @@ TagManager:
   - NPC
   - Canvas
   - ItemList
+  - Inventory
   layers:
   - Default
   - TransparentFX

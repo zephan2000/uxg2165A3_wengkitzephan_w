@@ -9,13 +9,13 @@ public class refSession
     public string actorType;
     public string levelid;
     public int maxhp;
-    public int defense;
     public int physicaldmg;
     public int magicdmg;
     public int vitality;
     public int power;
     public int intelligence;
     public int attspeed;
+    public int attributePoint;
     public int exp;
     public int gold;
     public string weapon;

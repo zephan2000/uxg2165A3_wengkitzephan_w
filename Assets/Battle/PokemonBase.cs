@@ -19,8 +19,8 @@ public class PokemonBase
 	public int pokemonPower { get { return power; } }
 	public int pokemonIntelligence { get { return intelligence; } }
 	public int pokemonAttSpeed { get { return attspeed; } }
-	public int pokemonExp { get { return exp; } }
-	public int pokemonGold { get { return gold; } }
+	public int pokemonExpGain { get { return expGain; } }
+	public int pokemonGoldGain { get { return goldGain; } }
 	public List<LearnableSkill> pokemonListOfLearnableSkill { get { return listofskills; } }
 
 
@@ -38,25 +38,31 @@ public class PokemonBase
 	[SerializeField] int power; // affects physical damage
 	[SerializeField] int intelligence; // affects magicdamage
 	[SerializeField] int attspeed; // affects priority
-	[SerializeField] int exp;
-	[SerializeField] int gold;
+	[SerializeField] int expGain;
+	[SerializeField] int goldGain;
+	//[SerializeField] string reflevelId;
 
 	[SerializeField] List<LearnableSkill> listofskills;
 
-	public PokemonBase(string actorName, string actorType) // for optimisation, create general functions so that it does not return twice
+	public PokemonBase(string actorName, string actorType, string levelId) // for optimisation, create general functions so that it does not return twice
 	{
+		Debug.Log($"this is LevelId: {levelId}");
 		GetPokemonNameFromActorName(actorName);
 		GetPokemonSpritePathFromActorName(actorName);
-		GetPokemonMaxHpFromActorName(actorName);
-		GetPokemonDefenseFromActorName(actorName);
-		GetPokemonPhysicalDamageFromActorName(actorName);
-		GetPokemonMagicDamageFromActorName(actorName);
-		GetPokemonVitalityFromActorName(actorName);
-		GetPokemonPowerFromActorName(actorName);
-		GetPokemonIntelligenceFromActorName(actorName);
-		GetPokemonSpeedFromActorType(actorName);
-		GetPokemonListOfLSFromActorType(actorType);
+		GetPokemonMaxHpFromLevelId(levelId);
+		GetPokemonPhysicalDamageFromLevelId(levelId);
+		GetPokemonMagicDamageFromLevelId(levelId);
+		GetPokemonVitalityFromLevelId(levelId);
+		GetPokemonPowerFromLevelId(levelId);
+		GetPokemonPhysicalDamageFromLevelId(levelId);
+		GetPokemonPhysicalDamageFromLevelId(levelId);	
+		GetPokemonListOfLSFromActorType(actorType); //getting skill list from actor sheet, don't change
 	}
+
+	//public void SetRefLevelId(string actorType, int level) 
+	//{
+	//	reflevelId = actorType + "_" + level.ToString();	
+	//}
 
 	public void GetPokemonNameFromActorName(string actorName)
 	{
@@ -66,51 +72,48 @@ public class PokemonBase
 	{
 		actorSpritePath = Game.GetActorByName(actorName).displaySpritePath;
 	}
-	public void GetPokemonMaxHpFromActorName(string actorName)
+	public void GetPokemonMaxHpFromLevelId(string levelId)
 	{
-		maxHp = Game.GetActorByName(actorName).maxhp;
+		maxHp = Game.GetLevelByLevelId(levelId).maxhp;
 	}
-	public void GetPokemonDefenseFromActorName(string actorName)
+	public void GetPokemonPhysicalDamageFromLevelId(string levelId)
 	{
-		defense = Game.GetActorByName(actorName).defense;
+		physicaldamage = Game.GetLevelByLevelId(levelId).physicaldmg;
 	}
-	public void GetPokemonPhysicalDamageFromActorName(string actorName)
+	public void GetPokemonMagicDamageFromLevelId(string levelId)
 	{
-		physicaldamage = Game.GetActorByName(actorName).physicaldmg;
+		magicdamage = Game.GetLevelByLevelId(levelId).magicdmg;
 	}
-	public void GetPokemonMagicDamageFromActorName(string actorName)
+	public void GetPokemonVitalityFromLevelId(string levelId)
 	{
-		magicdamage = Game.GetActorByName(actorName).magicdmg;
+		vitality = Game.GetLevelByLevelId(levelId).vitality;
 	}
-	public void GetPokemonVitalityFromActorName(string actorName)
+	public void GetPokemonPowerFromLevelId(string levelId)
 	{
-		vitality = Game.GetActorByName(actorName).vitality;
+		power = Game.GetLevelByLevelId(levelId).power;
 	}
-	public void GetPokemonPowerFromActorName(string actorName)
+	public void GetPokemonIntelligenceFromLevelId(string levelId)
 	{
-		power = Game.GetActorByName(actorName).power;
+		intelligence = Game.GetLevelByLevelId(levelId).intelligence;
 	}
-	public void GetPokemonIntelligenceFromActorName(string actorName)
+	public void GetPokemonSpeedFromLevelId(string levelId)
 	{
-		intelligence = Game.GetActorByName(actorName).intelligence;
+		Debug.Log(Game.GetLevelByLevelId(levelId).attspeed);
+		attspeed = Game.GetLevelByLevelId(levelId).attspeed;
+	}
+	public void GetPokemonExpGainFromlevelId(string levelId)
+	{
+		expGain = Game.GetLevelByLevelId(levelId).expGain;
+	}
+	public void GetPokemonGoldGainFromActorType(string levelId)
+	{
+		goldGain = Game.GetLevelByLevelId(levelId).goldGain;
 	}
 	public void GetPokemonListOfLSFromActorType(string actorType) //revist this
 	{
 		listofskills = GetListOfLearnableSkillByType(actorType);
 	}
-	public void GetPokemonSpeedFromActorType(string actorName)
-	{
-		Debug.Log(Game.GetActorByName(actorName).attSpeed);
-		attspeed = Game.GetActorByName(actorName).attSpeed;
-	}
-	public void GetPokemonExpFromActorType(string actorName)
-	{
-		exp = Game.GetActorByName(actorName).exp;
-	}
-	public void GetPokemonGoldFromActorType(string actorName)
-	{
-		gold = Game.GetActorByName(actorName).gold;
-	}
+	
 	public List<LearnableSkill> GetListOfLearnableSkillByType(string actorType)
 	{
 		//Debug.Log("Running List of LS function");
@@ -131,14 +134,13 @@ public class PokemonBase
 public enum Stat
 {
 	PhysicalDamage,
-	Defense,
 	MagicDamage,
 	Vitality,
 	Power,
 	Intelligence,
 	Speed,
-	Exp,
-	Gold,
+	ExpGain,
+	GoldGain,
 	MaxHP
 }
 

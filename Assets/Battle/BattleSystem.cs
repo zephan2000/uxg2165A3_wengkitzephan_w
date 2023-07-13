@@ -40,9 +40,15 @@ namespace pattayaA3
 			//Debug.Log($"{Game.sessionactorName},{Game.sessionactorType}");
 			Debug.Log($"{Game.chosenenemyName},{Game.chosenenemyType}");
 			//playerUnit.BattleUnitSetup(Game.sessionactorName,Game.sessionactorType);
-			playerUnit.BattleUnitSetup("Warrior", "playerWarrior");
-			enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType);
-
+			playerUnit.BattleUnitSetup("Warrior", "playerWarrior", 1);
+			if(Game.chosenenemyName == "Dark Wizard")
+			{
+				enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetDarkWizardLevel());
+			}
+			else
+			{
+				enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetEnemyPokemonLevel());
+			}	
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
 			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");
 			yield return new WaitForSeconds(1f);

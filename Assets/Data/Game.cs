@@ -22,8 +22,8 @@ public static class Game
     private static List<Dialog> dialogList;
     private static List<level> levellist;
     private static int enemyPokemonLevel = 1;
-
-    private static EachItem eachitem;
+	private static int darkWizardLevel = 1;
+	private static EachItem eachitem;
 
 
     public static string chosenenemyName { get; set; }
@@ -170,7 +170,49 @@ public static class Game
         }
         return nskills;
     }
-	#region Zephan's Data
+    #region Zephan's Data
+
+    public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
+    {
+        level alevelid = GetLevelByLevelId(levelid);
+        mainsession.maxhp = alevelid.maxhp;
+		mainsession.physicaldmg = alevelid.physicaldmg;
+		mainsession.physicaldmg = alevelid.physicaldmg;
+		mainsession.magicdmg = alevelid.magicdmg;
+		mainsession.vitality = alevelid.vitality;
+		mainsession.power = alevelid.power;
+		mainsession.intelligence = alevelid.intelligence;
+		mainsession.attspeed = alevelid.attspeed;
+	}
+    
+    public static int GetLevelFromLevelId(string levelid)
+    {
+        string[] levelIdArray = levelid.Split('_');
+        return Int32.Parse(levelIdArray[1]);
+    }
+
+    public static level GetLevelbyActorType(string type)
+	{
+		foreach (level level in levellist)
+		{
+			if (level.actorType == type)
+			{
+				//Debug.Log(aactor.actorType);
+				//Debug.Log(aactor.displaySpritePath);
+				return level;
+			}
+		}
+		return null;
+	}
+
+	public static level GetLevelByLevelId (string levelid)
+	{
+		foreach (level alevel in levellist)
+		{
+			if (alevel.levelId == levelid) return alevel;
+		}
+		return null;
+	}
 
 	public static void SetPlayerActorBySession()
 	{
@@ -227,13 +269,22 @@ public static class Game
 		dialogList = adialog;
 	}
 
-    public static int SetPokemonLevel(string pokemonLevel)
+    public static int SetEnemyPokemonLevel(string pokemonLevel)
     {
         return enemyPokemonLevel = Int32.Parse(pokemonLevel);
     }
-	public static int GetPokemonLevel()
+    public static int SetDarkWizardLevel(int darkWizardLevel)
+    {
+        return darkWizardLevel;
+    }
+
+	public static int GetEnemyPokemonLevel()
 	{
         return enemyPokemonLevel;
+	}
+	public static int GetDarkWizardLevel()
+	{
+		return darkWizardLevel;
 	}
 	#endregion
 	public static void SetItemList(List<items> alist)

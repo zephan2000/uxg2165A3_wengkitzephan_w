@@ -22,20 +22,6 @@ public class EachItem : MonoBehaviour
     public bool samecount;
     public List<string> listOfInventory = new List<string> ();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        //currentcount = currentSession.inventory.Length;
-        //realcount = currentSession.inventory.Length;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public bool CheckforInventory()
     {
         if (currentcount == test.realcount)

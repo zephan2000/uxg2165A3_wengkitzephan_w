@@ -61,7 +61,7 @@ namespace pattayaA3
 			if (Input.GetKey(KeyCode.D)) { moveDir += Vector2.right; this.GetComponent<SpriteRenderer>().flipX = false; }
 			//move player position
 			//Debug.Log(IsWalkable((Vector3)moveDir));
-			if(moveDir != Vector2.zero && !inventoryOpen)
+			if(moveDir != Vector2.zero)
 			{
 				MovePlayer(moveDir);
 			}
@@ -81,23 +81,12 @@ namespace pattayaA3
 					else
 						GetGameObject().GetComponent<NPC>()?.Interact();
 				}
-			}
-            else if (Input.GetKeyDown(KeyCode.K))
-            {
-                if (inventoryOpen)
-                {
-                    inventoryOpen = !inventoryOpen;
-                }
-				else
-				{
-                    inventoryOpen = !inventoryOpen;
-                }
-            }
+			}   
 
         }
 		public void MovePlayer(Vector2 moveDir) // old movement codes
 		{
-			int count = rb.Cast(moveDir, movementFilter, castCollisions, 6.5f * Time.fixedDeltaTime + collisionOffset);
+			int count = rb.Cast(moveDir, movementFilter, castCollisions, 5.5f * Time.fixedDeltaTime + collisionOffset);
 
 			if (count == 0)
 				rb.MovePosition(rb.position + moveDir * 5.5f * Time.fixedDeltaTime);

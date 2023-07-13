@@ -21,7 +21,8 @@ namespace pattayaA3
 
         public GameObject inventory;
 		public inventorybox inventorybox;
-		private bool isOpenInventory;
+		public Invent invent;
+		public bool isOpenInventory;
 		private bool isOpenTrainingCenter;
 
 		public GameObject trainingCenterBackground;
@@ -56,10 +57,6 @@ namespace pattayaA3
 			{
 				TownDialogManager.Instance.HandleUpdate();
 			}
-			else if (state == GameState.Inventory)
-			{
-
-			}
 			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z))
 			{
 				ToggleTrainingCenter();
@@ -76,13 +73,16 @@ namespace pattayaA3
 			//Raiyan
 			if (Input.GetKeyDown(KeyCode.I))
             {
-				ToggleInventory();
-				if (isOpenInventory)
+				if (!isOpenInventory)
 				{
 					state = GameState.Inventory;
+					invent.ToggleInventory(isOpenInventory);
+					isOpenInventory = !isOpenInventory;
 				}
 				else
 				{
+					invent.ToggleInventory(isOpenInventory);
+					isOpenInventory = !isOpenInventory;
 					state = GameState.FreeRoam;
 				}
             }
@@ -135,22 +135,22 @@ namespace pattayaA3
 			return isStarted;
 		}
 
-        public void SetInventory(bool aInventory)
-        {
-            isOpenInventory = aInventory;
-            if (isOpenInventory == true)
-            {
-                inventory.SetActive(true);
-            }
-            else
-            {
-                inventory.SetActive(false);
-            }
-        }
-        public void ToggleInventory()
-        {
-            SetInventory(!isOpenInventory);
-        }
+        //public void SetInventory(bool aInventory)
+        //{
+        //    isOpenInventory = aInventory;
+        //    if (isOpenInventory == true)
+        //    {
+        //        inventory.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        inventory.SetActive(false);
+        //    }
+        //}
+        //public void ToggleInventory()
+        //{
+        //    SetInventory(!isOpenInventory);
+        //}
 		public void SetTrainingCenter(bool aInventory)
 		{
 			isOpenTrainingCenter = aInventory;

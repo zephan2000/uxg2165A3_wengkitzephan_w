@@ -9,6 +9,8 @@ public class refLevel
     public string actorType;
     public int expToGain;
     public int maxExp;
+    public int expGain;
+    public int goldGain;
     public int maxhp;
     public int defense;
     public int physicaldmg;

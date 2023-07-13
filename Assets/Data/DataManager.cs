@@ -109,8 +109,9 @@ public class DataManager : MonoBehaviour
             sessionList.Add(asession);
         }
         Game.SetSessionList(sessionList);*/
-        session asession = new session(demoData.session[0].seshname, demoData.session[0].actorType, demoData.session[0].levelid, demoData.session[0].maxhp, demoData.session[0].defense, demoData.session[0].physicaldmg, demoData.session[0].magicdmg, demoData.session[0].vitality,
-                demoData.session[0].power, demoData.session[0].intelligence, demoData.session[0].attspeed, demoData.session[0].exp, demoData.session[0].gold, demoData.session[0].weapon, demoData.session[0].helmet, demoData.session[0].armour, demoData.session[0].inventory, demoData.session[0].displaySpritePath);
+        //save load system will use a foreach loop
+        session asession = new session(demoData.session[0].seshname, demoData.session[0].actorType, demoData.session[0].levelid, demoData.session[0].maxhp, demoData.session[0].physicaldmg, demoData.session[0].magicdmg, demoData.session[0].vitality,
+                demoData.session[0].power, demoData.session[0].intelligence, demoData.session[0].attspeed, demoData.session[0].attributePoint, demoData.session[0].exp, demoData.session[0].gold, demoData.session[0].weapon, demoData.session[0].helmet, demoData.session[0].armour, demoData.session[0].inventory, demoData.session[0].displaySpritePath);
         Game.SetSession(asession);
 
         foreach (refActor refactor in demoData.actor)
@@ -123,8 +124,7 @@ public class DataManager : MonoBehaviour
             //}
             //refactor.skillslist = stringSkillList;
             //Debug.Log($"This is {refactor.actorType}'s speed {refactor.attspeed}");
-            actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.maxhp, refactor.defense, refactor.physicaldmg, refactor.magicdmg,
-                refactor.vitality, refactor.power, refactor.intelligence, refactor.attspeed, refactor.skillslist, refactor.exp, refactor.gold, refactor.displaySpritePath);
+            actor aCtor = new actor(refactor.actorType, refactor.displayName, refactor.skillslist, refactor.displaySpritePath);
 
             actorList.Add(aCtor);
         }
@@ -132,7 +132,7 @@ public class DataManager : MonoBehaviour
 
         foreach (refLevel reflevel in demoData.level)
         {
-            level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.maxhp, reflevel.defense,
+            level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.expGain, reflevel.goldGain, reflevel.maxhp, reflevel.defense,
                 reflevel.physicaldmg, reflevel.magicdmg, reflevel.vitality, reflevel.power, reflevel.intelligence, reflevel.attspeed);
             levelList.Add(lEvel);
         }

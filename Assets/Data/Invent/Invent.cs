@@ -9,25 +9,10 @@ public class Invent : MonoBehaviour
     public GameObject inventory;
     public GameObject test;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ToggleInventory();
-        }
-    }
-
     public void ActivateInvent()
     {
         test = Instantiate(menu, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-        test.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+        test.transform.SetParent(GameObject.FindGameObjectWithTag("Inventory").transform, false);
         //Instantiate(canvas);
     }
 
@@ -36,7 +21,7 @@ public class Invent : MonoBehaviour
         GameObject.Destroy(test);
     }
 
-    public void ToggleInventory()
+    public void ToggleInventory(bool isOpenInventory)
     {
         SetInventory(!isOpenInventory);
     }

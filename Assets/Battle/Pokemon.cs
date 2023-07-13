@@ -38,7 +38,6 @@ public class Pokemon
 		HP = MaxHP;
 		StatBoosts = new Dictionary<Stat, int>() //important to instantiate
 		{
-			{Stat.Defense, 0},
 			{Stat.PhysicalDamage, 0},
 			{Stat.MagicDamage, 0},
 			{Stat.Vitality,0},
@@ -52,17 +51,16 @@ public class Pokemon
 	void CalculateStats()
 	{
 		Stats = new Dictionary<Stat,int>();
-		Stats.Add(Stat.Defense, Mathf.FloorToInt((_base.pokemonDefense +(_base.pokemonDefense * level / 100f) + 5)));
-		Stats.Add(Stat.PhysicalDamage, Mathf.FloorToInt((_base.pokemonPhysicalDmg + (_base.pokemonPower * level / 100f) + 5)));
-		Stats.Add(Stat.MagicDamage, Mathf.FloorToInt((_base.pokemonMagicDmg + (_base.pokemonIntelligence * level / 100f) + 5)));
-		Stats.Add(Stat.Vitality, Mathf.FloorToInt((_base.pokemonVitality * level / 100f) + 5));
-		Stats.Add(Stat.Power, Mathf.FloorToInt((_base.pokemonPower * level / 100f) + 5));
-		Stats.Add(Stat.Intelligence, Mathf.FloorToInt((_base.pokemonIntelligence * level / 100f) + 5));
-		Stats.Add(Stat.Speed, Mathf.FloorToInt((_base.pokemonAttSpeed * level / 100f) + 5));
-		Stats.Add(Stat.Exp,_base.pokemonExp);
-		Stats.Add(Stat.Gold,_base.pokemonGold);
+		Stats.Add(Stat.PhysicalDamage, _base.pokemonPhysicalDmg); // calculate physicaldamage based on pokemon power 
+		Stats.Add(Stat.MagicDamage, _base.pokemonMagicDmg);     // calculate magicdmg based on pokemon intelligence
+		Stats.Add(Stat.Vitality, _base.pokemonVitality);
+		Stats.Add(Stat.Power, _base.pokemonPower);
+		Stats.Add(Stat.Intelligence, _base.pokemonIntelligence);
+		Stats.Add(Stat.Speed, _base.pokemonAttSpeed);
+		Stats.Add(Stat.ExpGain,_base.pokemonExpGain);
+		Stats.Add(Stat.GoldGain,_base.pokemonGoldGain);
 
-		MaxHP = Mathf.FloorToInt((_base.MaxHp * level) + 10 + level + (_base.pokemonVitality * level / 100f) + 5);
+		MaxHP = Mathf.FloorToInt(_base.MaxHp * (1 + (_base.pokemonVitality / 100f))); //take in items also
 	}
 	int GetStat(Stat stat)
 	{
@@ -92,10 +90,6 @@ public class Pokemon
 		}
 	}
 	//properties can be used here since the pokemonBase deals with the base data already
-	public int Defense
-	{
-		get { return GetStat(Stat.Defense); }
-	}
 	public int PhysicalDamage 
 	{
 		get { return GetStat(Stat.PhysicalDamage); }

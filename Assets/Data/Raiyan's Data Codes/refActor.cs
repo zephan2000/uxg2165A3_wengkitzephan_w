@@ -8,17 +8,6 @@ public class refActor
     //public string actorId;
     public string actorType;
     public string displayName;
-    public int maxhp;
-    public int defense;
-    public int physicaldmg;
-    public int magicdmg;
-    public int vitality;
-    public int power;
-    //public int expertise;
-    public int intelligence;
-    public int attspeed;
     public string skillslist;
-    public int exp;
-    public int gold;
     public string displaySpritePath;
 }

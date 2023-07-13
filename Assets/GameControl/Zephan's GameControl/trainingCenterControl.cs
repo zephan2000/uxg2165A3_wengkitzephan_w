@@ -42,7 +42,7 @@ namespace pattayaA3
 			actor trainingNPCactor = Game.Getactorbytype(trainingNPC);
 			trainingNPCname.text = trainingNPCactor.displayName;
 			string trainingNPC_spritePath = trainingNPCactor.displaySpritePath;
-			StartCoroutine(TypeDialog(Game.GetDialogByDialogId("INTRO0038").dialogueText));
+			StartCoroutine(TypeDialog(Game.GetDialogByDialogId("TRAINING001").dialogueText));
 			UpdateSprite(trainingNPC_spritePath, trainingNPCSprite);
 
 		}
@@ -57,7 +57,7 @@ namespace pattayaA3
 		}
 		public void SetPokemonLevel(string inputText) // need to figure this out, why is no input being read
 		{
-			Game.SetPokemonLevel(inputText);
+			Game.SetEnemyPokemonLevel(inputText);
 		}
 		void enemy1Setup(string enemy1type)
         {
