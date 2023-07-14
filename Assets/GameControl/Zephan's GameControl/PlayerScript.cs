@@ -91,6 +91,11 @@ namespace pattayaA3
 				StartCoroutine(LevelUp()); //need to run this after quest is done too
 				StartCoroutine(playerHud.UpdateTownData());
 			}
+			if(Input.GetKeyDown(KeyCode.F1)) //for bug testing
+			{
+				StartCoroutine(SetHpTo50());
+				StartCoroutine(playerHud.UpdateTownData());
+			}
 				
 		}
 
@@ -111,6 +116,12 @@ namespace pattayaA3
 			levelUpText.SetActive(false);
 			// reset current exp
 
+		}
+		public IEnumerator SetHpTo50() // for bug testing
+		{
+			Game.currentHP = 50;
+			playerHud.SetTownData();
+			yield return new WaitForSeconds(1.2f);
 		}
 		public void MovePlayer(Vector2 moveDir) // old movement codes
 		{

@@ -39,8 +39,8 @@ namespace pattayaA3
 			nameText.text = Game.GetSession().actorType;
 			levelText.text = "Lvl" + Game.playerLevel.ToString();
 			Debug.Log($"this is currentHp: {Game.currentHP} / {Game.maxHP}, currentexp: {Game.currentEXP} / {Game.currentmaxEXP}");
-			hpBar.SetHPData((float)(Game.currentHP / Game.maxHP));
-			expBar.SetEXPData((float)(Game.currentEXP / Game.currentmaxEXP));
+			hpBar.SetHPSmooth((float)(Game.currentHP / Game.maxHP));
+			expBar.SetEXPSmooth((float)(Game.currentEXP / Game.currentmaxEXP));
 		}
 		public IEnumerator UpdateData()
 		{

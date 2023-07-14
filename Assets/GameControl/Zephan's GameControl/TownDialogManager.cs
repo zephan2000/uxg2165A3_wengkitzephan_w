@@ -31,7 +31,7 @@ public class TownDialogManager : MonoBehaviour
 	int currentLine = 0;
 	public void HandleUpdate()
 	{
-		if (Input.GetKeyDown(KeyCode.Space) && dialogState == TownDialogState.EndOfDialog)
+		if (Input.GetKeyDown(KeyCode.F) && dialogState == TownDialogState.EndOfDialog)
 		{
 			Debug.Log($"moving to next Dialog, this is current Dialog {currentDialog.dialogueId}");
 			currentDialog = Game.GetDialogByDialogList(currentDialog.nextdialogueId, dialogList); // assigning nextdialog to currentDialog from dialogList

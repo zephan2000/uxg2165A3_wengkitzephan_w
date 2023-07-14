@@ -44,7 +44,9 @@ namespace pattayaA3
 			{
 				if (state == GameState.Dialog)
 				{
+					
 					state = GameState.Training;
+					Debug.Log($"setting Gamestate from Dialog to {state}");
 					Game.runonce = 0;
 				}	
 			};
@@ -74,7 +76,11 @@ namespace pattayaA3
 			}
 			else if (state == GameState.Dialog)
 			{
-				//Debug.Log($"Handling Dialog Update, state is {state}");
+				if(Input.GetKey(KeyCode.M)) 
+				{ 
+					Debug.Log($"Handling Dialog Update, state is {state}"); 
+				}
+				
 				TownDialogManager.Instance.HandleUpdate();
 			}
 			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z) && state != GameState.Dialog)

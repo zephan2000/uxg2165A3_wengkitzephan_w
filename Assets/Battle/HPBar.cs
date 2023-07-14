@@ -26,6 +26,7 @@ namespace pattayaA3
 				{
 					curHp -= HpDecrease * Time.deltaTime;
 					health.transform.localScale = new Vector3(curHp, 1f);
+					Debug.Log(health.transform.localScale);
 					yield return null;
 				}
 			}
