@@ -23,16 +23,19 @@ public class TownDialogManager : MonoBehaviour
 	private bool Skip;
 	private bool isWarningDialog;
 	private Dialog currentDialog;
+	List<Dialog> dialogList;
+	int currentLine = 0;
+	private bool allowNext = false;
 	private void Awake()
 	{
 		Instance = this;
 	}
-	List<Dialog> dialogList;
-	int currentLine = 0;
 	public void HandleUpdate()
 	{
-		if (Input.GetKeyDown(KeyCode.F) && dialogState == TownDialogState.EndOfDialog)
+		if (Input.GetKeyDown(KeyCode.Space) && dialogState == TownDialogState.EndOfDialog)
 		{
+			//if (!allowNext) return;
+			//	if (allowNext) allowNext = false;
 			Debug.Log($"moving to next Dialog, this is current Dialog {currentDialog.dialogueId}");
 			currentDialog = Game.GetDialogByDialogList(currentDialog.nextdialogueId, dialogList); // assigning nextdialog to currentDialog from dialogList
 			currentDialogCoroutine = StartCoroutine(TypeDialog(currentDialog.dialogueText)); // making sure that dialog is read straight from the list
@@ -97,7 +100,6 @@ public class TownDialogManager : MonoBehaviour
 				{
 					Debug.Log($"this is the dialogtext when skipping: {(string)dialogText.text}");
 					Debug.Log($"this is the dialogState when skipping: {dialogState}");
-					StopAllCoroutines();
 					dialogText.text = currentDialog.dialogueText;
 					SkipText.SetActive(false);
 					//yield return new WaitForSeconds(1.2f);
@@ -132,7 +134,7 @@ public class TownDialogManager : MonoBehaviour
 			dialogState = TownDialogState.EndOfDialog;
 			SkipText.SetActive(false);
 			NextText.SetActive(true);
-			StopAllCoroutines();
+			allowNext = true;
 		}
 		isTyping = false;
 

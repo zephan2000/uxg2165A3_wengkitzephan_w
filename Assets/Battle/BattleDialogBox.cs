@@ -28,6 +28,7 @@ namespace pattayaA3
 		public IEnumerator TypeDialog(string dialog) // animating dialog to reveal letter by letter
 		{
 			dialogText.text = "";
+			Debug.Log(dialogText.text);
 			foreach (var letter in dialog.ToCharArray()) 
 			{
 				dialogText.text += letter;

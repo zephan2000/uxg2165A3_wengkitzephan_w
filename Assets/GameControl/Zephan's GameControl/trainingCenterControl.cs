@@ -22,6 +22,7 @@ namespace pattayaA3
 		[SerializeField] LevelController levelController;
 		[SerializeField] GameObject trainingCenterBackground;
 		[SerializeField] InputField levelInput;
+		bool allowNext = true;
 
 		//Skills
 		List<PokemonBase> trainingEnemyList = new List<PokemonBase>();
@@ -107,21 +108,20 @@ namespace pattayaA3
        
 		public void LoadBattle()
 		{
-			if(Game.runonce <= 0)
+			if (Game.currentHP != Game.maxHP)
 			{
-				if (Game.currentHP != Game.maxHP)
-				{
-					Game.runonce++;
-					levelController.state = GameState.Dialog;
-					Debug.Log($"showing warning Dialog, state is: {levelController.state}");
-					StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
-				}
-				else
-				{
-					levelController.StartNewLevel("Battle View");
-				}
+				StopAllCoroutines();
+				if (!allowNext) return;
+				if (allowNext) allowNext = false;
+				levelController.state = GameState.Dialog;
+				Debug.Log($"showing warning Dialog, state is: {levelController.state}");
+				allowNext = true;
+				StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
 			}
-			
+			else
+			{
+				levelController.StartNewLevel("Battle View");
+			}
 		}
     }
 }

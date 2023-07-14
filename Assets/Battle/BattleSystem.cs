@@ -23,6 +23,7 @@ namespace pattayaA3
 		int currentAction;
 		int currentMove;
 		bool isRunningTurn;
+		bool allowNext = true;
 		private void Start()
 		{
 			StartCoroutine(SetupBattle());
@@ -106,7 +107,8 @@ namespace pattayaA3
 		}
 		// sourceUnit is the attacker, targetUnit is the victim of the move
 		IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
-		{ 
+		{
+			//if(allowNext)
 			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.pokemonName} used {move.moveBase.moveName}");
 			move.UsesLeft--;
 			yield return new WaitForSeconds(1f);
@@ -248,13 +250,18 @@ namespace pattayaA3
 			}
 			dialogBox.UpdateMoveSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]); //Moves is the list of moves
 
-			if (Input.GetKey(KeyCode.Return))
+			if (Input.GetKeyDown(KeyCode.Return))
 			{
+				StopAllCoroutines();
+				if (!allowNext) return;
+				if (allowNext) allowNext = false;
+				Debug.Log("Return receiving input");
 				var move = playerUnit.Pokemon.Moves[currentMove];
 				if (move.UsesLeft == 0) return;
 
 				dialogBox.EnableMoveSelector(false);
 				dialogBox.EnableDialogText(true);
+				allowNext = true;
 				StartCoroutine(RunTurns(BattleAction.Move));
 				
 			}
