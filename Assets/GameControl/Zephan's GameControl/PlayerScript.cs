@@ -49,7 +49,6 @@ namespace pattayaA3
 		public float collisionOffset = 0.05f;
 		public bool isTouchingDoor;
 		public GameObject levelUpText;
-		private int currentLevel = 1;
 		public BattleHud playerHud;
 		private void Start()
 		{
@@ -102,10 +101,12 @@ namespace pattayaA3
 		public IEnumerator LevelUp()
 		{
 			levelUpText.SetActive(true);
-			currentLevel++;
-			Game.playerLevel = currentLevel;
-			string newlevelid = Game.GetSession().actorType + "_" + currentLevel.ToString();
+			Game.playerLevel++;
+			Game.playerLevel = Game.playerLevel;
+			string newlevelid = Game.GetSession().actorType + "_" + Game.playerLevel.ToString();
+			Debug.Log($"this is level id before level up: {newlevelid}");
 			Game.GetSession().levelId = newlevelid;
+			Debug.Log($"this is level id after level up: {Game.GetSession().levelId}");
 			Game.SetSessionDataFromLevelId(newlevelid);
 			Game.currentLevelEXP = 0;
 			Game.currentHP = Game.maxHP;

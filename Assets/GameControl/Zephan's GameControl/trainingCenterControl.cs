@@ -22,6 +22,7 @@ namespace pattayaA3
 		[SerializeField] LevelController levelController;
 		[SerializeField] GameObject trainingCenterBackground;
 		[SerializeField] InputField levelInput;
+		private Coroutine currentCoroutine;
 		bool allowNext = true;
 
 		//Skills
@@ -57,7 +58,7 @@ namespace pattayaA3
 			foreach (var letter in dialog.ToCharArray())
 			{
 				trainingNPCDialog.text += letter;
-				yield return new WaitForSeconds(1f / 30);
+				yield return new WaitForSeconds(1f / 60);
 			}
 		}
 		public void SetPokemonLevel(string inputText) // need to figure this out, why is no input being read
@@ -110,13 +111,16 @@ namespace pattayaA3
 		{
 			if (Game.currentHP != Game.maxHP)
 			{
-				StopAllCoroutines();
-				if (!allowNext) return;
+				if (!allowNext)
+				{
+					StopAllCoroutines();
+					return;
+				}
 				if (allowNext) allowNext = false;
 				levelController.state = GameState.Dialog;
 				Debug.Log($"showing warning Dialog, state is: {levelController.state}");
 				allowNext = true;
-				StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
+				currentCoroutine = StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
 			}
 			else
 			{

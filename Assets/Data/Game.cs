@@ -23,11 +23,10 @@ public static class Game
     private static List<level> levellist;
     private static int enemyPokemonLevel = 1;
 	private static int darkWizardLevel = 1;
-	private static EachItem eachitem;
-    
+    private static EachItem eachitem;
 
 
-    public static string chosenenemyName { get; set; }
+	public static string chosenenemyName { get; set; }
     public static string chosenenemyType { get; set; }
     public static string sessionactorName { get; set; }
     public static string sessionactorType { get; set; }
@@ -37,6 +36,8 @@ public static class Game
     public static float currentHP { get; set; }
 	public static float maxHP{ get; set; }
     public static string currentPokemonType { get; set; }
+    public static bool playerWon { get; set; }  
+    public static bool playerRan { get;set; }
 
 	public static float currentEXP { get; set; }
 	public static float currentLevelEXP { get; set; }

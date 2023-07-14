@@ -159,6 +159,7 @@ RectTransform:
   - {fileID: 464011799}
   - {fileID: 155543340}
   - {fileID: 1443345580}
+  - {fileID: 623303477}
   m_Father: {fileID: 2002206003}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -728,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &246838627
 RectTransform:
   m_ObjectHideFlags: 0
@@ -746,7 +747,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 485, y: -98}
+  m_AnchoredPosition: {x: 535, y: -98}
   m_SizeDelta: {x: -6.5498047, y: 129.5779}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &246838628
@@ -782,7 +783,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '>>> Left Click or ''Space'' To Skip'
+  m_Text: '>>> Press ''Space'' To Skip'
 --- !u!222 &246838629
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1533,7 +1534,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 570, y: -98}
+  m_AnchoredPosition: {x: 535, y: -98}
   m_SizeDelta: {x: -50.549683, y: 129.5779}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &611189477
@@ -1569,7 +1570,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '>>> Press ''F'' for next'
+  m_Text: '>>> Press ''Space'' for next'
 --- !u!222 &611189478
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1577,6 +1578,86 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611189475}
+  m_CullTransparentMesh: 1
+--- !u!1 &623303476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 623303477}
+  - component: {fileID: 623303479}
+  - component: {fileID: 623303478}
+  m_Layer: 5
+  m_Name: ProgressHUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &623303477
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623303476}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4166666, y: 0.4166666, z: 0.4166666}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 16508952}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 273.6901, y: -155.99994}
+  m_SizeDelta: {x: 1647.39, y: 919.36}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &623303478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623303476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 146
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Progress: 0/3'
+--- !u!222 &623303479
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623303476}
   m_CullTransparentMesh: 1
 --- !u!1 &697971847
 GameObject:
@@ -2234,7 +2315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 570, y: -98}
+  m_AnchoredPosition: {x: 535, y: -98}
   m_SizeDelta: {x: -50.549683, y: 129.5779}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &998932497
@@ -2270,7 +2351,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '>>> Press ''F'' to end'
+  m_Text: '>>> Press ''Space'' to end'
 --- !u!222 &998932498
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3015,7 +3096,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -510.8208, y: 240.52197}
+  m_AnchoredPosition: {x: 595, y: 19.721}
   m_SizeDelta: {x: 665.8531, y: 183.5218}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1443345581

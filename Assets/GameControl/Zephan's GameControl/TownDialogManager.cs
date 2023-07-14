@@ -18,9 +18,9 @@ public class TownDialogManager : MonoBehaviour
 	public event Action OnCloseWarningDialog;
 	public static TownDialogManager Instance { get; private set; }
 	TownDialogState dialogState;
-	private Coroutine currentDialogCoroutine;
+	//private Coroutine currentDialogCoroutine;
 	bool isTyping;
-	private bool Skip;
+	private bool allowSkip = false;
 	private bool isWarningDialog;
 	private Dialog currentDialog;
 	List<Dialog> dialogList;
@@ -32,19 +32,17 @@ public class TownDialogManager : MonoBehaviour
 	}
 	public void HandleUpdate()
 	{
-		if (Input.GetKeyDown(KeyCode.Space) && dialogState == TownDialogState.EndOfDialog)
+		if (Input.GetKeyDown(KeyCode.Space) && dialogState == TownDialogState.EndOfDialog && allowNext == true)
 		{
-			//if (!allowNext) return;
-			//	if (allowNext) allowNext = false;
+			if (!allowNext) return;
+			if (allowNext) allowNext = false;
+			//if(allowSkip) allowSkip = false;
 			Debug.Log($"moving to next Dialog, this is current Dialog {currentDialog.dialogueId}");
 			currentDialog = Game.GetDialogByDialogList(currentDialog.nextdialogueId, dialogList); // assigning nextdialog to currentDialog from dialogList
-			currentDialogCoroutine = StartCoroutine(TypeDialog(currentDialog.dialogueText)); // making sure that dialog is read straight from the list
+			StartCoroutine(TypeDialog(currentDialog)); // making sure that dialog is read straight from the list
 		}
-		else if (dialogState == TownDialogState.LastDialog)
+		if (dialogState == TownDialogState.LastDialog)
 		{
-			//Debug.Log("Starting Next Line");
-			//currentLine = 0;
-			//Debug.Log($"this is the dialogState when last dialog: {dialogState}");
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
 				Debug.Log($"this is isWarningDialog state when pressing space: {isWarningDialog}");
@@ -76,151 +74,147 @@ public class TownDialogManager : MonoBehaviour
 			Debug.Log($"List found {dialogList[0].dialogueText} ");
 			currentDialog = dialogList[0];
 			dialogBox.SetActive(true);
-			currentDialogCoroutine = StartCoroutine(TypeDialog(currentDialog.dialogueText));
+			allowSkip = true;
+			StartCoroutine(TypeDialog(currentDialog));
 		}
 	}
-	public IEnumerator TypeDialog(string line) // animating dialog to reveal letter by letter
+	public IEnumerator TypeDialog(Dialog currentDialog) // animating dialog to reveal letter by letter
 	{
 		Debug.Log(currentDialog.dialogueText);
 		if (dialogState != TownDialogState.Reading)
 			dialogState = TownDialogState.Reading;
 
 		dialogText.text = "";
-		Debug.Log($"this is the dialogId {currentDialog.dialogueId} after clearing: {dialogText.text}");
+		//Debug.Log($"this is the dialogId {currentDialog.dialogueId} after clearing: {dialogText.text}");
 		SkipText.SetActive(true);
 		NextText.SetActive(false);
 		EndText.SetActive(false);
 		foreach (var letter in currentDialog.dialogueText)
-		{ 
+		{
 			Debug.Log($"this is the dialogState when starting animation: {dialogState}");
 			Debug.Log($"this is the dialogId {currentDialog.dialogueId} after entering for loop: {dialogText.text}");
-			if(dialogState != TownDialogState.LastDialog)
+			if (allowSkip == true && Input.GetKey(KeyCode.Space)) // skippable dialogue
 			{
-				if (dialogState == TownDialogState.Reading && Input.GetKey(KeyCode.Space)) // skippable dialogue
-				{
-					Debug.Log($"this is the dialogtext when skipping: {(string)dialogText.text}");
-					Debug.Log($"this is the dialogState when skipping: {dialogState}");
-					dialogText.text = currentDialog.dialogueText;
-					SkipText.SetActive(false);
-					//yield return new WaitForSeconds(1.2f);
-					NextText.SetActive(true);
-					if (currentDialog.nextdialogueId == "-1")
-					{
-						dialogState = TownDialogState.LastDialog;
-						break;
-					}
-					break;
-				}
-
-				else
-				{
-					Debug.Log($"this is the dialogtext when animating: {(string)dialogText.text}");
-					dialogText.text += letter;
-					yield return new WaitForSeconds(1f / 30);
-				}
+				//Debug.Log($"this is allowSkip status: {allowSkip} while dialogue is: {currentDialog.dialogueText}");
+				//if (!allowSkip) yield return null;
+				allowSkip = false;
+				//Debug.Log($"this is the dialogtext when skipping: {(string)dialogText.text}");
+				Debug.Log($"this is the dialogState when skipping: {dialogState}, with currentDialog: {currentDialog.dialogueText}");
+				dialogText.text = currentDialog.dialogueText;
+				SkipText.SetActive(false);
+				//yield return new WaitForSeconds(1.2f);
+				NextText.SetActive(true);
+				break;
 			}
+
+			else
+			{
+				Debug.Log($"this is the dialogtext when animating: {(string)dialogText.text}");
+				dialogText.text += letter;
+				yield return new WaitForSeconds(1f / 10);
+			}
+
 		}
 		Debug.Log($"this is currentdialogId's nextDialogId {currentDialog.nextdialogueId}");
+
 		if (currentDialog.nextdialogueId == "-1")
 		{
+			SkipText.SetActive(false);
+			NextText.SetActive(true);
+			allowSkip = true;
 			Debug.Log($"this is the dialogState when setting dialogState to last dialog: {dialogState}");
 			dialogState = TownDialogState.LastDialog;
-			SkipText.SetActive(false);
-			NextText.SetActive(false);
-			EndText.SetActive(true);
+
 		}
 		else
 		{
-			dialogState = TownDialogState.EndOfDialog;
 			SkipText.SetActive(false);
-			NextText.SetActive(true);
+			NextText.SetActive(false);
+			EndText.SetActive(true);
+			dialogState = TownDialogState.EndOfDialog;
+
 			allowNext = true;
 		}
 		isTyping = false;
-
 	}
-
 	//public IEnumerator TypeDialog(Dialog currentDialog) // animating dialog to reveal letter by letter
 	//{
 	//	Debug.Log(currentDialog.dialogueText);
-	//	if(dialogState != TownDialogState.Reading)
+	//	if (dialogState != TownDialogState.Reading)
 	//		dialogState = TownDialogState.Reading;
 
 	//	dialogText.text = "";
-	//	Debug.Log($"this is the dialogId {currentDialog.dialogueId} after clearing: {dialogText.text}");
+	//	//Debug.Log($"this is the dialogId {currentDialog.dialogueId} after clearing: {dialogText.text}");
 	//	SkipText.SetActive(true);
 	//	NextText.SetActive(false);
 	//	EndText.SetActive(false);
-	//	if(currentDialog.nextdialogueId != "-2") 
-	//	{
-	//		foreach (var letter in currentDialog.dialogueText)
+	//	foreach (var letter in currentDialog.dialogueText)
+	//	{ 
+	//		Debug.Log($"this is the dialogState when starting animation: {dialogState}");
+	//		Debug.Log($"this is the dialogId {currentDialog.dialogueId} after entering for loop: {dialogText.text}");
+	//		if (allowSkip == true && Input.GetKey(KeyCode.Space)) // skippable dialogue
 	//		{
-	//			Debug.Log($"this is the dialogState when starting animation: {dialogState}");
-	//			if (Input.GetKey(KeyCode.Space)) // skippable dialogue
-	//			{
-	//				Debug.Log($"this is the dialogtext when skipping: {(string)dialogText.text}");
-	//				Debug.Log($"this is the dialogState when skipping: {dialogState}");
-	//				dialogText.text = currentDialog.dialogueText;
-	//				SkipText.SetActive(false);
-	//				//yield return new WaitForSeconds(1.2f);
-	//				NextText.SetActive(true);
-	//				break;
-	//			}
-	//			else
-	//			{
-
-	//				Debug.Log($"this is the dialogtext when animating: {(string)dialogText.text}");
-	//				dialogText.text += letter;
-	//				yield return new WaitForSeconds(1f / 30);
-	//			}
-
+	//			//Debug.Log($"this is allowSkip status: {allowSkip} while dialogue is: {currentDialog.dialogueText}");
+	//			//if (!allowSkip) yield return null;
+	//			allowSkip = false;
+	//			//Debug.Log($"this is the dialogtext when skipping: {(string)dialogText.text}");
+	//			Debug.Log($"this is the dialogState when skipping: {dialogState}, with currentDialog: {currentDialog.dialogueText}");
+	//			dialogText.text = currentDialog.dialogueText;
+	//			SkipText.SetActive(false);
+	//			//yield return new WaitForSeconds(1.2f);
+	//			NextText.SetActive(true);
+	//			break;
 	//		}
-	//		yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
-	//		NextDialog(currentDialog.nextdialogueId);
-	//	}
 
-	//	//if (currentDialog.nextdialogueId == "-1" && dialogState != TownDialogState.LastDialog)
+	//		else
+	//		{
+	//			Debug.Log($"this is the dialogtext when animating: {(string)dialogText.text}");
+	//			dialogText.text += letter;
+	//			yield return new WaitForSeconds(1f / 30);
+	//		}
+			
+	//	}
+	//	Debug.Log($"this is currentdialogId's nextDialogId {currentDialog.nextdialogueId}");
+		
+	//	yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+	//	NextDialog(currentDialog);
+	//	//if (currentDialog.nextdialogueId == "-1")
 	//	//{
 	//	//	Debug.Log($"this is the dialogState when setting dialogState to last dialog: {dialogState}");
 	//	//	dialogState = TownDialogState.LastDialog;
-	//	//	SkipText.SetActive(false);
-	//	//	NextText.SetActive(false);
-	//	//	EndText.SetActive(true);
+			
 	//	//}
 	//	//else
 	//	//{
 	//	//	dialogState = TownDialogState.EndOfDialog;
-	//	//	SkipText.SetActive(false);
-	//	//	NextText.SetActive(true);
+			
+	//	//	allowNext = true;
 	//	//}
 	//	//isTyping = false;
-
 	//}
 
-	//private void NextDialog(string nextDialogId)
+	//private void NextDialog(Dialog currentDialog)
 	//{
-	//	Debug.Log($"{nextDialogId}");
-	//	if (nextDialogId == "-2") return;
-	//	if (nextDialogId != "-1")
-	//		StartCoroutine(TypeDialog(Game.GetDialogByDialogList(nextDialogId,dialogList)));
-	//	else
-	//		EndDialogSettings();
-	//}
-
-	//private void EndDialogSettings()
-	//{
-	//	Debug.Log($"this is the current Coroutine: {currentDialogCoroutine}");
-	//	StopCoroutine(currentDialogCoroutine);
-	//	dialogState = TownDialogState.Inactive;
-	//	if (isWarningDialog)
+	//	Debug.Log($"{currentDialog}");
+	//	if (currentDialog.nextdialogueId == "-2") return;
+	//	if (currentDialog.nextdialogueId != "-1")
 	//	{
-	//		Debug.Log($"this is the dialogState when isWarningDialog: {dialogState}");
-	//		OnCloseWarningDialog?.Invoke();
-	//		isWarningDialog = false;
+	//		SkipText.SetActive(false);
+	//		NextText.SetActive(true);
+	//		allowSkip = true;	
+	//		StartCoroutine(TypeDialog(Game.GetDialogByDialogList(currentDialog.nextdialogueId, dialogList)));
+			
 	//	}
+			
 	//	else
-	//		OnCloseDialog?.Invoke();
-
-	//	dialogBox.SetActive(false);
+	//	{
+	//		SkipText.SetActive(false);
+	//		NextText.SetActive(false);
+	//		EndText.SetActive(true);
+	//		dialogState = TownDialogState.LastDialog;
+	//	}
+			
 	//}
+
+	
 }

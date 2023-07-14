@@ -33,7 +33,7 @@ public class IntroductionDialogManager : MonoBehaviour
 	int currentChoice;
 	public void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.F) && dialogState == IntroDialogState.EndOfDialog)
+		if(Input.GetKeyDown(KeyCode.Space) && dialogState == IntroDialogState.EndOfDialog)
 		{
 			currentDialog = Game.GetDialogByDialogList(currentDialog.nextdialogueId, dialogList); // assigning nextdialog to currentDialog from dialogList
 			StartCoroutine(TypeDialog(currentDialog.dialogueText));

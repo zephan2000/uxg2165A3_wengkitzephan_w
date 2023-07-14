@@ -17,7 +17,6 @@ namespace pattayaA3
 		[SerializeField] BattleDialogBox dialogBox;
 		[SerializeField] Image battleBackground;
 		private bool isStarted;
-		private bool playerWon;
 
 		BattleState state;
 		int currentAction;
@@ -124,7 +123,7 @@ namespace pattayaA3
 			if (targetUnit.Pokemon.HP <= 0)
 			{
 				yield return dialogBox.TypeDialog($"{targetUnit.Pokemon.Base.pokemonName} Fainted");
-				playerWon = true;
+				Game.playerWon = true;
 				yield return new WaitForSeconds(2f);
 				CheckForBattleOver(targetUnit);
 			}
@@ -171,12 +170,17 @@ namespace pattayaA3
 		}
 		void BattleOver(bool battleStatus)
 		{
-			playerWon = battleStatus;
-			if(playerWon == true)
+			Game.playerWon = battleStatus;
+			if(Game.playerWon == true)
 			{
 				Debug.Log($"Exp before gain: {Game.currentLevelEXP}/ {Game.currentmaxEXP}");
 				Game.currentLevelEXP += enemyUnit.Pokemon.Base.pokemonExpGain;
 				Debug.Log($"Exp after gain: {Game.currentLevelEXP}/ {Game.currentmaxEXP}");
+			}
+			else if (Game.playerWon == false)
+			{
+				if(Game.playerRan != true)
+					Game.currentLevelEXP += enemyUnit.Pokemon.Base.pokemonExpGain / 2;
 			}
 			state = BattleState.BattleOver;
 			ExitLevel("Town");
@@ -216,7 +220,8 @@ namespace pattayaA3
 				}
 				else if (currentAction == 1)
 				{
-					playerWon = false;
+					Game.playerRan = true;
+					Game.playerWon = false;
 					ExitLevel("Town");
 				}
 			}

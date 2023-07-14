@@ -47,7 +47,6 @@ namespace pattayaA3
 					
 					state = GameState.Training;
 					Debug.Log($"setting Gamestate from Dialog to {state}");
-					Game.runonce = 0;
 				}	
 			};
 			Debug.Log($"finding Id {Game.GetSession().levelId}");
@@ -55,7 +54,7 @@ namespace pattayaA3
 			Debug.Log($"finding maxHp by Id: {Game.GetSession().maxhp}");
 			trainingCenterBackground.SetActive(false);
 			playerHud.SetTownData();
-			if (Game.currentEXP >= Game.currentmaxEXP)
+			if (Game.currentEXP == Game.currentmaxEXP)
 			{
 				Debug.Log("checking for level up");
 				StartCoroutine(player.LevelUp());
