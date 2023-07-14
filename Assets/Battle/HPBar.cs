@@ -4,16 +4,17 @@ using UnityEngine;
 
 namespace pattayaA3
 {
-	public class HPBar : MonoBehaviour
+	public class HpBar : MonoBehaviour
 	{
 		public GameObject health;
 		private void Start()
 		{
 			health.transform.localScale = new Vector3(0.5f, 1f);
 		}
-		public void SetHP(float hpNormalized)
+		public void SetHPData(float hpNormalized)
 		{
 			health.transform.localScale = new Vector3(hpNormalized, 1f);
+			
 		}
 		public IEnumerator SetHPSmooth (float newHp)
 		{
@@ -37,8 +38,6 @@ namespace pattayaA3
 					yield return null;
 				}
 			}
-
-			
 		}
 	}
 }

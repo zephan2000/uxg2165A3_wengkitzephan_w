@@ -48,6 +48,9 @@ namespace pattayaA3
 		List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 		public float collisionOffset = 0.05f;
 		public bool isTouchingDoor;
+		public GameObject levelUpText;
+		private int currentLevel = 1;
+		public BattleHud playerHud;
 		private void Start()
 		{
 			rb = GetComponent<Rigidbody2D>();
@@ -83,7 +86,32 @@ namespace pattayaA3
 				}
 			}   
 
-        }
+			if(Input.GetKeyDown(KeyCode.F2)) 
+			{
+				StartCoroutine(LevelUp()); //need to run this after quest is done too
+				StartCoroutine(playerHud.UpdateTownData());
+			}
+				
+		}
+
+		public IEnumerator LevelUp()
+		{
+			levelUpText.SetActive(true);
+			currentLevel++;
+			Game.playerLevel = currentLevel;
+			string newlevelid = Game.GetSession().actorType + "_" + currentLevel.ToString();
+			Game.GetSession().levelId = newlevelid;
+			Game.SetSessionDataFromLevelId(newlevelid);
+			Game.currentLevelEXP = 0;
+			Game.currentHP = Game.maxHP;
+			Game.currentEXP = Game.currentmaxEXP;
+			Debug.Log(newlevelid);
+			playerHud.SetTownData();
+			yield return new WaitForSeconds(1.2f);
+			levelUpText.SetActive(false);
+			// reset current exp
+
+		}
 		public void MovePlayer(Vector2 moveDir) // old movement codes
 		{
 			int count = rb.Cast(moveDir, movementFilter, castCollisions, 5.5f * Time.fixedDeltaTime + collisionOffset);

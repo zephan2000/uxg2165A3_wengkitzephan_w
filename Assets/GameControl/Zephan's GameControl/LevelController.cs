@@ -17,13 +17,14 @@ namespace pattayaA3
 		public float outOfBoundsDuration = 3f;
 		private float outOfBoundsTimer;
 		public GameObject playerobj;
-		GameState state;
+		public GameState state;
 
         public GameObject inventory;
 		public inventorybox inventorybox;
 		public Invent invent;
 		public bool isOpenInventory;
 		private bool isOpenTrainingCenter;
+		public BattleHud playerHud;
 
 		public GameObject trainingCenterBackground;
 
@@ -39,9 +40,24 @@ namespace pattayaA3
 				if (state == GameState.Dialog) //for cases where you want to go to battle straight after dialog
 					state = GameState.FreeRoam;
 			};
-
-
+			TownDialogManager.Instance.OnCloseWarningDialog += () =>
+			{
+				if (state == GameState.Dialog) //for cases where you want to go to battle straight after dialog
+					state = GameState.Training;
+			};
+			Debug.Log($"finding Id {Game.GetSession().levelId}");
+			Game.SetSessionDataFromLevelId((Game.GetSession().levelId));
+			Debug.Log($"finding maxHp by Id: {Game.GetSession().maxhp}");
 			trainingCenterBackground.SetActive(false);
+			playerHud.SetTownData();
+			if (Game.currentEXP >= Game.currentmaxEXP)
+			{
+				Debug.Log("checking for level up");
+				StartCoroutine(player.LevelUp());
+				StartCoroutine(playerHud.UpdateTownData());
+			}
+				
+			//set EXP and HP data on Start()
 		}
 		private void Update()
 		{
@@ -55,20 +71,14 @@ namespace pattayaA3
 			}
 			else if (state == GameState.Dialog)
 			{
+				//Debug.Log($"Handling Dialog Update, state is {state}");
 				TownDialogManager.Instance.HandleUpdate();
 			}
-			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z))
+			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z) && state != GameState.Dialog)
 			{
+				Debug.Log($"pressing Z {state}");
+
 				ToggleTrainingCenter();
-				if (isOpenTrainingCenter)
-				{
-					state = GameState.Training;
-				}
-				else
-				{
-					state = GameState.FreeRoam;
-				}
-				
 			}
 			//Raiyan
 			if (Input.GetKeyDown(KeyCode.I))
@@ -154,18 +164,28 @@ namespace pattayaA3
 		public void SetTrainingCenter(bool aInventory)
 		{
 			isOpenTrainingCenter = aInventory;
-			if (isOpenTrainingCenter == true)
+			Debug.Log($"setting training center, state is: {state}");
+			if (isOpenTrainingCenter == true )
 			{
+				state = GameState.Training;
+				Debug.Log($"attempting to interact, state is: {state}");
 				trainingCenterBackground.GetComponent<TrainingCenterControl>().Interact();
 			}
 			else
 			{
+				//if(Game.dialogIsOpen == true)
+				//{
+				//	TownDialogManager.Instance.dialogBox.SetActive(false);
+				//}
+				state = GameState.FreeRoam;
 				trainingCenterBackground.GetComponent<TrainingCenterControl>().OffTrainingCenter();
+
 				player.isTouchingDoor = false;
 			}
 		}
 		public void ToggleTrainingCenter()
 		{
+
 			SetTrainingCenter(!isOpenTrainingCenter);
 		}
 

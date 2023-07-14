@@ -92,30 +92,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7071160479006428105}
+  - component: {fileID: 3056053400258625702}
   - component: {fileID: 7071160479006428104}
+  - component: {fileID: 5567692343461462049}
   m_Layer: 8
-  m_Name: Direction
+  m_Name: Level Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7071160479006428105
-Transform:
+--- !u!224 &3056053400258625702
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7071160479006428106}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.019, y: 0.67, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7071160480235571948}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.019, y: 0.85}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &7071160479006428104
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -168,6 +174,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!222 &5567692343461462049
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071160479006428106}
+  m_CullTransparentMesh: 1
 --- !u!1 &7071160480235571949
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +216,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 356456202591043080}
-  - {fileID: 7071160479006428105}
+  - {fileID: 3056053400258625702}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -291,20 +305,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8728bac00c130846882f04924ca5642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentActor: 
+  id: 
+  playerVit: 0
+  playerPow: 0
+  playerExp: 0
+  playerXp: 0
+  playerGold: 0
+  playerImage: 
+  inventoryOpen: 0
   gameController: {fileID: 0}
   initialPosition: {fileID: 0}
-  speed: 6
-  initHealth: 5
-  healthBar: {fileID: 0}
   sprite: {fileID: 0}
-  triggerCol: {fileID: 0}
-  isMoving: 0
+  playerCol: {fileID: 0}
   interactableLayer:
     serializedVersion: 2
     m_Bits: 0
   buildingLayer:
     serializedVersion: 2
     m_Bits: 0
+  portalLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  portal: {fileID: 0}
+  trainingCenter: {fileID: 0}
+  trainingCenterBackground: {fileID: 0}
+  currentposition: {x: 0, y: 0, z: 0}
+  triggerCol: {fileID: 0}
+  movementFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  collisionOffset: 0.05
+  isTouchingDoor: 0
 --- !u!61 &5968146904175973973
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 // Zephan
-public enum DialogState { Typing, SelectingChoice, EndOfDialog, LastDialog}
+public enum IntroDialogState { Typing, SelectingChoice, EndOfDialog, LastDialog}
 public class IntroductionDialogManager : MonoBehaviour
 {
 	[SerializeField] GameObject dialogBox;
@@ -27,38 +27,27 @@ public class IntroductionDialogManager : MonoBehaviour
 	//{
 	//	Instance = this; 
 	//}
-	DialogState dialogState;
-	List<Dialog> dialog1s;
+	IntroDialogState dialogState;
+	List<Dialog> dialogList;
 	List<Dialog> dialogChoiceList;
 	int currentChoice;
 	public void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.F) && dialogState == DialogState.EndOfDialog)
+		if(Input.GetKeyDown(KeyCode.F) && dialogState == IntroDialogState.EndOfDialog)
 		{
-			if (dialogState == DialogState.LastDialog)
-			{
-				//Debug.Log("Starting Next Line");
-				//currentLine = 0;
-				dialogBox.SetActive(false);
-				OnCloseDialog?.Invoke();
-			}
-			else
-			{
-				//Debug.Log("End");
-				currentDialog = Game.GetDialogByDialogList(currentDialog.nextdialogueId, dialog1s); // assigning nextdialog to currentDialog from dialogList
-				StartCoroutine(TypeDialog(currentDialog.dialogueText));
-			}
+			currentDialog = Game.GetDialogByDialogList(currentDialog.nextdialogueId, dialogList); // assigning nextdialog to currentDialog from dialogList
+			StartCoroutine(TypeDialog(currentDialog.dialogueText));
 		}
-		else if (dialogState == DialogState.SelectingChoice)
+		else if (dialogState == IntroDialogState.SelectingChoice)
 		{
 			Debug.Log("Handling Choice");
 			HandleChoiceDialog();
 		}
-		else if (Input.GetKeyDown(KeyCode.Space) | Input.GetMouseButtonDown(0) && dialogState == DialogState.Typing)
+		else if (Input.GetKeyDown(KeyCode.Space) | Input.GetMouseButtonDown(0) && dialogState == IntroDialogState.Typing)
 		{
 			Skip = true;
 		}
-		else if (dialogState == DialogState.LastDialog)
+		else if (dialogState == IntroDialogState.LastDialog)
 		{
 			if(Input.GetKeyDown(KeyCode.F))
 			startMenuController.StartLevel("Town");
@@ -70,15 +59,15 @@ public class IntroductionDialogManager : MonoBehaviour
 		yield return new WaitForEndOfFrame();
 		OnShowDialog?.Invoke();
 		//this.dialog = dialog; // change this line, need to read from a list of your own data
-		dialog1s = Game.GetDialogByType(dialogueType);
-		currentDialog = dialog1s[0];
+		dialogList = Game.GetDialogByType(dialogueType);
+		currentDialog = dialogList[0];
 		dialogBox.SetActive(true);
-		StartCoroutine(TypeDialog(dialog1s[0].dialogueText));
+		StartCoroutine(TypeDialog(dialogList[0].dialogueText));
 	}
 
 	public IEnumerator TypeDialog(string line) // animating dialog to reveal letter by letter
 	{
-		dialogState = DialogState.Typing;
+		dialogState = IntroDialogState.Typing;
 		dialogText.text = "";
 		NameText.GetComponent<Text>().text = currentDialog.currentSpeakerName; 
 		SkipText.SetActive(true);
@@ -88,7 +77,7 @@ public class IntroductionDialogManager : MonoBehaviour
 		ChoiceSelector.SetActive(false);
 		foreach (var letter in line.ToCharArray())
 		{
-			if (Skip) // skippable dialogue
+			if (Input.GetKey(KeyCode.Space)) // skippable dialogue
 			{
 				dialogText.text = line;
 				Skip = false;
@@ -97,8 +86,12 @@ public class IntroductionDialogManager : MonoBehaviour
 				NextText.SetActive(true);
 				break;
 			}
-			dialogText.text += letter;
-			yield return new WaitForSeconds(1f / 30);
+			else
+			{
+				dialogText.text += letter;
+				yield return new WaitForSeconds(1f / 30);
+			}
+			
 		}
 		if (currentDialog.nextdialogueId == "-1")
 		{
@@ -133,8 +126,8 @@ public class IntroductionDialogManager : MonoBehaviour
 		{
 			var chosenDialog = dialogChoiceList[currentChoice];
 			currentChoice = 0;
-			currentDialog = Game.GetDialogByDialogList(chosenDialog.dialogueId, dialog1s);//setting to next dialog
-			dialogState = DialogState.EndOfDialog;// assigning nextdialog to currentDialog from dialogList
+			currentDialog = Game.GetDialogByDialogList(chosenDialog.dialogueId, dialogList);//setting to next dialog
+			dialogState = IntroDialogState.EndOfDialog;// assigning nextdialog to currentDialog from dialogList
 			StartCoroutine(TypeDialog(currentDialog.dialogueText));
 			
 		}
@@ -176,11 +169,11 @@ public class IntroductionDialogManager : MonoBehaviour
 		SkipText.SetActive(false);
 		NextText.SetActive(false);
 		EndText.SetActive(true);
-		dialogState = DialogState.LastDialog;
+		dialogState = IntroDialogState.LastDialog;
 	}
 	void ChoiceDialogSettings()
 	{
-		dialogState = DialogState.SelectingChoice;
+		dialogState = IntroDialogState.SelectingChoice;
 		dialogChoiceList = Game.GetListOfChoicesByDialog(currentDialog);
 		//Debug.Log(dialogChoiceList[0].dialogueId);
 		SkipText.SetActive(false);
@@ -193,7 +186,7 @@ public class IntroductionDialogManager : MonoBehaviour
 	{
 		SkipText.SetActive(false);
 		NextText.SetActive(true);
-		dialogState = DialogState.EndOfDialog;
+		dialogState = IntroDialogState.EndOfDialog;
 	}
 	//void HandleChoiceDialog() //for a square choice dialog formation
 	//{

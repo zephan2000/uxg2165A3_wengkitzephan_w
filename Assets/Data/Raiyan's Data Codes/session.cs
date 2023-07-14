@@ -6,7 +6,7 @@ public class session
 {
     public string seshname { get; set; }
     public string actorType { get; set; }
-    public string levelid { get; set; }
+    public string levelId { get; set; }
     public int maxhp { get; set; }
     public int physicaldmg { get; set; }
     public int magicdmg { get; set; }
@@ -23,12 +23,12 @@ public class session
     public string inventory { get; set; }
     public string displaySpritePath { get; }
 
-    public session(string seshname, string actorType, string levelid, int maxhp, int physicaldmg, int magicdmg, int vitality, int power, 
+    public session(string seshname, string actorType, string levelId, int maxhp, int physicaldmg, int magicdmg, int vitality, int power, 
         int intelligence, int attspeed, int attributePoint, int exp, int gold, string weapon, string helmet, string armour, string inventory, string displaySpritePath)
     {
         this.seshname = seshname;
         this.actorType = actorType;
-        this.levelid = levelid;
+        this.levelId = levelId;
         this.maxhp = maxhp;
         this.physicaldmg = physicaldmg;
         this.magicdmg = magicdmg;
@@ -46,3 +46,21 @@ public class session
         this.displaySpritePath = displaySpritePath;
     }
 }
+//"seshname": "john",
+//            "actorType": "playerWarrior",
+//            "levelId": "playerWarrior_1",
+//            "maxhp": "0",
+//            "physicaldmg": "0",
+//            "magicdmg": "0",
+//            "vitality": "0",
+//            "power": "0",
+//            "intelligence": "0",
+//            "attspeed": "0",
+//            "attributeP": "0",
+//            "exp": "0",
+//            "gold": "0",
+//            "weapon": "item10",
+//            "helmet": "item13",
+//            "armour": "item14",
+//            "inventory": "",
+//            "displaySpritePath": ""

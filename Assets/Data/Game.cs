@@ -24,12 +24,24 @@ public static class Game
     private static int enemyPokemonLevel = 1;
 	private static int darkWizardLevel = 1;
 	private static EachItem eachitem;
+    
 
 
     public static string chosenenemyName { get; set; }
     public static string chosenenemyType { get; set; }
     public static string sessionactorName { get; set; }
     public static string sessionactorType { get; set; }
+    public static bool levelUp { get; set; }
+	public static int playerLevel { get; set; }
+	public static int playerExp { get; set; }
+    public static float currentHP { get; set; }
+	public static float maxHP{ get; set; }
+    public static string currentPokemonType { get; set; }
+
+	public static float currentEXP { get; set; }
+	public static float currentLevelEXP { get; set; }
+	public static float currentexpToGain { get; set; }
+	public static int currentmaxEXP { get; set; }
 	public static player GetPlayer()
     {
         return mainPlayer;
@@ -171,21 +183,26 @@ public static class Game
         return nskills;
     }
     #region Zephan's Data
-
+    
     public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
     {
-        level alevelid = GetLevelByLevelId(levelid);
-        mainsession.maxhp = alevelid.maxhp;
-		mainsession.physicaldmg = alevelid.physicaldmg;
-		mainsession.physicaldmg = alevelid.physicaldmg;
-		mainsession.magicdmg = alevelid.magicdmg;
-		mainsession.vitality = alevelid.vitality;
-		mainsession.power = alevelid.power;
-		mainsession.intelligence = alevelid.intelligence;
-		mainsession.attspeed = alevelid.attspeed;
+        level alevel = GetLevelByLevelId(levelid);
+        Debug.Log($"this is: {levelid}");
+        mainsession.maxhp = alevel.maxhp;
+		mainsession.physicaldmg = alevel.physicaldmg;
+		mainsession.magicdmg = alevel.magicdmg;
+		mainsession.vitality = alevel.vitality;
+		mainsession.power = alevel.power;
+		mainsession.intelligence = alevel.intelligence;
+		mainsession.attspeed = alevel.attspeed;
+        playerLevel = int.Parse(levelid.Split('_')[1]);
+        currentmaxEXP = GetLevelByLevelId(GetSession().levelId).maxExp;
+        currentexpToGain = GetLevelByLevelId(GetSession().levelId).expToGain;
+        maxHP = GetLevelByLevelId(GetSession().levelId).maxhp;
 	}
-    
-    public static int GetLevelFromLevelId(string levelid)
+
+
+	public static int GetLevelFromLevelId(string levelid)
     {
         string[] levelIdArray = levelid.Split('_');
         return Int32.Parse(levelIdArray[1]);
@@ -209,7 +226,11 @@ public static class Game
 	{
 		foreach (level alevel in levellist)
 		{
-			if (alevel.levelId == levelid) return alevel;
+            if (alevel.levelId == levelid)
+            {
+				return alevel;
+			}
+           
 		}
 		return null;
 	}

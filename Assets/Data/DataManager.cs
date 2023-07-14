@@ -21,9 +21,6 @@ public class DataManager : MonoBehaviour
         string filePath = Path.Combine(Application.dataPath, "export.json");
         string dataString = File.ReadAllText(filePath);
         //Debug.Log(dataString);
-
-
-
         DemoData demoData = JsonUtility.FromJson<DemoData>(dataString);
 
 
@@ -110,7 +107,7 @@ public class DataManager : MonoBehaviour
         }
         Game.SetSessionList(sessionList);*/
         //save load system will use a foreach loop
-        session asession = new session(demoData.session[0].seshname, demoData.session[0].actorType, demoData.session[0].levelid, demoData.session[0].maxhp, demoData.session[0].physicaldmg, demoData.session[0].magicdmg, demoData.session[0].vitality,
+        session asession = new session(demoData.session[0].seshname, demoData.session[0].actorType, demoData.session[0].levelId, demoData.session[0].maxhp, demoData.session[0].physicaldmg, demoData.session[0].magicdmg, demoData.session[0].vitality,
                 demoData.session[0].power, demoData.session[0].intelligence, demoData.session[0].attspeed, demoData.session[0].attributePoint, demoData.session[0].exp, demoData.session[0].gold, demoData.session[0].weapon, demoData.session[0].helmet, demoData.session[0].armour, demoData.session[0].inventory, demoData.session[0].displaySpritePath);
         Game.SetSession(asession);
 
@@ -132,8 +129,9 @@ public class DataManager : MonoBehaviour
 
         foreach (refLevel reflevel in demoData.level)
         {
-            level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.expGain, reflevel.goldGain, reflevel.maxhp, reflevel.defense,
+            level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.expGain, reflevel.goldGain, reflevel.maxhp,
                 reflevel.physicaldmg, reflevel.magicdmg, reflevel.vitality, reflevel.power, reflevel.intelligence, reflevel.attspeed);
+
             levelList.Add(lEvel);
         }
         Game.SetLevelList(levelList);

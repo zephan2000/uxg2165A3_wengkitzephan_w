@@ -22,6 +22,7 @@ namespace pattayaA3
 		BattleState state;
 		int currentAction;
 		int currentMove;
+		bool isRunningTurn;
 		private void Start()
 		{
 			StartCoroutine(SetupBattle());
@@ -35,20 +36,13 @@ namespace pattayaA3
 		}
 		public IEnumerator SetupBattle()
 		{
-			Debug.Log("Setting up");
+			//Debug.Log("Setting up");
 			//Set a new background for boss battle
 			//Debug.Log($"{Game.sessionactorName},{Game.sessionactorType}");
 			Debug.Log($"{Game.chosenenemyName},{Game.chosenenemyType}");
 			//playerUnit.BattleUnitSetup(Game.sessionactorName,Game.sessionactorType);
-			playerUnit.BattleUnitSetup("Warrior", "playerWarrior", 1);
-			if(Game.chosenenemyName == "Dark Wizard")
-			{
-				enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetDarkWizardLevel());
-			}
-			else
-			{
-				enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetEnemyPokemonLevel());
-			}	
+			playerUnit.BattleUnitSetup("Warrior", Game.GetSession().actorType, Game.playerLevel); //level will change
+			enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetEnemyPokemonLevel());
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
 			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");
 			yield return new WaitForSeconds(1f);
@@ -74,6 +68,7 @@ namespace pattayaA3
 		IEnumerator RunTurns(BattleAction playerAction)
 		{
 			state = BattleState.ExecuteTurn;
+			isRunningTurn = true;
 
 			if(playerAction == BattleAction.Move)
 			{
@@ -138,12 +133,12 @@ namespace pattayaA3
 			if (move.moveBase.moveTarget == MoveTarget.Self) // for heal
 			{
 				sourceUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
-				yield return sourceUnit.Hud.UpdateHP();
+				yield return sourceUnit.Hud.UpdateData();
 			}
 			else
 			{
 				targetUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
-				yield return targetUnit.Hud.UpdateHP();
+				yield return targetUnit.Hud.UpdateData();
 			}
 		}
 		IEnumerator RunMoveEffects( Pokemon sourceUnit, Pokemon targetUnit, Move move) // encapsulation so that status changes can be added
@@ -161,7 +156,8 @@ namespace pattayaA3
 
 		void CheckForBattleOver(BattleUnit faintedUnit)
 		{
-			if(faintedUnit.IsPlayerUnit)
+			Game.currentHP = playerUnit.Pokemon.HP;
+			if (faintedUnit.IsPlayerUnit)
 			{
 				BattleOver(false);
 			}
@@ -174,6 +170,12 @@ namespace pattayaA3
 		void BattleOver(bool battleStatus)
 		{
 			playerWon = battleStatus;
+			if(playerWon == true)
+			{
+				Debug.Log($"Exp before gain: {Game.currentLevelEXP}/ {Game.currentmaxEXP}");
+				Game.currentLevelEXP += enemyUnit.Pokemon.Base.pokemonExpGain;
+				Debug.Log($"Exp after gain: {Game.currentLevelEXP}/ {Game.currentmaxEXP}");
+			}
 			state = BattleState.BattleOver;
 			ExitLevel("Town");
 		}
@@ -220,6 +222,7 @@ namespace pattayaA3
 		// video #8 done but there something might be wrong with the playerunit or scripatble object do a check, so far so good
 		void HandleMoveSelection() 
 		{
+			isRunningTurn = false;
 			if (Input.GetKeyDown(KeyCode.RightArrow))
 			{
 				if (currentMove < playerUnit.Pokemon.Moves.Count - 1)
@@ -245,7 +248,7 @@ namespace pattayaA3
 			}
 			dialogBox.UpdateMoveSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]); //Moves is the list of moves
 
-			if (Input.GetKeyDown(KeyCode.Return))
+			if (Input.GetKey(KeyCode.Return))
 			{
 				var move = playerUnit.Pokemon.Moves[currentMove];
 				if (move.UsesLeft == 0) return;
@@ -253,6 +256,7 @@ namespace pattayaA3
 				dialogBox.EnableMoveSelector(false);
 				dialogBox.EnableDialogText(true);
 				StartCoroutine(RunTurns(BattleAction.Move));
+				
 			}
 		}
 		public void ExitLevel(string aScene)

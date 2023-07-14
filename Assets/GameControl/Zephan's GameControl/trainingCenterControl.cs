@@ -29,6 +29,7 @@ namespace pattayaA3
 		public void Interact()
 		{
 			trainingCenterBackground.SetActive(true);
+			//if(!Game.dialogIsOpen)
 			SetupTrainingCenter();
 		}
 		public void SetupTrainingCenter()
@@ -39,10 +40,11 @@ namespace pattayaA3
 		}
 		void trainingCenterNPCSetup(string trainingNPC)
 		{
+			//Debug.Log("setting up training center");
 			actor trainingNPCactor = Game.Getactorbytype(trainingNPC);
 			trainingNPCname.text = trainingNPCactor.displayName;
 			string trainingNPC_spritePath = trainingNPCactor.displaySpritePath;
-			StartCoroutine(TypeDialog(Game.GetDialogByDialogId("TRAINING001").dialogueText));
+			StartCoroutine(TypeDialog(Game.GetDialogByDialogId("TRAINING0001").dialogueText));
 			UpdateSprite(trainingNPC_spritePath, trainingNPCSprite);
 
 		}
@@ -82,7 +84,7 @@ namespace pattayaA3
         {
             AssetManager.LoadSprite(path, (Sprite s) =>
             {
-                Debug.Log(path);
+                //Debug.Log(path);
                 actorImage.sprite = s;
             });
         }
@@ -91,15 +93,28 @@ namespace pattayaA3
         {
             Game.chosenenemyName = Game.Getactorbytype(enemyType).displayName;
             Game.chosenenemyType = enemyType;
-			levelController.StartNewLevel("Battle View");
+			LoadBattle();
 		}
 
         public void LoadEnemy2(string enemyType)
         {
 			Game.chosenenemyName = Game.Getactorbytype(enemyType).displayName;
 			Game.chosenenemyType = enemyType;
-			levelController.StartNewLevel("Battle View");
+			LoadBattle();
 		}
        
+		public void LoadBattle()
+		{
+			if (Game.currentHP != Game.maxHP)
+			{
+				levelController.state = GameState.Dialog;
+				Debug.Log($"showing warning Dialog, state is: {levelController.state}");
+				StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
+			}
+			else
+			{
+				levelController.StartNewLevel("Battle View");
+			}
+		}
     }
 }

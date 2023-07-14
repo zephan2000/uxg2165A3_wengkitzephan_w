@@ -7,7 +7,7 @@ public class refSession
 {
     public string seshname;
     public string actorType;
-    public string levelid;
+    public string levelId;
     public int maxhp;
     public int physicaldmg;
     public int magicdmg;
