@@ -31,6 +31,8 @@ namespace pattayaA3
 			trainingCenterBackground.SetActive(true);
 			//if(!Game.dialogIsOpen)
 			SetupTrainingCenter();
+			Game.runonce = 0;
+
 		}
 		public void SetupTrainingCenter()
         {
@@ -105,16 +107,21 @@ namespace pattayaA3
        
 		public void LoadBattle()
 		{
-			if (Game.currentHP != Game.maxHP)
+			if(Game.runonce <= 0)
 			{
-				levelController.state = GameState.Dialog;
-				Debug.Log($"showing warning Dialog, state is: {levelController.state}");
-				StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
+				if (Game.currentHP != Game.maxHP)
+				{
+					Game.runonce++;
+					levelController.state = GameState.Dialog;
+					Debug.Log($"showing warning Dialog, state is: {levelController.state}");
+					StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
+				}
+				else
+				{
+					levelController.StartNewLevel("Battle View");
+				}
 			}
-			else
-			{
-				levelController.StartNewLevel("Battle View");
-			}
+			
 		}
     }
 }

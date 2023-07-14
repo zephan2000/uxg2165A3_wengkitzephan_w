@@ -42,6 +42,7 @@ public static class Game
 	public static float currentLevelEXP { get; set; }
 	public static float currentexpToGain { get; set; }
 	public static int currentmaxEXP { get; set; }
+    public static int runonce { get; set; }
 	public static player GetPlayer()
     {
         return mainPlayer;

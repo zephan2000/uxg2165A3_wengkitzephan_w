@@ -31,7 +31,7 @@ public class TownDialogManager : MonoBehaviour
 	int currentLine = 0;
 	public void HandleUpdate()
 	{
-		if (Input.GetKeyDown(KeyCode.F) && dialogState == TownDialogState.EndOfDialog)
+		if (Input.GetKeyDown(KeyCode.Space) && dialogState == TownDialogState.EndOfDialog)
 		{
 			Debug.Log($"moving to next Dialog, this is current Dialog {currentDialog.dialogueId}");
 			currentDialog = Game.GetDialogByDialogList(currentDialog.nextdialogueId, dialogList); // assigning nextdialog to currentDialog from dialogList
@@ -63,8 +63,8 @@ public class TownDialogManager : MonoBehaviour
 	public IEnumerator ShowDialog(string dialogueType)
 	{
 		Debug.Log($"Reading Dialog, checking dialog state: {dialogState}");
-		//if (dialogState != TownDialogState.Reading)
-		//{
+		if (dialogState != TownDialogState.Reading)
+		{
 			yield return new WaitForEndOfFrame();
 			OnShowDialog?.Invoke();
 			if (dialogueType == "WARNING")
@@ -74,13 +74,13 @@ public class TownDialogManager : MonoBehaviour
 			currentDialog = dialogList[0];
 			dialogBox.SetActive(true);
 			currentDialogCoroutine = StartCoroutine(TypeDialog(currentDialog.dialogueText));
-		//}
+		}
 	}
 	public IEnumerator TypeDialog(string line) // animating dialog to reveal letter by letter
 	{
 		Debug.Log(currentDialog.dialogueText);
-		//if (dialogState != TownDialogState.Reading)
-		//	dialogState = TownDialogState.Reading;
+		if (dialogState != TownDialogState.Reading)
+			dialogState = TownDialogState.Reading;
 
 		dialogText.text = "";
 		Debug.Log($"this is the dialogId {currentDialog.dialogueId} after clearing: {dialogText.text}");
@@ -90,25 +90,33 @@ public class TownDialogManager : MonoBehaviour
 		foreach (var letter in currentDialog.dialogueText)
 		{ 
 			Debug.Log($"this is the dialogState when starting animation: {dialogState}");
-			if (dialogState == TownDialogState.Reading && Input.GetKey(KeyCode.Space)) // skippable dialogue
+			Debug.Log($"this is the dialogId {currentDialog.dialogueId} after entering for loop: {dialogText.text}");
+			if(dialogState != TownDialogState.LastDialog)
 			{
-				Debug.Log($"this is the dialogtext when skipping: {(string)dialogText.text}");
-				Debug.Log($"this is the dialogState when skipping: {dialogState}");
-				dialogText.text = currentDialog.dialogueText;
-				SkipText.SetActive(false);
-				//yield return new WaitForSeconds(1.2f);
-				NextText.SetActive(true);
-				StopCoroutine(currentDialogCoroutine);
-				break;
-			}
-			else
-			{
+				if (dialogState == TownDialogState.Reading && Input.GetKey(KeyCode.Space)) // skippable dialogue
+				{
+					Debug.Log($"this is the dialogtext when skipping: {(string)dialogText.text}");
+					Debug.Log($"this is the dialogState when skipping: {dialogState}");
+					StopAllCoroutines();
+					dialogText.text = currentDialog.dialogueText;
+					SkipText.SetActive(false);
+					//yield return new WaitForSeconds(1.2f);
+					NextText.SetActive(true);
+					if (currentDialog.nextdialogueId == "-1")
+					{
+						dialogState = TownDialogState.LastDialog;
+						break;
+					}
+					break;
+				}
 
-				Debug.Log($"this is the dialogtext when animating: {(string)dialogText.text}");
-				dialogText.text += letter;
-				yield return new WaitForSeconds(1f / 30);
+				else
+				{
+					Debug.Log($"this is the dialogtext when animating: {(string)dialogText.text}");
+					dialogText.text += letter;
+					yield return new WaitForSeconds(1f / 30);
+				}
 			}
-
 		}
 		Debug.Log($"this is currentdialogId's nextDialogId {currentDialog.nextdialogueId}");
 		if (currentDialog.nextdialogueId == "-1")
@@ -124,6 +132,7 @@ public class TownDialogManager : MonoBehaviour
 			dialogState = TownDialogState.EndOfDialog;
 			SkipText.SetActive(false);
 			NextText.SetActive(true);
+			StopAllCoroutines();
 		}
 		isTyping = false;
 

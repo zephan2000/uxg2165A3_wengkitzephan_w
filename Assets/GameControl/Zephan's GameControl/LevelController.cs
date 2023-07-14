@@ -42,8 +42,11 @@ namespace pattayaA3
 			};
 			TownDialogManager.Instance.OnCloseWarningDialog += () =>
 			{
-				if (state == GameState.Dialog) //for cases where you want to go to battle straight after dialog
+				if (state == GameState.Dialog)
+				{
 					state = GameState.Training;
+					Game.runonce = 0;
+				}	
 			};
 			Debug.Log($"finding Id {Game.GetSession().levelId}");
 			Game.SetSessionDataFromLevelId((Game.GetSession().levelId));
