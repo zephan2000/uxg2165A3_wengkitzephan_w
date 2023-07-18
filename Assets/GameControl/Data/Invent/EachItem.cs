@@ -30,7 +30,7 @@ public class EachItem : MonoBehaviour
 
     public EachItem test = Game.GetEachItem();
 
-    public session currentSession = Game.mainsessionData;
+    public save currentSession = Game.mainsessionData;
 
     public int currentcount = 0;
     public int realcount { get; set; }

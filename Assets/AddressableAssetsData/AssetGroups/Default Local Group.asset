@@ -33,10 +33,6 @@ MonoBehaviour:
     m_Address: Assets/tester2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: a2e0194f0dd6adf438c0ddc2c21574fb
-    m_Address: Assets/ArtAssets/tester2.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 3115b5ad51550d548943f5329c5fe389
     m_Address: Assets/ArtAssets/tilemap_packed.png
     m_ReadOnly: 0

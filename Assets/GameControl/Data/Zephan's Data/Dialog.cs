@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dialog : MonoBehaviour
+public class Dialog
 {
 	//dialogueId	nextdialogueId	dialogueType	currentSpeakerName	displaySpritePathLeft	displaySpritePathRight	dialogueText	choices
-	public string dialogueId { get; }
-	public string nextdialogueId { get; }
-	public string dialogueType { get; }
-	public string currentSpeakerName { get; }
-	public string displaySpritePathLeft { get; }
-	public string displaySpritePathRight { get; }
-	public string dialogueText { get; }
-	public string choices { get; }
+	public string dialogueId;
+	public string nextdialogueId;
+	public string dialogueType;
+	public string currentSpeakerName;
+	public string displaySpritePathLeft;
+	public string displaySpritePathRight;
+	public string dialogueText;	
+	public string choices;
 	public Dialog(string dialogueId, string nextdialogueId, string dialogueType, string currentSpeakerName, string displaySpritePathLeft, string displaySpritePathRight, string dialogueText, string choices)
 	{
 		this.dialogueId = dialogueId;

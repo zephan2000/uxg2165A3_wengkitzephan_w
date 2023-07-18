@@ -13,5 +13,7 @@ public class DemoData
     public List<refSession> session;
     public List<refDialogue> dialogue;
     public List<refLevel> level;
+    public List<refQuest> quest;
+    public List<refSave> save;
     
 }

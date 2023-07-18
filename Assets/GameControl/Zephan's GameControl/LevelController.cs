@@ -1,12 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace pattayaA3
 {
 	//Zephan
-	public enum GameState { FreeRoam, Dialog, Shop, Inventory, Training}
+	public enum GameState { FreeRoam, Dialog, Shop, Inventory, Training, SaveMenu, SaveMenuSelection}
+	public enum QuestStatus { Inactive, Ongoing, Completed} //implement this
 	public class LevelController : GameSceneController
 	{
 		private Camera mainCamera;
@@ -18,8 +22,11 @@ namespace pattayaA3
 		private float outOfBoundsTimer;
 		public GameObject playerobj;
 		public GameState state;
+		public QuestStatus questStatus;
 
         public GameObject inventory;
+		public GameObject questHud;
+		public GameObject achievementStatus;
 		public inventorybox inventorybox;
 		public Invent invent;
 		public bool isOpenInventory;
@@ -29,8 +36,13 @@ namespace pattayaA3
 
         private bool isOpenTrainingCenter;
 		public BattleHud playerHud;
-
+		public GameObject pauseMenu;
+		public GameObject pauseMenuPrefab;
+		public List<GameObject> childList;
 		public GameObject trainingCenterBackground;
+		private int currentChoice = 0;
+		private bool isSaveMenuOpen;
+		private bool allowEscape;
 
         void Start()
 		{
@@ -51,22 +63,46 @@ namespace pattayaA3
 					
 					state = GameState.Training;
 					Debug.Log($"setting Gamestate from Dialog to {state}");
-					Game.runonce = 0;
 				}	
 			};
-			Debug.Log($"finding Id {Game.mainsessionData.levelId}");
-			Game.SetSessionDataFromLevelId((Game.mainsessionData.levelId));
+			TownDialogManager.Instance.StartBattleQuest += () =>
+			{
+				StartBattleQuestHud();
+			};
+			TownDialogManager.Instance.OnHeal += () =>
+			{
+				player.RestoreHealth();
+				Debug.Log("heal invoked");
+			};
+			TownDialogManager.Instance.RewardCollected += () =>
+			{
+				RewardCollectedHud();
+			};
+			Game.ProcessSaveData();
+			Game.GetSave(); //why does the game data disappear after writing?
+
+			Debug.Log($"finding Id {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
+			Game.SetSessionDataFromLevelId(Game.mainsessionData.levelId);
 			Debug.Log($"finding maxHp by Id: {Game.mainsessionData.maxhp}");
 			trainingCenterBackground.SetActive(false);
-			playerHud.SetTownData();
-			if (Game.currentEXP >= Game.currentmaxEXP)
+			if (Game.mainsessionData.startedQuest != "")
 			{
-				Debug.Log("checking for level up");
-				StartCoroutine(player.LevelUp());
-				StartCoroutine(playerHud.UpdateTownData());
+				questStatus = QuestStatus.Ongoing;
+				Game.questInProgress = true;
+				Game.SetQuestData();
+				StartBattleQuestHud();
+				CheckQuestProgress();
 			}
-				
+			if(questStatus == QuestStatus.Completed)
+			{
+				QuestCompleteHud();
+			}
+			
+			playerHud.SetTownData(); // set for start up
+			CheckForLevelUp();
+
 			//set EXP and HP data on Start()
+			Debug.Log(Game.saveList[0].saveId); //works
 		}
 		private void Update()
 		{
@@ -87,7 +123,7 @@ namespace pattayaA3
 				
 				TownDialogManager.Instance.HandleUpdate();
 			}
-			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z) && state != GameState.Dialog)
+			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z) && state == GameState.FreeRoam | state == GameState.Training)
 			{
 				Debug.Log($"pressing Z {state}");
 				if (state == GameState.Training)
@@ -102,7 +138,7 @@ namespace pattayaA3
 				
 			}
 			//Raiyan
-			if (Input.GetKeyDown(KeyCode.I))
+			if (Input.GetKeyDown(KeyCode.I) && state == GameState.FreeRoam | state == GameState.Inventory)
             {
 				if (!isOpenInventory)
 				{
@@ -117,6 +153,21 @@ namespace pattayaA3
 					state = GameState.FreeRoam;
 				}
             }
+
+			if (Input.GetKeyDown(KeyCode.Escape) && state == GameState.FreeRoam | state == GameState.SaveMenu)
+			{
+				ToggleSaveMenu();
+			}
+			if(state == GameState.SaveMenuSelection)
+			{
+				HandleSelection();
+				if(allowEscape)
+				{
+					state = GameState.FreeRoam;
+					GameObject.Destroy(pauseMenu);
+					childList.Clear();
+				}
+			}
             
             //inventorybox.CheckMenu();			
         }
@@ -144,6 +195,15 @@ namespace pattayaA3
 			isStarted = true;
 		}
 
+		public void CheckForLevelUp()
+		{
+			if (Game.mainsessionData.exp >= Game.currentmaxEXP)
+			{
+				Debug.Log("checking for level up");
+				StartCoroutine(player.LevelUp());
+				StartCoroutine(playerHud.UpdateTownData());
+			}
+		}
 		public bool CheckGameOver()
 		{
 			//check if game over
@@ -165,23 +225,84 @@ namespace pattayaA3
 		{
 			return isStarted;
 		}
+		public void UpdateChoiceSelection(int selectedChoice)
+		{
+			for (int i = 0; i < childList.Count; i++)
+			{
+				if (i == selectedChoice)
+				{
+					childList[i].GetComponent<Text>().color = Color.blue;
+				}
+				else
+					childList[i].GetComponent<Text>().color = Color.black;
+			}
+			//dialog Text is handled in TypeDialog already
+		}
+		void HandleSelection() //for vertical choice selector
+		{
+			//Debug.Log(childList.Count);
+			if (Input.GetKeyDown(KeyCode.DownArrow))
+			{
+				Debug.Log($"before down arrow, currentchoice = {currentChoice}");
+				if (currentChoice < childList.Count)
+					++currentChoice;
+				Debug.Log($"After down arrow, currentchoice = {currentChoice}");
+			}
+			else if (Input.GetKeyDown(KeyCode.UpArrow))
+			{
+				if (currentChoice > 0)
+					--currentChoice;
+			}
+			UpdateChoiceSelection(currentChoice);
 
-        //public void SetInventory(bool aInventory)
-        //{
-        //    isOpenInventory = aInventory;
-        //    if (isOpenInventory == true)
-        //    {
-        //        inventory.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        inventory.SetActive(false);
-        //    }
-        //}
-        //public void ToggleInventory()
-        //{
-        //    SetInventory(!isOpenInventory);
-        //}
+			if (Input.GetKeyDown(KeyCode.Return))
+			{
+				HandleSaveMenuSelection(); 
+
+			}
+			if(state == GameState.SaveMenuSelection && Input.GetKeyDown(KeyCode.Escape))
+			{
+				StartCoroutine(CheckForEscape());
+			}
+		}
+		public IEnumerator CheckForEscape()
+		{
+			yield return new WaitForSeconds(0.2f);
+			yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Escape));
+			allowEscape = true;
+		}
+
+		void HandleSaveMenuSelection()
+		{
+			switch(childList[currentChoice].GetComponent<Text>().text)
+			{
+				case "Resume":
+					state = GameState.FreeRoam;
+					if(pauseMenu != null)
+					{
+						GameObject.Destroy(pauseMenu);
+						childList.Clear();
+					}
+					currentChoice = 0;
+					break;
+				case "Save":
+					Debug.Log("Saving");
+					Game.SaveToJSON<save>(Game.saveList);
+					currentChoice = 0;
+					break;
+				case "Exit":
+					gameController.GoToLevelSelect();
+					currentChoice = 0;
+					//Game.mainsessionData.saveStatus = "INACTIVE";
+					//Game.SaveToJSON<save>(Game.saveList);
+					if (pauseMenu != null)
+					{
+						GameObject.Destroy(pauseMenu);
+						childList.Clear();
+					}
+					break;
+			}
+		}
 		public void SetTrainingCenter(bool aInventory)
 		{
 			isOpenTrainingCenter = aInventory;
@@ -210,5 +331,107 @@ namespace pattayaA3
 			SetTrainingCenter(!isOpenTrainingCenter);
 		}
 
+		public void SetSaveMenu(bool aInventory)
+		{
+			isSaveMenuOpen = aInventory;
+			if (isSaveMenuOpen == true)
+			{
+				state = GameState.SaveMenu;
+				pauseMenu = Instantiate(pauseMenuPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+				pauseMenu.transform.SetParent(GameObject.FindGameObjectWithTag("Pause Menu").transform, false);
+				
+				//pauseMenu.GetComponent<GameObject>().SetActive(false);
+				if (childList.Count <= 0)
+				{
+					foreach (Transform child in pauseMenu.transform.GetChild(0))
+					{
+						if (child.gameObject.CompareTag("Choice") == true)
+						{
+							childList.Add(child.gameObject);
+							Debug.Log(child.gameObject.name);
+						}
+					}
+				}
+				allowEscape = false;
+				state = GameState.SaveMenuSelection;
+			}
+			else
+			{
+				state = GameState.FreeRoam;
+				GameObject.Destroy(pauseMenu);
+				childList.Clear();
+			}
+		}
+		public void ToggleSaveMenu()
+		{
+
+			SetSaveMenu(!isSaveMenuOpen);
+		}
+
+		public void StartBattleQuestHud()
+		{
+			questHud.SetActive(true);
+			questHud.transform.GetChild(0).GetComponent<Text>().text = $"Quest Requirement: {Game.startedQuest.questName}";
+			questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
+			CheckQuestProgress();
+			Game.SaveToJSON<save>(Game.saveList);
+		}
+		public void QuestCompleteHud()
+		{
+			questHud.SetActive(true);
+			questHud.transform.GetChild(0).GetComponent<Text>().text = $"Talk to NPC for reward! {Game.startedQuest.questName} completed!";
+			questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
+			Game.mainsessionData.startedQuest = Game.startedQuest.questId;
+			
+			Game.SaveToJSON<save>(Game.saveList);
+		}
+
+		public void RewardCollectedHud()
+		{
+			questHud.SetActive(false);
+			questStatus = QuestStatus.Completed;
+		}
+		public void CheckQuestProgress()
+		{
+			if (Game.battleQuestProgress == Game.startedQuest.questReq)
+			{
+				Game.questComplete = true;
+				QuestCompleteHud();
+			}
+				
+			else Game.questComplete = false;
+		}
+
+		//public void ActivateInvent()
+		//{
+		//	test = Instantiate(menu, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+		//	test.transform.SetParent(GameObject.FindGameObjectWithTag("Inventory").transform, false);
+		//	//Instantiate(canvas);
+		//}
+
+			//public void DeActivateInvent()
+			//{
+			//	GameObject.Destroy(test);
+			//}
+
+			//public void ToggleInventory(bool isOpenInventory)
+			//{
+			//	SetInventory(!isOpenInventory);
+			//}
+
+			//public void SetInventory(bool aInventory)
+			//{
+			//	isOpenInventory = aInventory;
+			//	if (isOpenInventory == true)
+			//	{
+			//		ActivateInvent();
+			//		test.SetActive(true);
+			//	}
+			//	else
+			//	{
+			//		DeActivateInvent();
+			//		test.SetActive(false);
+			//	}
+			//}
 	}
 }

@@ -7,25 +7,27 @@ namespace pattayaA3
 	public class HpBar : MonoBehaviour
 	{
 		public GameObject health;
-		private void Start()
-		{
-			health.transform.localScale = new Vector3(0.5f, 1f);
-		}
+		//private void Start()
+		//{
+		//	health.transform.localScale = new Vector3(Mathf.Clamp((float)(Game.mainsessionData.currenthp / Game.maxHP),0,1), 1f);
+		//}
 		public void SetHPData(float hpNormalized)
 		{
-			health.transform.localScale = new Vector3(hpNormalized, 1f);
+			health.transform.localScale = new Vector3(Mathf.Clamp((float)Game.mainsessionData.currenthp / Game.maxHP, 0, 1), 1f);
 			
 		}
 		public IEnumerator SetHPSmooth (float newHp)
 		{
+			Debug.Log($"this is current hp with {Game.mainsessionData.currenthp}, current exp scale:{Mathf.Clamp((float)Game.mainsessionData.currenthp / Game.maxHP,0,1)}");
 			float curHp = health.transform.localScale.x;
-			float HpDecrease = curHp - newHp;
-			if(HpDecrease >= 0)
+			float HpDifference = curHp - newHp; //negative means that the player gained
+			Debug.Log($"this is HpDifference: {HpDifference}");
+			if(HpDifference >= 0)
 			{
 				while (curHp - newHp >= 0) //mathf.epsilon is the smallest value that a float can have different from zero
 				{
-					curHp -= HpDecrease * Time.deltaTime;
-					health.transform.localScale = new Vector3(curHp, 1f);
+					curHp += HpDifference * -1 * Time.deltaTime;
+					health.transform.localScale = new Vector3(Mathf.Clamp(curHp, 0, 1), 1f);
 					//Debug.Log(health.transform.localScale);
 					yield return null;
 				}
@@ -34,8 +36,8 @@ namespace pattayaA3
 			{
 				while (curHp - newHp <= 0)
 				{
-					curHp += HpDecrease * -1 * Time.deltaTime;
-					health.transform.localScale = new Vector3(curHp, 1f);
+					curHp += HpDifference * -1 * Time.deltaTime;
+					health.transform.localScale = new Vector3(Mathf.Clamp(curHp, 0, 1), 1f);
 					yield return null;
 				}
 			}

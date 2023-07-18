@@ -12,6 +12,11 @@ TagManager:
   - Inventory
   - OneItem
   - Shop
+  - Pause Menu
+  - Choice
+  - Save Menu
+  - Save
+  - SaveList
   layers:
   - Default
   - TransparentFX
