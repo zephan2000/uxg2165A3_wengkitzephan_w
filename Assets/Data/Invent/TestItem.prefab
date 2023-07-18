@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 328589883218474999}
   - component: {fileID: 5207422084171500993}
   m_Layer: 5
-  m_Name: item18_Stat2 (1)
+  m_Name: item18_Stat3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,11 +512,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8742998105250348819, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Text
-      value: +0Intelligence
+      value: +0Power
       objectReference: {fileID: 0}
     - target: {fileID: 8862240794123252038, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Text
-      value: +0Power
+      value: +0Vitality
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1830542435655892322, guid: 611b73c868d74c246af996352e0da65d, type: 3}
@@ -636,7 +636,7 @@ PrefabInstance:
     - target: {fileID: 6671773697558480503, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1133162721, guid: 3115b5ad51550d548943f5329c5fe389, type: 3}
+      objectReference: {fileID: -417027082, guid: 3115b5ad51550d548943f5329c5fe389, type: 3}
     - target: {fileID: 7027385965056062050, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

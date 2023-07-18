@@ -81,7 +81,9 @@ namespace pattayaA3
 					else if (GetGameObject().name == "Training Center Door")
 						isTouchingDoor = true;
 
-					else
+					else if (GetGameObject().name == "Shop Door")
+                        isTouchingDoor = true;
+                    else
 						GetGameObject().GetComponent<NPC>()?.Interact();
 				}
 			}   

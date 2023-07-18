@@ -69,7 +69,7 @@ namespace pattayaA3
 
         public Transform itemListing;
 
-        string CheckItemInventory = Game.mainsessionData.inventory;
+        string CheckItemInventory;
 
         public GameObject eachItemObject;
         public EachItem eachItem;
@@ -81,6 +81,8 @@ namespace pattayaA3
             SetInventoryText();
 
             eachItem = eachItemObject.GetComponent<EachItem>();
+
+            CheckItemInventory = Game.mainsessionData.inventory;
         }
         private void Update()
 		{

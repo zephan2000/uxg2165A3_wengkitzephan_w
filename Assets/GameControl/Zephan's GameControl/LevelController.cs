@@ -23,7 +23,11 @@ namespace pattayaA3
 		public inventorybox inventorybox;
 		public Invent invent;
 		public bool isOpenInventory;
-		private bool isOpenTrainingCenter;
+
+		public ShopExist shopexist;
+		public bool isOpenShop;
+
+        private bool isOpenTrainingCenter;
 		public BattleHud playerHud;
 
 		public GameObject trainingCenterBackground;
@@ -86,8 +90,16 @@ namespace pattayaA3
 			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z) && state != GameState.Dialog)
 			{
 				Debug.Log($"pressing Z {state}");
-
-				ToggleTrainingCenter();
+				if (state == GameState.Training)
+				{
+                    ToggleTrainingCenter();
+                }
+				else if (state == GameState.Shop)
+				{
+					shopexist.ToggleShop(isOpenShop);
+					isOpenShop = !isOpenShop;
+				}
+				
 			}
 			//Raiyan
 			if (Input.GetKeyDown(KeyCode.I))
