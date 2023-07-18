@@ -408,42 +408,102 @@
         },
         {
             "dialogueId": "QUEST0001",
-            "nextdialogueId": "-1",
+            "nextdialogueId": "-2",
             "dialogueType": "QUEST",
             "currentSpeakerName": "NPC",
-            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_84]",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "Simi...",
-            "choices": ""
+            "dialogueText": "How can I help you today?",
+            "choices": "Restore Health#QUEST0002@I want a quest.#QUEST0004"
         },
         {
             "dialogueId": "QUEST0002",
             "nextdialogueId": "QUEST0003",
-            "dialogueType": "QUEST1",
+            "dialogueType": "QUEST",
             "currentSpeakerName": "NPC",
-            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_84]",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "Hello!",
+            "dialogueText": "Restore Health",
             "choices": ""
         },
         {
             "dialogueId": "QUEST0003",
-            "nextdialogueId": "QUEST0004",
-            "dialogueType": "QUEST1",
+            "nextdialogueId": "-1",
+            "dialogueType": "QUEST",
             "currentSpeakerName": "NPC",
-            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_84]",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "Go eat sandwiches",
+            "dialogueText": "There you go!",
             "choices": ""
         },
         {
             "dialogueId": "QUEST0004",
-            "nextdialogueId": "-1",
-            "dialogueType": "QUEST1",
+            "nextdialogueId": "QUEST0005",
+            "dialogueType": "QUEST",
             "currentSpeakerName": "NPC",
-            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_84]",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "Coolio",
+            "dialogueText": "I want a quest.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0005",
+            "nextdialogueId": "-2",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Alrighty!",
+            "choices": "Win the Bat#QUEST0006@Win the Ghost#QUEST0007@I changed my mind.#QUEST0008"
+        },
+        {
+            "dialogueId": "QUEST0006",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win the Bat",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0007",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win the Ghost",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0008",
+            "nextdialogueId": "QUEST0009",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "I changed my mind.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0009",
+            "nextdialogueId": "QUEST0001",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Sure!",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0010",
+            "nextdialogueId": "-1",
+            "dialogueType": "QUEST",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Good luck...",
             "choices": ""
         },
         {
@@ -460,10 +520,20 @@
             "dialogueId": "WARNING0001",
             "nextdialogueId": "-1",
             "dialogueType": "WARNING",
-            "currentSpeakerName": "GAME",
+            "currentSpeakerName": "Game",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_86]",
             "displaySpritePathRight": "",
-            "dialogueText": "Please restore health!",
+            "dialogueText": "Please restore your health!",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QC0001",
+            "nextdialogueId": "-1",
+            "dialogueType": "QC",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_86]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Great job! You've gained [exp] exp!",
             "choices": ""
         }
     ],
@@ -476,7 +546,8 @@
             "defenseBuff": "1",
             "physicaldmgBuff": "5",
             "magicdmgBuff": "0",
-            "cost": "50"
+            "cost": "50",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item02",
@@ -486,7 +557,8 @@
             "defenseBuff": "2",
             "physicaldmgBuff": "3",
             "magicdmgBuff": "0",
-            "cost": "30"
+            "cost": "30",
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_129]"
         },
         {
             "itemId": "item03",
@@ -496,7 +568,8 @@
             "defenseBuff": "5",
             "physicaldmgBuff": "1",
             "magicdmgBuff": "0",
-            "cost": "50"
+            "cost": "50",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item04",
@@ -506,7 +579,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "5",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item05",
@@ -516,7 +590,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "4",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item06",
@@ -526,7 +601,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "4",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item07",
@@ -536,7 +612,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "5",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item08",
@@ -546,7 +623,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "3",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item09",
@@ -556,7 +634,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "3",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item10",
@@ -566,7 +645,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "0"
+            "cost": "0",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item11",
@@ -576,7 +656,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "0"
+            "cost": "0",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item12",
@@ -586,7 +667,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "0"
+            "cost": "0",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item13",
@@ -596,7 +678,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "0"
+            "cost": "0",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item14",
@@ -606,7 +689,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "0"
+            "cost": "0",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item15",
@@ -616,7 +700,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item16",
@@ -626,7 +711,8 @@
             "defenseBuff": "3",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item17",
@@ -636,7 +722,8 @@
             "defenseBuff": "5",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item18",
@@ -646,7 +733,8 @@
             "defenseBuff": "0",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item19",
@@ -656,7 +744,8 @@
             "defenseBuff": "3",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         },
         {
             "itemId": "item20",
@@ -666,7 +755,8 @@
             "defenseBuff": "5",
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
-            "cost": "40"
+            "cost": "40",
+            "displaySpritePath": ""
         }
     ],
     "level": [
@@ -2238,7 +2328,7 @@
             "expGain": "0",
             "goldGain": "0",
             "maxhp": "4647",
-            "physicaldmg": "10",    
+            "physicaldmg": "10",
             "magicdmg": "10",
             "vitality": "10",
             "power": "10",
@@ -2246,26 +2336,26 @@
             "attspeed": "100"
         }
     ],
-    "session": [
+    "quest": [
         {
-            "seshname": "john",
-            "actorType": "playerWarrior",
-            "levelId": "playerWarrior_1",
-            "maxhp": "0",
-            "physicaldmg": "0",
-            "magicdmg": "0",
-            "vitality": "0",
-            "power": "0",
-            "intelligence": "0",
-            "attspeed": "0",
-            "attributePoint": "0",
-            "exp": "0",
-            "gold": "0",
-            "weapon": "item10",
-            "helmet": "item13",
-            "armour": "item14",
-            "inventory": "",
-            "displaySpritePath": ""
+            "questId": "QUEST1",
+            "questType": "BATTLE",
+            "questName": "Win The Bat",
+            "questReq": "1",
+            "actorTypeToSlay": "enemyBat",
+            "expReward": "100",
+            "goldReward": "30",
+            "questdialogIdTrigger": "QUEST0005"
+        },
+        {
+            "questId": "QUEST2",
+            "questType": "BATTLE",
+            "questName": "Win The Ghost",
+            "questReq": "1",
+            "actorTypeToSlay": "enemyGhost",
+            "expReward": "130",
+            "goldReward": "40",
+            "questdialogIdTrigger": "QUEST0006"
         }
     ],
     "skills": [
@@ -2383,7 +2473,7 @@
             "category": "Magic",
             "target": "Foe",
             "skillname": "Lightning Bolt",
-            "dmg": "10",
+            "dmg": "50",
             "hpgain": "0",
             "accuracy": "3",
             "priority": "1",

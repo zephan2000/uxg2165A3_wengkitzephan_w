@@ -29,9 +29,11 @@ namespace pattayaA3
 			//Raiyan's Code
 			DataManager dataManager = GetComponent<DataManager>();
 			dataManager.LoadRefData();
+			Game.GetSave();
+			Debug.Log($"This is mainsessionData: {Game.mainsessionData.saveId}");// gets active data;
 
-            //load initial scene
-            LoadScene(initialScene);
+			//load initial scene
+			LoadScene(initialScene);
 
 			//DialogManager.Instance.OnShowDialog += () =>
 			//{

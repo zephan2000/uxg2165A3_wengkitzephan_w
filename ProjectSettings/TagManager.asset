@@ -10,6 +10,11 @@ TagManager:
   - Canvas
   - ItemList
   - Inventory
+  - Pause Menu
+  - Choice
+  - Save Menu
+  - Save
+  - SaveList
   layers:
   - Default
   - TransparentFX

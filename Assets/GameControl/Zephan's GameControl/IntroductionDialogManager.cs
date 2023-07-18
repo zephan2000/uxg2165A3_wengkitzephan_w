@@ -17,6 +17,8 @@ public class IntroductionDialogManager : MonoBehaviour
 	[SerializeField] GameObject ChoiceText;
 	[SerializeField] GameObject ChoiceSelector;
 	[SerializeField] List<GameObject> choiceButtons;
+	[SerializeField] GameObject leftSpeaker;
+	[SerializeField] GameObject rightSpeaker;
 	public event Action OnShowDialog;
 	public event Action OnCloseDialog;
 	//public static TownDialogManager Instance {  get; private set; }
@@ -43,13 +45,13 @@ public class IntroductionDialogManager : MonoBehaviour
 			Debug.Log("Handling Choice");
 			HandleChoiceDialog();
 		}
-		else if (Input.GetKeyDown(KeyCode.Space) | Input.GetMouseButtonDown(0) && dialogState == IntroDialogState.Typing)
+		else if (Input.GetKeyDown(KeyCode.Space) && dialogState == IntroDialogState.Typing)
 		{
 			Skip = true;
 		}
 		else if (dialogState == IntroDialogState.LastDialog)
 		{
-			if(Input.GetKeyDown(KeyCode.F))
+			if(Input.GetKeyDown(KeyCode.Return))
 			startMenuController.StartLevel("Town");
 		}
 
@@ -62,6 +64,14 @@ public class IntroductionDialogManager : MonoBehaviour
 		dialogList = Game.GetDialogByType(dialogueType);
 		currentDialog = dialogList[0];
 		dialogBox.SetActive(true);
+		AssetManager.LoadSprite(currentDialog.displaySpritePathLeft, (Sprite s) =>
+		{
+			leftSpeaker.GetComponent<Image>().sprite = s;
+		});
+		AssetManager.LoadSprite(currentDialog.displaySpritePathRight, (Sprite s) =>
+		{
+			rightSpeaker.GetComponent<Image>().sprite = s;
+		});
 		StartCoroutine(TypeDialog(dialogList[0].dialogueText));
 	}
 
@@ -75,9 +85,10 @@ public class IntroductionDialogManager : MonoBehaviour
 		EndText.SetActive(false);
 		ChoiceText.SetActive(false);
 		ChoiceSelector.SetActive(false);
+		CheckForCurrentSpeaker(currentDialog);
 		foreach (var letter in line.ToCharArray())
 		{
-			if (Input.GetKey(KeyCode.Space)) // skippable dialogue
+			if (Skip) // skippable dialogue
 			{
 				dialogText.text = line;
 				Skip = false;
@@ -106,6 +117,20 @@ public class IntroductionDialogManager : MonoBehaviour
 			EndOfCurrentDialogSettings();
 		}
 	}
+
+	public void CheckForCurrentSpeaker(Dialog currentDialog)
+	{
+		if(currentDialog.currentSpeakerName == "NPC")
+		{
+			rightSpeaker.GetComponent<Image>().color = Color.white;
+			leftSpeaker.GetComponent<Image>().color = Color.grey;
+		}
+		else
+		{
+			leftSpeaker.GetComponent<Image>().color = Color.white;
+			rightSpeaker.GetComponent<Image>().color = Color.grey;
+		}
+	}	
 	
 	void HandleChoiceDialog() //for vertical choice selector
 	{
@@ -120,7 +145,7 @@ public class IntroductionDialogManager : MonoBehaviour
 			if (currentChoice > 0)
 				--currentChoice;
 		}
-		UpdateChoiceSelection(currentChoice, dialogChoiceList[currentChoice]); 
+		UpdateChoiceSelection(currentChoice); 
 
 		if (Input.GetKeyDown(KeyCode.Return))
 		{
@@ -132,7 +157,7 @@ public class IntroductionDialogManager : MonoBehaviour
 			
 		}
 	}
-	public void UpdateChoiceSelection(int selectedChoice, Dialog dialogChoice)
+	public void UpdateChoiceSelection(int selectedChoice)
 	{
 		for (int i = 0; i < choiceButtons.Count; i++)
 		{

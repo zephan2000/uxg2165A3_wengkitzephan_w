@@ -41,7 +41,7 @@ namespace pattayaA3
 			//Debug.Log($"{Game.sessionactorName},{Game.sessionactorType}");
 			Debug.Log($"{Game.chosenenemyName},{Game.chosenenemyType}");
 			//playerUnit.BattleUnitSetup(Game.sessionactorName,Game.sessionactorType);
-			playerUnit.BattleUnitSetup("Warrior", Game.GetSession().actorType, Game.playerLevel); //level will change
+			playerUnit.BattleUnitSetup(Game.mainsessionData.actorName, Game.mainsessionData.actorType, Game.playerLevel); //need to add an actorName to save class
 			enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetEnemyPokemonLevel());
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
 			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");
@@ -134,12 +134,12 @@ namespace pattayaA3
 			if (move.moveBase.moveTarget == MoveTarget.Self) // for heal
 			{
 				sourceUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
-				yield return sourceUnit.Hud.UpdateData();
+				yield return sourceUnit.Hud.UpdateBattleData();
 			}
 			else
 			{
 				targetUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
-				yield return targetUnit.Hud.UpdateData();
+				yield return targetUnit.Hud.UpdateBattleData();
 			}
 		}
 		IEnumerator RunMoveEffects( Pokemon sourceUnit, Pokemon targetUnit, Move move) // encapsulation so that status changes can be added
@@ -157,7 +157,7 @@ namespace pattayaA3
 
 		void CheckForBattleOver(BattleUnit faintedUnit)
 		{
-			Game.currentHP = playerUnit.Pokemon.HP;
+			Game.mainsessionData.currenthp = playerUnit.Pokemon.HP;
 			if (faintedUnit.IsPlayerUnit)
 			{
 				BattleOver(false);
@@ -173,18 +173,31 @@ namespace pattayaA3
 			Game.playerWon = battleStatus;
 			if(Game.playerWon == true)
 			{
-				Debug.Log($"Exp before gain: {Game.currentLevelEXP}/ {Game.currentmaxEXP}");
-				Game.currentLevelEXP += enemyUnit.Pokemon.Base.pokemonExpGain;
-				Debug.Log($"Exp after gain: {Game.currentLevelEXP}/ {Game.currentmaxEXP}");
+				Debug.Log($"Exp before gain: {Game.mainsessionData.exp}/ {Game.currentmaxEXP}");
+				Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain;
+				if(Game.questInProgress && Game.startedQuest.questType == "BATTLE")
+				{
+					CheckBattleQuestProgress();
+				}
+				Debug.Log($"Exp after gain: {Game.mainsessionData.exp}/ {Game.currentmaxEXP}");
 			}
 			else if (Game.playerWon == false)
 			{
 				if(Game.playerRan != true)
-					Game.currentLevelEXP += enemyUnit.Pokemon.Base.pokemonExpGain / 2;
+					Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain / 2;
 			}
+			Game.SaveToJSON<save>(Game.saveList);
 			state = BattleState.BattleOver;
 			ExitLevel("Town");
 		}
+		void CheckBattleQuestProgress()
+		{
+			if(Game.startedQuest.actorTypeToSlay == Game.chosenenemyType)
+			{
+				Game.UpdateBattleQuestProgress();
+			}
+		}
+
 
 		public void Update()
 		{

@@ -67,7 +67,7 @@ namespace pattayaA3
         //Skills
         List<skills> skillList = new List<skills>();
 
-        session mainsession = Game.GetSession();
+        save mainsession = Game.mainsessionData;
 
         public GameObject eachItemObject;
         public EachItem eachItem;
@@ -87,7 +87,7 @@ namespace pattayaA3
 		}
 		public void SetInventoryText()
         {
-            session currentsession = Game.GetSession();
+            save currentsession = Game.mainsessionData;
             List<string> ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
             List<string> ListOfSkillsSeperated = GetRealSkillStringList(ListOfSkillsGroup);
 
@@ -530,7 +530,7 @@ namespace pattayaA3
 
         public void UpdateEquipment()
         {
-            session currentsession = Game.GetSession();
+            save currentsession = Game.mainsessionData;
             List<string> ListOfSkillsGroup;
             //Debug.Log("Actor Type: " + currentmenu);
             ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
@@ -555,14 +555,14 @@ namespace pattayaA3
 
         public void ChangeWeapon()
         {
-            session currentsession = Game.GetSession();
+            save currentsession = Game.mainsessionData;
             Game.SetSessionWeaponVariable("item02");
 
         }
 
         public void AddItem(string itemId)
         {
-            session currensession = Game.GetSession();
+            save currensession = Game.mainsessionData;
             Game.AddItemToInventory(itemId);
             eachItem.ActivateUI();
         }

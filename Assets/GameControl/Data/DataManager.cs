@@ -7,6 +7,7 @@ using UnityEditor.AddressableAssets;
 using System.ComponentModel;
 using pattayaA3;
 using System.Net.NetworkInformation;
+using Unity.Mathematics;
 
 public class DataManager : MonoBehaviour
 {
@@ -18,21 +19,24 @@ public class DataManager : MonoBehaviour
 
     public void LoadRefData()
     {
-        string filePath = Path.Combine(Application.dataPath, "export.json");
-        string dataString = File.ReadAllText(filePath);
-        //Debug.Log(dataString);
+        Game.filePath = Path.Combine(Application.dataPath, "export.json");
+        Game.testFilePath = Path.Combine(Application.dataPath, "export_backup.json");
+        Game.saveFilePath = Path.Combine(Application.dataPath, "save.json");
+
+		string dataString = File.ReadAllText(Game.filePath);
         DemoData demoData = JsonUtility.FromJson<DemoData>(dataString);
 
 
-        //Debug.Log(demoData.items[0].displayName);
-        //Debug.Log(demoData);
+		//Debug.Log(demoData.items[0].displayName);
+		//Debug.Log(demoData);
 
-        //Debug.Log(demoData.player[0].name);
-        //Debug.Log(demoData.enemydummy[0].displayName);
-        //Debug.Log(demoData.items[0].displayName);
+		//Debug.Log(demoData.player[0].name);
+		//Debug.Log(demoData.enemydummy[0].displayName);
+		//Debug.Log(demoData.items[0].displayName);
 
-        //process data
-        ProcessDemoData(demoData);
+		//process data
+		ProcessDemoData(demoData);
+        Game.ProcessSaveData();
         //actor best = Game.Getactorbytype("Player");
         //Debug.Log(best.power);
         //Debug.Log("Yes");
@@ -68,7 +72,9 @@ public class DataManager : MonoBehaviour
         
     }
 
-    private void ProcessDemoData(DemoData demoData)
+
+
+	private void ProcessDemoData(DemoData demoData)
     {
         List<items> itemList = new List<items>();
         //List<EnemyBaseData> enemyList = new List<EnemyBaseData>();
@@ -78,6 +84,7 @@ public class DataManager : MonoBehaviour
         List<session> sessionList = new List<session>();
         List<Dialog> dialogList = new List<Dialog>();
         List<level> levelList = new List<level>();
+        List<Quest> questList = new List<Quest>();
         
         foreach (RefItems refItem in demoData.items)
         {
@@ -107,9 +114,9 @@ public class DataManager : MonoBehaviour
         }
         Game.SetSessionList(sessionList);*/
         //save load system will use a foreach loop
-        session asession = new session(demoData.session[0].seshname, demoData.session[0].actorType, demoData.session[0].levelId, demoData.session[0].maxhp, demoData.session[0].physicaldmg, demoData.session[0].magicdmg, demoData.session[0].vitality,
-                demoData.session[0].power, demoData.session[0].intelligence, demoData.session[0].attspeed, demoData.session[0].attributePoint, demoData.session[0].exp, demoData.session[0].gold, demoData.session[0].weapon, demoData.session[0].helmet, demoData.session[0].armour, demoData.session[0].inventory, demoData.session[0].displaySpritePath);
-        Game.SetSession(asession);
+        //session asession = new session(demoData.session[0].seshname, demoData.session[0].actorType, demoData.session[0].levelId, demoData.session[0].maxhp, demoData.session[0].physicaldmg, demoData.session[0].magicdmg, demoData.session[0].vitality,
+        //        demoData.session[0].power, demoData.session[0].intelligence, demoData.session[0].attspeed, demoData.session[0].attributePoint, demoData.session[0].exp, demoData.session[0].gold, demoData.session[0].weapon, demoData.session[0].helmet, demoData.session[0].armour, demoData.session[0].inventory, demoData.session[0].displaySpritePath);
+        //Game.SetSession(asession);
 
         foreach (refActor refactor in demoData.actor)
         {
@@ -144,7 +151,15 @@ public class DataManager : MonoBehaviour
             dialogList.Add(diAlogue);
         }
         Game.SetDialogList(dialogList);
+		foreach (refQuest quest in demoData.quest)
+		{
+			//Debug.Log($"this is quest: {quest.questId}, {quest.questType}, {quest.levelRequirement}, {quest.numberOf}, {quest.actorTypeToSlay}, {quest.expReward}, {quest.goldReward}, {quest.questdialogIdTrigger}");
+			Quest quEst = new Quest (quest.questId, quest.questType, quest.questName, quest.questReq, quest.actorTypeToSlay, quest.expReward, quest.goldReward, quest.questdialogIdTrigger);
+			questList.Add(quEst);
+            //Debug.Log($"this is quEst : {quEst.questId}");
+		}
+        Game.questList = questList;
 
 
-    }
+	}
 }

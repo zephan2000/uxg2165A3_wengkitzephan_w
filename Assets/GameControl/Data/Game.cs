@@ -1,11 +1,13 @@
 using pattayaA3;
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Text;
 
 public static class Game
 {
@@ -15,34 +17,48 @@ public static class Game
     private static List<actor> actorList;
     private static player mainPlayer;
     private static List<skills> skillslist;
-    
-    private static List<session> sessionlist;
-    private static session mainsession;
 
-    private static List<Dialog> dialogList;
+    
+   
+
+	private static List<Dialog> dialogList;
     private static List<level> levellist;
     private static int enemyPokemonLevel = 1;
 	private static int darkWizardLevel = 1;
     private static EachItem eachitem;
+     //data added in from DemoData
+	
+    public static bool initialStart = true;
+	//Save
+	public static List<save> saveList;
+	public static string saveFilePath;
+	public static string filePath;
+	public static string testFilePath;
+	public static save mainsessionData;
 
+	//Quest
+	public static List<Quest> questList;
+	public static Quest startedQuest;
+    public static bool questInProgress;
+	public static int battleQuestProgress;
+	public static bool questComplete;
 
 	public static string chosenenemyName { get; set; }
     public static string chosenenemyType { get; set; }
     public static string sessionactorName { get; set; }
     public static string sessionactorType { get; set; }
     public static bool levelUp { get; set; }
-	public static int playerLevel { get; set; }
+    public static int playerLevel;
 	public static int playerExp { get; set; }
-    public static float currentHP { get; set; }
+  
 	public static float maxHP{ get; set; }
     public static string currentPokemonType { get; set; }
     public static bool playerWon { get; set; }  
     public static bool playerRan { get;set; }
 
-	public static float currentEXP { get; set; }
-	public static float currentLevelEXP { get; set; }
+    public static float currentEXP;
 	public static float currentexpToGain { get; set; }
-	public static int currentmaxEXP { get; set; }
+    public static int currentmaxEXP;
     public static int runonce { get; set; }
 	public static player GetPlayer()
     {
@@ -154,11 +170,6 @@ public static class Game
         return Game.Getactorbytype(type).skillslist;
     }
 
-    public static session GetSession()
-    {
-        return mainsession;
-    }
-
 	public static List<skills> GetListOfSkillsByType(string type)
     {
         List<skills> listofskillsbyType = new List<skills>();
@@ -184,23 +195,24 @@ public static class Game
         }
         return nskills;
     }
-    #region Zephan's Data
-    
-    public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
+	#region Zephan's Data
+
+	#region Level System
+	public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
     {
         level alevel = GetLevelByLevelId(levelid);
-        Debug.Log($"this is: {levelid}");
-        mainsession.maxhp = alevel.maxhp;
-		mainsession.physicaldmg = alevel.physicaldmg;
-		mainsession.magicdmg = alevel.magicdmg;
-		mainsession.vitality = alevel.vitality;
-		mainsession.power = alevel.power;
-		mainsession.intelligence = alevel.intelligence;
-		mainsession.attspeed = alevel.attspeed;
+        mainsessionData.maxhp = alevel.maxhp;
+		mainsessionData.physicaldmg = alevel.physicaldmg;
+		mainsessionData.magicdmg = alevel.magicdmg;
+		mainsessionData.vitality = alevel.vitality;
+		mainsessionData.power = alevel.power;
+		mainsessionData.intelligence = alevel.intelligence;
+		mainsessionData.attspeed = alevel.attspeed;
         playerLevel = int.Parse(levelid.Split('_')[1]);
-        currentmaxEXP = GetLevelByLevelId(GetSession().levelId).maxExp;
-        currentexpToGain = GetLevelByLevelId(GetSession().levelId).expToGain;
-        maxHP = GetLevelByLevelId(GetSession().levelId).maxhp;
+        currentmaxEXP = GetLevelByLevelId(mainsessionData.levelId).maxExp;
+		Debug.Log($"this is: {levelid}, current level max exp:{alevel.maxExp}, Game's currentexp: {Game.mainsessionData.exp}, currentmaxEXP: {Game.currentmaxEXP}");
+		currentexpToGain = GetLevelByLevelId(mainsessionData.levelId).expToGain;
+        maxHP = GetLevelByLevelId(mainsessionData.levelId).maxhp;
 	}
 
 
@@ -236,35 +248,139 @@ public static class Game
 		}
 		return null;
 	}
+	#endregion
+	#region File Handling (Save System)
 
-	public static void SetPlayerActorBySession()
+	public static void ProcessSaveData()
 	{
-		sessionactorName = Getactorbytype(mainsession.actorType).displayName;
-		sessionactorType = mainsession.actorType;
+        string saveString = File.ReadAllText(Game.saveFilePath);
+        DemoData saveData = JsonUtility.FromJson<DemoData>(saveString);
+		List<save> saveDataList = new List<save>();
+
+		foreach (refSave refData in saveData.save)
+		{
+			save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName, refData.actorType, refData.levelId, refData.currenthp, refData.maxhp, refData.physicaldmg, refData.magicdmg, refData.vitality, refData.power,
+							refData.intelligence, refData.attspeed, refData.attributePoint, refData.exp, refData.gold, refData.weapon, refData.helmet, refData.armour, refData.inventory, refData.displaySpritePath, 
+                            refData.startedQuest, refData.completedQuest, refData.completedAchievement);
+			saveDataList.Add(savedata);
+		}
+		Game.saveList = saveDataList;
+	}
+	public static save GetSave() //for single play (testing purposes)
+	{
+		foreach (save savedata in saveList)
+		{
+			if (savedata.saveStatus == "ACTIVE")
+				mainsessionData = savedata;
+		}
+        Debug.Log($"this is mainsessionId: {mainsessionData.levelId}");
+		return mainsessionData;
 	}
 
-	public static List<Dialog> GetDialogByType(string type)
+    public static void LoadSave(string saveId)
     {
-        List<Dialog> ndialog = new List<Dialog>();
-        foreach(Dialog adialog in dialogList)
+        foreach (save savedata in saveList)
         {
-            if(adialog.dialogueType == type)
+            if (saveId.Equals(savedata.saveId))
             {
-                ndialog.Add(adialog);
-            }
+				mainsessionData = savedata;
+                savedata.saveStatus = "ACTIVE";
+			}
         }
-        return ndialog;
+    }
+    public static void SaveToJSON<T>(List<T> toSave) where T:save// change this to Save, manually write the JSON formula
+    {
+        var jsonString = new StringBuilder(); 
+        save finalObj = toSave.Last();
+        jsonString.Append("{\"save\":[");
+        foreach (save savedata in saveList)
+        {
+            if(savedata != finalObj)
+            {
+			    if (savedata.saveId == mainsessionData.saveId)
+				    jsonString.Append($"{JsonUtility.ToJson(mainsessionData)},");
+				else
+                    jsonString.Append($"{JsonUtility.ToJson(savedata)},");
+			}
+			else
+                jsonString.Append(JsonUtility.ToJson(savedata));
+        }
+        jsonString.Append("]}");
+        //string content = JsonHelper.ToJson<T>(toSave.ToArray());
+        //Debug.Log($"this is the content in ToSave: {toSave.seshname}");
+		Debug.Log($"now saving: {jsonString.ToString()}");
+		WriteFile(Game.saveFilePath, jsonString.ToString());
     }
 
-    public static Dialog GetDialogByDialogId(string dialogId)
+    public static void WriteFile(string path, string content)
     {
-        foreach(Dialog adialog in dialogList)
+        FileStream fileStream = new FileStream(path, FileMode.Create);
+        using (StreamWriter writer = new StreamWriter(fileStream))
         {
-            if (adialog.dialogueId == dialogId)
-                return adialog;
+            writer.Write(content);
         }
-        return null;
     }
+
+	#endregion
+	#region Quest
+
+    public static void SetQuestData()
+    {
+        string[] questdata = mainsessionData.startedQuest.Split('_');
+        Game.startedQuest = GetQuestByQuestId(questdata[0]);
+        Game.battleQuestProgress = Int32.Parse(questdata[1]);
+    }
+
+    public static void UpdateBattleQuestProgress()
+    {
+        battleQuestProgress++;
+        mainsessionData.startedQuest = startedQuest.questId + "_" + battleQuestProgress;
+        SaveToJSON<save>(saveList);
+    }
+    public static void UpdateCompletedQuest()
+    {
+		if (mainsessionData.completedQuest == "")
+			mainsessionData.completedQuest = mainsessionData.startedQuest.Split('_')[0];
+		else
+			mainsessionData.completedQuest = mainsessionData.startedQuest.Split('_')[0] + "@" + mainsessionData.completedQuest;
+
+        mainsessionData.startedQuest = "";
+		SaveToJSON<save>(saveList);
+	}
+	public static Quest GetQuestByQuestId(string selectedquestId)
+	{
+		foreach (Quest aquest in questList)
+		{
+			if (aquest.questId == selectedquestId)
+				return aquest;
+		}
+		return null;
+	}
+	#endregion
+
+	#region Dialog
+	public static List<Dialog> GetDialogByType(string type)
+	{
+		List<Dialog> ndialog = new List<Dialog>();
+		foreach (Dialog adialog in dialogList)
+		{
+			if (adialog.dialogueType == type)
+			{
+				ndialog.Add(adialog);
+			}
+		}
+		return ndialog;
+	}
+
+	public static Dialog GetDialogByDialogId(string dialogId)
+	{
+		foreach (Dialog adialog in dialogList)
+		{
+			if (adialog.dialogueId == dialogId)
+				return adialog;
+		}
+		return null;
+	}
 	public static Dialog GetDialogByDialogList(string dialogId, List<Dialog> dialogList) //for optimisation, in the event where there is a ton of dialog to run through
 	{
 		foreach (Dialog adialog in dialogList)
@@ -274,25 +390,26 @@ public static class Game
 		}
 		return null;
 	}
-    public static List<Dialog> GetListOfChoicesByDialog(Dialog currentDialog)
-    {
-        string[] textdialogIdArray = currentDialog.choices.Split('@');
-        List<Dialog> choices = new List<Dialog>();
-        for(int i =0; i < textdialogIdArray.Length; i++)
-        {
-            string[] choicedialogArray = textdialogIdArray[i].Split('#');
-            Debug.Log(GetDialogByDialogId(choicedialogArray[1]).dialogueId);
-            //Debug.Log(choicedialogArray[0]);
-            choices.Add(GetDialogByDialogId(choicedialogArray[1]));
-        }
-        return choices;
-    }
+	public static List<Dialog> GetListOfChoicesByDialog(Dialog currentDialog)
+	{
+		string[] textdialogIdArray = currentDialog.choices.Split('@');
+		List<Dialog> choices = new List<Dialog>();
+		for (int i = 0; i < textdialogIdArray.Length; i++)
+		{
+			string[] choicedialogArray = textdialogIdArray[i].Split('#');
+			Debug.Log(GetDialogByDialogId(choicedialogArray[1]).dialogueId);
+			//Debug.Log(choicedialogArray[0]);
+			choices.Add(GetDialogByDialogId(choicedialogArray[1]));
+		}
+		return choices;
+	}
 	public static void SetDialogList(List<Dialog> adialog)
 	{
 		dialogList = adialog;
 	}
+	#endregion Dialog
 
-    public static int SetEnemyPokemonLevel(string pokemonLevel)
+	public static int SetEnemyPokemonLevel(string pokemonLevel)
     {
         return enemyPokemonLevel = Int32.Parse(pokemonLevel);
     }
@@ -330,14 +447,14 @@ public static class Game
     {
         skillslist = askill;
     }
-    public static void SetSessionList(List<session> asession)
-    {
-        sessionlist = asession;
-    }
-    public static void SetSession(session asession2)
-    {
-        mainsession = asession2;
-    }
+    //public static void SetSessionList(List<session> asession)
+    //{
+    //    sessionlist = asession;
+    //}
+    //public static void SetSession(session asession2)
+    //{
+    //    mainsession = asession2;
+    //}
     public static void SetLevelList(List<level> alevel)
     {
         levellist = alevel;
@@ -364,19 +481,19 @@ public static class Game
 
     public static void SetSessionWeaponVariable(string change)
     {
-        mainsession.weapon = Game.Getitemsbyid(change).displayName;
+        mainsessionData.weapon = Game.Getitemsbyid(change).displayName;
     }
 
     public static void AddItemToInventory(string itemid)
     {
-        if (mainsession.inventory == "")
+        if (mainsessionData.inventory == "")
         {
-            mainsession.inventory += itemid;
+            mainsessionData.inventory += itemid;
             //eachitem.realcount++;
         }
         else
         {
-            mainsession.inventory += "," + itemid;
+            mainsessionData.inventory += "," + itemid;
             //eachitem.realcount++;
         }
     }

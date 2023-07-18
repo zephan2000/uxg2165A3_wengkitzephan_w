@@ -98,30 +98,46 @@ namespace pattayaA3
 				
 		}
 
-		public IEnumerator LevelUp()
+		public IEnumerator LevelUp() //do one for cheats and one for normal
 		{
 			levelUpText.SetActive(true);
 			Game.playerLevel++;
-			Game.playerLevel = Game.playerLevel;
-			string newlevelid = Game.GetSession().actorType + "_" + Game.playerLevel.ToString();
+			//Game.playerLevel = Game.playerLevel;
+			string newlevelid = Game.mainsessionData.actorType + "_" + Game.playerLevel.ToString();
 			Debug.Log($"this is level id before level up: {newlevelid}");
-			Game.GetSession().levelId = newlevelid;
-			Debug.Log($"this is level id after level up: {Game.GetSession().levelId}");
+			Game.mainsessionData.levelId = newlevelid;
+			Debug.Log($"this is level id after level up: {Game.mainsessionData.levelId}");
 			Game.SetSessionDataFromLevelId(newlevelid);
-			Game.currentLevelEXP = 0;
-			Game.currentHP = Game.maxHP;
-			Game.currentEXP = Game.currentmaxEXP;
+			Game.mainsessionData.exp = 0;
+			Game.mainsessionData.currenthp = (int)Game.maxHP;
+			Game.mainsessionData.exp += 10; // need to adjust this formula
 			Debug.Log(newlevelid);
-			playerHud.SetTownData();
+			StartCoroutine(playerHud.UpdateTownData());
 			yield return new WaitForSeconds(1.2f);
 			levelUpText.SetActive(false);
+			if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
+			{
+				Game.mainsessionData.exp -= Game.currentmaxEXP;
+				Debug.Log("checking for level up");
+				yield return new WaitForSeconds(0.3f);
+				StartCoroutine(playerHud.UpdateTownData());
+				//playerHud.UpdateTownData();
+				StartCoroutine(LevelUp());
+			}
+			Game.SaveToJSON<save>(Game.saveList);
 			// reset current exp
 
 		}
+		public void RestoreHealth()
+		{
+			Game.mainsessionData.currenthp = (int)Game.maxHP;
+			Debug.Log($"this is currentHp from RestoreHealth: {Game.mainsessionData.currenthp} / {Game.maxHP}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
+			StartCoroutine(playerHud.UpdateTownData());
+		}
 		public IEnumerator SetHpTo50() // for bug testing
 		{
-			Game.currentHP = 50;
-			playerHud.SetTownData();
+			Game.mainsessionData.currenthp = 50;
+			StartCoroutine(playerHud.UpdateTownData());
 			yield return new WaitForSeconds(1.2f);
 		}
 		public void MovePlayer(Vector2 moveDir) // old movement codes
@@ -202,7 +218,7 @@ namespace pattayaA3
             playerImage = Game.Getactorbytype("playerWizard").displaySpritePath ;
 			Debug.Log(playerImage);
 
-			Sprite tileSprite = Resources.Load(playerImage) as Sprite;
+			//Sprite tileSprite = Resources.Load(playerImage) as Sprite;
 
 			AssetManager.LoadSprite(playerImage, (Sprite s) =>
 			{

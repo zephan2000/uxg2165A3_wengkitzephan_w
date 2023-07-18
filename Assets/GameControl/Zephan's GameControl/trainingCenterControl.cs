@@ -109,7 +109,7 @@ namespace pattayaA3
        
 		public void LoadBattle()
 		{
-			if (Game.currentHP != Game.maxHP)
+			if (Game.mainsessionData.currenthp != Game.maxHP)
 			{
 				if (!allowNext)
 				{
