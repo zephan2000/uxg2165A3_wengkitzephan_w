@@ -104,8 +104,8 @@ namespace pattayaA3
 			levelUpText.SetActive(true);
 			currentLevel++;
 			Game.playerLevel = currentLevel;
-			string newlevelid = Game.GetSession().actorType + "_" + currentLevel.ToString();
-			Game.GetSession().levelId = newlevelid;
+			string newlevelid = Game.mainsessionData.actorType + "_" + currentLevel.ToString();
+			Game.mainsessionData.levelId = newlevelid;
 			Game.SetSessionDataFromLevelId(newlevelid);
 			Game.currentLevelEXP = 0;
 			Game.currentHP = Game.maxHP;

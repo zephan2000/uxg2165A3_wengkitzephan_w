@@ -50,9 +50,9 @@ namespace pattayaA3
 					Game.runonce = 0;
 				}	
 			};
-			Debug.Log($"finding Id {Game.GetSession().levelId}");
-			Game.SetSessionDataFromLevelId((Game.GetSession().levelId));
-			Debug.Log($"finding maxHp by Id: {Game.GetSession().maxhp}");
+			Debug.Log($"finding Id {Game.mainsessionData.levelId}");
+			Game.SetSessionDataFromLevelId((Game.mainsessionData.levelId));
+			Debug.Log($"finding maxHp by Id: {Game.mainsessionData.maxhp}");
 			trainingCenterBackground.SetActive(false);
 			playerHud.SetTownData();
 			if (Game.currentEXP >= Game.currentmaxEXP)

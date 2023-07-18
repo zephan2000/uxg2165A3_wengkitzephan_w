@@ -412,7 +412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d482a5eb7695dd6478086e3c84fe2124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 1636328888}
 --- !u!224 &155543340
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1492,8 +1491,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemUi: {fileID: 5091864157648745266, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}
   itemUi_addition: {fileID: 6590003235538800373, guid: 611b73c868d74c246af996352e0da65d, type: 3}
+  itemGroup: {fileID: 2926972097142777429, guid: 74448e0bf7d74324abeef7530aa528ba, type: 3}
+  itemUi_child01: {fileID: 0}
   itemUiToBeCreated: {fileID: 0}
   itemUi_additionToBeCreated: {fileID: 0}
+  itemGroupToBeCreated: {fileID: 0}
   test: {fileID: 0}
   currentcount: 0
   samecount: 0
@@ -2374,16 +2376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd35e6ad2c16074e95d419dc565828d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy1: {fileID: 1837711829}
-  enemy1_image: {fileID: 291270854}
-  enemy2: {fileID: 494680760}
-  enemy2_image: {fileID: 1123603404}
-  trainingNPCname: {fileID: 1299412602}
-  trainingNPCSprite: {fileID: 1783833914}
-  trainingNPCDialog: {fileID: 1485313155}
-  levelController: {fileID: 590105149}
-  trainingCenterBackground: {fileID: 1000550457}
-  levelInput: {fileID: 884754198}
 --- !u!1 &1059077753
 GameObject:
   m_ObjectHideFlags: 0

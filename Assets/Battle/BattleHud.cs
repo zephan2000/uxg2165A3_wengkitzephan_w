@@ -36,7 +36,7 @@ namespace pattayaA3
 		}
 		public void SetTownData()
 		{
-			nameText.text = Game.GetSession().actorType;
+			nameText.text = Game.mainsessionData.actorType;
 			levelText.text = "Lvl" + Game.playerLevel.ToString();
 			Debug.Log($"this is currentHp: {Game.currentHP} / {Game.maxHP}, currentexp: {Game.currentEXP} / {Game.currentmaxEXP}");
 			hpBar.SetHPSmooth((float)(Game.currentHP / Game.maxHP));

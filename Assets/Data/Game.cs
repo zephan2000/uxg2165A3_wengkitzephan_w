@@ -17,7 +17,7 @@ public static class Game
     private static List<skills> skillslist;
     
     private static List<session> sessionlist;
-    private static session mainsession;
+    public static session mainsessionData;
 
     private static List<Dialog> dialogList;
     private static List<level> levellist;
@@ -153,10 +153,6 @@ public static class Game
         return Game.Getactorbytype(type).skillslist;
     }
 
-    public static session GetSession()
-    {
-        return mainsession;
-    }
 
 	public static List<skills> GetListOfSkillsByType(string type)
     {
@@ -189,17 +185,17 @@ public static class Game
     {
         level alevel = GetLevelByLevelId(levelid);
         Debug.Log($"this is: {levelid}");
-        mainsession.maxhp = alevel.maxhp;
-		mainsession.physicaldmg = alevel.physicaldmg;
-		mainsession.magicdmg = alevel.magicdmg;
-		mainsession.vitality = alevel.vitality;
-		mainsession.power = alevel.power;
-		mainsession.intelligence = alevel.intelligence;
-		mainsession.attspeed = alevel.attspeed;
+        mainsessionData.maxhp = alevel.maxhp;
+		mainsessionData.physicaldmg = alevel.physicaldmg;
+		mainsessionData.magicdmg = alevel.magicdmg;
+		mainsessionData.vitality = alevel.vitality;
+		mainsessionData.power = alevel.power;
+		mainsessionData.intelligence = alevel.intelligence;
+		mainsessionData.attspeed = alevel.attspeed;
         playerLevel = int.Parse(levelid.Split('_')[1]);
-        currentmaxEXP = GetLevelByLevelId(GetSession().levelId).maxExp;
-        currentexpToGain = GetLevelByLevelId(GetSession().levelId).expToGain;
-        maxHP = GetLevelByLevelId(GetSession().levelId).maxhp;
+        currentmaxEXP = GetLevelByLevelId(mainsessionData.levelId).maxExp;
+        currentexpToGain = GetLevelByLevelId(mainsessionData.levelId).expToGain;
+        maxHP = GetLevelByLevelId(mainsessionData.levelId).maxhp;
 	}
 
 
@@ -238,8 +234,8 @@ public static class Game
 
 	public static void SetPlayerActorBySession()
 	{
-		sessionactorName = Getactorbytype(mainsession.actorType).displayName;
-		sessionactorType = mainsession.actorType;
+		sessionactorName = Getactorbytype(mainsessionData.actorType).displayName;
+		sessionactorType = mainsessionData.actorType;
 	}
 
 	public static List<Dialog> GetDialogByType(string type)
@@ -335,7 +331,7 @@ public static class Game
     }
     public static void SetSession(session asession2)
     {
-        mainsession = asession2;
+        mainsessionData = asession2;
     }
     public static void SetLevelList(List<level> alevel)
     {
@@ -363,19 +359,19 @@ public static class Game
 
     public static void SetSessionWeaponVariable(string change)
     {
-        mainsession.weapon = Game.Getitemsbyid(change).displayName;
+        mainsessionData.weapon = Game.Getitemsbyid(change).displayName;
     }
 
     public static void AddItemToInventory(string itemid)
     {
-        if (mainsession.inventory == "")
+        if (mainsessionData.inventory == "")
         {
-            mainsession.inventory += itemid;
+            mainsessionData.inventory += itemid;
             //eachitem.realcount++;
         }
         else
         {
-            mainsession.inventory += "," + itemid;
+            mainsessionData.inventory += "," + itemid;
             //eachitem.realcount++;
         }
     }
@@ -383,5 +379,19 @@ public static class Game
     public static EachItem GetEachItem()
     {
         return eachitem;
+    }
+
+    public static List<items> GetItemsInInventory()
+    {
+        session currentSession = Game.mainsessionData;
+        List<items> iList = new List<items>();
+        string[] stringArray = currentSession.inventory.Split(",");
+        foreach (var a in stringArray)
+        {
+            //string test = itemlist.Find(x => x.itemId == a).itemId;
+            items test = Getitemsbyid(a);
+            iList.Add(test);
+        }
+        return iList;
     }
 }

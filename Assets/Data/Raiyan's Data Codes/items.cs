@@ -12,8 +12,11 @@ public class items
     public int physicaldmgBuff { get; }
     public int magicdmgBuff { get; }
     public int cost { get; }
+    public string displaySpritePath { get; }
 
-    public items(string itemId, string itemType, string actorType, string displayName, int defenseBuff, int physicaldmgBuff, int magicdmgBuff, int cost)
+    public items(string itemId, string itemType, string actorType,
+        string displayName, int defenseBuff, int physicaldmgBuff,
+        int magicdmgBuff, int cost, string displaySpritePath)
     {
         this.itemId = itemId;
         this.itemType = itemType;
@@ -23,5 +26,6 @@ public class items
         this.physicaldmgBuff = physicaldmgBuff;
         this.magicdmgBuff = magicdmgBuff;
         this.cost = cost;
+        this.displaySpritePath = displaySpritePath;
     }
 }

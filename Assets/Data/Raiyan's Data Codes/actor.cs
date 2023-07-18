@@ -5,9 +5,9 @@ using UnityEngine;
 public class actor
 {
     //public string actorId { get; }
-    public string actorType { get; }
-    public string displayName { get; } 
-    public string skillslist { get; set; }
+    public string actorType;
+    public string displayName;
+    public string skillslist;
     public string displaySpritePath { get; }
 
     public actor(string actorType,string displayName, string skillslist,

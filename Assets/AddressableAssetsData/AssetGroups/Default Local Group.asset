@@ -45,6 +45,10 @@ MonoBehaviour:
     m_Address: Assets/ArtAssets/tilemap_packed_111.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 32a0ff6391218fa489016ed3b3c980f2
+    m_Address: Assets/Data/Invent/TestItem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 611fc7ae2aceb054e9fd0c1b62e8303a, type: 2}
   m_SchemaSet:

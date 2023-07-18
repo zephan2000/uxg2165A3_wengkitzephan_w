@@ -10,6 +10,7 @@ TagManager:
   - Canvas
   - ItemList
   - Inventory
+  - OneItem
   layers:
   - Default
   - TransparentFX

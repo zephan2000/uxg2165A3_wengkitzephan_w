@@ -13,4 +13,5 @@ public class RefItems
     public int physicaldmgBuff;
     public int magicdmgBuff;
     public int cost;
+    public string displaySpritePath;
 }

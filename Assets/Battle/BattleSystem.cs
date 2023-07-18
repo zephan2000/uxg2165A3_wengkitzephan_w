@@ -42,7 +42,7 @@ namespace pattayaA3
 			//Debug.Log($"{Game.sessionactorName},{Game.sessionactorType}");
 			Debug.Log($"{Game.chosenenemyName},{Game.chosenenemyType}");
 			//playerUnit.BattleUnitSetup(Game.sessionactorName,Game.sessionactorType);
-			playerUnit.BattleUnitSetup("Warrior", Game.GetSession().actorType, Game.playerLevel); //level will change
+			playerUnit.BattleUnitSetup("Warrior", Game.mainsessionData.actorType, Game.playerLevel); //level will change
 			enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetEnemyPokemonLevel());
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
 			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");

@@ -67,10 +67,14 @@ namespace pattayaA3
         //Skills
         List<skills> skillList = new List<skills>();
 
-        session mainsession = Game.GetSession();
+        public Transform itemListing;
+
+        string CheckItemInventory = Game.mainsessionData.inventory;
 
         public GameObject eachItemObject;
         public EachItem eachItem;
+        public Invent invent;
+        public bool runonce;
 
         private void Start()
         {
@@ -82,12 +86,13 @@ namespace pattayaA3
 		{
             CheckMenu();
 			UpdateEquipment();
+            ConstantlyCheck();
 			//Debug.Log("Session Weapon:" + Game.Getitemsbyid(Game.GetitemsbyName(mainsession.weapon).itemId).displayName);
-			Debug.Log("Inventory: " + mainsession.inventory);
+			//Debug.Log("Inventory: " + mainsession.inventory);
 		}
 		public void SetInventoryText()
         {
-            session currentsession = Game.GetSession();
+            session currentsession = Game.mainsessionData;
             List<string> ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
             List<string> ListOfSkillsSeperated = GetRealSkillStringList(ListOfSkillsGroup);
 
@@ -137,54 +142,54 @@ namespace pattayaA3
                 this.GetComponent<Image>().sprite = s;
             });
         }
-        public void EnableInventoryMenu(bool enabled)
-        {
-            //Text
-            charactername.enabled = enabled;
-            menuchoice.enabled = enabled;
-            itemchoice.enabled = enabled;
-            skillchoice.enabled = enabled;
-            statchoice.enabled = enabled;
-            equipchoice.enabled = !enabled;
-            equipitemchoice.enabled = !enabled;
-            //Item boxes
-            item1.enabled = enabled;
-            item2.enabled = enabled;
-            item3.enabled = enabled;
-            //Skill boxes
-            skill1.enabled = enabled;
-            skill2.enabled = enabled;
-            skill3.enabled = enabled;
-            skill4.enabled = enabled;
-            //Stat boxes
-            stat1.enabled = enabled;
-            stat2.enabled = enabled;
-            stat3.enabled = enabled;
-            stat4.enabled = enabled;
+        //public void EnableInventoryMenu(bool enabled)
+        //{
+        //    //Text
+        //    charactername.enabled = enabled;
+        //    menuchoice.enabled = enabled;
+        //    itemchoice.enabled = enabled;
+        //    skillchoice.enabled = enabled;
+        //    statchoice.enabled = enabled;
+        //    equipchoice.enabled = !enabled;
+        //    equipitemchoice.enabled = !enabled;
+        //    //Item boxes
+        //    item1.enabled = enabled;
+        //    item2.enabled = enabled;
+        //    item3.enabled = enabled;
+        //    //Skill boxes
+        //    skill1.enabled = enabled;
+        //    skill2.enabled = enabled;
+        //    skill3.enabled = enabled;
+        //    skill4.enabled = enabled;
+        //    //Stat boxes
+        //    stat1.enabled = enabled;
+        //    stat2.enabled = enabled;
+        //    stat3.enabled = enabled;
+        //    stat4.enabled = enabled;
 
-            //Objects
-            character.SetActive(enabled);
-            charactersprite.SetActive(enabled);
-            itemObject.SetActive(enabled);
-            skillchoiceObject.SetActive(enabled);
-            statchoiceObject.SetActive(enabled);
-            menuchoiceObject.SetActive(enabled);
-            scroll.SetActive(!enabled);
-            //Item object
-            item1Object.SetActive(enabled);
-            item2Object.SetActive(enabled);
-            item3Object.SetActive(enabled);
-            //Skill object
-            skill1Object.SetActive(enabled);
-            skill2Object.SetActive(enabled);
-            skill3Object.SetActive(enabled);
-            skill4Object.SetActive(enabled);
-            //Stat object
-            stat1Object.SetActive(enabled);
-            stat2Object.SetActive(enabled);
-            stat3Object.SetActive(enabled);
-            stat4Object.SetActive(enabled);
-        }
+        //    //Objects
+        //    character.SetActive(enabled);
+        //    charactersprite.SetActive(enabled);
+        //    itemObject.SetActive(enabled);
+        //    skillchoiceObject.SetActive(enabled);
+        //    statchoiceObject.SetActive(enabled);
+        //    menuchoiceObject.SetActive(enabled);
+        //    scroll.SetActive(!enabled);
+        //    //Item object
+        //    item1Object.SetActive(enabled);
+        //    item2Object.SetActive(enabled);
+        //    item3Object.SetActive(enabled);
+        //    //Skill object
+        //    skill1Object.SetActive(enabled);
+        //    skill2Object.SetActive(enabled);
+        //    skill3Object.SetActive(enabled);
+        //    skill4Object.SetActive(enabled);
+        //    //Stat object
+        //    stat1Object.SetActive(enabled);
+        //    stat2Object.SetActive(enabled);
+        //    stat3Object.SetActive(enabled);
+        //    stat4Object.SetActive(enabled);
+        //}
         public void EnableItemMenu(bool enabled)
         {
             //Text
@@ -236,6 +241,8 @@ namespace pattayaA3
             stat2Object.SetActive(!enabled);
             stat3Object.SetActive(!enabled);
             stat4Object.SetActive(!enabled);
+
+            runonce = false;
         }
         public void EnableSkillMenu(bool enabled)
         {
@@ -288,6 +295,8 @@ namespace pattayaA3
             stat2Object.SetActive(!enabled);
             stat3Object.SetActive(!enabled);
             stat4Object.SetActive(!enabled);
+
+            runonce = false;
         }
         public void EnableStatMenu(bool enabled)
         {
@@ -340,6 +349,8 @@ namespace pattayaA3
             stat2Object.SetActive(enabled);
             stat3Object.SetActive(enabled);
             stat4Object.SetActive(enabled);
+
+            runonce = false;
         }
         public void EnableEquipmentMenu(bool enabled)
         {
@@ -392,6 +403,8 @@ namespace pattayaA3
             stat2Object.SetActive(!enabled);
             stat3Object.SetActive(!enabled);
             stat4Object.SetActive(!enabled);
+
+            runonce = false;
         }
         public void EnableEquipmentItemMenu(bool enabled)
         {
@@ -444,6 +457,17 @@ namespace pattayaA3
             stat2Object.SetActive(!enabled);
             stat3Object.SetActive(!enabled);
             stat4Object.SetActive(!enabled);
+
+            if (!runonce)
+            {
+                for (int i = 0; i < Game.GetItemsInInventory().Count; i++)
+                {
+                    eachItem.ActivateUI(Game.GetItemsInInventory()[i]);
+                }
+                //eachItem.ActivateUI(a);
+                runonce = true;
+            }
+            //eachItem.ActivateUI();
         }
 
         public void ItemPress()
@@ -474,17 +498,25 @@ namespace pattayaA3
                 case Inventory.item:
                     //menuchoice.text = "Item";
                     EnableEquipmentMenu(true);
+                    DisableItemList();
+                    //eachItem.DeActivateInvent();
                     break;
                 case Inventory.skills:
                     EnableSkillMenu(true);
                     menuchoice.text = "Skills";
+                    DisableItemList();
+                    //eachItem.DeActivateInvent();
                     break;
                 case Inventory.stats:
                     EnableStatMenu(true);
                     menuchoice.text = "Stats";
+                    DisableItemList();
+                    //eachItem.DeActivateInvent();
                     break;
                 case Inventory.itemEquipment:
                     EnableEquipmentMenu(true);
+                    DisableItemList();
+                    //eachItem.DeActivateInvent();
                     //.text = "Stats";
                     break;
                 case Inventory.itemItems:
@@ -493,10 +525,24 @@ namespace pattayaA3
                     break;
                 default:
                     EnableItemMenu(true);
+                    DisableItemList();
+                    //eachItem.DeActivateInvent();
                     //menuchoice.text = "Item";
                     break;
             }
         }
+
+        public void DisableItemList()
+        {
+            foreach (Transform child in itemListing)
+            {
+                //Debug.Log(child.gameObject.name);
+                GameObject.Destroy(child.gameObject);
+
+            }
+        }
+
+        
 
         public static List<string> GetListOfSkillsPartOne(string actorType)
         {
@@ -530,7 +576,8 @@ namespace pattayaA3
 
         public void UpdateEquipment()
         {
-            session currentsession = Game.GetSession();
+            session currentsession = Game.mainsessionData;
+            List<items> itemList = Game.GetItemsInInventory();
             List<string> ListOfSkillsGroup;
             //Debug.Log("Actor Type: " + currentmenu);
             ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
@@ -551,20 +598,35 @@ namespace pattayaA3
             stat2.text = "Power:" + currentsession.power;
             stat3.text = "Intelligence:" + currentsession.intelligence;
             stat4.text = "Attack Speed:" + currentsession.attspeed;
+
+
         }
 
         public void ChangeWeapon()
         {
-            session currentsession = Game.GetSession();
+            session currentsession = Game.mainsessionData;
             Game.SetSessionWeaponVariable("item02");
 
         }
 
         public void AddItem(string itemId)
         {
-            session currensession = Game.GetSession();
+            session currensession = Game.mainsessionData;
+
+            
+
             Game.AddItemToInventory(itemId);
-            eachItem.ActivateUI();
+            //eachItem.ActivateUI();
+        }
+
+        public void ConstantlyCheck()
+        {
+            if (!(CheckItemInventory == Game.mainsessionData.inventory))
+            {
+                DisableItemList();
+                runonce = false;
+                CheckItemInventory = Game.mainsessionData.inventory;
+            }
         }
     }
 }

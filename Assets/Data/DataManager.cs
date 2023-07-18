@@ -44,8 +44,8 @@ public class DataManager : MonoBehaviour
         Game.AssignAllSkillListToActor();
         //Game.ListdownSkills("enemyBat");
         //Debug.Log(Game.GetActorByName("Warrior").skillslist);
-        //Debug.Log(Game.GetEquipment(Game.GetSession().actorType));
-        /*        List<string> testString = Game.GetListOfSkillsPartOne(Game.GetSession().actorType);
+        //Debug.Log(Game.GetEquipment(Game.mainsessionData.actorType));
+        /*        List<string> testString = Game.GetListOfSkillsPartOne(Game.mainsessionData.actorType);
                 List<string> testString2 = new List<string>();
                 foreach (var test in testString)
                 {
@@ -57,15 +57,19 @@ public class DataManager : MonoBehaviour
                 {
                     Debug.Log(test);
                 }*/
-        if (Game.Getactorbytype("enemyBat").skillslist == null)
-        {
-            Debug.Log(Game.Getactorbytype("enemyBat").actorType);
-        }
-        else
-        {
-            Debug.Log(Game.Getactorbytype("enemyBat").skillslist);
-        }
-        
+        //if (Game.Getactorbytype("enemyBat").skillslist == null)
+        //{
+        //    Debug.Log(Game.Getactorbytype("enemyBat").actorType);
+        //}
+        //else
+        //{
+        //    Debug.Log(Game.Getactorbytype("enemyBat").skillslist);
+        //}
+        //foreach (var a in Game.GetItemsInInventory())
+        //{
+        //    Debug.Log(a.itemId);
+        //}
+        //Debug.Log(Game.mainsessionData.inventory);
     }
 
     private void ProcessDemoData(DemoData demoData)
@@ -83,7 +87,8 @@ public class DataManager : MonoBehaviour
         {
             items item = new items(refItem.itemId, refItem.itemType,
                 refItem.actorType, refItem.displayName, refItem.defenseBuff,
-                refItem.physicaldmgBuff, refItem.magicdmgBuff, refItem.cost);
+                refItem.physicaldmgBuff, refItem.magicdmgBuff, refItem.cost,
+                refItem.displaySpritePath);
 
             itemList.Add(item);
         }
