@@ -123,7 +123,7 @@ namespace pattayaA3
 				
 				TownDialogManager.Instance.HandleUpdate();
 			}
-			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z) && state == GameState.FreeRoam | state == GameState.Training)
+			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z) && state == GameState.FreeRoam | state == GameState.Training | state == GameState.Shop)
 			{
 				Debug.Log($"pressing Z {state}");
 				if (state == GameState.Training)

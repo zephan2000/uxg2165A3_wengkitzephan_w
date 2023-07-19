@@ -156,7 +156,7 @@ namespace pattayaA3
 			var collision = Physics2D.OverlapCircle(interactPos, 0.25f, interactableLayer);
 			if (collision != null)
 			{
-				//Debug.Log(collision.gameObject.name);
+				Debug.Log(collision.gameObject.name);
 				StartCoroutine(InteractablePing(collision));
 				//Debug.Log(IsInteractable());
 				return false;

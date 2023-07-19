@@ -851,7 +851,7 @@
     ],
     "level": [
         {
-            "levelId": "playerWarrior01",
+            "levelId": "playerWarrior_01",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "50",
@@ -865,7 +865,7 @@
             "attspeed": "20"
         },
         {
-            "levelId": "playerWarrior02",
+            "levelId": "playerWarrior_02",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "100",
@@ -879,7 +879,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior03",
+            "levelId": "playerWarrior_03",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "150",
@@ -893,7 +893,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior04",
+            "levelId": "playerWarrior_04",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "200",
@@ -907,7 +907,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior05",
+            "levelId": "playerWarrior_05",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "250",
@@ -921,7 +921,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior06",
+            "levelId": "playerWarrior_06",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "300",
@@ -935,7 +935,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior07",
+            "levelId": "playerWarrior_07",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "350",
@@ -949,7 +949,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior08",
+            "levelId": "playerWarrior_08",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "400",
@@ -963,7 +963,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior09",
+            "levelId": "playerWarrior_09",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "450",
@@ -977,7 +977,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior10",
+            "levelId": "playerWarrior_10",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "500",
@@ -991,7 +991,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior11",
+            "levelId": "playerWarrior_11",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "550",
@@ -1005,7 +1005,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior12",
+            "levelId": "playerWarrior_12",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "600",
@@ -1019,7 +1019,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior13",
+            "levelId": "playerWarrior_13",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "700",
@@ -1033,7 +1033,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior14",
+            "levelId": "playerWarrior_14",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "750",
@@ -1047,7 +1047,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior15",
+            "levelId": "playerWarrior_15",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "800",
@@ -1061,7 +1061,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior16",
+            "levelId": "playerWarrior_16",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "850",
@@ -1075,7 +1075,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior17",
+            "levelId": "playerWarrior_7",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "900",
@@ -1089,7 +1089,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior18",
+            "levelId": "playerWarrior_8",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "950",
@@ -1103,7 +1103,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior19",
+            "levelId": "playerWarrior_9",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "1000",
@@ -1117,7 +1117,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior20",
+            "levelId": "playerWarrior_0",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "1050",
@@ -1131,7 +1131,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard01",
+            "levelId": "playerWizard_1",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "50",
@@ -1145,7 +1145,7 @@
             "attspeed": "10"
         },
         {
-            "levelId": "playerWizard02",
+            "levelId": "playerWizard_2",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "100",
@@ -1159,7 +1159,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard03",
+            "levelId": "playerWizard_3",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "150",
@@ -1173,7 +1173,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard04",
+            "levelId": "playerWizard_4",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "200",
@@ -1187,7 +1187,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard05",
+            "levelId": "playerWizard_5",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "250",
@@ -1201,7 +1201,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard06",
+            "levelId": "playerWizard_6",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "300",
@@ -1215,7 +1215,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard07",
+            "levelId": "playerWizard_7",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "350",
@@ -1229,7 +1229,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard08",
+            "levelId": "playerWizard_8",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "400",
@@ -1243,7 +1243,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard09",
+            "levelId": "playerWizard_9",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "450",
@@ -1257,7 +1257,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard10",
+            "levelId": "playerWizard_10",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "500",
@@ -1271,7 +1271,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard11",
+            "levelId": "playerWizard_11",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "550",
@@ -1285,7 +1285,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard12",
+            "levelId": "playerWizard_12",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "600",
@@ -1299,7 +1299,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard13",
+            "levelId": "playerWizard_13",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "700",
@@ -1313,7 +1313,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard14",
+            "levelId": "playerWizard_14",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "750",
@@ -1327,7 +1327,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard15",
+            "levelId": "playerWizard_15",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "800",
@@ -1341,7 +1341,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard16",
+            "levelId": "playerWizard_16",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "850",
@@ -1355,7 +1355,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard17",
+            "levelId": "playerWizard_17",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "900",
@@ -1369,7 +1369,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard18",
+            "levelId": "playerWizard_18",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "950",
@@ -1383,7 +1383,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard19",
+            "levelId": "playerWizard_19",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "1000",
@@ -1397,7 +1397,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWizard20",
+            "levelId": "playerWizard_20",
             "actorType": "playerWizard",
             "expToGain": "50",
             "maxExp": "1050",
@@ -1411,7 +1411,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher01",
+            "levelId": "playerArcher_1",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "50",
@@ -1425,7 +1425,7 @@
             "attspeed": "42"
         },
         {
-            "levelId": "playerArcher02",
+            "levelId": "playerArcher_2",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "100",
@@ -1439,7 +1439,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher03",
+            "levelId": "playerArcher_3",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "150",
@@ -1453,7 +1453,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher04",
+            "levelId": "playerArcher_4",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "200",
@@ -1467,7 +1467,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher05",
+            "levelId": "playerArcher_5",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "250",
@@ -1481,7 +1481,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher06",
+            "levelId": "playerArcher_6",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "300",
@@ -1495,7 +1495,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher07",
+            "levelId": "playerArcher_7",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "350",
@@ -1509,7 +1509,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher08",
+            "levelId": "playerArcher_8",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "400",
@@ -1523,7 +1523,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher09",
+            "levelId": "playerArcher_9",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "450",
@@ -1537,7 +1537,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher10",
+            "levelId": "playerArcher_10",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "500",
@@ -1551,7 +1551,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher11",
+            "levelId": "playerArcher_11",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "550",
@@ -1565,7 +1565,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher12",
+            "levelId": "playerArcher_12",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "600",
@@ -1579,7 +1579,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher13",
+            "levelId": "playerArcher_13",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "700",
@@ -1593,7 +1593,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher14",
+            "levelId": "playerArcher_14",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "750",
@@ -1607,7 +1607,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher15",
+            "levelId": "playerArcher_15",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "800",
@@ -1621,7 +1621,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher16",
+            "levelId": "playerArcher_16",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "850",
@@ -1635,7 +1635,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher17",
+            "levelId": "playerArcher_17",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "900",
@@ -1649,7 +1649,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher18",
+            "levelId": "playerArcher_18",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "950",
@@ -1663,7 +1663,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerArcher19",
+            "levelId": "playerArcher_19",
             "actorType": "playerArcher",
             "expToGain": "50",
             "maxExp": "1000",

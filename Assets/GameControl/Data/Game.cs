@@ -201,6 +201,7 @@ public static class Game
 	public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
     {
         level alevel = GetLevelByLevelId(levelid);
+        Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}");
         mainsessionData.maxhp = alevel.maxhp;
 		mainsessionData.physicaldmg = alevel.physicaldmg;
 		mainsessionData.magicdmg = alevel.magicdmg;
@@ -505,7 +506,7 @@ public static class Game
 
     public static List<items> GetItemsInInventory()
     {
-        session currentSession = Game.mainsessionData;
+        save currentSession = Game.mainsessionData;
         List<items> iList = new List<items>();
         string[] stringArray = currentSession.inventory.Split(",");
         foreach (var a in stringArray)
