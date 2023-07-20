@@ -43,6 +43,17 @@ public static class Game
 	public static int battleQuestProgress;
 	public static bool questComplete;
 
+    //Analytics
+    public static string [] battleResultByEnemyType;
+    public static bool isBattleOver;// format: enemyType_battleStatus, where battleStatus {0 = Run, 1 = Lost, 2 = Won}
+    public static int battlesWon;
+	public static int battlesLost;
+	public static int battlesRan;
+    public static string enemyTypeForAnalytics;
+    public static int gameRunTime;
+
+    //Achievement
+
 	public static string chosenenemyName { get; set; }
     public static string chosenenemyType { get; set; }
     public static string sessionactorName { get; set; }
@@ -153,7 +164,7 @@ public static class Game
     }
     public static string GetSkillListByType(string type)
     {
-        return Game.Getactorbytype(type).skillslist;
+        return Getactorbytype(type).skillslist;
     }
 	public static skills GetskillbyName(string name)
 	{
@@ -261,10 +272,10 @@ public static class Game
 		{
 			save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName, refData.actorType, refData.levelId, refData.currenthp, refData.maxhp, refData.physicaldmg, refData.magicdmg, refData.vitality, refData.power,
 							refData.intelligence, refData.attspeed, refData.attributePoint, refData.exp, refData.gold, refData.weapon, refData.helmet, refData.armour, refData.inventory, refData.displaySpritePath, 
-                            refData.startedQuest, refData.completedQuest, refData.completedAchievement);
+                            refData.startedQuest, refData.completedQuest, refData.completedAchievement, refData.runtime, refData.battles);
 			saveDataList.Add(savedata);
 		}
-		Game.saveList = saveDataList;
+		saveList = saveDataList;
 	}
 	public static save GetSave() //for single play (testing purposes)
 	{
@@ -281,11 +292,14 @@ public static class Game
     {
         foreach (save savedata in saveList)
         {
-            if (saveId.Equals(savedata.saveId))
+            //if (saveId.Equals(savedata.saveId))
+                if(savedata.saveId == saveId)
             {
 				mainsessionData = savedata;
                 savedata.saveStatus = "ACTIVE";
+                Debug.Log($"This is soemthing done /////////////////////////////////////////////");
 			}
+                Debug.Log($"================================================\n{savedata.saveId}");
         }
     }
     public static void SaveToJSON<T>(List<T> toSave) where T:save// change this to Save, manually write the JSON formula
@@ -356,6 +370,7 @@ public static class Game
 		}
 		return null;
 	}
+
 	#endregion
 
 	#region Dialog
@@ -409,6 +424,72 @@ public static class Game
 	}
 	#endregion Dialog
 
+	#region Analytics
+
+	
+
+	public static void AssignBattleResult()
+    {
+        if(playerRan)
+        {
+            if (mainsessionData.battles == "")
+                mainsessionData.battles = chosenenemyType + '_' + "0";
+            else
+                mainsessionData.battles = mainsessionData.battles + "@" + chosenenemyType + '_' + "0";
+		}
+		else if (!playerRan && !playerWon)
+		{
+			if (mainsessionData.battles == "")
+				mainsessionData.battles = chosenenemyType + '@' + "1";
+			else
+				mainsessionData.battles = mainsessionData.battles + "@" + chosenenemyType + '_' + "1";
+		}
+		else if (!playerRan && playerWon)
+		{
+			if (mainsessionData.battles == "")
+				mainsessionData.battles = chosenenemyType + '@' + "2";
+			else
+				mainsessionData.battles = mainsessionData.battles + "@" + chosenenemyType + '_' + "2";
+		}
+	}
+
+    public static string [] BattleResultByEnemyType(string enemyType)
+    {
+        string[] eachBattle = mainsessionData.battles.Split('@');
+		List<string> battleResultList = new List<string>();
+		foreach (string battle in eachBattle)
+        {
+
+            if (battle.Contains(enemyType))
+                battleResultList.Add(battle);
+		}
+
+        foreach (string battle in battleResultList)
+        {
+            Debug.Log($"this is a string in battleResultList {battle}, with enemyType name {enemyType}");
+        }
+        battleResultByEnemyType = battleResultList.ToArray();
+        return battleResultByEnemyType;
+    }
+
+	#endregion
+
+	#region Achievement
+
+    public static int GetNumberOfBattles()
+    {
+        int noofBattles = 0;
+
+        string[] battleString = mainsessionData.battles.Split('@');
+        for(int i = 0; i < battleString.Length; i++)
+        {
+            noofBattles++;
+        }
+
+        return noofBattles;
+    }
+
+	#endregion
 	public static int SetEnemyPokemonLevel(string pokemonLevel)
     {
         return enemyPokemonLevel = Int32.Parse(pokemonLevel);

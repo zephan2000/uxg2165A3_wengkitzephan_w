@@ -1628,7 +1628,9 @@ MonoBehaviour:
   playerHud: {fileID: 16508953}
   pauseMenu: {fileID: 2128987963}
   pauseMenuPrefab: {fileID: 3296140887574902020, guid: fd50aab8b2e1b9844a7c36b44378400b, type: 3}
+  analyticsPrefab: {fileID: 2277368925523905580, guid: 1b96cd0b000ab2443ba79d8c1ff9f5f4, type: 3}
   childList: []
+  progressMenuList: []
   trainingCenterBackground: {fileID: 1000550457}
 --- !u!114 &590105150
 MonoBehaviour:
@@ -1677,7 +1679,7 @@ MonoBehaviour:
     actorName: 
     actorType: 
     levelId: 
-    currenthp: 140
+    currenthp: 0
     maxhp: 0
     physicaldmg: 0
     magicdmg: 0

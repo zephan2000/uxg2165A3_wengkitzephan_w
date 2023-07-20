@@ -2,12 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System;
-using UnityEditor.AddressableAssets;
-using System.ComponentModel;
-using pattayaA3;
-using System.Net.NetworkInformation;
-using Unity.Mathematics;
 
 public class DataManager : MonoBehaviour
 {
@@ -15,6 +9,7 @@ public class DataManager : MonoBehaviour
     void Start()
     {
         LoadRefData();
+
     }
 
     public void LoadRefData()
@@ -61,14 +56,14 @@ public class DataManager : MonoBehaviour
                 {
                     Debug.Log(test);
                 }*/
-        if (Game.Getactorbytype("enemyBat").skillslist == null)
-        {
-            Debug.Log(Game.Getactorbytype("enemyBat").actorType);
-        }
-        else
-        {
-            Debug.Log(Game.Getactorbytype("enemyBat").skillslist);
-        }
+        //if (Game.Getactorbytype("enemyBat").skillslist == null)
+        //{
+        //    Debug.Log(Game.Getactorbytype("enemyBat").actorType);
+        //}
+        //else
+        //{
+        //    Debug.Log(Game.Getactorbytype("enemyBat").skillslist);
+        //}
         
     }
 

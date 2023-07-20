@@ -35,6 +35,7 @@ public class TownDialogManager : MonoBehaviour
 	private bool allowNext = false;
 	private int currentChoice;
 	private int numberOfButtons;
+	private bool questCompleteCheck;
 
 	private void Awake()
 	{
@@ -109,6 +110,7 @@ public class TownDialogManager : MonoBehaviour
 		SkipText.SetActive(true);
 		NextText.SetActive(false);
 		EndText.SetActive(false);
+		questCompleteCheck = false;
 		if(currentDialog.dialogueType == "QC")
 			CheckForSpecialDialog();
 		foreach (var letter in currentDialog.dialogueText)
@@ -243,12 +245,14 @@ public class TownDialogManager : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Return)) // implement functions now
 		{
-			var chosenDialog = dialogChoiceList[currentChoice];
-			CheckForQuestTrigger(chosenDialog.dialogueId);
+			Dialog chosenDialog = dialogChoiceList[currentChoice];
+			
+			CheckForQuestInProgress(chosenDialog);	
+			CheckForCompletedQuest(chosenDialog);
 			currentChoice = 0;
 			numberOfButtons = 0;	
-			currentDialog = Game.GetDialogByDialogList(chosenDialog.nextdialogueId, dialogList);
-			Debug.Log($"This is the chosenDialog: {chosenDialog.dialogueId}, with the currentDialog: {currentDialog}");//setting to next dialog
+			
+			Debug.Log($"This is the chosenDialog: {chosenDialog.dialogueId}, with the currentDialog: {currentDialog.dialogueId}");//setting to next dialog
 			dialogState = TownDialogState.EndOfDialog;
 			if(chosenDialog.dialogueText == "Restore Health")
 			{
@@ -297,4 +301,42 @@ public class TownDialogManager : MonoBehaviour
 
 		}
 	}
+	public void CheckForQuestInProgress(Dialog chosenDialog)
+	{
+		if (Game.mainsessionData.startedQuest == "")
+		{
+			CheckForQuestTrigger(chosenDialog.dialogueId);
+			currentDialog = Game.GetDialogByDialogList(chosenDialog.nextdialogueId, dialogList);
+		}
+		else
+			currentDialog = Game.GetDialogByType("QW")[0];
+	}
+
+	public void CheckForCompletedQuest(Dialog chosenDialog)
+	{
+		Debug.Log($"checking for data in mainsessionData {Game.mainsessionData.completedQuest}");
+		if (Game.mainsessionData.completedQuest == "")
+		{
+			Debug.Log("no completedQuest");
+		}
+		else
+		{
+			string[] completedQuests = Game.mainsessionData.completedQuest.Split("@");
+			foreach (string quest in completedQuests)
+			{
+				if (Game.GetQuestByQuestId(quest).questName == chosenDialog.dialogueText)
+					questCompleteCheck = true;
+
+				Debug.Log($"this is from CheckForOngoingQuest {quest}, questCompleteCheck status {questCompleteCheck}, questName {Game.GetQuestByQuestId(quest).questName}");
+			}
+
+			if (questCompleteCheck == true)
+			{
+				currentDialog = Game.GetDialogByDialogId("QW0002");
+			}
+		}
+		
+	}
+
+	
 }

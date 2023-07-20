@@ -1,4 +1,5 @@
 using pattayaA3;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace pattayaA3
 		[SerializeField] BattleDialogBox dialogBox;
 		[SerializeField] Image battleBackground;
 		private bool isStarted;
+		private int battleRunTime;
 
 		BattleState state;
 		int currentAction;
@@ -25,6 +27,8 @@ namespace pattayaA3
 		bool allowNext = true;
 		private void Start()
 		{
+			Game.isBattleOver = false;
+			StartCoroutine(RecordSecondsTakenPerBattle());
 			StartCoroutine(SetupBattle());
 		}
 
@@ -39,6 +43,9 @@ namespace pattayaA3
 			//Debug.Log("Setting up");
 			//Set a new background for boss battle
 			//Debug.Log($"{Game.sessionactorName},{Game.sessionactorType}");
+			Game.isBattleOver = false;
+			Game.playerWon = false;
+			Game.playerRan = false;
 			Debug.Log($"{Game.chosenenemyName},{Game.chosenenemyType}");
 			//playerUnit.BattleUnitSetup(Game.sessionactorName,Game.sessionactorType);
 			playerUnit.BattleUnitSetup(Game.mainsessionData.actorName, Game.mainsessionData.actorType, Game.playerLevel); //need to add an actorName to save class
@@ -186,7 +193,10 @@ namespace pattayaA3
 				if(Game.playerRan != true)
 					Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain / 2;
 			}
+			Game.mainsessionData.runtime += battleRunTime;
+			Game.AssignBattleResult();
 			Game.SaveToJSON<save>(Game.saveList);
+			Game.isBattleOver = false;
 			state = BattleState.BattleOver;
 			ExitLevel("Town");
 		}
@@ -235,6 +245,11 @@ namespace pattayaA3
 				{
 					Game.playerRan = true;
 					Game.playerWon = false;
+					Game.isBattleOver = true;
+					Debug.Log($"This is battle runtime: {battleRunTime} with mainsessionData runtime: {Game.mainsessionData.runtime}");
+					Game.mainsessionData.runtime += battleRunTime;
+					Game.AssignBattleResult();
+					Game.SaveToJSON<save>(Game.saveList);
 					ExitLevel("Town");
 				}
 			}
@@ -289,6 +304,17 @@ namespace pattayaA3
 			gameController.LoadScene(aScene);
 			gameController.RemoveScene(sceneName);
 		}
+		public IEnumerator RecordSecondsTakenPerBattle()
+		{
+			while (!Game.isBattleOver)
+			{
+				yield return new WaitForSeconds(1);
+				battleRunTime += 1;
+				Debug.Log($"this is battle run time: {battleRunTime}, with battleStatus {!Game.isBattleOver}");
+
+			}
+		}
+
 	}
 }
 

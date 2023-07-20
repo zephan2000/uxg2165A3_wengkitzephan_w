@@ -30,9 +30,12 @@ public class save
 	public string startedQuest;
 	public string completedQuest;
 	public string completedAchievement;
+    public int runtime;
+    public string battles;
 
 	public save(string saveId, string seshname, string saveStatus, string actorName,string actorType, string levelId, int currenthp, int maxhp, int physicaldmg, int magicdmg, int vitality, int power, 
-        int intelligence, int attspeed, int attributePoint, int exp, int gold, string weapon, string helmet, string armour, string inventory, string displaySpritePath, string startedQuest, string completedQuest, string completedAchievement)
+        int intelligence, int attspeed, int attributePoint, int exp, int gold, string weapon, string helmet, string armour, string inventory, string displaySpritePath, string startedQuest, string completedQuest, 
+        string completedAchievement,int runtime, string battles)
     {
         this.saveId = saveId;
         this.seshname = seshname;
@@ -59,6 +62,8 @@ public class save
         this.startedQuest = startedQuest;
         this.completedQuest = completedQuest;
         this.completedAchievement = completedAchievement;
+        this.runtime = runtime;
+        this.battles = battles;
     }
 
 }

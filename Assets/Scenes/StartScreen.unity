@@ -3121,6 +3121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1799764327974723819}
   - component: {fileID: 317250288632733413}
+  - component: {fileID: 2472244311544197374}
   m_Layer: 5
   m_Name: itemList
   m_TagString: SaveList
@@ -3128,6 +3129,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2472244311544197374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2472244311544197373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 1
 --- !u!222 &2527267650799727558
 CanvasRenderer:
   m_ObjectHideFlags: 0
