@@ -19,6 +19,8 @@ TagManager:
   - SaveList
   - ShopList
   - ShopBG
+  - Analytics
+  - Return
   layers:
   - Default
   - TransparentFX

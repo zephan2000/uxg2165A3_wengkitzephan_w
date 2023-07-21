@@ -34,4 +34,6 @@ public class refSave
     public string startedQuest;
     public string completedQuest;
     public string completedAchievement;
+    public int runtime;
+    public string battles;
 }

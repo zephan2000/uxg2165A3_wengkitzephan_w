@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace pattayaA3
 {
 	//Zephan
-	public enum GameState { FreeRoam, Dialog, Shop, Inventory, Training, SaveMenu, SaveMenuSelection}
+	public enum GameState { FreeRoam, Dialog, Shop, Inventory, Training, SaveMenu, SaveMenuSelection , ProgressMenu, ProgressMenuSelection}
 	public enum QuestStatus { Inactive, Ongoing, Completed} //implement this
 	public class LevelController : GameSceneController
 	{
@@ -38,13 +38,23 @@ namespace pattayaA3
 		public BattleHud playerHud;
 		public GameObject pauseMenu;
 		public GameObject pauseMenuPrefab;
+		private GameObject progressButton;
+		private GameObject progressMenu;
+		public GameObject analyticsPrefab;
 		public List<GameObject> childList;
+		public List<GameObject> progressMenuList;
 		public GameObject trainingCenterBackground;
 		private int currentChoice = 0;
-		private bool isSaveMenuOpen;
+		private bool isPauseMenuOpen;
 		private bool allowEscape;
+		private bool allowReturn;
+		private bool isProgressMenuOpen;
+		private int PlayTimeHour;
+		private int PlayTimeMinute;
+		private int PlayTimeSecond;
+		private int MyPlayTime;
 
-        void Start()
+		void Start()
 		{
 			TownDialogManager.Instance.OnShowDialog += () =>
 			{
@@ -102,7 +112,7 @@ namespace pattayaA3
 			CheckForLevelUp();
 
 			//set EXP and HP data on Start()
-			Debug.Log(Game.saveList[0].saveId); //works
+			//Debug.Log(Game.saveList[0].saveId); //works
 		}
 		private void Update()
 		{
@@ -150,8 +160,10 @@ namespace pattayaA3
             {
 				if (!isOpenInventory)
 				{
+					Debug.Log($"this is mainsessionData before inventory: {Game.mainsessionData.saveId}, {Game.mainsessionData.actorName}");
 					state = GameState.Inventory;
 					invent.ToggleInventory(isOpenInventory);
+					Debug.Log($"this is mainsessionData after toggle: {Game.mainsessionData.saveId}, {Game.mainsessionData.actorName}");
 					isOpenInventory = !isOpenInventory;
 				}
 				else
@@ -164,7 +176,7 @@ namespace pattayaA3
 
 			if (Input.GetKeyDown(KeyCode.Escape) && state == GameState.FreeRoam | state == GameState.SaveMenu)
 			{
-				ToggleSaveMenu();
+				TogglePauseMenu();
 			}
 			if(state == GameState.SaveMenuSelection)
 			{
@@ -175,6 +187,10 @@ namespace pattayaA3
 					GameObject.Destroy(pauseMenu);
 					childList.Clear();
 				}
+			}
+			else if (state == GameState.ProgressMenuSelection)
+			{
+				HandleProgressMenuSelection();
 			}
             
             //inventorybox.CheckMenu();			
@@ -212,11 +228,6 @@ namespace pattayaA3
 				StartCoroutine(playerHud.UpdateTownData());
 			}
 		}
-		public bool CheckGameOver()
-		{
-			//check if game over
-			return gameController.CheckGameOver();
-		}
 		public void StartNewLevel(string aScene)
 		{
 			player.currentposition = player.GetCurrentPosition(); // check what is the current player position
@@ -233,12 +244,56 @@ namespace pattayaA3
 		{
 			return isStarted;
 		}
+
+		#region PauseMenu Settings
+		public void TogglePauseMenu()
+		{
+
+			SetPauseMenu(!isPauseMenuOpen);
+		}
+		public void SetPauseMenu(bool aInventory)
+		{
+			isPauseMenuOpen = aInventory;
+			if (isPauseMenuOpen == true)
+			{
+				state = GameState.SaveMenu;
+				pauseMenu = Instantiate(pauseMenuPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+				pauseMenu.transform.SetParent(GameObject.FindGameObjectWithTag("Pause Menu").transform, false);
+
+				//pauseMenu.GetComponent<GameObject>().SetActive(false);
+				if (childList.Count <= 0)
+				{
+					foreach (Transform child in pauseMenu.transform.GetChild(0))
+					{
+						if (child.gameObject.CompareTag("Choice") == true)
+						{
+							if(child.gameObject.name == "Progress")
+							{
+								progressButton = child.gameObject;
+							}
+							childList.Add(child.gameObject);
+							Debug.Log(child.gameObject.name);
+						}
+					}
+				}
+				allowEscape = false;
+				state = GameState.SaveMenuSelection;
+			}
+			else
+			{
+				state = GameState.FreeRoam;
+				GameObject.Destroy(pauseMenu);
+				childList.Clear();
+			}
+		}
+
 		public void UpdateChoiceSelection(int selectedChoice)
 		{
 			for (int i = 0; i < childList.Count; i++)
 			{
 				if (i == selectedChoice)
 				{
+					Debug.Log($"this is {childList[i].gameObject.name}");
 					childList[i].GetComponent<Text>().color = Color.blue;
 				}
 				else
@@ -253,7 +308,10 @@ namespace pattayaA3
 			{
 				Debug.Log($"before down arrow, currentchoice = {currentChoice}");
 				if (currentChoice < childList.Count)
+				{
 					++currentChoice;
+				}
+					
 				Debug.Log($"After down arrow, currentchoice = {currentChoice}");
 			}
 			else if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -265,10 +323,10 @@ namespace pattayaA3
 
 			if (Input.GetKeyDown(KeyCode.Return))
 			{
-				HandleSaveMenuSelection(); 
+				HandleSaveMenuSelection();
 
 			}
-			if(state == GameState.SaveMenuSelection && Input.GetKeyDown(KeyCode.Escape))
+			if (state == GameState.SaveMenuSelection && Input.GetKeyDown(KeyCode.Escape))
 			{
 				StartCoroutine(CheckForEscape());
 			}
@@ -282,14 +340,27 @@ namespace pattayaA3
 
 		void HandleSaveMenuSelection()
 		{
-			switch(childList[currentChoice].GetComponent<Text>().text)
+			switch (childList[currentChoice].gameObject.name)
 			{
 				case "Resume":
 					state = GameState.FreeRoam;
-					if(pauseMenu != null)
+					if (pauseMenu != null)
 					{
 						GameObject.Destroy(pauseMenu);
 						childList.Clear();
+					}
+					currentChoice = 0;
+					break;
+
+				case "Progress":
+					Debug.Log("progress runnning");
+					ToggleProgressMenu();
+					foreach (GameObject child in childList)
+					{
+						if(child.gameObject.name == "Progress")
+						{  }
+						else
+							child.SetActive(false);
 					}
 					currentChoice = 0;
 					break;
@@ -309,13 +380,18 @@ namespace pattayaA3
 						childList.Clear();
 					}
 					break;
+
 			}
 		}
+
+		#endregion
+
+		#region Training Center
 		public void SetTrainingCenter(bool aInventory)
 		{
 			isOpenTrainingCenter = aInventory;
 			Debug.Log($"setting training center, state is: {state}");
-			if (isOpenTrainingCenter == true )
+			if (isOpenTrainingCenter == true)
 			{
 				state = GameState.Training;
 				Debug.Log($"attempting to interact, state is: {state}");
@@ -338,44 +414,247 @@ namespace pattayaA3
 
 			SetTrainingCenter(!isOpenTrainingCenter);
 		}
+		#endregion 
 
-		public void SetSaveMenu(bool aInventory)
+		#region Progress Menu
+		public void ToggleProgressMenu()
 		{
-			isSaveMenuOpen = aInventory;
-			if (isSaveMenuOpen == true)
+			SetProgressMenu(!isProgressMenuOpen);
+		}
+		public void SetProgressMenu(bool aInventory)
+		{
+			isProgressMenuOpen = aInventory;
+			if (isProgressMenuOpen == true)
 			{
-				state = GameState.SaveMenu;
-				pauseMenu = Instantiate(pauseMenuPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-				pauseMenu.transform.SetParent(GameObject.FindGameObjectWithTag("Pause Menu").transform, false);
-				
+				state = GameState.ProgressMenu;
+				progressMenu = Instantiate(analyticsPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+				progressMenu.transform.SetParent(progressButton.transform, false);
+				Debug.Log($"runnning: {progressMenu.gameObject.name}");
 				//pauseMenu.GetComponent<GameObject>().SetActive(false);
-				if (childList.Count <= 0)
+
+				foreach(Transform child in progressMenu.transform)
 				{
-					foreach (Transform child in pauseMenu.transform.GetChild(0))
+					Debug.Log($"progress Menu children gameObject: {child.gameObject.name}");
+					if (child.gameObject.name == "Battle Won/Lost/Ran")
 					{
-						if (child.gameObject.CompareTag("Choice") == true)
-						{
-							childList.Add(child.gameObject);
-							Debug.Log(child.gameObject.name);
-						}
+						Debug.Log($"this is the enemy battle data {enemyBatString()} + {enemyGhostString()} + {enemyWizardString()}");
+						child.gameObject.GetComponent<Text>().text = enemyBatString() + "," + enemyGhostString() + "," + enemyWizardString();
+
 					}
+
+					else if (child.gameObject.name == "Quest Ongoing")
+					{
+						Debug.Log($"this is quest ongoing {Game.mainsessionData.startedQuest}");
+						child.gameObject.GetComponent<Text>().text = "Quest Ongoing: " + Game.mainsessionData.startedQuest.Split('_')[0];
+					}
+					else if (child.gameObject.name == "Quest Completed")
+					{
+						child.gameObject.GetComponent<Text>().text = "Quest Completed: " + GetCompletedQuestData();
+					}
+					else if (child.gameObject.name == "Achievements Completed")
+					{
+						child.gameObject.GetComponent<Text>().text = "Achievement: ";
+					}
+					else if (child.gameObject.name == "Return")
+					{
+						progressMenuList.Add(child.gameObject);
+						Debug.Log($"finding return gameObject {child.gameObject.name}");
+					}
+					else if (child.gameObject.name == "Minutes Per Battle")
+					{
+						child.gameObject.GetComponent<Text>().text = "Average Minutes Per Battle: " + ((Game.mainsessionData.runtime/60)/ Game.mainsessionData.battles.Split('@').Length);
+						Debug.Log("assign run time");
+					}
+					else
+						return;
+					
 				}
-				allowEscape = false;
+				allowReturn = false;
+				state = GameState.ProgressMenuSelection;
+			}
+			else 
+			{
 				state = GameState.SaveMenuSelection;
+				foreach (Transform child in progressButton.transform.GetChild(0))
+				{
+					Destroy(child.gameObject);
+				}
+				Destroy(progressMenu);
+				progressMenuList.Clear();
+				foreach (GameObject child in childList)
+				{
+					child.SetActive(true);
+				}
+			}
+		}
+		void ProgressMenuSelection() //for vertical choice selector
+		{
+			if (state == GameState.ProgressMenuSelection && Input.GetKeyDown(KeyCode.Return))
+			{
+				currentChoice = 0;
+				StartCoroutine(CheckForReturn());
+			}
+		}
+
+		private IEnumerator CheckForReturn()
+		{
+			yield return new WaitForSeconds(0.2f);
+			yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+			allowReturn = true;
+		}
+
+		void HandleProgressMenuSelection()
+		{
+			if (progressMenuList[currentChoice].gameObject.name == "Return")
+			{
+				Debug.Log($"this is currentchoice: {currentChoice}");
+				progressMenuList[currentChoice].GetComponent<Text>().color = Color.blue;
+				if (Input.GetKeyDown(KeyCode.Return))
+					ToggleProgressMenu();
+			}
+
+		}
+
+		#endregion
+		#region Battle And Quest Analytics
+		public IEnumerator RecordTimeRoutine()
+		{
+			TimeSpan ts;
+			while (true)
+			{
+				yield return new WaitForSeconds(1);
+				MyPlayTime += 1;
+
+				ts = TimeSpan.FromSeconds(MyPlayTime);
+
+				PlayTimeHour = (int)ts.TotalHours;
+				PlayTimeMinute = ts.Minutes;
+				PlayTimeSecond = ts.Seconds;
+			}
+		}
+		public string GetCompletedQuestData()
+		{
+			string[] questData = Game.mainsessionData.completedQuest.Split('@');
+			string questString = " ";
+			string quest1Complete = "Incomplete";
+			string quest2Complete = "Incomplete";
+			string quest3Complete = "Incomplete";
+
+			foreach (string quest in questData) 
+			{
+				if (quest == "QUEST1")
+					quest1Complete = "Complete";
+				else if (quest == "QUEST2")
+					quest2Complete = "Complete";
+				else if (quest == "QUEST3")
+					quest3Complete = "Complete";
+			}
+			questString = $"Quest 1 : {quest1Complete}, Quest 2 : {quest2Complete}, Quest 3: {quest3Complete}";
+
+			return questString;
+
+		}
+		public string enemyBatString()
+		{
+			string[] enemyBatBattles = Game.BattleResultByEnemyType("enemyBat");
+			string enemyBatString = " ";
+			if (enemyBatBattles.Length >= 0)
+			{
+				int enemyBatWon = 0;
+				int enemyBatLost = 0;
+				int enemyBatRan = 0;
+				for (int i = 0; i < enemyBatBattles.Length; i++)
+				{
+
+					string[] enemyBatResult = enemyBatBattles[i].Split('_');
+					if (enemyBatResult[1] == "0")
+						enemyBatRan++;
+					else if (enemyBatResult[1] == "1")
+						enemyBatLost++;
+					else if (enemyBatResult[1] == "2")
+						enemyBatWon++;
+					else
+						return null;
+				}
+
+				if (enemyBatString == " ")
+					enemyBatString= $"Bat(Won/Lost/Ran): {enemyBatWon}/{enemyBatLost}/{enemyBatRan}";
 			}
 			else
 			{
-				state = GameState.FreeRoam;
-				GameObject.Destroy(pauseMenu);
-				childList.Clear();
+				enemyBatString = "Bat(Won/Lost/Ran): 0/0/0";
 			}
+
+			Debug.Log($"this is the enemyBatString {enemyBatString}");
+			return enemyBatString;
 		}
-		public void ToggleSaveMenu()
+
+		public string enemyGhostString()
 		{
+			string[] enemyGhostBattles = Game.BattleResultByEnemyType("enemyGhost");
+			string enemyGhostString = " ";
+			if (enemyGhostBattles.Length >= 0)
+			{
+				int enemyGhostWon = 0;
+				int enemyGhostLost = 0;
+				int enemyGhostRan = 0;
+				for (int i = 0; i < enemyGhostBattles.Length; i++)
+				{
 
-			SetSaveMenu(!isSaveMenuOpen);
+					string[] enemyGhostResult = enemyGhostBattles[i].Split('_');
+					if (enemyGhostResult[1] == "0")
+						enemyGhostRan++;
+					else if (enemyGhostResult[1] == "1")
+						enemyGhostLost++;
+					else if (enemyGhostResult[1] == "2")
+						enemyGhostWon++;
+				}
+
+				if (enemyGhostString == " ")
+					enemyGhostString = $"Ghost(Won/Lost/Ran): {enemyGhostWon}/{enemyGhostLost}/{enemyGhostRan}";
+			}
+			else
+			{
+				enemyGhostString = "Ghost(Won/Lost/Ran): 0/0/0";
+			}
+
+			return enemyGhostString;
 		}
 
+		public string enemyWizardString()
+		{
+			string[] enemyWizardBattles = Game.BattleResultByEnemyType("enemyWizard");
+			string enemyWizardString = " ";
+			if (enemyWizardBattles.Length >= 0)
+			{
+				int enemyWizardWon = 0;
+				int enemyWizardLost = 0;
+				int enemyWizardRan = 0;
+				for (int i = 0; i < enemyWizardBattles.Length; i++)
+				{
+
+					string[] enemyWizardResult = enemyWizardBattles[i].Split('_');
+					if (enemyWizardResult[1] == "0")
+						enemyWizardRan++;
+					else if (enemyWizardResult[1] == "1")
+						enemyWizardLost++;
+					else if (enemyWizardResult[1] == "2")
+						enemyWizardWon++;
+				}
+
+				if (enemyWizardString == " ")
+					enemyWizardString = $"Dark Wizard (Won/Lost/Ran): {enemyWizardWon}/{enemyWizardLost}/{enemyWizardRan}";
+			}
+			else
+			{
+				enemyWizardString = "Dark Wizard (Won/Lost/Ran): 0/0/0";
+			}
+
+			return enemyWizardString;
+		}
+		#endregion
+
+		#region Quest
 		public void StartBattleQuestHud()
 		{
 			questHud.SetActive(true);
@@ -390,7 +669,7 @@ namespace pattayaA3
 			questHud.transform.GetChild(0).GetComponent<Text>().text = $"Talk to NPC for reward! {Game.startedQuest.questName} completed!";
 			questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
 			Game.mainsessionData.startedQuest = Game.startedQuest.questId;
-			
+
 			Game.SaveToJSON<save>(Game.saveList);
 		}
 
@@ -406,9 +685,11 @@ namespace pattayaA3
 				Game.questComplete = true;
 				QuestCompleteHud();
 			}
-				
+
 			else Game.questComplete = false;
 		}
+		#endregion
+
 
 		//public void ActivateInvent()
 		//{
@@ -417,29 +698,29 @@ namespace pattayaA3
 		//	//Instantiate(canvas);
 		//}
 
-			//public void DeActivateInvent()
-			//{
-			//	GameObject.Destroy(test);
-			//}
+		//public void DeActivateInvent()
+		//{
+		//	GameObject.Destroy(test);
+		//}
 
-			//public void ToggleInventory(bool isOpenInventory)
-			//{
-			//	SetInventory(!isOpenInventory);
-			//}
+		//public void ToggleInventory(bool isOpenInventory)
+		//{
+		//	SetInventory(!isOpenInventory);
+		//}
 
-			//public void SetInventory(bool aInventory)
-			//{
-			//	isOpenInventory = aInventory;
-			//	if (isOpenInventory == true)
-			//	{
-			//		ActivateInvent();
-			//		test.SetActive(true);
-			//	}
-			//	else
-			//	{
-			//		DeActivateInvent();
-			//		test.SetActive(false);
-			//	}
-			//}
+		//public void SetInventory(bool aInventory)
+		//{
+		//	isOpenInventory = aInventory;
+		//	if (isOpenInventory == true)
+		//	{
+		//		ActivateInvent();
+		//		test.SetActive(true);
+		//	}
+		//	else
+		//	{
+		//		DeActivateInvent();
+		//		test.SetActive(false);
+		//	}
+		//}
 	}
 }

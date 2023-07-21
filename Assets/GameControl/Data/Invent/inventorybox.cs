@@ -5,62 +5,37 @@ using UnityEngine.UI;
 
 public enum Inventory
 {
-    item, skills, stats, itemEquipment, itemItems
+	item, skills, stats, itemEquipment, itemItems
 }
 
 namespace pattayaA3
 {
-    public class inventorybox : MonoBehaviour
-    {
-        //Text
-        [SerializeField] Text charactername;
-        [SerializeField] Text itemchoice;
-        [SerializeField] Text skillchoice;
-        [SerializeField] Text statchoice;
-        [SerializeField] Text menuchoice;
-        [SerializeField] Text equipchoice;
-        [SerializeField] Text equipitemchoice;
-        //Item text
-        [SerializeField] Text item1;
-        [SerializeField] Text item2;
-        [SerializeField] Text item3;
-        //Skill text
-        [SerializeField] Text skill1;
-        [SerializeField] Text skill2;
-        [SerializeField] Text skill3;
-        [SerializeField] Text skill4;
-        //Stat text
-        [SerializeField] Text stat1;
-        [SerializeField] Text stat2;
-        [SerializeField] Text stat3;
-        [SerializeField] Text stat4;
+	public class inventorybox : MonoBehaviour
+	{
+		[SerializeField] DataManager _dm;
 
-        //Objects
-        [SerializeField] GameObject character;
-        [SerializeField] GameObject charactersprite;
-        [SerializeField] GameObject itemObject;
-        [SerializeField] GameObject skillchoiceObject;
-        [SerializeField] GameObject statchoiceObject;
-        [SerializeField] GameObject menuchoiceObject;
-        [SerializeField] GameObject equipchoiceObject;
-        [SerializeField] GameObject equipitemchoiceObject;
-        [SerializeField] GameObject inventoryBaseObject;
-        [SerializeField] GameObject inventoryInnerObject;
-        [SerializeField] GameObject scroll;
-        //Item object
-        [SerializeField] GameObject item1Object;
-        [SerializeField] GameObject item2Object;
-        [SerializeField] GameObject item3Object;
-        //Skill object
-        [SerializeField] GameObject skill1Object;
-        [SerializeField] GameObject skill2Object;
-        [SerializeField] GameObject skill3Object;
-        [SerializeField] GameObject skill4Object;
-        //Stat object
-        [SerializeField] GameObject stat1Object;
-        [SerializeField] GameObject stat2Object;
-        [SerializeField] GameObject stat3Object;
-        [SerializeField] GameObject stat4Object;
+		//Text
+		[SerializeField] Text charactername;
+		[SerializeField] Text itemchoice;
+		[SerializeField] Text skillchoice;
+		[SerializeField] Text statchoice;
+		[SerializeField] Text menuchoice;
+		[SerializeField] Text equipchoice;
+		[SerializeField] Text equipitemchoice;
+		//Item text
+		[SerializeField] Text item1;
+		[SerializeField] Text item2;
+		[SerializeField] Text item3;
+		//Skill text
+		[SerializeField] Text skill1;
+		[SerializeField] Text skill2;
+		[SerializeField] Text skill3;
+		[SerializeField] Text skill4;
+		//Stat text
+		[SerializeField] Text stat1;
+		[SerializeField] Text stat2;
+		[SerializeField] Text stat3;
+		[SerializeField] Text stat4;
 
         #region AttributeStuff
         //Attribute Stuff
@@ -92,9 +67,34 @@ namespace pattayaA3
 
         #endregion
         Inventory currentmenu = Inventory.item;
+		//Objects
+		[SerializeField] GameObject character;
+		[SerializeField] GameObject charactersprite;
+		[SerializeField] GameObject itemObject;
+		[SerializeField] GameObject skillchoiceObject;
+		[SerializeField] GameObject statchoiceObject;
+		[SerializeField] GameObject menuchoiceObject;
+		[SerializeField] GameObject equipchoiceObject;
+		[SerializeField] GameObject equipitemchoiceObject;
+		[SerializeField] GameObject inventoryBaseObject;
+		[SerializeField] GameObject inventoryInnerObject;
+		[SerializeField] GameObject scroll;
+		//Item object
+		[SerializeField] GameObject item1Object;
+		[SerializeField] GameObject item2Object;
+		[SerializeField] GameObject item3Object;
+		//Skill object
+		[SerializeField] GameObject skill1Object;
+		[SerializeField] GameObject skill2Object;
+		[SerializeField] GameObject skill3Object;
+		[SerializeField] GameObject skill4Object;
+		//Stat object
+		[SerializeField] GameObject stat1Object;
+		[SerializeField] GameObject stat2Object;
+		[SerializeField] GameObject stat3Object;
+		[SerializeField] GameObject stat4Object;
 
-        //Skills
-        List<skills> skillList = new List<skills>();
+		Inventory currentmenu = Inventory.item;
 
         public Transform itemListing;
 
@@ -153,10 +153,10 @@ namespace pattayaA3
             item2.text = Game.Getitemsbyid(Game.mainsessionData.helmet).displayName;
             item3.text = Game.Getitemsbyid(Game.mainsessionData.armour).displayName;
 
-            skill1.text = Game.GetSkillById(ListOfSkillsGroup[0]).skillname;
-            skill2.text = Game.GetSkillById(ListOfSkillsGroup[1]).skillname;
-            skill3.text = Game.GetSkillById(ListOfSkillsGroup[2]).skillname;
-            skill4.text = Game.GetSkillById(ListOfSkillsGroup[3]).skillname;
+			skill1.text = Game.GetSkillById(ListOfSkillsGroup[0]).skillname;
+			skill2.text = Game.GetSkillById(ListOfSkillsGroup[1]).skillname;
+			skill3.text = Game.GetSkillById(ListOfSkillsGroup[2]).skillname;
+			skill4.text = Game.GetSkillById(ListOfSkillsGroup[3]).skillname;
 
             stat1.text = "Vitality: " + Game.mainsessionData.vitality_added;
             stat2.text = "Power: " + Game.mainsessionData.power_added;
@@ -166,22 +166,22 @@ namespace pattayaA3
             //added_stat_text.text = "" + Game.mainsessionData.attributePoint;
             added_stat_text.text = "TEst";
 
-            switch (currentmenu)
-            {
-                case Inventory.item:
-                    menuchoice.text = "Item";
-                    break;
-                case Inventory.skills:
-                    menuchoice.text = "Skills";
-                    break;
-                case Inventory.stats:
-                    menuchoice.text = "Stats";
-                    break;
-                default:
-                    menuchoice.text = "Item";
-                    break;
-            }
-        }
+			switch (currentmenu)
+			{
+				case Inventory.item:
+					menuchoice.text = "Item";
+					break;
+				case Inventory.skills:
+					menuchoice.text = "Skills";
+					break;
+				case Inventory.stats:
+					menuchoice.text = "Stats";
+					break;
+				default:
+					menuchoice.text = "Item";
+					break;
+			}
+		}
 
         public void UpdateSprite(string path)
         {
@@ -1042,21 +1042,21 @@ namespace pattayaA3
                 //LearnableSkill newLS = new LearnableSkill(LS); // returning ID of move here and level has to be casted as int later
                 //ListOfLS.Add(newLS);
 
-                ListofStrings.Add(LS);
-            }
-            return ListofStrings;
-        }
-        public List<string> GetRealSkillStringList(List<string> stringList)
-        {
-            List<string> testString2 = new List<string>();
-            foreach (var test in stringList)
-            {
-                //Debug.Log(test);
-                string[] LSarray = test.Split('_');
-                testString2.Add(LSarray[0]);
-            }
-            return testString2;
-        }
+				ListofStrings.Add(LS);
+			}
+			return ListofStrings;
+		}
+		public List<string> GetRealSkillStringList(List<string> stringList)
+		{
+			List<string> testString2 = new List<string>();
+			foreach (var test in stringList)
+			{
+				//Debug.Log(test);
+				string[] LSarray = test.Split('_');
+				testString2.Add(LSarray[0]);
+			}
+			return testString2;
+		}
 
         public void UpdateEquipment()
         {
