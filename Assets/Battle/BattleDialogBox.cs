@@ -62,7 +62,7 @@ namespace pattayaA3
 
 			}
 		}
-		public void UpdateMoveSelection(int selectedMove, Move move)
+		public void UpdateMoveSelection(int selectedMove, Move move) //
 		{
 			for (int i = 0; i < moveTexts.Count; i++)	
 			{
