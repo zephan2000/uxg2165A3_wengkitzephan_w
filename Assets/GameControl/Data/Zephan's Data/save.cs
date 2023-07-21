@@ -19,7 +19,11 @@ public class save
     public int power;
     public int intelligence;
     public int attspeed;
-	public int attributePoint;
+    public int vitality_added;
+    public int power_added;
+    public int intelligence_added;
+    public int attspeed_added;
+    public int attributePoint;
 	public int exp;
     public int gold;
     public string weapon;
@@ -31,8 +35,12 @@ public class save
 	public string completedQuest;
 	public string completedAchievement;
 
-	public save(string saveId, string seshname, string saveStatus, string actorName,string actorType, string levelId, int currenthp, int maxhp, int physicaldmg, int magicdmg, int vitality, int power, 
-        int intelligence, int attspeed, int attributePoint, int exp, int gold, string weapon, string helmet, string armour, string inventory, string displaySpritePath, string startedQuest, string completedQuest, string completedAchievement)
+	public save(string saveId, string seshname, string saveStatus, string actorName,string actorType,
+        string levelId, int currenthp, int maxhp, int physicaldmg, int magicdmg, int vitality, int power, 
+        int intelligence, int attspeed, int vitality_added, int power_added, int intelligence_added,
+        int attspeed_added, int attributePoint, int exp, int gold, string weapon, string helmet,
+        string armour, string inventory, string displaySpritePath, string startedQuest, string completedQuest,
+        string completedAchievement)
     {
         this.saveId = saveId;
         this.seshname = seshname;
@@ -48,6 +56,10 @@ public class save
         this.power = power;
         this.intelligence = intelligence;
         this.attspeed = attspeed;
+        this.vitality_added = vitality_added;
+        this.power_added = power_added;
+        this.intelligence_added = intelligence_added;
+        this.attspeed_added = attspeed_added;
         this.attributePoint = attributePoint;
         this.exp = exp;
         this.gold = gold;

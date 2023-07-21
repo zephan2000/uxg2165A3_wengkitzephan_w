@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -8,6 +9,7 @@ using static UnityEditor.Progress;
 public class EachItem : MonoBehaviour
 {
     public Transform itemListing;
+    public Transform itemListingObject;
 
     public GameObject itemUi;
     public GameObject itemUi_addition;
@@ -39,17 +41,14 @@ public class EachItem : MonoBehaviour
     public List<string> listOfInventory = new List<string> ();
     public List<items> inventoryList;
 
-    public void Awake()
+
+    public void Start()
     {
         inventoryList = Game.GetItemsInInventory();
+        Game.ProcessSaveData();
+        Game.GetSave();
 
-        //
-        //itemGroup_child01_itemUI = itemGroup.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        //itemGroup_child01_itemUI_addition = itemGroup.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
-        //itemGroup_child02_itemUI = itemGroup.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject;
-        //itemGroup_child02_itemUI_addition = itemGroup.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject;
-
-        
+        itemListing = GameObject.FindWithTag("ItemList").transform;
     }
 
     public void GetAllItems()
@@ -77,8 +76,8 @@ public class EachItem : MonoBehaviour
         //Get itemUI/Image game object
         itemGroup_child01_itemUI = itemGroup_child01_itemUI.transform.GetChild(0).gameObject;
         //Setting Item Image
-        string itemImage =itemIteration.displaySpritePath;
-        Debug.Log("[" + itemIteration.itemId + " Sprite Path :" + itemImage);
+        string itemImage = itemIteration.displaySpritePath;
+        //Debug.Log("This is : " + itemIteration.itemId + " With Sprite Path :" + itemImage);
 
         AssetManager.LoadSprite(itemImage, (Sprite s) =>
         {
@@ -142,7 +141,18 @@ public class EachItem : MonoBehaviour
 
     public void DeActivateInvent()
     {
+        //Debug.Log("Destroys");
         GameObject.Destroy(itemGroupToBeCreated);
+    }
+
+    public void DisableItemList()
+    {
+        foreach (Transform child in itemListing)
+        {
+            //Debug.Log(child.gameObject.name);
+            GameObject.Destroy(child.gameObject);
+
+        }
     }
 
     public void AddInventoryfromButton()
@@ -156,25 +166,33 @@ public class EachItem : MonoBehaviour
     public void ReplaceEquipment()
     {
         string itemEquip = OnClicked(equipButton);
-        string[] itemEquipList = itemEquip.Split("(");
+        //Debug.Log("Equippin item: "+itemEquip);
+        //string[] itemEquipList = itemEquip.Split("(");
 
-        switch (Game.Getitemsbyid(itemEquipList[0]).itemType)
+        switch (Game.Getitemsbyid(itemEquip).itemType)
         {
             case "weapon":
                 Game.AddItemToInventory(Game.mainsessionData.weapon);
-                Game.mainsessionData.weapon = itemEquipList[0];
+                Game.mainsessionData.weapon = itemEquip;
+                Game.SaveToJSON<save>(Game.saveList);
+                //Debug.Log("Equipped item: " + Game.mainsessionData.weapon);
+
                 break;
             case "helmet":
                 Game.AddItemToInventory(Game.mainsessionData.helmet);
-                Game.mainsessionData.helmet = itemEquipList[0];
+                Game.mainsessionData.helmet = itemEquip;
+                Game.SaveToJSON<save>(Game.saveList);
+                //Debug.Log("Equipped item: " + Game.mainsessionData.helmet);
                 break;
             case "armour":
                 Game.AddItemToInventory(Game.mainsessionData.armour);
-                Game.mainsessionData.armour = itemEquipList[0];
+                Game.mainsessionData.armour = itemEquip;
+                Game.SaveToJSON<save>(Game.saveList);
+                //Debug.Log("Equipped item: " + Game.mainsessionData.armour);
                 break;
         }
-        
-
+        Debug.Log("items: " + Game.mainsessionData.inventory);
+        Debug.Log("items: " + Game.mainsessionData.weapon);
     }
     public void RemoveFromItemList()
     {
@@ -185,15 +203,38 @@ public class EachItem : MonoBehaviour
         string inventoryList = Game.mainsessionData.inventory;
         foreach (var a in Game.GetItemsInInventory())
         {
+            Debug.Log("Item : "+a.itemId);
             if (!(a.itemId == itemEquipList[0]))
             {
+                Debug.Log("Will be removed");
                 replaceString += a.itemId;
                 replaceString += ",";
                 
             }
         }
+        Debug.Log("Finished list : " + replaceString);
         replaceString = replaceString.Remove(replaceString.Length - 1);
         Game.mainsessionData.inventory = replaceString;
+
+        ReplaceEquipment();
+        //DestroyOneItem();
+        //DeActivateInvent();
+        
+        DisableItemList();
+
+
+        //itemGroup = GameObject.FindWithTag("ItemList");
+
+        //List<items> listinventory = Game.GetItemsInInventory();
+        //for (int i = 0; i < Game.GetItemsInInventory().Count; i++)
+        //{
+        //    Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
+        //    ActivateUI(listinventory[i]);
+
+        //    Game.ProcessSaveData();
+        //    Game.GetSave();
+        //    //Debug.Log(i);
+        //}
     }
 
 
@@ -201,13 +242,16 @@ public class EachItem : MonoBehaviour
     {
         itemListing = GameObject.FindGameObjectWithTag("ItemList").transform;
         string itemEquip = OnClicked(equipButton);
+
         foreach (Transform child in itemListing)
         {
             //Debug.Log(child.gameObject.name);
             if (child.gameObject.name == (itemEquip + "(Clone)"))
             {
-
+                Debug.Log("This child: "+child.gameObject.name);
                 GameObject.Destroy(child.gameObject);
+                //Destroy(GetComponent<Transform>().gameObject);
+                break;
             }
 
 

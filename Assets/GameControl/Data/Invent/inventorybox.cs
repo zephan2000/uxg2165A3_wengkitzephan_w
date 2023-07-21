@@ -62,6 +62,35 @@ namespace pattayaA3
         [SerializeField] GameObject stat3Object;
         [SerializeField] GameObject stat4Object;
 
+        #region AttributeStuff
+        //Attribute Stuff
+        [SerializeField] GameObject confirm_top;
+        [SerializeField] Text confirm_text;
+
+        [SerializeField] Text added_stat_text;
+        [SerializeField] Text added_point_text;
+
+        [SerializeField] GameObject add_vitality_button;
+        [SerializeField] Text add_vitality_text;
+        [SerializeField] GameObject subtract_vitality_button;
+        [SerializeField] Text subtract_vitality_text;
+
+        [SerializeField] GameObject add_power_button;
+        [SerializeField] Text add_power_text;
+        [SerializeField] GameObject subtract_power_button;
+        [SerializeField] Text subtract_power_text;
+
+        [SerializeField] GameObject add_intelligence_button;
+        [SerializeField] Text add_intelligence_text;
+        [SerializeField] GameObject subtract_intelligence_button;
+        [SerializeField] Text subtract_intelligence_text;
+
+        [SerializeField] GameObject add_attspeed_button;
+        [SerializeField] Text add_attspeed_text;
+        [SerializeField] GameObject subtract_attspeed_button;
+        [SerializeField] Text subtract_attspeed_text;
+
+        #endregion
         Inventory currentmenu = Inventory.item;
 
         //Skills
@@ -70,55 +99,72 @@ namespace pattayaA3
         public Transform itemListing;
 
         string CheckItemInventory;
-        save mainsession = Game.mainsessionData;
+        save mainsessions;
 
         public GameObject eachItemObject;
         public EachItem eachItem;
         public Invent invent;
         public bool runonce;
+        public bool confirmation;
 
         private void Start()
         {
+            Game.ProcessSaveData();
+            Game.GetSave();
+
+
             SetInventoryText();
 
             eachItem = eachItemObject.GetComponent<EachItem>();
 
             CheckItemInventory = Game.mainsessionData.inventory;
+            CheckMenu();
         }
         private void Update()
 		{
-            CheckMenu();
-			UpdateEquipment();
+            //CheckMenu();
+			//UpdateEquipment();
             ConstantlyCheck();
 			//Debug.Log("Session Weapon:" + Game.Getitemsbyid(Game.GetitemsbyName(mainsession.weapon).itemId).displayName);
 			//Debug.Log("Inventory: " + mainsession.inventory);
+            if (runonce == false)
+            {
+                CheckMenu();
+            }
 		}
 		public void SetInventoryText()
         {
-            save currentsession = Game.mainsessionData;
-            List<string> ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
+            //save Game.mainsessionData = Game.mainsessionData;
+            List<string> ListOfSkillsGroup = GetListOfSkillsPartOne(Game.mainsessionData.actorType);
             List<string> ListOfSkillsSeperated = GetRealSkillStringList(ListOfSkillsGroup);
 
-            charactername.text = currentsession.seshname;
-            //itemchoice.text = currentsession.seshname;
-            //skillchoice.text = currentsession.seshname;
-            //statchoice.text = currentsession.seshname;
+            charactername.text = Game.mainsessionData.seshname;
+            //itemchoice.text = Game.mainsessionData.seshname;
+            //skillchoice.text = Game.mainsessionData.seshname;
+            //statchoice.text = Game.mainsessionData.seshname;
             equipchoice.text = "Equipment";
             equipitemchoice.text = "Items";
+            Game.mainsessionData.vitality_added += Game.mainsessionData.vitality;
+            Game.mainsessionData.power_added += Game.mainsessionData.power;
+            Game.mainsessionData.intelligence_added += Game.mainsessionData.intelligence;
+            Game.mainsessionData.attspeed_added += Game.mainsessionData.attspeed;
 
-            item1.text = Game.Getitemsbyid(currentsession.weapon).displayName;
-            item2.text = Game.Getitemsbyid(currentsession.helmet).displayName;
-            item3.text = Game.Getitemsbyid(currentsession.armour).displayName;
+            item1.text = Game.Getitemsbyid(Game.mainsessionData.weapon).displayName;
+            item2.text = Game.Getitemsbyid(Game.mainsessionData.helmet).displayName;
+            item3.text = Game.Getitemsbyid(Game.mainsessionData.armour).displayName;
 
             skill1.text = Game.GetSkillById(ListOfSkillsGroup[0]).skillname;
             skill2.text = Game.GetSkillById(ListOfSkillsGroup[1]).skillname;
             skill3.text = Game.GetSkillById(ListOfSkillsGroup[2]).skillname;
             skill4.text = Game.GetSkillById(ListOfSkillsGroup[3]).skillname;
 
-            stat1.text = "Vitality:" + currentsession.vitality;
-            stat2.text = "Power:" + currentsession.power;
-            stat3.text = "Intelligence:" + currentsession.intelligence;
-            stat4.text = "Attack Speed:" + currentsession.attspeed;
+            stat1.text = "Vitality: " + Game.mainsessionData.vitality_added;
+            stat2.text = "Power: " + Game.mainsessionData.power_added;
+            stat3.text = "Intelligence: " + Game.mainsessionData.intelligence_added;
+            stat4.text = "Attack Speed: " + Game.mainsessionData.attspeed_added;
+
+            //added_stat_text.text = "" + Game.mainsessionData.attributePoint;
+            added_stat_text.text = "TEst";
 
             switch (currentmenu)
             {
@@ -245,6 +291,37 @@ namespace pattayaA3
             stat3Object.SetActive(!enabled);
             stat4Object.SetActive(!enabled);
 
+            //Attribute
+            confirm_top.SetActive(!enabled);
+            confirm_text.enabled = !enabled;
+
+            added_point_text.enabled = !enabled;
+            added_stat_text.enabled = !enabled;
+
+            add_vitality_button.SetActive(!enabled);
+            add_vitality_text.enabled = !enabled;
+
+            add_power_button.SetActive(!enabled);
+            add_power_text.enabled = !enabled;
+
+            add_intelligence_button.SetActive(!enabled);
+            add_intelligence_text.enabled = !enabled;
+
+            add_attspeed_button.SetActive(!enabled);
+            add_attspeed_text.enabled = !enabled;
+
+            subtract_vitality_button.SetActive(!enabled);
+            subtract_vitality_text.enabled = !enabled;
+
+            subtract_power_button.SetActive(!enabled);
+            subtract_power_text.enabled = !enabled;
+
+            subtract_intelligence_button.SetActive(!enabled);
+            subtract_intelligence_text.enabled = !enabled;
+
+            subtract_attspeed_button.SetActive(!enabled);
+            subtract_attspeed_text.enabled = !enabled;
+
             runonce = false;
         }
         public void EnableSkillMenu(bool enabled)
@@ -298,6 +375,37 @@ namespace pattayaA3
             stat2Object.SetActive(!enabled);
             stat3Object.SetActive(!enabled);
             stat4Object.SetActive(!enabled);
+
+            //Attribute
+            confirm_top.SetActive(!enabled);
+            confirm_text.enabled = !enabled;
+
+            added_point_text.enabled = !enabled;
+            added_stat_text.enabled = !enabled;
+
+            add_vitality_button.SetActive(!enabled);
+            add_vitality_text.enabled = !enabled;
+
+            add_power_button.SetActive(!enabled);
+            add_power_text.enabled = !enabled;
+
+            add_intelligence_button.SetActive(!enabled);
+            add_intelligence_text.enabled = !enabled;
+
+            add_attspeed_button.SetActive(!enabled);
+            add_attspeed_text.enabled = !enabled;
+
+            subtract_vitality_button.SetActive(!enabled);
+            subtract_vitality_text.enabled = !enabled;
+
+            subtract_power_button.SetActive(!enabled);
+            subtract_power_text.enabled = !enabled;
+
+            subtract_intelligence_button.SetActive(!enabled);
+            subtract_intelligence_text.enabled = !enabled;
+
+            subtract_attspeed_button.SetActive(!enabled);
+            subtract_attspeed_text.enabled = !enabled;
 
             runonce = false;
         }
@@ -353,6 +461,170 @@ namespace pattayaA3
             stat3Object.SetActive(enabled);
             stat4Object.SetActive(enabled);
 
+            //Attribute
+            if (Game.mainsessionData.attributePoint > 0 && confirmation==false)
+            {
+                confirm_top.SetActive(enabled);
+                confirm_text.enabled = enabled;
+
+                add_vitality_button.SetActive(enabled);
+                add_vitality_text.enabled = enabled;
+
+                add_power_button.SetActive(enabled);
+                add_power_text.enabled = enabled;
+
+                add_intelligence_button.SetActive(enabled);
+                add_intelligence_text.enabled = enabled;
+
+                add_attspeed_button.SetActive(enabled);
+                add_attspeed_text.enabled = enabled;
+
+                subtract_vitality_button.SetActive(enabled);
+                subtract_vitality_text.enabled = enabled;
+
+                subtract_power_button.SetActive(enabled);
+                subtract_power_text.enabled = enabled;
+
+                subtract_intelligence_button.SetActive(enabled);
+                subtract_intelligence_text.enabled = enabled;
+
+                subtract_attspeed_button.SetActive(enabled);
+                subtract_attspeed_text.enabled = enabled;
+            }
+            else if (Game.mainsessionData.attributePoint == 0 && confirmation == false)
+            {
+                confirm_top.SetActive(enabled);
+                confirm_text.enabled = enabled;
+
+                add_vitality_button.SetActive(!enabled);
+                add_vitality_text.enabled = !enabled;
+
+                add_power_button.SetActive(!enabled);
+                add_power_text.enabled = !enabled;
+
+                add_intelligence_button.SetActive(!enabled);
+                add_intelligence_text.enabled = !enabled;
+
+                add_attspeed_button.SetActive(!enabled);
+                add_attspeed_text.enabled = !enabled;
+
+                subtract_vitality_button.SetActive(enabled);
+                subtract_vitality_text.enabled = enabled;
+
+                subtract_power_button.SetActive(enabled);
+                subtract_power_text.enabled = enabled;
+
+                subtract_intelligence_button.SetActive(enabled);
+                subtract_intelligence_text.enabled = enabled;
+
+                subtract_attspeed_button.SetActive(enabled);
+                subtract_attspeed_text.enabled = enabled;
+            }
+            else if (Game.mainsessionData.attributePoint == 0 && confirmation == true)
+            {
+                confirm_top.SetActive(!enabled);
+                confirm_text.enabled = !enabled;
+
+                add_vitality_button.SetActive(!enabled);
+                add_vitality_text.enabled = !enabled;
+
+                add_power_button.SetActive(!enabled);
+                add_power_text.enabled = !enabled;
+
+                add_intelligence_button.SetActive(!enabled);
+                add_intelligence_text.enabled = !enabled;
+
+                add_attspeed_button.SetActive(!enabled);
+                add_attspeed_text.enabled = !enabled;
+
+                subtract_vitality_button.SetActive(!enabled);
+                subtract_vitality_text.enabled = !enabled;
+
+                subtract_power_button.SetActive(!enabled);
+                subtract_power_text.enabled = !enabled;
+
+                subtract_intelligence_button.SetActive(!enabled);
+                subtract_intelligence_text.enabled = !enabled;
+
+                subtract_attspeed_button.SetActive(!enabled);
+                subtract_attspeed_text.enabled = !enabled;
+            }
+            else if (Game.mainsessionData.attributePoint > 0 && confirmation == true)
+            {
+                confirm_top.SetActive(enabled);
+                confirm_text.enabled = enabled;
+
+                add_vitality_button.SetActive(enabled);
+                add_vitality_text.enabled = enabled;
+
+                add_power_button.SetActive(enabled);
+                add_power_text.enabled = enabled;
+
+                add_intelligence_button.SetActive(enabled);
+                add_intelligence_text.enabled = enabled;
+
+                add_attspeed_button.SetActive(enabled);
+                add_attspeed_text.enabled = enabled;
+
+                subtract_vitality_button.SetActive(enabled);
+                subtract_vitality_text.enabled = enabled;
+
+                subtract_power_button.SetActive(enabled);
+                subtract_power_text.enabled = enabled;
+
+                subtract_intelligence_button.SetActive(enabled);
+                subtract_intelligence_text.enabled = enabled;
+
+                subtract_attspeed_button.SetActive(enabled);
+                subtract_attspeed_text.enabled = enabled;
+            }
+            else
+            {
+                //confirm_top.SetActive(!enabled);
+                //confirm_text.enabled = !enabled;
+
+                //add_vitality_button.SetActive(!enabled);
+                //add_vitality_text.enabled = !enabled;
+
+                //add_power_button.SetActive(!enabled);
+                //add_power_text.enabled = !enabled;
+
+                //add_intelligence_button.SetActive(!enabled);
+                //add_intelligence_text.enabled = !enabled;
+
+                //add_attspeed_button.SetActive(!enabled);
+                //add_attspeed_text.enabled = !enabled;
+
+                //subtract_vitality_button.SetActive(!enabled);
+                //subtract_vitality_text.enabled = !enabled;
+
+                //subtract_power_button.SetActive(!enabled);
+                //subtract_power_text.enabled = !enabled;
+
+                //subtract_intelligence_button.SetActive(!enabled);
+                //subtract_intelligence_text.enabled = !enabled;
+
+                //subtract_attspeed_button.SetActive(!enabled);
+                //subtract_attspeed_text.enabled = !enabled;
+            }
+
+            added_point_text.enabled = enabled;
+            added_stat_text.enabled = enabled;
+            //Debug.Log(Game.mainsessionData.attributePoint);
+            //stat1.text = "Vitality: " + Game.mainsessionData.vitality_added;
+            //stat2.text = "Power: " + Game.mainsessionData.power_added;
+            //stat3.text = "Intelligence: " + Game.mainsessionData.intelligence_added;
+            //stat4.text = "Attack Speed: " + Game.mainsessionData.attspeed_added;
+
+            stat1.text = "Vitality: " + Game.mainsessionData.vitality;
+            stat2.text = "Power: " + Game.mainsessionData.power;
+            stat3.text = "Intelligence: " + Game.mainsessionData.intelligence;
+            stat4.text = "Attack Speed: " + Game.mainsessionData.attspeed;
+            added_stat_text.text = "" + Game.mainsessionData.attributePoint;
+            //added_stat_text.enabled=enabled;
+
+            
+
             runonce = false;
         }
         public void EnableEquipmentMenu(bool enabled)
@@ -406,6 +678,36 @@ namespace pattayaA3
             stat2Object.SetActive(!enabled);
             stat3Object.SetActive(!enabled);
             stat4Object.SetActive(!enabled);
+
+            //Attribute
+            confirm_top.SetActive(!enabled);
+            confirm_text.enabled = !enabled;
+
+            added_point_text.enabled = !enabled;
+            added_stat_text.enabled = !enabled;
+
+            add_vitality_button.SetActive(!enabled);
+            add_vitality_text.enabled = !enabled;
+
+            add_power_button.SetActive(!enabled);
+            add_power_text.enabled = !enabled;
+
+            add_intelligence_button.SetActive(!enabled);
+            add_intelligence_text.enabled = !enabled;
+
+            add_attspeed_button.SetActive(!enabled);
+            add_attspeed_text.enabled = !enabled;
+            subtract_vitality_button.SetActive(!enabled);
+            subtract_vitality_text.enabled = !enabled;
+
+            subtract_power_button.SetActive(!enabled);
+            subtract_power_text.enabled = !enabled;
+
+            subtract_intelligence_button.SetActive(!enabled);
+            subtract_intelligence_text.enabled = !enabled;
+
+            subtract_attspeed_button.SetActive(!enabled);
+            subtract_attspeed_text.enabled = !enabled;
 
             runonce = false;
         }
@@ -461,38 +763,209 @@ namespace pattayaA3
             stat3Object.SetActive(!enabled);
             stat4Object.SetActive(!enabled);
 
+            //Attribute
+            confirm_top.SetActive(!enabled);
+            confirm_text.enabled = !enabled;
+
+            added_point_text.enabled = !enabled;
+            added_stat_text.enabled = !enabled;
+
+            add_vitality_button.SetActive(!enabled);
+            add_vitality_text.enabled = !enabled;
+
+            add_power_button.SetActive(!enabled);
+            add_power_text.enabled = !enabled;
+
+            add_intelligence_button.SetActive(!enabled);
+            add_intelligence_text.enabled = !enabled;
+
+            add_attspeed_button.SetActive(!enabled);
+            add_attspeed_text.enabled = !enabled;
+
+            subtract_vitality_button.SetActive(!enabled);
+            subtract_vitality_text.enabled = !enabled;
+
+            subtract_power_button.SetActive(!enabled);
+            subtract_power_text.enabled = !enabled;
+
+            subtract_intelligence_button.SetActive(!enabled);
+            subtract_intelligence_text.enabled = !enabled;
+
+            subtract_attspeed_button.SetActive(!enabled);
+            subtract_attspeed_text.enabled = !enabled;
+
+            Debug.Log("This is inventory "+Game.mainsessionData.inventory);
+            //Debug.Log("This is inventory Count " + Game.GetItemsInInventory().Count);
+
+
             if (!runonce)
             {
+                List<items> listinventory = Game.GetItemsInInventory();
                 for (int i = 0; i < Game.GetItemsInInventory().Count; i++)
                 {
-                    eachItem.ActivateUI(Game.GetItemsInInventory()[i]);
+                    Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
+                    eachItem.ActivateUI(listinventory[i]);
+
+                    Game.ProcessSaveData();
+                    Game.GetSave();
+                    //Debug.Log(i);
                 }
                 //eachItem.ActivateUI(a);
+                
                 runonce = true;
             }
             //eachItem.ActivateUI();
         }
 
+        public void UpdateItemList()
+        {
+            //List<items> listinventory = Game.GetItemsInInventory();
+            //for (int i = 0; i < Game.GetItemsInInventory().Count; i++)
+            //{
+            //    Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
+            //    eachItem.ActivateUI(listinventory[i]);
+
+            //    Game.ProcessSaveData();
+            //    Game.GetSave();
+            //}
+            Debug.Log("test");
+            runonce=false;
+        }
+
+        #region Button Presses
         public void ItemPress()
         {
             currentmenu = Inventory.itemEquipment;
+            CheckMenu();
         }
         public void SkillPress()
         {
             currentmenu = Inventory.skills;
+            CheckMenu();
         }
         public void StatPress()
         {
             currentmenu = Inventory.stats;
+            CheckMenu();
         }
         public void EquipmentPress()
         {
             currentmenu = Inventory.itemEquipment;
+            CheckMenu();
         }
         public void EquipmentItemPress()
         {
             currentmenu = Inventory.itemItems;
+            CheckMenu();
         }
+
+        public void Add_Vitality()
+        {
+            if (Game.mainsessionData.attributePoint > 0)
+            {
+                Game.mainsessionData.attributePoint--;
+                Game.mainsessionData.vitality++;
+                //Game.mainsessionData.vitality = Game.mainsessionData.vitality_added;
+                Game.SaveToJSON<save>(Game.saveList);
+
+                //Debug.Log("This is Vitality: " + Game.mainsessionData.vitality);
+                //Debug.Log("This is Vitality_added: " + Game.mainsessionData.vitality_added);
+            }
+        }
+        public void Remove_Vitality()
+        {
+            if (Game.mainsessionData.vitality_added > 0)
+            {
+                Game.mainsessionData.attributePoint++;
+                Game.mainsessionData.vitality--;
+                //ame.mainsessionData.vitality = Game.mainsessionData.vitality_added;
+                //Game.mainsessionData.vitality_added += Game.mainsessionData.vitality;
+                Game.SaveToJSON<save>(Game.saveList);
+
+                //Debug.Log("This is Vitality: " + Game.mainsessionData.vitality_added);
+                //Debug.Log("This is Vitality_added: " + Game.mainsessionData.vitality_added);
+            }
+        }
+        public void Add_Power()
+        {
+            if (Game.mainsessionData.attributePoint > 0)
+            {
+                Game.mainsessionData.attributePoint--;
+                Game.mainsessionData.power++;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+        }
+        public void Remove_Power()
+        {
+            if (Game.mainsessionData.power_added > 0)
+            {
+                Game.mainsessionData.attributePoint++;
+                Game.mainsessionData.power--;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+        }
+        public void Add_Intelligence()
+        {
+            if (Game.mainsessionData.attributePoint > 0)
+            {
+                Game.mainsessionData.attributePoint--;
+                Game.mainsessionData.intelligence++;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+        }
+        public void Remove_Intelligence()
+        {
+            if (Game.mainsessionData.intelligence > 0)
+            {
+                Game.mainsessionData.attributePoint++;
+                Game.mainsessionData.intelligence--;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+        }
+        public void Add_AttSpeed()
+        {
+            if (Game.mainsessionData.attributePoint > 0)
+            {
+                Game.mainsessionData.attributePoint--;
+                Game.mainsessionData.attspeed++;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+        }
+        public void Remove_Add_AttSpeed()
+        {
+            if (Game.mainsessionData.attspeed > 0)
+            {
+                Game.mainsessionData.attributePoint++;
+                Game.mainsessionData.attspeed--;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+        }
+        public void Confirmation()
+        {
+
+            confirmation = true;
+
+            Debug.Log("Comfirmed");
+
+            //Game.mainsessionData.attspeed += Game.mainsessionData.attspeed_added;
+            Game.mainsessionData.attspeed_added += Game.mainsessionData.attspeed;
+            //Game.mainsessionData.attspeed_added = 0;
+
+            //Game.mainsessionData.power += Game.mainsessionData.power_added;
+            Game.mainsessionData.power_added += Game.mainsessionData.power;
+            //Game.mainsessionData.power_added = 0;
+
+            //Game.mainsessionData.intelligence += Game.mainsessionData.intelligence_added;
+            Game.mainsessionData.intelligence_added += Game.mainsessionData.intelligence;
+            //Game.mainsessionData.intelligence_added = 0;
+
+            //Game.mainsessionData.vitality += Game.mainsessionData.vitality_added;
+            Game.mainsessionData.vitality_added += Game.mainsessionData.vitality;
+            //Game.mainsessionData.vitality = 0;
+
+            Game.SaveToJSON<save>(Game.saveList);
+        }
+        #endregion
 
         public void CheckMenu()
         {
@@ -500,35 +973,43 @@ namespace pattayaA3
             {
                 case Inventory.item:
                     //menuchoice.text = "Item";
+                    //CheckMenu();
                     EnableEquipmentMenu(true);
                     DisableItemList();
                     //eachItem.DeActivateInvent();
                     break;
                 case Inventory.skills:
+                    //CheckMenu();
                     EnableSkillMenu(true);
                     menuchoice.text = "Skills";
                     DisableItemList();
                     //eachItem.DeActivateInvent();
                     break;
                 case Inventory.stats:
+                    //CheckMenu();
                     EnableStatMenu(true);
                     menuchoice.text = "Stats";
                     DisableItemList();
                     //eachItem.DeActivateInvent();
                     break;
                 case Inventory.itemEquipment:
+                    //CheckMenu();
                     EnableEquipmentMenu(true);
                     DisableItemList();
+                    UpdateEquipment();
                     //eachItem.DeActivateInvent();
                     //.text = "Stats";
                     break;
                 case Inventory.itemItems:
+                    //CheckMenu();
                     EnableEquipmentItemMenu(true);
+
                     //menuchoice.text = "Stats";
                     break;
                 default:
+                    //CheckMenu();
                     EnableItemMenu(true);
-                    DisableItemList();
+                    //DisableItemList();
                     //eachItem.DeActivateInvent();
                     //menuchoice.text = "Item";
                     break;
@@ -579,37 +1060,39 @@ namespace pattayaA3
 
         public void UpdateEquipment()
         {
-            save currentsession = Game.mainsessionData;
-            List<string> ListOfSkillsGroup;
+            //Game.ProcessSaveData();
+            //Game.GetSave();
+
+            //List<string> ListOfSkillsGroup;
             //Debug.Log("Actor Type: " + currentmenu);
-            ListOfSkillsGroup = GetListOfSkillsPartOne(currentsession.actorType);
-            item1.text = Game.Getitemsbyid(currentsession.weapon).displayName;
-            item2.text = Game.Getitemsbyid(currentsession.helmet).displayName;
-            item3.text = Game.Getitemsbyid(currentsession.armour).displayName;
-            //item1.text = Game.Getcurrentsession.weapon;
-            //item2.text = currentsession.helmet;
-            //item3.text = currentsession.armour;
+            //ListOfSkillsGroup = GetListOfSkillsPartOne(Game.mainsessionData.actorType);
+            item1.text = Game.Getitemsbyid(Game.mainsessionData.weapon).displayName;
+            item2.text = Game.Getitemsbyid(Game.mainsessionData.helmet).displayName;
+            item3.text = Game.Getitemsbyid(Game.mainsessionData.armour).displayName;
+            //item1.text = Game.GetGame.mainsessionData.weapon;
+            //item2.text = Game.mainsessionData.helmet;
+            //item3.text = Game.mainsessionData.armour;
 
 
-            skill1.text = Game.GetSkillById(ListOfSkillsGroup[0]).skillname;
-            skill2.text = Game.GetSkillById(ListOfSkillsGroup[1]).skillname;
-            skill3.text = Game.GetSkillById(ListOfSkillsGroup[2]).skillname;
-            skill4.text = Game.GetSkillById(ListOfSkillsGroup[3]).skillname;
+            //skill1.text = Game.GetSkillById(ListOfSkillsGroup[0]).skillname;
+            //skill2.text = Game.GetSkillById(ListOfSkillsGroup[1]).skillname;
+            //skill3.text = Game.GetSkillById(ListOfSkillsGroup[2]).skillname;
+            //skill4.text = Game.GetSkillById(ListOfSkillsGroup[3]).skillname;
 
-            stat1.text = "Vitality:" + currentsession.vitality;
-            stat2.text = "Power:" + currentsession.power;
-            stat3.text = "Intelligence:" + currentsession.intelligence;
-            stat4.text = "Attack Speed:" + currentsession.attspeed;
+            //stat1.text = "Vitality:" + Game.mainsessionData.vitality;
+            //stat2.text = "Power:" + Game.mainsessionData.power;
+            //stat3.text = "Intelligence:" + Game.mainsessionData.intelligence;
+            //stat4.text = "Attack Speed:" + Game.mainsessionData.attspeed;
 
 
         }
 
-        public void ChangeWeapon()
-        {
-            save currentsession = Game.mainsessionData;
-            Game.SetSessionWeaponVariable("item02");
+        //public void ChangeWeapon()
+        //{
+        //    save Game.mainsessionData = Game.mainsessionData;
+        //    Game.SetSessionWeaponVariable("item02");
 
-        }
+        //}
 
         public void AddItem(string itemId)
         {
@@ -622,6 +1105,7 @@ namespace pattayaA3
         {
             if (!(CheckItemInventory == Game.mainsessionData.inventory))
             {
+                Debug.Log("Test");
                 DisableItemList();
                 runonce = false;
                 CheckItemInventory = Game.mainsessionData.inventory;

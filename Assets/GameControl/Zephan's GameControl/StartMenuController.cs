@@ -21,9 +21,9 @@ namespace pattayaA3
 
 		public void StartLevel(string aScene)
 		{
-			Debug.Log($"finding Id from StartMenuController: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
+			//Debug.Log($"finding Id from StartMenuController: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
 			gameController.LoadScene(aScene);
-			Debug.Log($"finding Id after Loading: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
+			//Debug.Log($"finding Id after Loading: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
 			gameController.RemoveScene(sceneName);
 		}
 

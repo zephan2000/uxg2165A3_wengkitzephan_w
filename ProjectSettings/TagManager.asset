@@ -17,6 +17,8 @@ TagManager:
   - Save Menu
   - Save
   - SaveList
+  - ShopList
+  - ShopBG
   layers:
   - Default
   - TransparentFX

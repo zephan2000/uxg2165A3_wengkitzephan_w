@@ -201,7 +201,7 @@ public static class Game
 	public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
     {
         level alevel = GetLevelByLevelId(levelid);
-        Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}");
+        //Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}");
         mainsessionData.maxhp = alevel.maxhp;
 		mainsessionData.physicaldmg = alevel.physicaldmg;
 		mainsessionData.magicdmg = alevel.magicdmg;
@@ -211,7 +211,7 @@ public static class Game
 		mainsessionData.attspeed = alevel.attspeed;
         playerLevel = int.Parse(levelid.Split('_')[1]);
         currentmaxEXP = GetLevelByLevelId(mainsessionData.levelId).maxExp;
-		Debug.Log($"this is: {levelid}, current level max exp:{alevel.maxExp}, Game's currentexp: {Game.mainsessionData.exp}, currentmaxEXP: {Game.currentmaxEXP}");
+		//Debug.Log($"this is: {levelid}, current level max exp:{alevel.maxExp}, Game's currentexp: {Game.mainsessionData.exp}, currentmaxEXP: {Game.currentmaxEXP}");
 		currentexpToGain = GetLevelByLevelId(mainsessionData.levelId).expToGain;
         maxHP = GetLevelByLevelId(mainsessionData.levelId).maxhp;
 	}
@@ -260,9 +260,12 @@ public static class Game
 
 		foreach (refSave refData in saveData.save)
 		{
-			save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName, refData.actorType, refData.levelId, refData.currenthp, refData.maxhp, refData.physicaldmg, refData.magicdmg, refData.vitality, refData.power,
-							refData.intelligence, refData.attspeed, refData.attributePoint, refData.exp, refData.gold, refData.weapon, refData.helmet, refData.armour, refData.inventory, refData.displaySpritePath, 
-                            refData.startedQuest, refData.completedQuest, refData.completedAchievement);
+			save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName,
+                refData.actorType, refData.levelId, refData.currenthp, refData.maxhp, refData.physicaldmg,
+                refData.magicdmg, refData.vitality, refData.power,refData.intelligence, refData.attspeed,
+                refData.vitality_added, refData.power_added, refData.intelligence_added, refData.attspeed_added,
+                refData.attributePoint, refData.exp, refData.gold, refData.weapon, refData.helmet, refData.armour,
+                refData.inventory, refData.displaySpritePath, refData.startedQuest, refData.completedQuest, refData.completedAchievement);
 			saveDataList.Add(savedata);
 		}
 		Game.saveList = saveDataList;
@@ -274,7 +277,7 @@ public static class Game
 			if (savedata.saveStatus == "ACTIVE")
 				mainsessionData = savedata;
 		}
-        Debug.Log($"this is mainsessionId: {mainsessionData.levelId}");
+        //Debug.Log($"this is mainsessionId: {mainsessionData.levelId}");
 		return mainsessionData;
 	}
 
@@ -309,7 +312,7 @@ public static class Game
         jsonString.Append("]}");
         //string content = JsonHelper.ToJson<T>(toSave.ToArray());
         //Debug.Log($"this is the content in ToSave: {toSave.seshname}");
-		Debug.Log($"now saving: {jsonString.ToString()}");
+		//Debug.Log($"now saving: {jsonString.ToString()}");
 		WriteFile(Game.saveFilePath, jsonString.ToString());
     }
 

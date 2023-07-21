@@ -85,6 +85,7 @@ namespace pattayaA3
                     else
 						GetGameObject().GetComponent<NPC>()?.Interact();
 				}
+				Debug.Log($"This is isTouchinDoor {isTouchingDoor}");
 			}   
 
 			if(Input.GetKeyDown(KeyCode.F2)) 
@@ -97,8 +98,32 @@ namespace pattayaA3
 				StartCoroutine(SetHpTo50());
 				StartCoroutine(playerHud.UpdateTownData());
 			}
-				
-		}
+            if (Input.GetKeyDown(KeyCode.F3)) //for bug testing
+            {
+                StartCoroutine(SetGoldTo500());
+                //StartCoroutine(playerHud.UpdateTownData());
+            }
+            if (Input.GetKeyDown(KeyCode.F4)) //for bug testing
+            {
+                Game.mainsessionData.gold += 200;
+                //StartCoroutine(playerHud.UpdateTownData());
+            }
+			if (Input.GetKeyDown(KeyCode.F5))
+            {
+                Game.mainsessionData.attributePoint += 3;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+            if (Input.GetKeyDown(KeyCode.F6))
+            {
+                Game.playerLevel++;
+            }
+            if (Input.GetKeyDown(KeyCode.F7))
+            {
+                Game.mainsessionData.attributePoint = 0;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+
+        }
 
 		public IEnumerator LevelUp() //do one for cheats and one for normal
 		{
@@ -113,6 +138,8 @@ namespace pattayaA3
 			Game.mainsessionData.exp = 0;
 			Game.mainsessionData.currenthp = (int)Game.maxHP;
 			Game.mainsessionData.exp += 10; // need to adjust this formula
+			//Game.mainsessionData.gold += 200;
+			//Game.mainsessionData.attributePoint += 5;
 			Debug.Log(newlevelid);
 			StartCoroutine(playerHud.UpdateTownData());
 			yield return new WaitForSeconds(1.2f);
@@ -142,7 +169,13 @@ namespace pattayaA3
 			StartCoroutine(playerHud.UpdateTownData());
 			yield return new WaitForSeconds(1.2f);
 		}
-		public void MovePlayer(Vector2 moveDir) // old movement codes
+        public IEnumerator SetGoldTo500() // for bug testing
+        {
+            Game.mainsessionData.gold = 500;
+            //StartCoroutine(playerHud.UpdateTownData());
+            yield return new WaitForSeconds(1.2f);
+        }
+        public void MovePlayer(Vector2 moveDir) // old movement codes
 		{
 			int count = rb.Cast(moveDir, movementFilter, castCollisions, 5.5f * Time.fixedDeltaTime + collisionOffset);
 
@@ -156,7 +189,7 @@ namespace pattayaA3
 			var collision = Physics2D.OverlapCircle(interactPos, 0.25f, interactableLayer);
 			if (collision != null)
 			{
-				Debug.Log(collision.gameObject.name);
+				//Debug.Log(collision.gameObject.name);
 				StartCoroutine(InteractablePing(collision));
 				//Debug.Log(IsInteractable());
 				return false;
@@ -215,10 +248,10 @@ namespace pattayaA3
 		public void UpdatePlayerStats() 
 		{
 			//player.UpdateStats();
-			Debug.Log("Running");
+			//Debug.Log("Running");
 			//Debug.Log(Game.Getactorbytype("Player").displaySpritePath);
             playerImage = Game.Getactorbytype("playerWizard").displaySpritePath ;
-			Debug.Log(playerImage);
+			//Debug.Log(playerImage);
 
 			//Sprite tileSprite = Resources.Load(playerImage) as Sprite;
 

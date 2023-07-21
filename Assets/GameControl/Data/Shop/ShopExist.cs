@@ -7,12 +7,13 @@ public class ShopExist : MonoBehaviour
     public GameObject menu;
     public bool isOpenShop;
     public GameObject shop;
-    public GameObject test;
+    private GameObject test;
 
     public void ActivateInvent()
     {
+        shop.SetActive(true);
         test = Instantiate(menu, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-        test.transform.SetParent(GameObject.FindGameObjectWithTag("Shop").transform, false);
+        test.transform.SetParent(shop.transform, false);
         //Instantiate(canvas);
     }
     public void DeActivateInvent()

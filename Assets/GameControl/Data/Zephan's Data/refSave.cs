@@ -19,6 +19,10 @@ public class refSave
     public int power;
     public int intelligence;
     public int attspeed;
+    public int vitality_added;
+    public int power_added;
+    public int intelligence_added;
+    public int attspeed_added;
     public int attributePoint;
     public int exp;
     public int gold;

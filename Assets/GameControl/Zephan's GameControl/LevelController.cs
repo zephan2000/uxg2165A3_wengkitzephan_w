@@ -81,9 +81,9 @@ namespace pattayaA3
 			Game.ProcessSaveData();
 			Game.GetSave(); //why does the game data disappear after writing?
 
-			Debug.Log($"finding Id {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
+			//Debug.Log($"finding Id {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
 			Game.SetSessionDataFromLevelId(Game.mainsessionData.levelId);
-			Debug.Log($"finding maxHp by Id: {Game.mainsessionData.maxhp}");
+			//Debug.Log($"finding maxHp by Id: {Game.mainsessionData.maxhp}");
 			trainingCenterBackground.SetActive(false);
 			if (Game.mainsessionData.startedQuest != "")
 			{
@@ -126,13 +126,21 @@ namespace pattayaA3
 			if (player.isTouchingDoor == true && Input.GetKeyDown(KeyCode.Z) && state == GameState.FreeRoam | state == GameState.Training | state == GameState.Shop)
 			{
 				Debug.Log($"pressing Z {state}");
-				if (state == GameState.Training)
+				if (player.GetGameObject().name == "Training Center Door")
 				{
                     ToggleTrainingCenter();
                 }
-				else if (state == GameState.Shop)
+				else if (player.GetGameObject().name == "Shop Door")
 				{
 					shopexist.ToggleShop(isOpenShop);
+					if (!isOpenShop)
+					{
+                        state = GameState.Shop;
+                    }
+					else
+					{
+                        state = GameState.FreeRoam;
+                    }
 					isOpenShop = !isOpenShop;
 				}
 				

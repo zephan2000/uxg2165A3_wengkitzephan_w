@@ -30,7 +30,7 @@ namespace pattayaA3
 			DataManager dataManager = GetComponent<DataManager>();
 			dataManager.LoadRefData();
 			Game.GetSave();
-			Debug.Log($"This is mainsessionData: {Game.mainsessionData.saveId}");// gets active data;
+			//Debug.Log($"This is mainsessionData: {Game.mainsessionData.saveId}");// gets active data;
 
 			//load initial scene
 			LoadScene(initialScene);
