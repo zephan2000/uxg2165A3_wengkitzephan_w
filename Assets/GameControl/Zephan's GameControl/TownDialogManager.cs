@@ -246,18 +246,22 @@ public class TownDialogManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Return)) // implement functions now
 		{
 			Dialog chosenDialog = dialogChoiceList[currentChoice];
-			
-			CheckForQuestInProgress(chosenDialog);	
-			CheckForCompletedQuest(chosenDialog);
+			Debug.Log($"this is chosenDialog Id: {chosenDialog.dialogueId}");
+			if (chosenDialog.dialogueText == "Restore Health")
+			{
+				RestoreHealth(chosenDialog);
+				currentDialog = Game.GetDialogByDialogList(chosenDialog.nextdialogueId, dialogList);
+			}
+			else if (chosenDialog.dialogueText == "I want a quest.")
+			{
+				CheckForQuestInProgress(chosenDialog);
+				CheckForCompletedQuest(chosenDialog);
+			}
 			currentChoice = 0;
 			numberOfButtons = 0;	
 			
 			Debug.Log($"This is the chosenDialog: {chosenDialog.dialogueId}, with the currentDialog: {currentDialog.dialogueId}");//setting to next dialog
 			dialogState = TownDialogState.EndOfDialog;
-			if(chosenDialog.dialogueText == "Restore Health")
-			{
-				RestoreHealth(chosenDialog);
-			}
 			if(currentDialog.nextdialogueId != "-2")
 			{
 				dialogText.SetActive(true);

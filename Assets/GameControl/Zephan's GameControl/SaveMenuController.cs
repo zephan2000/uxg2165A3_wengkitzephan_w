@@ -13,9 +13,9 @@ public class SaveMenuController : MonoBehaviour
 {
 	public GameObject savePrefab;
 	public GameObject saveMenu;
-	GameObject saveInfo;
 	List<GameObject> saveList = new List<GameObject>();
 	List<SaveButton> saveButtons = new List<SaveButton>();
+	List<GameObject> saveListButtons = new List<GameObject>();	
 	Dictionary<GameObject, SaveButton> saveDictionary = new Dictionary<GameObject, SaveButton>();
 	public StartMenuController startMenu;
 	public void OpenMenu()
@@ -28,6 +28,7 @@ public class SaveMenuController : MonoBehaviour
 			GameObject playerLevel = null;
 			GameObject playerName = null;
 			GameObject playerClass = null;
+			GameObject saveInfo = null; 
 
 			saveInfo = Instantiate(savePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
 			saveInfo.transform.SetParent(GameObject.FindGameObjectWithTag("SaveList").transform, false);
@@ -39,6 +40,7 @@ public class SaveMenuController : MonoBehaviour
 				{
 					case "saveId":
 						saveId = child.gameObject;
+						saveInfo.name = saveData.saveId;
 						saveId.GetComponent<Text>().text = saveData.saveId;
 						Debug.Log("saveId running");
 						saveId.transform.SetParent(saveRoot, false);
@@ -67,24 +69,35 @@ public class SaveMenuController : MonoBehaviour
 				}
 			}
 			SaveButton saveButton = new SaveButton(saveId, saveDate, playerLevel, playerName, playerClass);
-			saveInfo.GetComponent<Button>().onClick.AddListener(delegate { LoadSave(saveInfo); });// need to add listener to each button, assign loadSaveFile function
+			saveInfo.GetComponent<Button>().onClick.AddListener(delegate { LoadSave(OnClicked(saveInfo)); });// need to add listener to each button, assign loadSaveFile function
 			saveDictionary.Add(saveInfo, saveButton);
 			saveList.Add(saveInfo);
 			saveButtons.Add(saveButton);
 		}
 	}
-
-	public void LoadSave(GameObject currentButton)
+	public string OnClicked(GameObject obj)
 	{
+		Debug.Log($"this is button's name {obj.gameObject.name}");
+		return obj.gameObject.name;
+	}
+
+	public void LoadSave(string currentSaveId)
+	{
+		Debug.Log($"this is currentButton's name {currentSaveId}");
 		foreach (KeyValuePair<GameObject,SaveButton> saveDictionaryObj in saveDictionary)
 		{
-			if (saveDictionaryObj.Key == currentButton)
+			Debug.Log($"this is saveDictionaryobj's name {saveDictionaryObj.Key.transform.GetChild(0).GetComponent<Text>().text}");
+			if (saveDictionaryObj.Key.transform.GetChild(0).GetComponent<Text>().text == currentSaveId)
 			{
 				Game.LoadSave(saveDictionaryObj.Value.saveId.GetComponent<Text>().text);
 				break;
 			}
 		}
 		CloseMenu();
+		foreach (GameObject saveInfo in saveList)
+		{
+			GameObject.Destroy(saveInfo);
+		}
 		startMenu.StartLevel("Town");
 	}
 	// load Save file function, onClick check for 

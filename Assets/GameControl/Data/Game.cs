@@ -105,7 +105,7 @@ public static class Game
 
 
 
-	public static actor Getactorbytype(string type)
+	public static actor GetActorByActorType(string type)
     {
         foreach (actor aactor in actorList)
         {
@@ -118,7 +118,7 @@ public static class Game
         }
 		return null;
     }
-    public static actor GetActorByName(string name)
+    public static actor GetActorByActorName(string name)
     {
         foreach (actor aactor in actorList)
         {
@@ -166,7 +166,7 @@ public static class Game
     }
     public static string GetSkillListByType(string type)
     {
-        return Getactorbytype(type).skillslist;
+        return GetActorByActorType(type).skillslist;
     }
 	public static skills GetskillbyName(string name)
 	{
@@ -180,7 +180,7 @@ public static class Game
     public static string GetEquipment(string type)
     {
         
-        return Game.Getactorbytype(type).skillslist;
+        return Game.GetActorByActorType(type).skillslist;
     }
 
 	public static List<skills> GetListOfSkillsByType(string type)
@@ -228,11 +228,45 @@ public static class Game
 		currentexpToGain = GetLevelByLevelId(mainsessionData.levelId).expToGain;
         maxHP = GetLevelByLevelId(mainsessionData.levelId).maxhp;
 	}
-
-
-	public static int GetLevelFromLevelId(string levelid)
+    public static void CreateNewMainSession(string levelid)
     {
-        string[] levelIdArray = levelid.Split('_');
+        level alevel = GetLevelByLevelId(levelid);
+        Debug.Log($"checking actorType{levelid.Split('_')[0]}");
+        actor currentactor = GetActorByActorType(levelid.Split('_')[0]);
+        string saveId = "";
+        int saveIdnumber = 0;
+        if (saveList != null)
+        {
+            foreach (save saveData in saveList)
+            {
+                saveIdnumber++;
+            }
+        }
+        if (saveIdnumber < 10)
+        {
+            saveId = "save000" + ++saveIdnumber;
+
+        }
+        else { }
+		Debug.Log($"debugging current actor : {currentactor.displayName}, {currentactor.actorType}");
+		Debug.Log($"constructing mainsessionData: {saveId},{"lewis"}, {"ACTIVE"}, {currentactor.displayName}, {currentactor.actorType}");
+        Debug.Log($"constructing mainsessionData:{levelid}, {alevel.maxhp}, {alevel.maxhp}, {alevel.physicaldmg}");
+        Debug.Log($"constructing mainsessionData: {alevel.magicdmg}, {alevel.vitality}");
+        Debug.Log($"constructing mainsessionData:{alevel.power}, {alevel.intelligence}, {alevel.attspeed},0, 0, 0");
+        Debug.Log($"constructing mainsessionData:{"item10"}, {"item14"}, {"item13"},{""}");
+        Debug.Log($"constructing mainsessionData: {currentactor.displaySpritePath}, {""}, {""}, {""}, 0,{""}");
+
+
+		mainsessionData = new save(saveId, "lewis", "ACTIVE", currentactor.displayName, currentactor.actorType, 
+                                   levelid, alevel.maxhp, alevel.maxhp, alevel.physicaldmg, alevel.magicdmg, alevel.vitality,
+                                   alevel.power, alevel.intelligence, alevel.attspeed, 0, 0, 0, "item10", "item14", "item13", "", 
+                                   currentactor.displaySpritePath, "", "", "", 0,"");
+
+        SaveToJSON<save>(saveList);
+	}
+	public static int GetLevelFromLevelId(string levelid)
+	{
+		string[] levelIdArray = levelid.Split('_');
         return Int32.Parse(levelIdArray[1]);
     }
 
@@ -267,8 +301,7 @@ public static class Game
 
 	public static void ProcessSaveData(DemoData demoData2)
 	{
-        //Debug.Log("This is demodata : " + demoData2);
-        //string saveString = File.ReadAllText(Game.saveFilePath);
+        //string saveString = File.ReadAllText(saveFilePath);
         //DemoData saveData = JsonUtility.FromJson<DemoData>(saveString);
 		List<save> saveDataList = new List<save>();
 
@@ -306,13 +339,16 @@ public static class Game
 
     public static void LoadSave(string saveId)
     {
-        foreach (save savedata in saveList)
+		Debug.Log($"this is incoming saveId: {saveId}");
+		foreach (save savedata in saveList)
         {
             //if (saveId.Equals(savedata.saveId))
-                if(savedata.saveId == saveId)
+            if(savedata.saveId == saveId)
             {
+				Debug.Log($"this is the saveId found: {savedata.saveId}");
 				mainsessionData = savedata;
-                savedata.saveStatus = "ACTIVE";
+				mainsessionData.saveStatus = "ACTIVE";
+                SaveToJSON<save>(saveList);
                 Debug.Log($"This is soemthing done /////////////////////////////////////////////");
 			}
                 Debug.Log($"================================================\n{savedata.saveId}");
@@ -320,26 +356,68 @@ public static class Game
     }
     public static void SaveToJSON<T>(List<T> toSave) where T:save// change this to Save, manually write the JSON formula
     {
-        var jsonString = new StringBuilder(); 
-        save finalObj = toSave.Last();
-        jsonString.Append("{\"save\":[");
-        foreach (save savedata in saveList)
+        if(toSave != null)
         {
-            if(savedata != finalObj)
+			var jsonString = new StringBuilder();
+			save finalObj = toSave.Last();
+            List<save> newSaveList = new List<save>();
+            bool sessionDataSaved = false;
+			jsonString.Append("{\"save\":[");
+
+            foreach (save savedata in saveList)
             {
-			    if (savedata.saveId == mainsessionData.saveId)
-				    jsonString.Append($"{JsonUtility.ToJson(mainsessionData)},");
+                Debug.Log($"this is savedataId: {savedata.saveId}");
+                if (savedata == finalObj && mainsessionData.saveId != savedata.saveId)
+                    newSaveList.Add(mainsessionData);
+
+                    newSaveList.Add(savedata);
+            }
+            newSaveList.Reverse();
+            saveList = newSaveList;
+            finalObj = newSaveList.Last();
+			foreach (save savedata in saveList)
+			{
+				if (savedata != finalObj)
+				{
+					if (savedata.saveId == mainsessionData.saveId && sessionDataSaved != true)
+					{
+                        if(finalObj.saveId == mainsessionData.saveId)
+                        {
+                            jsonString.Append($"{JsonUtility.ToJson(mainsessionData)},");
+							Debug.Log($"Match found: this is final object, saveId {mainsessionData.saveId} and the saveStatus {mainsessionData.saveStatus}");
+                        }
+                        else
+                        {
+							sessionDataSaved = false;
+							jsonString.Append($"{JsonUtility.ToJson(mainsessionData)},");
+							Debug.Log($"Match found: this is, saveId {mainsessionData.saveId} and the saveStatus {mainsessionData.saveStatus}");
+						}
+                        
+					}
+
+					else
+						jsonString.Append($"{JsonUtility.ToJson(savedata)},");
+
+				}
 				else
-                    jsonString.Append($"{JsonUtility.ToJson(savedata)},");
+					jsonString.Append(JsonUtility.ToJson(savedata));
 			}
-			else
-                jsonString.Append(JsonUtility.ToJson(savedata));
-        }
-        jsonString.Append("]}");
-        //string content = JsonHelper.ToJson<T>(toSave.ToArray());
-        //Debug.Log($"this is the content in ToSave: {toSave.seshname}");
-		Debug.Log($"now saving: {jsonString.ToString()}");
-		WriteFile(Game.saveFilePath, jsonString.ToString());
+			jsonString.Append("]}");
+			//string content = JsonHelper.ToJson<T>(toSave.ToArray());
+			//Debug.Log($"this is the content in ToSave: {toSave.seshname}");
+			Debug.Log($"now saving: {jsonString.ToString()}");
+			WriteFile(Game.saveFilePath, jsonString.ToString());
+		}
+        else
+        {
+			var jsonString = new StringBuilder();
+			jsonString.Append("{\"save\":[");
+			jsonString.Append($"{JsonUtility.ToJson(mainsessionData)}");
+			jsonString.Append("]}");
+			Debug.Log($"now saving: {jsonString.ToString()}");
+			WriteFile(Game.saveFilePath, jsonString.ToString());
+		}
+        
     }
 
     public static void WriteFile(string path, string content)
@@ -349,6 +427,30 @@ public static class Game
         {
             writer.Write(content);
         }
+    }
+
+    public static void StartNewGame(string chosenClassText)
+    {
+        if(chosenClassText != "")
+        {
+			switch (chosenClassText)
+			{
+				case "playerWarrior_1":
+					Debug.Log($"this is mainsessiondata's levelid {chosenClassText}");
+                    CreateNewMainSession(chosenClassText);
+					SetSessionDataFromLevelId(mainsessionData.levelId);
+					break;
+				case "playerWizard_1":
+					CreateNewMainSession(chosenClassText);
+					SetSessionDataFromLevelId(mainsessionData.levelId);
+					break;
+				case "playerArcher_1":
+					CreateNewMainSession(chosenClassText);
+					SetSessionDataFromLevelId(mainsessionData.levelId);
+					break;
+			}
+		}
+        
     }
 
 	#endregion
@@ -393,8 +495,11 @@ public static class Game
 	public static List<Dialog> GetDialogByType(string type)
 	{
 		List<Dialog> ndialog = new List<Dialog>();
+        if(dialogList == null) 
+		    Debug.Log($"this is all dialog in dialogList: ");
 		foreach (Dialog adialog in dialogList)
 		{
+            
 			if (adialog.dialogueType == type)
 			{
 				ndialog.Add(adialog);

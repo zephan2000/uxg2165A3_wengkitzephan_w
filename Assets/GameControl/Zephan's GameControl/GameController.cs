@@ -31,6 +31,7 @@ namespace pattayaA3
 			dataManager.LoadRefData();
             
             //Game.GetSave();
+			//Game.ProcessSaveData();
 			//Debug.Log($"This is mainsessionData: {Game.mainsessionData.saveId}");// gets active data;
 
 			//load initial scene

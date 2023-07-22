@@ -13,18 +13,35 @@ namespace pattayaA3
 		public GameObject SaveMenu;
 		public SaveMenuController saveMenuController;
 		public GameObject scrollBar;
+		public GameObject nosaveFile;
 
 		public override void Initialize(GameController aController)
 		{
 			base.Initialize(aController);
 		}
 
+		public void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.N))
+			{
+				Game.StartNewGame("playerWarrior_1");
+			}
+		}
 		public void StartLevel(string aScene)
 		{
-			//Debug.Log($"finding Id from StartMenuController: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
-			gameController.LoadScene(aScene);
-			//Debug.Log($"finding Id after Loading: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
-			gameController.RemoveScene(sceneName);
+			if(Game.mainsessionData !=null)
+			{
+				Debug.Log($"finding Id from StartMenuController: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
+				gameController.LoadScene(aScene);
+				Game.ProcessSaveData();
+				Debug.Log($"finding Id after Loading: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
+				gameController.RemoveScene(sceneName);
+			}
+			else
+			{
+				nosaveFile.GetComponent<Text>().text = "No session data assigned";
+				StartCoroutine(startMenuWarning());
+			}
 		}
 
 		public void StartIntroduction()
@@ -36,9 +53,27 @@ namespace pattayaA3
 
 		public void OnSaveMenu()
 		{
-			SaveMenu.SetActive(true);
-			saveMenuController.OpenMenu();
-			scrollBar.SetActive(true);
+			if (Game.saveList != null)
+			{
+				SaveMenu.SetActive(true);
+				saveMenuController.OpenMenu();
+				scrollBar.SetActive(true);
+			}
+			else
+			{
+				nosaveFile.GetComponent<Text>().text = "No Save Files";
+				StartCoroutine(startMenuWarning());
+			}
+			
+		}
+
+		public IEnumerator startMenuWarning()
+		{
+			yield return new WaitForSeconds(0.2f);
+			yield return Input.GetMouseButtonDown(0);
+			nosaveFile.SetActive(true);
+			yield return new WaitForSeconds(1f);
+			nosaveFile.SetActive(false);
 		}
 	}
 }

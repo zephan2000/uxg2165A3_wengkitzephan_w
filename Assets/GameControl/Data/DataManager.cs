@@ -18,10 +18,18 @@ public class DataManager : MonoBehaviour
     {
         //Debug.Log("This is persistent data path : " + Application.persistentDataPath);
 
+        
+
 
         Game.filePath = "Assets/Paths/export.json";
-        Game.saveFilePath = "Assets/Paths/save.json";
+        //Game.saveFilePath = "Assets/Paths/save.json";
         //DemoData demoData = null;
+        Game.saveFilePath = Path.Combine(Application.persistentDataPath, "save.json");
+        Debug.Log($"this is the persistentDatapath {Game.saveFilePath}");
+
+		string saveString = File.ReadAllText(Game.saveFilePath);
+        //if (saveString != "")
+            //Game.ProcessSaveData();
 
         AssetManager.LoadFile("export.json", Game.filePath, (TextAsset t) =>
         {
@@ -32,12 +40,15 @@ public class DataManager : MonoBehaviour
             Game.AssignAllSkillListToActor();
         });
 
-        AssetManager.LoadFile("save.json", Game.saveFilePath, (TextAsset t) =>
+        if (saveString != "")
         {
-            Game.demoData2 = JsonUtility.FromJson<DemoData>(t.text);
-            Game.ProcessSaveData(Game.demoData2);
-            Game.GetSave();
-        });
+            AssetManager.LoadFile("save.json", Game.saveFilePath, (TextAsset t) =>
+            {
+                Game.demoData2 = JsonUtility.FromJson<DemoData>(t.text);
+                Game.ProcessSaveData(Game.demoData2);
+                Game.GetSave();
+            });
+        }
 
 
         //Game.filePath = Path.Combine(Application.persistentDataPath, "export.json");
@@ -64,7 +75,7 @@ public class DataManager : MonoBehaviour
         //Debug.Log("Yes");
         //Debug.Log(Game.GetItemList());
         //Game.ListdownSkills();
-        //Game.AssignAllSkillListToActor();
+        Game.AssignAllSkillListToActor();
         //Game.ListdownSkills();
         //Game.ListdownSkills("enemyBat");
 

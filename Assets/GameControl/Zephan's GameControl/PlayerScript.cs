@@ -251,8 +251,8 @@ namespace pattayaA3
 			//player.UpdateStats();
 			//Debug.Log("Running");
 			//Debug.Log(Game.Getactorbytype("Player").displaySpritePath);
-            playerImage = Game.Getactorbytype("playerWizard").displaySpritePath ;
-			//Debug.Log(playerImage);
+            playerImage = Game.GetActorByActorType("playerWizard").displaySpritePath ;
+			Debug.Log(playerImage);
 
 			//Sprite tileSprite = Resources.Load(playerImage) as Sprite;
 
