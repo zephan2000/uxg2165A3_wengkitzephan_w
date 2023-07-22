@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
-using UnityEditor.PackageManager;
+//using UnityEditor;
+//using UnityEditor.Animations;
+//using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 

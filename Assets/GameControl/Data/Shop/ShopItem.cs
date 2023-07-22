@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Search;
+//using UnityEditor;
+//using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
+//using static UnityEditor.Progress;
 
 public class ShopItem : MonoBehaviour
 {
@@ -46,7 +46,7 @@ public class ShopItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Game.ProcessSaveData();
+        Game.ProcessSaveData(Game.demoData2);
         Game.GetSave();
 
         itemListing = GameObject.FindWithTag("ShopList").transform;

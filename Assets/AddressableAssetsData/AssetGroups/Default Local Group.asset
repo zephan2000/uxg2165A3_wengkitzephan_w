@@ -45,6 +45,18 @@ MonoBehaviour:
     m_Address: Assets/Data/Invent/TestItem.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 01d5afbc3cc9bc34cb7bc9cc91ecdc11
+    m_Address: Assets/Paths
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 871a1ae53ebd8244b90bb33f7686db40
+    m_Address: Assets/Paths/export.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 65bee4794f171074f9dafd918cb8f177
+    m_Address: Assets/Paths/save.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 611fc7ae2aceb054e9fd0c1b62e8303a, type: 2}
   m_SchemaSet:

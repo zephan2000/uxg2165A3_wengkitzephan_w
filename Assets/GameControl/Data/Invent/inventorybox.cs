@@ -14,8 +14,9 @@ namespace pattayaA3
 	{
 		[SerializeField] DataManager _dm;
 
-		//Text
-		[SerializeField] Text charactername;
+        #region Text Objects
+        //Text
+        [SerializeField] Text charactername;
 		[SerializeField] Text itemchoice;
 		[SerializeField] Text skillchoice;
 		[SerializeField] Text statchoice;
@@ -36,6 +37,7 @@ namespace pattayaA3
 		[SerializeField] Text stat2;
 		[SerializeField] Text stat3;
 		[SerializeField] Text stat4;
+        #endregion
 
         #region AttributeStuff
         //Attribute Stuff
@@ -66,9 +68,10 @@ namespace pattayaA3
         [SerializeField] Text subtract_attspeed_text;
 
         #endregion
-        Inventory currentmenu = Inventory.item;
-		//Objects
-		[SerializeField] GameObject character;
+
+        #region GameObjects
+        //Objects
+        [SerializeField] GameObject character;
 		[SerializeField] GameObject charactersprite;
 		[SerializeField] GameObject itemObject;
 		[SerializeField] GameObject skillchoiceObject;
@@ -94,7 +97,9 @@ namespace pattayaA3
 		[SerializeField] GameObject stat3Object;
 		[SerializeField] GameObject stat4Object;
 
-		Inventory currentmenu = Inventory.item;
+        #endregion
+
+        Inventory currentmenu = Inventory.item;
 
         public Transform itemListing;
 
@@ -109,7 +114,7 @@ namespace pattayaA3
 
         private void Start()
         {
-            Game.ProcessSaveData();
+            Game.ProcessSaveData(Game.demoData2);
             Game.GetSave();
 
 
@@ -794,25 +799,28 @@ namespace pattayaA3
             subtract_attspeed_button.SetActive(!enabled);
             subtract_attspeed_text.enabled = !enabled;
 
-            Debug.Log("This is inventory "+Game.mainsessionData.inventory);
+            
+            //Debug.Log("This is inventory :"+Game.mainsessionData.inventory + ": this is null");
             //Debug.Log("This is inventory Count " + Game.GetItemsInInventory().Count);
 
-
-            if (!runonce)
+            if (!(Game.GetItemsInInventory() == null))
             {
-                List<items> listinventory = Game.GetItemsInInventory();
-                for (int i = 0; i < Game.GetItemsInInventory().Count; i++)
+                if (!runonce)
                 {
-                    Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
-                    eachItem.ActivateUI(listinventory[i]);
+                    List<items> listinventory = Game.GetItemsInInventory();
+                    for (int i = 0; i < Game.GetItemsInInventory().Count; i++)
+                    {
+                        Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
+                        eachItem.ActivateUI(listinventory[i]);
 
-                    Game.ProcessSaveData();
-                    Game.GetSave();
-                    //Debug.Log(i);
+                        Game.ProcessSaveData(Game.demoData2);
+                        Game.GetSave();
+                        //Debug.Log(i);
+                    }
+                    //eachItem.ActivateUI(a);
+
+                    runonce = true;
                 }
-                //eachItem.ActivateUI(a);
-                
-                runonce = true;
             }
             //eachItem.ActivateUI();
         }

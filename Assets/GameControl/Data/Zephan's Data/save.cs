@@ -37,12 +37,37 @@ public class save
     public int runtime;
     public string battles;
 
-	public save(string saveId, string seshname, string saveStatus, string actorName,string actorType,
-        string levelId, int currenthp, int maxhp, int physicaldmg, int magicdmg, int vitality, int power, 
-        int intelligence, int attspeed, int vitality_added, int power_added, int intelligence_added,
-        int attspeed_added, int attributePoint, int exp, int gold, string weapon, string helmet,
-        string armour, string inventory, string displaySpritePath, string startedQuest, string completedQuest,
-        string completedAchievement, int runtime, string battles)
+	public save(string saveId,
+                string seshname,
+                string saveStatus,
+                string actorName,
+                string actorType,
+                string levelId,
+                int currenthp,
+                int maxhp,
+                int physicaldmg,
+                int magicdmg,
+                int vitality,
+                int power, 
+                int intelligence,
+                int attspeed,
+                int vitality_added,
+                int power_added,
+                int intelligence_added,
+                int attspeed_added,
+                int attributePoint,
+                int exp,
+                int gold,
+                string weapon,
+                string helmet,
+                string armour,
+                string inventory,
+                string displaySpritePath,
+                string startedQuest,
+                string completedQuest,
+                string completedAchievement,
+                int runtime,
+                string battles)
     {
         this.saveId = saveId;
         this.seshname = seshname;

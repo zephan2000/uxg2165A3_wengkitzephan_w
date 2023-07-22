@@ -8,6 +8,7 @@ using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Text;
+//using TreeEditor;
 
 public static class Game
 {
@@ -29,7 +30,8 @@ public static class Game
      //data added in from DemoData
 	
     public static bool initialStart = true;
-	//Save
+    //Save
+    public static DemoData demoData2;
 	public static List<save> saveList;
 	public static string saveFilePath;
 	public static string filePath;
@@ -263,15 +265,17 @@ public static class Game
 	#endregion
 	#region File Handling (Save System)
 
-	public static void ProcessSaveData()
+	public static void ProcessSaveData(DemoData demoData2)
 	{
-        string saveString = File.ReadAllText(Game.saveFilePath);
-        DemoData saveData = JsonUtility.FromJson<DemoData>(saveString);
+        //Debug.Log("This is demodata : " + demoData2);
+        //string saveString = File.ReadAllText(Game.saveFilePath);
+        //DemoData saveData = JsonUtility.FromJson<DemoData>(saveString);
 		List<save> saveDataList = new List<save>();
 
-		foreach (refSave refData in saveData.save)
+		foreach (refSave refData in demoData2.save)
 		{
-			save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName,
+            //Debug.Log("This is demodata save id : " + refData.saveId);
+            save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName,
                 refData.actorType, refData.levelId, refData.currenthp, refData.maxhp, refData.physicaldmg,
                 refData.magicdmg, refData.vitality, refData.power,refData.intelligence, refData.attspeed,
                 refData.vitality_added, refData.power_added, refData.intelligence_added, refData.attspeed_added,
@@ -279,18 +283,25 @@ public static class Game
                 refData.inventory, refData.displaySpritePath, refData.startedQuest, refData.completedQuest, 
                 refData.completedAchievement, refData.runtime, refData.battles);
 			saveDataList.Add(savedata);
-		}
-		saveList = saveDataList;
-	}
+            
+        }
+		Game.saveList = saveDataList;
+        //Debug.Log("This is demodata save id : " + saveList[0].saveId);
+    }
 	public static save GetSave() //for single play (testing purposes)
 	{
-		foreach (save savedata in saveList)
+        //Debug.Log("This is demodata save id : " + Game.saveList[0].saveId);
+        //foreach(var save in saveList)
+        //{
+        //    Debug.Log("This is demodata save id : " + save.saveId);
+        //}
+        foreach (var savedata in Game.saveList)
 		{
 			if (savedata.saveStatus == "ACTIVE")
-				mainsessionData = savedata;
+				Game.mainsessionData = savedata;
 		}
         //Debug.Log($"this is mainsessionId: {mainsessionData.levelId}");
-		return mainsessionData;
+		return Game.mainsessionData;
 	}
 
     public static void LoadSave(string saveId)
@@ -327,7 +338,7 @@ public static class Game
         jsonString.Append("]}");
         //string content = JsonHelper.ToJson<T>(toSave.ToArray());
         //Debug.Log($"this is the content in ToSave: {toSave.seshname}");
-		//Debug.Log($"now saving: {jsonString.ToString()}");
+		Debug.Log($"now saving: {jsonString.ToString()}");
 		WriteFile(Game.saveFilePath, jsonString.ToString());
     }
 
@@ -413,11 +424,12 @@ public static class Game
 	public static List<Dialog> GetListOfChoicesByDialog(Dialog currentDialog)
 	{
 		string[] textdialogIdArray = currentDialog.choices.Split('@');
+        Debug.Log($"this is currnet DIalog choice: {currentDialog.choices}");
 		List<Dialog> choices = new List<Dialog>();
 		for (int i = 0; i < textdialogIdArray.Length; i++)
 		{
 			string[] choicedialogArray = textdialogIdArray[i].Split('#');
-			Debug.Log(GetDialogByDialogId(choicedialogArray[1]).dialogueId);
+			Debug.Log(GetDialogByDialogId(choicedialogArray[1]));
 			//Debug.Log(choicedialogArray[0]);
 			choices.Add(GetDialogByDialogId(choicedialogArray[1]));
 		}
@@ -591,15 +603,22 @@ public static class Game
 
     public static List<items> GetItemsInInventory()
     {
-        save currentSession = Game.mainsessionData;
-        List<items> iList = new List<items>();
-        string[] stringArray = currentSession.inventory.Split(",");
-        foreach (var a in stringArray)
+        if (!(Game.mainsessionData.inventory == ""))
         {
-            //string test = itemlist.Find(x => x.itemId == a).itemId;
-            items test = Getitemsbyid(a);
-            iList.Add(test);
+            save currentSession = Game.mainsessionData;
+            List<items> iList = new List<items>();
+            string[] stringArray = currentSession.inventory.Split(",");
+            foreach (var a in stringArray)
+            {
+                //string test = itemlist.Find(x => x.itemId == a).itemId;
+                items test = Getitemsbyid(a);
+                iList.Add(test);
+            }
+            return iList;
         }
-        return iList;
+        //Debug.Log("Real");
+        return null;
     }
+
+    
 }

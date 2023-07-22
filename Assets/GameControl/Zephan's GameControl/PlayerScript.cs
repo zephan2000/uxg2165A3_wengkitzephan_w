@@ -106,6 +106,7 @@ namespace pattayaA3
             if (Input.GetKeyDown(KeyCode.F4)) //for bug testing
             {
                 Game.mainsessionData.gold += 200;
+                Game.SaveToJSON<save>(Game.saveList);
                 //StartCoroutine(playerHud.UpdateTownData());
             }
 			if (Input.GetKeyDown(KeyCode.F5))

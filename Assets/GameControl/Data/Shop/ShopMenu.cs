@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
+//using UnityEditor;
+//using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,7 +69,7 @@ public class ShopMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Game.ProcessSaveData();
+        Game.ProcessSaveData(Game.demoData2);
         Game.GetSave();
 
         SetInventory();
@@ -155,7 +156,7 @@ public class ShopMenu : MonoBehaviour
                 //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
                 shopItem.ActivateUI(listinventory[i], shop_state);
 
-                Game.ProcessSaveData();
+                Game.ProcessSaveData(Game.demoData2);
                 Game.GetSave();
                 //Debug.Log(i);
             }
@@ -168,23 +169,26 @@ public class ShopMenu : MonoBehaviour
     {
         DisableItemList();
         scroll.SetActive(enabled);
-        if (!runonce)
+        if (!(Game.GetItemsInInventory() == null))
         {
-            ShopList = Game.GetItemsInInventory();
-            List<items> listinventory = ShopList;
-            for (int i = 0; i < listinventory.Count; i++)
+            if (!runonce)
             {
-                //hopList = Game.GetItemsInInventory();
-                //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
-                shopItem.ActivateUI(listinventory[i], shop_state);
-                //Debug.Log("This is ramadan : ");
-                Game.ProcessSaveData();
-                Game.GetSave();
-                //Debug.Log(i);
-            }
-            //eachItem.ActivateUI(a);
+                ShopList = Game.GetItemsInInventory();
+                List<items> listinventory = ShopList;
+                for (int i = 0; i < listinventory.Count; i++)
+                {
+                    //hopList = Game.GetItemsInInventory();
+                    //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
+                    shopItem.ActivateUI(listinventory[i], shop_state);
+                    //Debug.Log("This is ramadan : ");
+                    Game.ProcessSaveData(Game.demoData2);
+                    Game.GetSave();
+                    //Debug.Log(i);
+                }
+                //eachItem.ActivateUI(a);
 
-            runonce = true;
+                runonce = true;
+            }
         }
     }
     public void ConstantlyCheck()

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
+//using UnityEditor;
+//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -88,7 +88,7 @@ namespace pattayaA3
 			{
 				RewardCollectedHud();
 			};
-			Game.ProcessSaveData();
+			Game.ProcessSaveData(Game.demoData2);
 			Game.GetSave(); //why does the game data disappear after writing?
 
 			//Debug.Log($"finding Id {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class DataManager : MonoBehaviour
 {
@@ -14,24 +16,49 @@ public class DataManager : MonoBehaviour
 
     public void LoadRefData()
     {
-        Game.filePath = Path.Combine(Application.dataPath, "export.json");
-        Game.testFilePath = Path.Combine(Application.dataPath, "export_backup.json");
-        Game.saveFilePath = Path.Combine(Application.dataPath, "save.json");
-
-		string dataString = File.ReadAllText(Game.filePath);
-        DemoData demoData = JsonUtility.FromJson<DemoData>(dataString);
+        //Debug.Log("This is persistent data path : " + Application.persistentDataPath);
 
 
-		//Debug.Log(demoData.items[0].displayName);
-		//Debug.Log(demoData);
+        Game.filePath = "Assets/Paths/export.json";
+        Game.saveFilePath = "Assets/Paths/save.json";
+        //DemoData demoData = null;
 
-		//Debug.Log(demoData.player[0].name);
-		//Debug.Log(demoData.enemydummy[0].displayName);
-		//Debug.Log(demoData.items[0].displayName);
+        AssetManager.LoadFile("export.json", Game.filePath, (TextAsset t) =>
+        {
+            //t.text = 
+            DemoData demoData = JsonUtility.FromJson<DemoData>(t.text);
+            ProcessDemoData(demoData);
+            //Game.ProcessSaveData();
+            Game.AssignAllSkillListToActor();
+        });
 
-		//process data
-		ProcessDemoData(demoData);
-        Game.ProcessSaveData();
+        AssetManager.LoadFile("save.json", Game.saveFilePath, (TextAsset t) =>
+        {
+            Game.demoData2 = JsonUtility.FromJson<DemoData>(t.text);
+            Game.ProcessSaveData(Game.demoData2);
+            Game.GetSave();
+        });
+
+
+        //Game.filePath = Path.Combine(Application.persistentDataPath, "export.json");
+        ////Game.testFilePath = Path.Combine(Application.persistentDataPath, "export_backup.json");
+        //Game.saveFilePath = Path.Combine(Application.persistentDataPath, "save.json");
+
+        //string dataString = File.ReadAllText(Game.filePath);
+        //DemoData demoData = JsonUtility.FromJson<DemoData>(dataString);
+
+
+        //Debug.Log(demoData.items[0].displayName);
+        //Debug.Log(demoData);
+
+        //Debug.Log(demoData.player[0].name);
+        //Debug.Log(demoData.enemydummy[0].displayName);
+        //Debug.Log(demoData.items[0].displayName);
+
+        //process data
+        //ProcessDemoData(demoData);
+        //      Game.ProcessSaveData();
+
         //actor best = Game.Getactorbytype("Player");
         //Debug.Log(best.power);
         //Debug.Log("Yes");
@@ -40,7 +67,9 @@ public class DataManager : MonoBehaviour
         //Game.AssignAllSkillListToActor();
         //Game.ListdownSkills();
         //Game.ListdownSkills("enemyBat");
-        Game.AssignAllSkillListToActor();
+
+        //Game.AssignAllSkillListToActor();
+
         //Game.ListdownSkills("enemyBat");
         //Debug.Log(Game.GetActorByName("Warrior").skillslist);
         //Debug.Log(Game.GetEquipment(Game.mainsessionData.actorType));
@@ -69,7 +98,7 @@ public class DataManager : MonoBehaviour
         //    Debug.Log(a.itemId);
         //}
         //Debug.Log(Game.mainsessionData.inventory);
-        
+
     }
 
 
