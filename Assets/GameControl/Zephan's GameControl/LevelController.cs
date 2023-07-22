@@ -352,8 +352,8 @@ namespace pattayaA3
 				case "Exit":
 					gameController.GoToLevelSelect();
 					currentChoice = 0;
-					//Game.mainsessionData.saveStatus = "INACTIVE";
-					//Game.SaveToJSON<save>(Game.saveList);
+					Game.mainsessionData.saveStatus = "INACTIVE";
+					Game.SaveToJSON<save>(Game.saveList);
 					if (pauseMenu != null)
 					{
 						GameObject.Destroy(pauseMenu);

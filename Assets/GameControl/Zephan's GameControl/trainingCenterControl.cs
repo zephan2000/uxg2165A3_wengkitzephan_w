@@ -45,7 +45,7 @@ namespace pattayaA3
 		void trainingCenterNPCSetup(string trainingNPC)
 		{
 			//Debug.Log("setting up training center");
-			actor trainingNPCactor = Game.Getactorbytype(trainingNPC);
+			actor trainingNPCactor = Game.GetActorByActorType(trainingNPC);
 			trainingNPCname.text = trainingNPCactor.displayName;
 			string trainingNPC_spritePath = trainingNPCactor.displaySpritePath;
 			StartCoroutine(TypeDialog(Game.GetDialogByDialogId("TRAINING0001").dialogueText));
@@ -67,14 +67,14 @@ namespace pattayaA3
 		}
 		void enemy1Setup(string enemy1type)
         {
-			actor enemy1actor= Game.Getactorbytype(enemy1type);
+			actor enemy1actor= Game.GetActorByActorType(enemy1type);
 			enemy1.text = enemy1actor.displayName;
 			string enemy1_spritePath = enemy1actor.displaySpritePath;
             UpdateSprite(enemy1_spritePath, enemy1_image);
 		}
 		void enemy2Setup(string enemy2type)
 		{
-			actor enemy2actor = Game.Getactorbytype(enemy2type);
+			actor enemy2actor = Game.GetActorByActorType(enemy2type);
 			enemy2.text = enemy2actor.displayName;
 			string enemy2_spritePath = enemy2actor.displaySpritePath;
 			UpdateSprite(enemy2_spritePath, enemy2_image);
@@ -95,14 +95,14 @@ namespace pattayaA3
 
         public void LoadEnemy1(string enemyType)
         {
-            Game.chosenenemyName = Game.Getactorbytype(enemyType).displayName;
+            Game.chosenenemyName = Game.GetActorByActorType(enemyType).displayName;
             Game.chosenenemyType = enemyType;
 			LoadBattle();
 		}
 
         public void LoadEnemy2(string enemyType)
         {
-			Game.chosenenemyName = Game.Getactorbytype(enemyType).displayName;
+			Game.chosenenemyName = Game.GetActorByActorType(enemyType).displayName;
 			Game.chosenenemyType = enemyType;
 			LoadBattle();
 		}

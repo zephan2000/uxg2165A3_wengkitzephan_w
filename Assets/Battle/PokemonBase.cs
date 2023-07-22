@@ -66,11 +66,11 @@ public class PokemonBase
 
 	public void GetPokemonNameFromActorName(string actorName)
 	{
-		nameText = Game.GetActorByName(actorName).displayName;
+		nameText = Game.GetActorByActorName(actorName).displayName;
 	}
 	public void GetPokemonSpritePathFromActorName(string actorName)
 	{
-		actorSpritePath = Game.GetActorByName(actorName).displaySpritePath;
+		actorSpritePath = Game.GetActorByActorName(actorName).displaySpritePath;
 	}
 	public void GetPokemonMaxHpFromLevelId(string levelId)
 	{

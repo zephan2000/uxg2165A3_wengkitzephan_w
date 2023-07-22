@@ -33,6 +33,8 @@ public class IntroductionDialogManager : MonoBehaviour
 	List<Dialog> dialogList;
 	List<Dialog> dialogChoiceList;
 	int currentChoice;
+	private string chosenClassText;
+	private bool canUpdateClass;
 	public void Update()
 	{
 		if(Input.GetKeyDown(KeyCode.Space) && dialogState == IntroDialogState.EndOfDialog)
@@ -149,13 +151,49 @@ public class IntroductionDialogManager : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Return))
 		{
+			canUpdateClass = true;
 			var chosenDialog = dialogChoiceList[currentChoice];
+			UpdateClassSelection(chosenDialog, canUpdateClass);
 			currentChoice = 0;
 			currentDialog = Game.GetDialogByDialogList(chosenDialog.dialogueId, dialogList);//setting to next dialog
 			dialogState = IntroDialogState.EndOfDialog;// assigning nextdialog to currentDialog from dialogList
 			StartCoroutine(TypeDialog(currentDialog.dialogueText));
 			
 		}
+	}
+	public IEnumerator CheckForReturnKey()
+	{
+		canUpdateClass = false;
+		yield return new WaitForSeconds(0.2f);
+		yield return Input.GetKeyDown(KeyCode.Return);
+	}
+	public void UpdateClassSelection(Dialog chosenDialog, bool canUpdateClass)
+	{
+		Debug.Log($"this is chosenDialog text from class selection {chosenDialog.dialogueText}");	
+		if(canUpdateClass)
+		{
+			switch (chosenDialog.dialogueText)
+			{
+				case "I want to be a Warrior.":
+					chosenClassText = "playerWarrior_1";
+					break;
+				case "I want to be a Wizard.":
+					chosenClassText = "playerWizard_1";
+					break;
+				case "I want to be an Archer.":
+					chosenClassText = "playerArcher_1";
+					break;
+				case "Hmm... let me choose again":
+					chosenClassText = "";
+					break;
+				case "Yes I'm sure.":
+					Debug.Log($"this is chosenClassText {chosenClassText}");
+					Game.StartNewGame(chosenClassText);
+					break;
+			}
+		}
+		
+
 	}
 	public void UpdateChoiceSelection(int selectedChoice)
 	{

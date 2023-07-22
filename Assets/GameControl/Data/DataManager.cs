@@ -16,10 +16,15 @@ public class DataManager : MonoBehaviour
     {
         Game.filePath = Path.Combine(Application.dataPath, "export.json");
         Game.testFilePath = Path.Combine(Application.dataPath, "export_backup.json");
-        Game.saveFilePath = Path.Combine(Application.dataPath, "save.json");
+        Game.saveFilePath = Path.Combine(Application.persistentDataPath, "save.json");
+        Debug.Log($"this is the persistentDatapath {Game.saveFilePath}");
 
 		string dataString = File.ReadAllText(Game.filePath);
         DemoData demoData = JsonUtility.FromJson<DemoData>(dataString);
+
+		string saveString = File.ReadAllText(Game.saveFilePath);
+        if (saveString != "")
+            Game.ProcessSaveData();
 
 
 		//Debug.Log(demoData.items[0].displayName);
@@ -31,16 +36,16 @@ public class DataManager : MonoBehaviour
 
 		//process data
 		ProcessDemoData(demoData);
-        Game.ProcessSaveData();
+        //      Game.ProcessSaveData();
         //actor best = Game.Getactorbytype("Player");
         //Debug.Log(best.power);
         //Debug.Log("Yes");
         //Debug.Log(Game.GetItemList());
         //Game.ListdownSkills();
-        //Game.AssignAllSkillListToActor();
+        Game.AssignAllSkillListToActor();
         //Game.ListdownSkills();
         //Game.ListdownSkills("enemyBat");
-        Game.AssignAllSkillListToActor();
+        //Game.AssignAllSkillListToActor();
         //Game.ListdownSkills("enemyBat");
         //Debug.Log(Game.GetActorByName("Warrior").skillslist);
         //Debug.Log(Game.GetEquipment(Game.GetSession().actorType));
@@ -64,7 +69,7 @@ public class DataManager : MonoBehaviour
         //{
         //    Debug.Log(Game.Getactorbytype("enemyBat").skillslist);
         //}
-        
+
     }
 
 
