@@ -250,7 +250,8 @@ public static class Game
         else { }
 		Debug.Log($"debugging current actor : {currentactor.displayName}, {currentactor.actorType}");
 		Debug.Log($"constructing mainsessionData: {saveId},{"lewis"}, {"ACTIVE"}, {currentactor.displayName}, {currentactor.actorType}");
-        Debug.Log($"constructing mainsessionData:{levelid}, {alevel.maxhp}, {alevel.maxhp}, {alevel.physicaldmg}");
+        Debug.Log($"constructing mainsessionData:{levelid}");
+        Debug.Log($"constructing mainsessionData:{alevel.maxhp}, {alevel.maxhp}, {alevel.physicaldmg}");
         Debug.Log($"constructing mainsessionData: {alevel.magicdmg}, {alevel.vitality}");
         Debug.Log($"constructing mainsessionData:{alevel.power}, {alevel.intelligence}, {alevel.attspeed},0, 0, 0");
         Debug.Log($"constructing mainsessionData:{"item10"}, {"item14"}, {"item13"},{""}");
@@ -259,7 +260,7 @@ public static class Game
 
 		mainsessionData = new save(saveId, "lewis", "ACTIVE", currentactor.displayName, currentactor.actorType, 
                                    levelid, alevel.maxhp, alevel.maxhp, alevel.physicaldmg, alevel.magicdmg, alevel.vitality,
-                                   alevel.power, alevel.intelligence, alevel.attspeed, 0, 0, 0, "item10", "item14", "item13", "", 
+                                   alevel.power, alevel.intelligence, alevel.attspeed, 0, 0, 0, 0, 0, 0, 0, "item10", "item14", "item13", "", 
                                    currentactor.displaySpritePath, "", "", "", 0,"");
 
         SaveToJSON<save>(saveList);
@@ -299,29 +300,52 @@ public static class Game
 	#endregion
 	#region File Handling (Save System)
 
-	public static void ProcessSaveData(DemoData demoData2)
-	{
-        //string saveString = File.ReadAllText(saveFilePath);
-        //DemoData saveData = JsonUtility.FromJson<DemoData>(saveString);
-		List<save> saveDataList = new List<save>();
+	//public static void ProcessSaveData(DemoData demoData2)
+	//{
+ //       //string saveString = File.ReadAllText(saveFilePath);
+ //       //DemoData saveData = JsonUtility.FromJson<DemoData>(saveString);
+	//	List<save> saveDataList = new List<save>();
 
-		foreach (refSave refData in demoData2.save)
-		{
+	//	foreach (refSave refData in demoData2.save)
+	//	{
+ //           //Debug.Log("This is demodata save id : " + refData.saveId);
+ //           save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName,
+ //               refData.actorType, refData.levelId, refData.currenthp, refData.maxhp, refData.physicaldmg,
+ //               refData.magicdmg, refData.vitality, refData.power,refData.intelligence, refData.attspeed,
+ //               refData.vitality_added, refData.power_added, refData.intelligence_added, refData.attspeed_added,
+ //               refData.attributePoint, refData.exp, refData.gold, refData.weapon, refData.helmet, refData.armour,
+ //               refData.inventory, refData.displaySpritePath, refData.startedQuest, refData.completedQuest, 
+ //               refData.completedAchievement, refData.runtime, refData.battles);
+	//		saveDataList.Add(savedata);
+            
+ //       }
+	//	Game.saveList = saveDataList;
+ //       //Debug.Log("This is demodata save id : " + saveList[0].saveId);
+ //   }
+    public static void ProcessSaveData()
+    {
+        string saveString = File.ReadAllText(saveFilePath);
+        Debug.Log("This is savestring : " + saveString);
+        DemoData saveData = JsonUtility.FromJson<DemoData>(saveString);
+        List<save> saveDataList = new List<save>();
+
+        foreach (refSave refData in saveData.save)
+        {
             //Debug.Log("This is demodata save id : " + refData.saveId);
             save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName,
                 refData.actorType, refData.levelId, refData.currenthp, refData.maxhp, refData.physicaldmg,
-                refData.magicdmg, refData.vitality, refData.power,refData.intelligence, refData.attspeed,
+                refData.magicdmg, refData.vitality, refData.power, refData.intelligence, refData.attspeed,
                 refData.vitality_added, refData.power_added, refData.intelligence_added, refData.attspeed_added,
                 refData.attributePoint, refData.exp, refData.gold, refData.weapon, refData.helmet, refData.armour,
-                refData.inventory, refData.displaySpritePath, refData.startedQuest, refData.completedQuest, 
+                refData.inventory, refData.displaySpritePath, refData.startedQuest, refData.completedQuest,
                 refData.completedAchievement, refData.runtime, refData.battles);
-			saveDataList.Add(savedata);
-            
+            saveDataList.Add(savedata);
+
         }
-		Game.saveList = saveDataList;
+        Game.saveList = saveDataList;
         //Debug.Log("This is demodata save id : " + saveList[0].saveId);
     }
-	public static save GetSave() //for single play (testing purposes)
+    public static save GetSave() //for single play (testing purposes)
 	{
         //Debug.Log("This is demodata save id : " + Game.saveList[0].saveId);
         //foreach(var save in saveList)

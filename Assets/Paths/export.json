@@ -871,7 +871,7 @@
     ],
     "level": [
         {
-            "levelId": "playerWarrior_01",
+            "levelId": "playerWarrior_1",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "50",
@@ -885,7 +885,7 @@
             "attspeed": "20"
         },
         {
-            "levelId": "playerWarrior_02",
+            "levelId": "playerWarrior_2",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "100",
@@ -899,7 +899,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_03",
+            "levelId": "playerWarrior_3",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "150",
@@ -913,7 +913,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_04",
+            "levelId": "playerWarrior_4",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "200",
@@ -927,7 +927,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_05",
+            "levelId": "playerWarrior_5",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "250",
@@ -941,7 +941,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_06",
+            "levelId": "playerWarrior_6",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "300",
@@ -955,7 +955,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_07",
+            "levelId": "playerWarrior_7",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "350",
@@ -969,7 +969,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_08",
+            "levelId": "playerWarrior_8",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "400",
@@ -983,7 +983,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_09",
+            "levelId": "playerWarrior_9",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "450",
@@ -1095,7 +1095,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_7",
+            "levelId": "playerWarrior_17",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "900",
@@ -1109,7 +1109,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_8",
+            "levelId": "playerWarrior_18",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "950",
@@ -1123,7 +1123,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_9",
+            "levelId": "playerWarrior_19",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "1000",
@@ -1137,7 +1137,7 @@
             "attspeed": ""
         },
         {
-            "levelId": "playerWarrior_0",
+            "levelId": "playerWarrior_20",
             "actorType": "playerWarrior",
             "expToGain": "50",
             "maxExp": "1050",

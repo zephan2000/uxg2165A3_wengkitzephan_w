@@ -88,8 +88,9 @@ namespace pattayaA3
 			{
 				RewardCollectedHud();
 			};
-			Game.ProcessSaveData(Game.demoData2);
-			Game.GetSave(); //why does the game data disappear after writing?
+			//Game.ProcessSaveData(Game.demoData2);
+            Game.ProcessSaveData();
+            Game.GetSave(); //why does the game data disappear after writing?
 
 			//Debug.Log($"finding Id {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
 			Game.SetSessionDataFromLevelId(Game.mainsessionData.levelId);

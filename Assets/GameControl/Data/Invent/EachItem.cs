@@ -46,7 +46,8 @@ namespace pattayaA3
         public void Start()
         {
             inventoryList = Game.GetItemsInInventory();
-            Game.ProcessSaveData(Game.demoData2);
+            //Game.ProcessSaveData(Game.demoData2);
+            Game.ProcessSaveData();
             Game.GetSave();
 
             itemListing = GameObject.FindWithTag("ItemList").transform;

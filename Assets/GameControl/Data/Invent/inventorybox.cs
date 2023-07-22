@@ -114,7 +114,8 @@ namespace pattayaA3
 
         private void Start()
         {
-            Game.ProcessSaveData(Game.demoData2);
+            //Game.ProcessSaveData(Game.demoData2);
+            Game.ProcessSaveData();
             Game.GetSave();
 
 
@@ -813,7 +814,8 @@ namespace pattayaA3
                         Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
                         eachItem.ActivateUI(listinventory[i]);
 
-                        Game.ProcessSaveData(Game.demoData2);
+                        //Game.ProcessSaveData(Game.demoData2);
+                        Game.ProcessSaveData();
                         Game.GetSave();
                         //Debug.Log(i);
                     }

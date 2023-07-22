@@ -69,7 +69,8 @@ public class ShopMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Game.ProcessSaveData(Game.demoData2);
+        //Game.ProcessSaveData(Game.demoData2);
+        Game.ProcessSaveData();
         Game.GetSave();
 
         SetInventory();
@@ -156,7 +157,8 @@ public class ShopMenu : MonoBehaviour
                 //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
                 shopItem.ActivateUI(listinventory[i], shop_state);
 
-                Game.ProcessSaveData(Game.demoData2);
+                //Game.ProcessSaveData(Game.demoData2);
+                Game.ProcessSaveData();
                 Game.GetSave();
                 //Debug.Log(i);
             }
@@ -181,7 +183,8 @@ public class ShopMenu : MonoBehaviour
                     //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
                     shopItem.ActivateUI(listinventory[i], shop_state);
                     //Debug.Log("This is ramadan : ");
-                    Game.ProcessSaveData(Game.demoData2);
+                    //Game.ProcessSaveData(Game.demoData2);
+                    Game.ProcessSaveData();
                     Game.GetSave();
                     //Debug.Log(i);
                 }

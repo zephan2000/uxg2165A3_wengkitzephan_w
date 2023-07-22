@@ -46,7 +46,8 @@ public class ShopItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Game.ProcessSaveData(Game.demoData2);
+        //Game.ProcessSaveData(Game.demoData2);
+        Game.ProcessSaveData();
         Game.GetSave();
 
         itemListing = GameObject.FindWithTag("ShopList").transform;

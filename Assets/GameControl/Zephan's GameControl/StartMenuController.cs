@@ -33,8 +33,9 @@ namespace pattayaA3
 			{
 				Debug.Log($"finding Id from StartMenuController: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
 				gameController.LoadScene(aScene);
-				Game.ProcessSaveData();
-				Debug.Log($"finding Id after Loading: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
+				//Game.ProcessSaveData(Game.demoData2);
+                Game.ProcessSaveData();
+                Debug.Log($"finding Id after Loading: {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
 				gameController.RemoveScene(sceneName);
 			}
 			else
