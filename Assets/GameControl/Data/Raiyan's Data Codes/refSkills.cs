@@ -13,7 +13,7 @@ public class refSkills
     public int dmg;
     public int hpgain;
     public int accuracy;
-    public int priority;
+    public string priority;
     public int maxuses;
 
 

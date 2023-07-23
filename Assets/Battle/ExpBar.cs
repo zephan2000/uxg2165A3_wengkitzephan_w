@@ -20,6 +20,7 @@ namespace pattayaA3
 		public IEnumerator SetEXPSmooth(float newExp)
 		{
 			Debug.Log($"this is from setEXPSmooth : {Mathf.Clamp((float)Game.mainsessionData.exp / Game.currentmaxEXP, 0, 1)}");
+			//exp.transform.localScale = new Vector3(Mathf.Clamp((float)Game.mainsessionData.exp / Game.currentmaxEXP, 0, 1),1f);
 			float curExp = exp.transform.localScale.x;
 			float expDifference = curExp - newExp;
 			if (expDifference >= 0)

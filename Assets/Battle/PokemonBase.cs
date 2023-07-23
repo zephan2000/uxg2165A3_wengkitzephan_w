@@ -46,7 +46,7 @@ public class PokemonBase
 
 	public PokemonBase(string actorName, string actorType, string levelId) // for optimisation, create general functions so that it does not return twice
 	{
-		Debug.Log($"this is LevelId: {levelId}");
+	
 		GetPokemonNameFromActorName(actorName);
 		GetPokemonSpritePathFromActorName(actorName);
 		GetPokemonMaxHpFromLevelId(levelId);
@@ -55,8 +55,10 @@ public class PokemonBase
 		GetPokemonVitalityFromLevelId(levelId);
 		GetPokemonPowerFromLevelId(levelId);
 		GetPokemonPhysicalDamageFromLevelId(levelId);
-		GetPokemonPhysicalDamageFromLevelId(levelId);	
-		GetPokemonListOfLSFromActorType(actorType); //getting skill list from actor sheet, don't change
+		GetPokemonPhysicalDamageFromLevelId(levelId);
+		GetPokemonSpeedFromLevelId(levelId);
+		GetPokemonListOfLSFromActorType(actorType);
+		Debug.Log($"this is LevelId: {levelId}, actorName {actorName}, attspeed: {attspeed}");//getting skill list from actor sheet, don't change
 	}
 
 	//public void SetRefLevelId(string actorType, int level) 

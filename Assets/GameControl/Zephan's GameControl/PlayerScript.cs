@@ -91,12 +91,10 @@ namespace pattayaA3
 			if(Input.GetKeyDown(KeyCode.F2)) 
 			{
 				StartCoroutine(LevelUp()); //need to run this after quest is done too
-				StartCoroutine(playerHud.UpdateTownData());
 			}
 			if(Input.GetKeyDown(KeyCode.F1)) //for bug testing
 			{
 				StartCoroutine(SetHpTo50());
-				StartCoroutine(playerHud.UpdateTownData());
 			}
             if (Input.GetKeyDown(KeyCode.F3)) //for bug testing
             {
@@ -150,7 +148,7 @@ namespace pattayaA3
 				Game.mainsessionData.exp -= Game.currentmaxEXP;
 				Debug.Log("checking for level up");
 				yield return new WaitForSeconds(0.3f);
-				StartCoroutine(playerHud.UpdateTownData());
+				//StartCoroutine(playerHud.UpdateTownData());
 				//playerHud.UpdateTownData();
 				StartCoroutine(LevelUp());
 			}

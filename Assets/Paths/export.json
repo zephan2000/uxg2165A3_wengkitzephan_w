@@ -2263,7 +2263,7 @@
             "vitality": "10",
             "power": "10",
             "intelligence": "10",
-            "attspeed": "10"
+            "attspeed": "100"
         },
         {
             "levelId": "enemyWizard_2",
@@ -2278,7 +2278,7 @@
             "vitality": "10",
             "power": "10",
             "intelligence": "10",
-            "attspeed": "10"
+            "attspeed": "100"
         },
         {
             "levelId": "enemyWizard_3",
@@ -2293,7 +2293,7 @@
             "vitality": "10",
             "power": "10",
             "intelligence": "10",
-            "attspeed": "10"
+            "attspeed": "100"
         },
         {
             "levelId": "enemyWizard_4",
@@ -2358,7 +2358,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2370,7 +2370,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "1",
+            "priority": "Yes",
             "maxuses": "20"
         },
         {
@@ -2382,7 +2382,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "3",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "2"
         },
         {
@@ -2394,7 +2394,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "5",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "5"
         },
         {
@@ -2406,7 +2406,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "5",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "5"
         },
         {
@@ -2418,7 +2418,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "2",
-            "priority": "1",
+            "priority": "Yes",
             "maxuses": "20"
         },
         {
@@ -2430,7 +2430,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "2"
         },
         {
@@ -2442,7 +2442,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "5",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "5"
         },
         {
@@ -2454,7 +2454,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "5",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "5"
         },
         {
@@ -2466,7 +2466,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "3",
-            "priority": "1",
+            "priority": "Yes",
             "maxuses": "20"
         },
         {
@@ -2478,7 +2478,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "4",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "2"
         },
         {
@@ -2490,7 +2490,7 @@
             "dmg": "10",
             "hpgain": "100",
             "accuracy": "2",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "1"
         },
         {
@@ -2502,7 +2502,7 @@
             "dmg": "10",
             "hpgain": "100",
             "accuracy": "2",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "1"
         },
         {
@@ -2514,7 +2514,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2526,7 +2526,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2538,7 +2538,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2550,7 +2550,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2562,7 +2562,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2574,7 +2574,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2586,7 +2586,7 @@
             "dmg": "50",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2598,7 +2598,7 @@
             "dmg": "50",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         },
         {
@@ -2610,7 +2610,7 @@
             "dmg": "50",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "0",
+            "priority": "No",
             "maxuses": "20"
         }
     ]

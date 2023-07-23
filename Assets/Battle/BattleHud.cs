@@ -39,8 +39,8 @@ namespace pattayaA3
 			nameText.text = Game.mainsessionData.actorType;
 			levelText.text = "Lvl" + Game.playerLevel.ToString();
 			Debug.Log($"this is currentHp from SetTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
-			hpBar.SetHPSmooth((float)(Game.mainsessionData.currenthp / Game.mainsessionData.maxhp));
-			expBar.SetEXPSmooth((float)(Game.mainsessionData.exp / Game.currentmaxEXP));
+			StartCoroutine(hpBar.SetHPSmooth((float)(Game.mainsessionData.currenthp / Game.mainsessionData.maxhp)));
+			StartCoroutine(expBar.SetEXPSmooth((float)(Game.mainsessionData.exp / Game.currentmaxEXP)));
 		}
 		public IEnumerator UpdateBattleData()
 		{
@@ -55,7 +55,8 @@ namespace pattayaA3
 		public IEnumerator UpdateTownData()
 		{
 			levelText.text = "Lvl" + Game.playerLevel.ToString();
-			yield return hpBar.SetHPSmooth((float)Game.mainsessionData.currenthp / Game.maxHP);
+			Debug.Log($"this is currentHp from UpdateTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
+			yield return hpBar.SetHPSmooth((float)Game.mainsessionData.currenthp / Game.mainsessionData.maxhp);
 			yield return expBar.SetEXPSmooth((float)Game.mainsessionData.exp / Game.currentmaxEXP);
 			//hptrack = (float)_pokemon.HP;
 			//Debug.Log(hptrack);

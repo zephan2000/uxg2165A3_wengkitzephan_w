@@ -71,7 +71,6 @@ namespace pattayaA3
 			dialogBox.EnableDialogText(false);
 			dialogBox.EnableMoveSelector(true);
 		}	
-		// comment here for battle architecture, to be able to keep track of state machine
 		IEnumerator RunTurns(BattleAction playerAction)
 		{
 			state = BattleState.ExecuteTurn;
@@ -82,17 +81,17 @@ namespace pattayaA3
 				playerUnit.Pokemon.CurrentMove = playerUnit.Pokemon.Moves[currentMove];
 				enemyUnit.Pokemon.CurrentMove = enemyUnit.Pokemon.GetRandomMove();
 
-				int playerMovePriority = playerUnit.Pokemon.CurrentMove.moveBase.movePriority;
-				int enemyMovePriority = enemyUnit.Pokemon.CurrentMove.moveBase.movePriority;
+				string playerMovePriority = playerUnit.Pokemon.CurrentMove.moveBase.movePriority;
+				string enemyMovePriority = enemyUnit.Pokemon.CurrentMove.moveBase.movePriority;
 
 
 				// check who goes first, Replaced ChooseFirstTurn()
 				bool playerGoesFirst = true;
-				if(enemyMovePriority > playerMovePriority) //checking based on priority
+				if(enemyMovePriority == "Yes") //checking based on priority
 				{
 					playerGoesFirst = false;
 				}
-				else if (enemyMovePriority ==  playerMovePriority)
+				else if (enemyMovePriority.CompareTo(playerMovePriority) == 0)
 				{
 					playerGoesFirst = playerUnit.Pokemon.Speed >= enemyUnit.Pokemon.Speed; // returns true if playerUnit is faster
 				}
