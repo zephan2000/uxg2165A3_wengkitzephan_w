@@ -12,10 +12,10 @@ public class skills
     public int dmg { get; }
     public int hpgain { get; }
     public int accuracy { get; }
-    public int priority { get; }
+    public string priority { get; }
     public int maxuses { get; }
 
-    public skills(string skillid, string actorType, string category, string target, string skillname, int dmg, int hpgain, int accuracy, int priority, int maxuses)
+    public skills(string skillid, string actorType, string category, string target, string skillname, int dmg, int hpgain, int accuracy, string priority, int maxuses)
     {
         this.skillid = skillid;
         this.actorType = actorType;

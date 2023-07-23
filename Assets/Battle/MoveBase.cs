@@ -11,7 +11,7 @@ public class MoveBase
 	public string moveName { get { return nameText; } }
 	public int moveDamage { get { return damage; } }
 	public int moveAccuracy { get { return accuracy; } }
-	public int movePriority { get { return priority; } }
+	public string movePriority { get { return priority; } }
 	public int moveMaxUses { get { return MaxUses; } }
 	public int moveHpGain { get { return Hpgain; } }
 	public MoveCategory moveCategory { get { return category; } }
@@ -23,7 +23,7 @@ public class MoveBase
 	[SerializeField] int damage;
 	[SerializeField] int Hpgain;
 	[SerializeField] int accuracy;
-	[SerializeField] int priority;
+	[SerializeField] string priority;
 	[SerializeField] int MaxUses;
 	[SerializeField] MoveCategory category;
 	[SerializeField] MoveEffects effects;
