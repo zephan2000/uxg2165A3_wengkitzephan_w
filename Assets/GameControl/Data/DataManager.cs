@@ -26,10 +26,30 @@ public class DataManager : MonoBehaviour
         //DemoData demoData = null;
         Game.saveFilePath = Path.Combine(Application.persistentDataPath, "save.json");
         Debug.Log($"this is the persistentDatapath {Game.saveFilePath}");
+		FileInfo saveFileInfo = new FileInfo(Game.saveFilePath);
 
-		string saveString = File.ReadAllText(Game.saveFilePath);
-        if (saveString != "")
-            Game.ProcessSaveData();
+        if (saveFileInfo.Exists)
+        {
+			string saveString = File.ReadAllText(Game.saveFilePath);
+			if (saveString.Length != 0)
+            {
+                Debug.Log("this is saveString " + saveString);
+                if (!string.IsNullOrWhiteSpace(saveString))
+                {
+                    Debug.Log($"running process save data function");
+                    Game.ProcessSaveData();
+                }
+            }
+        }
+        else
+        {
+            StreamWriter fileWriter = File.CreateText(Game.saveFilePath);
+            fileWriter.WriteLine();
+            fileWriter.Close();
+        }
+        //string saveString = File.ReadAllText(Game.saveFilePath);
+        //if (saveString != "")
+        //    Game.ProcessSaveData();
 
         AssetManager.LoadFile("export.json", Game.filePath, (TextAsset t) =>
         {
@@ -177,7 +197,7 @@ public class DataManager : MonoBehaviour
 
         foreach (refLevel reflevel in demoData.level)
         {
-            level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.expGain, reflevel.goldGain, reflevel.maxhp,
+            level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.expGain, reflevel.goldGain, reflevel.basehp,
                 reflevel.physicaldmg, reflevel.magicdmg, reflevel.vitality, reflevel.power, reflevel.intelligence, reflevel.attspeed);
 
             levelList.Add(lEvel);

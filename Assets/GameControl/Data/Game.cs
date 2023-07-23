@@ -24,19 +24,21 @@ public static class Game
 
 	private static List<Dialog> dialogList;
     private static List<level> levellist;
-    private static int enemyPokemonLevel = 1;
 	private static int darkWizardLevel = 1;
     private static EachItem eachitem;
-     //data added in from DemoData
-	
-    public static bool initialStart = true;
-    //Save
-    public static DemoData demoData2;
+	//data added in from DemoData
+
+	//Game
+	public static bool isTrainingWarning;
+	public static bool isBossWarning;
+	//Save
+	public static DemoData demoData2;
 	public static List<save> saveList;
 	public static string saveFilePath;
 	public static string filePath;
 	public static string testFilePath;
 	public static save mainsessionData;
+	public static int enemyPokemonLevel = 1;
 
 	//Quest
 	public static List<Quest> questList;
@@ -214,8 +216,8 @@ public static class Game
 	public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
     {
         level alevel = GetLevelByLevelId(levelid);
-        //Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}");
-        mainsessionData.maxhp = alevel.maxhp;
+        Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}");
+        mainsessionData.maxhp = alevel.basehp;
 		mainsessionData.physicaldmg = alevel.physicaldmg;
 		mainsessionData.magicdmg = alevel.magicdmg;
 		mainsessionData.vitality = alevel.vitality;
@@ -224,12 +226,29 @@ public static class Game
 		mainsessionData.attspeed = alevel.attspeed;
         playerLevel = int.Parse(levelid.Split('_')[1]);
         currentmaxEXP = GetLevelByLevelId(mainsessionData.levelId).maxExp;
-		//Debug.Log($"this is: {levelid}, current level max exp:{alevel.maxExp}, Game's currentexp: {Game.mainsessionData.exp}, currentmaxEXP: {Game.currentmaxEXP}");
+		Debug.Log($"this is: {levelid}, current level max exp:{alevel.maxExp}, Game's currentexp: {Game.mainsessionData.exp}, currentmaxEXP: {Game.currentmaxEXP}, currentMaxHp from level: {alevel.basehp}");
 		currentexpToGain = GetLevelByLevelId(mainsessionData.levelId).expToGain;
-        maxHP = GetLevelByLevelId(mainsessionData.levelId).maxhp;
+        maxHP = GetLevelByLevelId(mainsessionData.levelId).basehp;
 	}
     public static void CreateNewMainSession(string levelid)
     {
+        //FileInfo saveFileInfo = new FileInfo(Game.saveFilePath); // causes the previous saves to persist? ProcessSaveData() is not running so what could it be?
+        //persisting again even after commenting out the code here,Problem doesn't lie with the saveString either, the fileInfo persists somehow on the second save Requires further checks if problem persists
+
+        //if (saveFileInfo.Exists)
+        //{
+        //string saveString = File.ReadAllText(Game.saveFilePath);
+        //Debug.Log("this is saveString from creatingnewmainsession" + saveString);
+        //if (saveString.Length != 0)
+        //{
+        //    Debug.Log("this is saveString " + saveString);
+        //    if (!string.IsNullOrWhiteSpace(saveString))
+        //    {
+        //        Debug.Log($"running process save data function");
+        //        ProcessSaveData();
+        //    }
+        //}
+        //}
         level alevel = GetLevelByLevelId(levelid);
         Debug.Log($"checking actorType{levelid.Split('_')[0]}");
         actor currentactor = GetActorByActorType(levelid.Split('_')[0]);
@@ -244,14 +263,28 @@ public static class Game
         }
         if (saveIdnumber < 10)
         {
-            saveId = "save000" + ++saveIdnumber;
+            saveId = "save_000" + ++saveIdnumber;
 
         }
-        else { }
+		else if (saveIdnumber < 100 && saveIdnumber >=10 )
+		{
+			saveId = "save_00" + ++saveIdnumber;
+
+		}
+		else if (saveIdnumber < 1000 && saveIdnumber >= 100)
+		{
+			saveId = "save_0" + ++saveIdnumber;
+
+		}
+		else if (saveIdnumber < 9999 && saveIdnumber >= 1000)
+		{
+			saveId = "save_" + ++saveIdnumber;
+
+		}
 		Debug.Log($"debugging current actor : {currentactor.displayName}, {currentactor.actorType}");
 		Debug.Log($"constructing mainsessionData: {saveId},{"lewis"}, {"ACTIVE"}, {currentactor.displayName}, {currentactor.actorType}");
         Debug.Log($"constructing mainsessionData:{levelid}");
-        Debug.Log($"constructing mainsessionData:{alevel.maxhp}, {alevel.maxhp}, {alevel.physicaldmg}");
+        Debug.Log($"constructing mainsessionData:{alevel.basehp}, {alevel.basehp}, {alevel.physicaldmg}");
         Debug.Log($"constructing mainsessionData: {alevel.magicdmg}, {alevel.vitality}");
         Debug.Log($"constructing mainsessionData:{alevel.power}, {alevel.intelligence}, {alevel.attspeed},0, 0, 0");
         Debug.Log($"constructing mainsessionData:{"item10"}, {"item14"}, {"item13"},{""}");
@@ -259,7 +292,7 @@ public static class Game
 
 
 		mainsessionData = new save(saveId, "lewis", "ACTIVE", currentactor.displayName, currentactor.actorType, 
-                                   levelid, alevel.maxhp, alevel.maxhp, alevel.physicaldmg, alevel.magicdmg, alevel.vitality,
+                                   levelid, alevel.basehp, alevel.basehp, alevel.physicaldmg, alevel.magicdmg, alevel.vitality,
                                    alevel.power, alevel.intelligence, alevel.attspeed, 0, 0, 0, 0, 0, 0, 0, "item10", "item14", "item13", "", 
                                    currentactor.displaySpritePath, "", "", "", 0,"");
 
@@ -380,8 +413,10 @@ public static class Game
     }
     public static void SaveToJSON<T>(List<T> toSave) where T:save// change this to Save, manually write the JSON formula
     {
-        if(toSave != null)
+        Debug.Log("this is mainsessionData Id " + mainsessionData.saveId);
+        if (toSave != null)
         {
+            Debug.Log($"toSave is not null, this is mainsessionData id: {mainsessionData.saveId}");
 			var jsonString = new StringBuilder();
 			save finalObj = toSave.Last();
             List<save> newSaveList = new List<save>();
@@ -396,36 +431,24 @@ public static class Game
 
                     newSaveList.Add(savedata);
             }
-            newSaveList.Reverse();
-            saveList = newSaveList;
+            saveList = SortSaveFile(newSaveList);
             finalObj = newSaveList.Last();
+			List<string> jsonStrings = new List<string>();
 			foreach (save savedata in saveList)
 			{
 				if (savedata != finalObj)
 				{
 					if (savedata.saveId == mainsessionData.saveId && sessionDataSaved != true)
-					{
-                        if(finalObj.saveId == mainsessionData.saveId)
-                        {
-                            jsonString.Append($"{JsonUtility.ToJson(mainsessionData)},");
-							Debug.Log($"Match found: this is final object, saveId {mainsessionData.saveId} and the saveStatus {mainsessionData.saveStatus}");
-                        }
-                        else
-                        {
-							sessionDataSaved = false;
-							jsonString.Append($"{JsonUtility.ToJson(mainsessionData)},");
-							Debug.Log($"Match found: this is, saveId {mainsessionData.saveId} and the saveStatus {mainsessionData.saveStatus}");
-						}
-                        
-					}
+						jsonStrings.Add(JsonUtility.ToJson(mainsessionData));
 
 					else
-						jsonString.Append($"{JsonUtility.ToJson(savedata)},");
-
+						jsonStrings.Add(JsonUtility.ToJson(savedata));
 				}
 				else
-					jsonString.Append(JsonUtility.ToJson(savedata));
+					jsonStrings.Add(JsonUtility.ToJson(savedata));
 			}
+
+			jsonString.Append(string.Join(",", jsonStrings));
 			jsonString.Append("]}");
 			//string content = JsonHelper.ToJson<T>(toSave.ToArray());
 			//Debug.Log($"this is the content in ToSave: {toSave.seshname}");
@@ -443,8 +466,43 @@ public static class Game
 		}
         
     }
+	// public static List<save> SortSaveFile(List<save> saveList)
+	// {
+	//     Debug.Log("running sort ");
+	//     List<save> saveListCopy = new List<save>(saveList);
+	//     List<save> sortedList = new List<save>();
+	//     save finalsaveObj = saveList[0];
+	//     while(saveListCopy.Count != 0)
+	//     {
+	//         finalsaveObj.saveId = "save_0000";
+	//         foreach(save save in saveListCopy)
+	//         {
+	//             if (Int32.Parse(save.saveId.Split('_')[1]) > Int32.Parse(finalsaveObj.saveId.Split('_')[1]))
+	//             {
+	//                 finalsaveObj = save;
+	//	}
 
-    public static void WriteFile(string path, string content)
+	//	Debug.Log("this is finalsaveObj " + finalsaveObj.saveId);//finding max
+	//}
+	//         sortedList.Add(finalsaveObj);
+	//         saveListCopy.Remove(finalsaveObj);
+	//     }
+	//     foreach (save d in sortedList)
+	//     {
+	//         Debug.Log($"this is sortedList {d.saveId}");
+	//     }
+	//     sortedList.Reverse();
+	//     return sortedList;
+	// }
+
+	public static List<save> SortSaveFile(List<save> saveList)
+	{
+		List<save> sortedSaves = saveList.OrderBy(s => s.GetSaveNumber()).ToList();
+		return sortedSaves;
+	}
+
+
+	public static void WriteFile(string path, string content)
     {
         FileStream fileStream = new FileStream(path, FileMode.Create);
         using (StreamWriter writer = new StreamWriter(fileStream))
@@ -638,6 +696,7 @@ public static class Game
 	#endregion
 	public static int SetEnemyPokemonLevel(string pokemonLevel)
     {
+        Debug.Log("this is pokemonLevel:" + pokemonLevel);
         return enemyPokemonLevel = Int32.Parse(pokemonLevel);
     }
     public static int SetDarkWizardLevel(int darkWizardLevel)

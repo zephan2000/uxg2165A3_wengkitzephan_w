@@ -12,8 +12,10 @@ public class Portal : MonoBehaviour, Interactable
 		//Game.SetChosenEnemyActorType("enemyWizard");
 		Game.chosenenemyName = "Dark Wizard";
 		Game.chosenenemyType = "enemyWizard";
-		if (Game.mainsessionData.currenthp != Game.maxHP)
+		if (Game.mainsessionData.currenthp != Game.mainsessionData.maxhp)
 		{
+			Game.isBossWarning = true;
+			Debug.Log("showing warning");
 			StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
 		}
 		else

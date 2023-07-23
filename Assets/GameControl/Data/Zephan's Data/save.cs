@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -101,5 +102,21 @@ public class save
         this.runtime = runtime;
         this.battles = battles;
     }
+
+	public int GetSaveNumber()
+	{
+		// Assuming the format of the saveId is "save_0000"
+		if (saveId.Length < 9 || !saveId.StartsWith("save_"))
+		{
+			throw new ArgumentException("Invalid saveId format");
+		}
+
+		if (!int.TryParse(saveId.Substring(5), out int saveNumber))
+		{
+			throw new ArgumentException("Invalid saveId format");
+		}
+
+		return saveNumber;
+	}
 
 }

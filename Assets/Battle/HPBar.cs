@@ -13,12 +13,12 @@ namespace pattayaA3
 		//}
 		public void SetHPData(float hpNormalized)
 		{
-			health.transform.localScale = new Vector3(Mathf.Clamp((float)Game.mainsessionData.currenthp / Game.maxHP, 0, 1), 1f);
+			health.transform.localScale = new Vector3(Mathf.Clamp((float)Game.mainsessionData.currenthp / Game.mainsessionData.maxhp, 0, 1), 1f);
 			
 		}
 		public IEnumerator SetHPSmooth (float newHp)
 		{
-			Debug.Log($"this is current hp with {Game.mainsessionData.currenthp}, current exp scale:{Mathf.Clamp((float)Game.mainsessionData.currenthp / Game.maxHP,0,1)}");
+			Debug.Log($"this is current hp with {Game.mainsessionData.currenthp}, current exp scale:{Mathf.Clamp((float)Game.mainsessionData.currenthp / Game.mainsessionData.maxhp,0,1)}");
 			float curHp = health.transform.localScale.x;
 			float HpDifference = curHp - newHp; //negative means that the player gained
 			Debug.Log($"this is HpDifference: {HpDifference}");

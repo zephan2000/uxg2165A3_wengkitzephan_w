@@ -34,7 +34,17 @@ namespace pattayaA3
 			//if(!Game.dialogIsOpen)
 			SetupTrainingCenter();
 			Game.runonce = 0;
+			//levelInput = GameObject.Find("InputField").GetComponent<InputField>();
+			//levelInput.onValueChanged.AddListener( delegate { SetPokemonLevel(); } );
 
+		}
+		void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Return))
+			{
+				SetPokemonLevel(levelInput.text);
+				Debug.Log("deactivating input ");
+			}
 		}
 		public void SetupTrainingCenter()
         {
@@ -61,7 +71,7 @@ namespace pattayaA3
 				yield return new WaitForSeconds(1f / 60);
 			}
 		}
-		public void SetPokemonLevel(string inputText) // need to figure this out, why is no input being read
+		public void SetPokemonLevel(string inputText) // input being read now, but how do i get out of level input
 		{
 			Game.SetEnemyPokemonLevel(inputText);
 		}
@@ -97,9 +107,10 @@ namespace pattayaA3
         {
             Game.chosenenemyName = Game.GetActorByActorType(enemyType).displayName;
             Game.chosenenemyType = enemyType;
+			Debug.Log("this is loading enemy current hp "+ Game.mainsessionData.currenthp);
 			LoadBattle();
 		}
-
+		
         public void LoadEnemy2(string enemyType)
         {
 			Game.chosenenemyName = Game.GetActorByActorType(enemyType).displayName;
@@ -109,7 +120,8 @@ namespace pattayaA3
        
 		public void LoadBattle()
 		{
-			if (Game.mainsessionData.currenthp != Game.maxHP)
+			//Debug.Log("running Load Battle");
+			if (Game.mainsessionData.currenthp != Game.mainsessionData.maxhp)
 			{
 				if (!allowNext)
 				{
@@ -120,6 +132,7 @@ namespace pattayaA3
 				levelController.state = GameState.Dialog;
 				Debug.Log($"showing warning Dialog, state is: {levelController.state}");
 				allowNext = true;
+				Game.isTrainingWarning = true;
 				currentCoroutine = StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
 			}
 			else
