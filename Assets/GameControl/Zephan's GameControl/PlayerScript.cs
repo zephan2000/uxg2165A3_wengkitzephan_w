@@ -96,7 +96,7 @@ namespace pattayaA3
 			if(Input.GetKeyDown(KeyCode.F1)) //for bug testing
 			{
 				StartCoroutine(SetHpTo50());
-				StartCoroutine(playerHud.UpdateTownData());
+				//StartCoroutine(playerHud.UpdateTownData());
 			}
             if (Input.GetKeyDown(KeyCode.F3)) //for bug testing
             {

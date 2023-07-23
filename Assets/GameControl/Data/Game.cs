@@ -281,6 +281,7 @@ public static class Game
 			saveId = "save_" + ++saveIdnumber;
 
 		}
+
 		Debug.Log($"debugging current actor : {currentactor.displayName}, {currentactor.actorType}");
 		Debug.Log($"constructing mainsessionData: {saveId},{"lewis"}, {"ACTIVE"}, {currentactor.displayName}, {currentactor.actorType}");
         Debug.Log($"constructing mainsessionData:{levelid}");
