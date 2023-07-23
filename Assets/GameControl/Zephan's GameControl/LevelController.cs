@@ -66,14 +66,21 @@ namespace pattayaA3
 				if (state == GameState.Dialog) //for cases where you want to go to battle straight after dialog
 					state = GameState.FreeRoam;
 			};
-			TownDialogManager.Instance.OnCloseWarningDialog += () =>
+			TownDialogManager.Instance.OnCloseTrainingWarning += () =>
 			{
 				if (state == GameState.Dialog)
 				{
-					
 					state = GameState.Training;
 					Debug.Log($"setting Gamestate from Dialog to {state}");
 				}	
+			};
+			TownDialogManager.Instance.OnCloseBossWarning += () =>
+			{
+				if (state == GameState.Dialog)
+				{
+					state = GameState.FreeRoam;
+					Debug.Log($"setting Gamestate from Dialog to {state}");
+				}
 			};
 			TownDialogManager.Instance.StartBattleQuest += () =>
 			{
@@ -96,6 +103,7 @@ namespace pattayaA3
 			Game.SetSessionDataFromLevelId(Game.mainsessionData.levelId);
 			//Debug.Log($"finding maxHp by Id: {Game.mainsessionData.maxhp}");
 			trainingCenterBackground.SetActive(false);
+			Game.enemyPokemonLevel = 1;
 			if (Game.mainsessionData.startedQuest != "")
 			{
 				questStatus = QuestStatus.Ongoing;
@@ -374,6 +382,7 @@ namespace pattayaA3
 					gameController.GoToLevelSelect();
 					currentChoice = 0;
 					Game.mainsessionData.saveStatus = "INACTIVE";
+					Debug.Log($"this is mainsessionData's saveId {Game.mainsessionData.saveId} with saveStatus {Game.mainsessionData.saveStatus}");
 					Game.SaveToJSON<save>(Game.saveList);
 					if (pauseMenu != null)
 					{

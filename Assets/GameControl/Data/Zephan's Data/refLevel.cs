@@ -11,7 +11,7 @@ public class refLevel
     public int maxExp;
     public int expGain;
     public int goldGain;
-    public int maxhp;
+    public int basehp;
     public int physicaldmg;
     public int magicdmg;
     public int vitality;

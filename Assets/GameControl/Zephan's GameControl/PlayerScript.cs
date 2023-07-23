@@ -137,7 +137,7 @@ namespace pattayaA3
 			Debug.Log($"this is level id after level up: {Game.mainsessionData.levelId}");
 			Game.SetSessionDataFromLevelId(newlevelid);
 			Game.mainsessionData.exp = 0;
-			Game.mainsessionData.currenthp = (int)Game.maxHP;
+			Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
 			Game.mainsessionData.exp += 10; // need to adjust this formula
 			//Game.mainsessionData.gold += 200;
 			//Game.mainsessionData.attributePoint += 5;
@@ -160,8 +160,8 @@ namespace pattayaA3
 		}
 		public void RestoreHealth()
 		{
-			Game.mainsessionData.currenthp = (int)Game.maxHP;
-			Debug.Log($"this is currentHp from RestoreHealth: {Game.mainsessionData.currenthp} / {Game.maxHP}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
+			Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
+			Debug.Log($"this is currentHp from RestoreHealth: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
 			StartCoroutine(playerHud.UpdateTownData());
 		}
 		public IEnumerator SetHpTo50() // for bug testing

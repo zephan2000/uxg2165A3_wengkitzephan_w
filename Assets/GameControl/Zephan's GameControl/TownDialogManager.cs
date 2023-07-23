@@ -17,7 +17,8 @@ public class TownDialogManager : MonoBehaviour
 	[SerializeField] List<GameObject> choiceButtons;
 	public event Action OnShowDialog;
 	public event Action OnCloseDialog;
-	public event Action OnCloseWarningDialog;
+	public event Action OnCloseTrainingWarning;
+	public event Action OnCloseBossWarning;
 	public event Action StartBattleQuest;
 	public event Action OnHeal;
 	public event Action RewardCollected;
@@ -26,7 +27,6 @@ public class TownDialogManager : MonoBehaviour
 	//private Coroutine currentDialogCoroutine;
 	bool skipOnNext;
 	private bool allowSkip = false;
-	private bool isWarningDialog;
 	private Dialog currentDialog;
 	private Dialog selectedDialog;
 	List<Dialog> dialogList;
@@ -65,12 +65,18 @@ public class TownDialogManager : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
-				Debug.Log($"this is isWarningDialog state when pressing space: {isWarningDialog}");
-				if (isWarningDialog)
+				Debug.Log($"this is isWarningDialog state when pressing space: {Game.isTrainingWarning}");
+				if (Game.isTrainingWarning)
 				{
-					Debug.Log($"this is the dialogState when isWarningDialog: {dialogState}");
-					OnCloseWarningDialog?.Invoke();
-					isWarningDialog = false;
+					Debug.Log($"this is the dialogState when training Warning: {dialogState}");
+					OnCloseTrainingWarning?.Invoke();
+					Game.isTrainingWarning = false;
+				}
+				else if (Game.isBossWarning)
+				{
+					Debug.Log($"this is the dialogState when boss Warning: {dialogState}");
+					OnCloseBossWarning?.Invoke();
+					Game.isBossWarning= false;
 				}
 				else
 					OnCloseDialog?.Invoke();
@@ -88,8 +94,6 @@ public class TownDialogManager : MonoBehaviour
 		{
 			yield return new WaitForEndOfFrame();
 			OnShowDialog?.Invoke();
-			if (dialogueType == "WARNING")
-				isWarningDialog = true;
 			dialogList = Game.GetDialogByType(dialogueType);
 			Debug.Log($"List found {dialogList[0].dialogueText} ");
 			currentDialog = dialogList[0];

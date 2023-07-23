@@ -74,7 +74,7 @@ public class PokemonBase
 	}
 	public void GetPokemonMaxHpFromLevelId(string levelId)
 	{
-		maxHp = Game.GetLevelByLevelId(levelId).maxhp;
+		maxHp = Game.GetLevelByLevelId(levelId).basehp;
 	}
 	public void GetPokemonPhysicalDamageFromLevelId(string levelId)
 	{
