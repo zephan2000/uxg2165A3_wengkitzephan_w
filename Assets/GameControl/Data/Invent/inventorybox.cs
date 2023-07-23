@@ -37,6 +37,8 @@ namespace pattayaA3
 		[SerializeField] Text stat2;
 		[SerializeField] Text stat3;
 		[SerializeField] Text stat4;
+
+        [SerializeField] Text exp;
         #endregion
 
         #region AttributeStuff
@@ -112,12 +114,15 @@ namespace pattayaA3
         public bool runonce;
         public bool confirmation;
 
+        level levell;
+
         private void Start()
         {
             //Game.ProcessSaveData(Game.demoData2);
             Game.ProcessSaveData();
             Game.GetSave();
 
+            //levell = Game.GetLevelByLevelId(Game.mainsessionData.levelId);
 
             SetInventoryText();
 
@@ -137,7 +142,9 @@ namespace pattayaA3
             {
                 CheckMenu();
             }
-		}
+            //levell = Game.GetLevelByLevelId(Game.mainsessionData.levelId);
+            //exp.text = "Exp : " + Game.mainsessionData.exp + "/" + levell.maxExp;
+        }
 		public void SetInventoryText()
         {
             //save Game.mainsessionData = Game.mainsessionData;
@@ -187,7 +194,11 @@ namespace pattayaA3
 					menuchoice.text = "Item";
 					break;
 			}
-		}
+
+            level levell = Game.GetLevelByLevelId(Game.mainsessionData.levelId);
+            exp.text = "Exp : " + Game.mainsessionData.exp + "/" + levell.maxExp;
+
+        }
 
         public void UpdateSprite(string path)
         {
@@ -622,9 +633,17 @@ namespace pattayaA3
             //stat3.text = "Intelligence: " + Game.mainsessionData.intelligence_added;
             //stat4.text = "Attack Speed: " + Game.mainsessionData.attspeed_added;
 
-            stat1.text = "Vitality: " + Game.mainsessionData.vitality;
-            stat2.text = "Power: " + Game.mainsessionData.power;
-            stat3.text = "Intelligence: " + Game.mainsessionData.intelligence;
+            int itemPower = 0, itemVit = 0, itemInt = 0;
+            List<int> helmet = Game.GetAllBuffsFromHelmet();
+            List<int> armour = Game.GetAllBuffsFromArmour();
+            List<int> weapon = Game.GetAllBuffsFromWeapon();
+            itemVit = helmet[0] + armour[0] + weapon[0];
+            itemPower = helmet[1] + armour[1] + weapon[1];
+            itemInt = helmet[2] + armour[2] + weapon[2];
+
+            stat1.text = "Vitality: " + Game.mainsessionData.vitality + " (+" + itemVit + ")";
+            stat2.text = "Power: " + Game.mainsessionData.power + " (+" + itemPower + ")";
+            stat3.text = "Intelligence: " + Game.mainsessionData.intelligence + " (+" + itemInt + ")";
             stat4.text = "Attack Speed: " + Game.mainsessionData.attspeed;
             added_stat_text.text = "" + Game.mainsessionData.attributePoint;
             //added_stat_text.enabled=enabled;
@@ -801,25 +820,26 @@ namespace pattayaA3
             subtract_attspeed_text.enabled = !enabled;
 
             
-            //Debug.Log("This is inventory :"+Game.mainsessionData.inventory + ": this is null");
-            //Debug.Log("This is inventory Count " + Game.GetItemsInInventory().Count);
+            Debug.Log("This is inventory :"+CheckItemInventory);
+            Debug.Log("This is inventory session " + Game.mainsessionData.inventory);
 
             if (!(Game.GetItemsInInventory() == null))
             {
                 if (!runonce)
                 {
                     List<items> listinventory = Game.GetItemsInInventory();
+                    Debug.Log("Counter : " + Game.GetItemsInInventory().Count);
                     for (int i = 0; i < Game.GetItemsInInventory().Count; i++)
                     {
                         Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
                         eachItem.ActivateUI(listinventory[i]);
+                        //eachItem.UpdateSprite(listinventory[i].displaySpritePath, (GameObject.Find(listinventory[i].itemId + "(clone)").GetComponent<Image>()));
 
                         //Game.ProcessSaveData(Game.demoData2);
                         Game.ProcessSaveData();
                         Game.GetSave();
                         //Debug.Log(i);
                     }
-                    //eachItem.ActivateUI(a);
 
                     runonce = true;
                 }
@@ -1115,9 +1135,14 @@ namespace pattayaA3
         {
             if (!(CheckItemInventory == Game.mainsessionData.inventory))
             {
-                Debug.Log("Test");
-                DisableItemList();
+                //Debug.Log("Test");
+                //DisableItemList();
                 runonce = false;
+                if (currentmenu == Inventory.itemItems)
+                {
+                    //EnableEquipmentItemMenu(true);
+                }
+
                 CheckItemInventory = Game.mainsessionData.inventory;
             }
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 //using UnityEditor;
 //using UnityEditor.Search;
 using UnityEngine;
@@ -45,10 +46,11 @@ namespace pattayaA3
 
         public void Start()
         {
-            inventoryList = Game.GetItemsInInventory();
+            
             //Game.ProcessSaveData(Game.demoData2);
             Game.ProcessSaveData();
             Game.GetSave();
+            inventoryList = Game.GetItemsInInventory();
 
             if (GameObject.FindWithTag("ItemList") == null)
             {
@@ -76,6 +78,16 @@ namespace pattayaA3
             }
             return false;
         }
+
+        public void UpdateSprite(string path, Image actorImage)
+        {
+            AssetManager.LoadSprite(path, (Sprite s) =>
+            {
+                //Debug.Log(path);
+                actorImage.sprite = s;
+            });
+        }
+
         public void ActivateUI(items itemIteration)
         {
             //Debug.Log("First" + itemGroup_child01_itemUI.name);
@@ -87,12 +99,13 @@ namespace pattayaA3
             //Setting Item Image
             string itemImage = itemIteration.displaySpritePath;
             //Debug.Log("This is : " + itemIteration.itemId + " With Sprite Path :" + itemImage);
+            UpdateSprite(itemImage, itemGroup_child01_itemUI.GetComponent<Image>());
 
-            AssetManager.LoadSprite(itemImage, (Sprite s) =>
-            {
-                //Debug.Log("Sprite Path" + itemImage);
-                itemGroup_child01_itemUI.GetComponent<Image>().sprite = s;
-            });
+            //AssetManager.LoadSprite(itemImage, (Sprite s) =>
+            //{
+            //    //Debug.Log("Sprite Path" + itemImage);
+            //    itemGroup_child01_itemUI.GetComponent<Image>().sprite = s;
+            //});
 
             //Get itemUI game object
             itemGroup_child01_itemUI_addition = itemGroup.transform.GetChild(0).gameObject;
@@ -200,6 +213,7 @@ namespace pattayaA3
                     //Debug.Log("Equipped item: " + Game.mainsessionData.armour);
                     break;
             }
+
             Debug.Log("items: " + Game.mainsessionData.inventory);
             Debug.Log("items: " + Game.mainsessionData.weapon);
         }

@@ -537,7 +537,7 @@
             "physicaldmgBuff": "5",
             "magicdmgBuff": "0",
             "cost": "50",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_124]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_101]"
         },
         {
             "itemId": "item02",
@@ -548,7 +548,7 @@
             "physicaldmgBuff": "3",
             "magicdmgBuff": "0",
             "cost": "30",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_125]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_102]"
         },
         {
             "itemId": "item03",
@@ -559,7 +559,7 @@
             "physicaldmgBuff": "1",
             "magicdmgBuff": "0",
             "cost": "50",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_126]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_103]"
         },
         {
             "itemId": "item04",
@@ -570,7 +570,7 @@
             "physicaldmgBuff": "5",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_127]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_104]"
         },
         {
             "itemId": "item05",
@@ -581,7 +581,7 @@
             "physicaldmgBuff": "4",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_128]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_105]"
         },
         {
             "itemId": "item06",
@@ -592,7 +592,7 @@
             "physicaldmgBuff": "4",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_129]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_106]"
         },
         {
             "itemId": "item07",
@@ -603,7 +603,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "5",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_130]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_107]"
         },
         {
             "itemId": "item08",
@@ -614,7 +614,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "3",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_131]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_108]"
         },
         {
             "itemId": "item09",
@@ -625,7 +625,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "3",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_132]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_109]"
         },
         {
             "itemId": "item10",
@@ -636,7 +636,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "0",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_133]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_110]"
         },
         {
             "itemId": "item11",
@@ -647,7 +647,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "0",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_134]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_111]"
         },
         {
             "itemId": "item12",
@@ -658,7 +658,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "0",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_135]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_112]"
         },
         {
             "itemId": "item13",
@@ -669,7 +669,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "0",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_136]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_113]"
         },
         {
             "itemId": "item14",
@@ -680,7 +680,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "0",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_137]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_114]"
         },
         {
             "itemId": "item15",
@@ -691,7 +691,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_138]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_115]"
         },
         {
             "itemId": "item16",
@@ -702,7 +702,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_139]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_116]"
         },
         {
             "itemId": "item17",
@@ -713,7 +713,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_140]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_117]"
         },
         {
             "itemId": "item18",
@@ -724,7 +724,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_141]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_118]"
         },
         {
             "itemId": "item19",
@@ -735,7 +735,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_142]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_119]"
         },
         {
             "itemId": "item20",
@@ -746,7 +746,7 @@
             "physicaldmgBuff": "0",
             "magicdmgBuff": "0",
             "cost": "40",
-            "displaySpritePath": "tilemap_packed.png[tilemap_packed_143]"
+            "displaySpritePath": "tilemap_packed.png[tilemap_packed_120]"
         }
     ],
     "level": [
@@ -2500,7 +2500,7 @@
             "target": "Foe",
             "skillname": "Prayer to the Stronger",
             "dmg": "10",
-            "hpgain": "100",
+            "hpgain": "0",
             "accuracy": "2",
             "priority": "No",
             "maxuses": "1"

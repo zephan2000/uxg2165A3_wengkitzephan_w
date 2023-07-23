@@ -8,6 +8,7 @@ using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Text;
+//using UnityEditor.Build.Pipeline;
 //using TreeEditor;
 
 public static class Game
@@ -808,6 +809,35 @@ public static class Game
         //Debug.Log("Real");
         return null;
     }
+    public static List<int> GetAllBuffsFromHelmet()
+    {
+        List<int> def = new List<int>();
+        items Helmet = Game.Getitemsbyid(Game.mainsessionData.helmet);
+        def.Add(Helmet.defenseBuff);
+        def.Add(Helmet.physicaldmgBuff);
+        def.Add(Helmet.magicdmgBuff);
+        
+        return def;
+    }
+    public static List<int> GetAllBuffsFromArmour()
+    {
+        List<int> def = new List<int>();
+        items Armour = Game.Getitemsbyid(Game.mainsessionData.armour);
+        def.Add(Armour.defenseBuff);
+        def.Add(Armour.physicaldmgBuff);
+        def.Add(Armour.magicdmgBuff);
 
-    
+        return def;
+    }
+    public static List<int> GetAllBuffsFromWeapon()
+    {
+        List<int> def = new List<int>();
+        items Weapon = Game.Getitemsbyid(Game.mainsessionData.weapon);
+        def.Add(Weapon.defenseBuff);
+        def.Add(Weapon.physicaldmgBuff);
+        def.Add(Weapon.magicdmgBuff);
+
+        return def;
+    }
+
 }

@@ -121,6 +121,11 @@ namespace pattayaA3
                 Game.mainsessionData.attributePoint = 0;
                 Game.SaveToJSON<save>(Game.saveList);
             }
+            if (Input.GetKeyDown(KeyCode.F8))
+            {
+                Game.mainsessionData.currenthp = 50;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
 
         }
 

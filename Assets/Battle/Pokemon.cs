@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
 using UnityEngine;
 // Zephan
 public class Pokemon 
@@ -52,27 +52,14 @@ public class Pokemon
 	void CalculateStats()
 	{
 		int itemPower = 0, itemVit = 0, itemInt = 0;
-		if (!(Game.GetItemsInInventory() == null))
-		{
-			foreach (var a in Game.GetItemsInInventory())
-			{
-				if (a.defenseBuff > 0)
-				{
-					itemVit += a.defenseBuff;
-				}
-				if (a.physicaldmgBuff > 0)
-				{
-					itemPower += a.physicaldmgBuff;
-				}
-				if (a.magicdmgBuff > 0)
-				{
-					itemInt += a.magicdmgBuff;
-				}
-			}
-		}
+		List<int> helmet = Game.GetAllBuffsFromHelmet();
+        List<int> armour = Game.GetAllBuffsFromArmour();
+        List<int> weapon = Game.GetAllBuffsFromWeapon();
+		itemVit = helmet[0] + armour[0] + weapon[0];
+        itemPower = helmet[1] + armour[1] + weapon[1];
+        itemInt = helmet[2] + armour[2] + weapon[2];
 
-
-		Stats = new Dictionary<Stat,int>();
+        Stats = new Dictionary<Stat,int>();
 		Stats.Add(Stat.PhysicalDamage, (int)Mathf.Pow(1.015f , ((15*level)+ _base.pokemonPhysicalDmg)) + (_base.pokemonPower + itemPower)); // calculate physicaldamage based on pokemon power 
 		Stats.Add(Stat.MagicDamage, (int)Mathf.Pow(1.015f, ((15 * level) + _base.pokemonMagicDmg)) + (_base.pokemonIntelligence + itemInt));     // calculate magicdmg based on pokemon intelligence
 		Stats.Add(Stat.Vitality, _base.pokemonVitality);
@@ -83,7 +70,10 @@ public class Pokemon
 		Stats.Add(Stat.GoldGain,_base.pokemonGoldGain);
 
 		MaxHP = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * level) - _base.pokemonVitality)) + (_base.MaxHp + itemVit)); //take in items also
-	}
+
+		
+
+    }
 	int GetStat(Stat stat)
 	{
 		int statVal = Stats[stat];

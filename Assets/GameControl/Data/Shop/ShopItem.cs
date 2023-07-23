@@ -143,11 +143,20 @@ public class ShopItem : MonoBehaviour
             
         }
         Debug.Log("Finished list : " + replaceString);
-        replaceString = replaceString.Remove(replaceString.Length - 1);
+        if (Game.GetItemsInInventory().Count == 1)
+        {
+
+        }
+        else
+        {
+            replaceString = replaceString.Remove(replaceString.Length - 1);
+        }
         cycleOne = false;
         Game.mainsessionData.inventory = replaceString;
         SellItem(itemEquip);
         DisableItemList();
+        //DestroyOneItem(itemEquipList[0]);
+        //DisableItemList();
 
     }
 
@@ -162,6 +171,20 @@ public class ShopItem : MonoBehaviour
         }
     }
 
+    public void DestroyOneItem(string itemid)
+    {
+        GameObject destruction = GameObject.Find(itemid + "_Group");
+        GameObject.Destroy(destruction);
+    }
+
+    public void UpdateSprite(string path, Image actorImage)
+    {
+        AssetManager.LoadSprite(path, (Sprite s) =>
+        {
+            //Debug.Log(path);
+            actorImage.sprite = s;
+        });
+    }
 
 
     public void ActivateUI(items itemIteration, Shop shopState)
@@ -172,15 +195,21 @@ public class ShopItem : MonoBehaviour
         itemGroup_child01_itemUI = itemGroup.transform.GetChild(0).gameObject;
         //Get itemUI/Image game object
         itemGroup_child01_itemUI = itemGroup_child01_itemUI.transform.GetChild(0).gameObject;
+        itemGroup_child01_itemUI.name = itemIteration.itemId;
         //Setting Item Image
         string itemImage = itemIteration.displaySpritePath;
-        //Debug.Log("This is : " + itemIteration.itemId + " With Sprite Path :" + itemImage);
 
-        AssetManager.LoadSprite(itemImage, (Sprite s) =>
-        {
-            //Debug.Log("Sprite Path" + itemImage);
-            itemGroup_child01_itemUI.GetComponent<Image>().sprite = s;
-        });
+        Debug.Log("This is : " + itemIteration.itemId + " With Sprite Path :" + itemImage);
+
+        //AssetManager.LoadSprite(itemImage, (Sprite s) =>
+        //{
+        //    //Debug.Log("Sprite Path" + itemImage);
+        //    itemGroup_child01_itemUI.GetComponent<Image>().sprite = s;
+        //});
+        //UpdateSprite(itemImage, itemGroup_child01_itemUI.GetComponent<Image>());
+        //Image testing_image = GameObject.Find(itemIteration.itemId).GetComponent<Image>();
+        //Image testing_object = testing_image.GetComponent<Image>();
+        //UpdateSprite(itemImage, itemGroup_child01_itemUI.GetComponent<Image>());
 
         //Get itemUI game object //Name
         itemGroup_child02_itemUI = itemGroup.transform.GetChild(0).gameObject;
@@ -273,6 +302,7 @@ public class ShopItem : MonoBehaviour
 
         //Instantiation of itemGroup object
         //itemGroup.name = itemIteration.itemId;
+        itemGroup.name = itemIteration.itemId + "_Group";
 
         itemGroupToBeCreated = Instantiate(itemGroup, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         itemGroupToBeCreated.transform.SetParent(GameObject.FindGameObjectWithTag("ShopList").transform, false);

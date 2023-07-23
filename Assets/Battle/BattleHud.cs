@@ -22,18 +22,27 @@ namespace pattayaA3
 			Debug.Log($"{pokemon.Base.pokemonName} did not run successfully: ");
 			expBar.SetEXPSmooth((float)(Game.mainsessionData.exp / Game.currentmaxEXP));
 			Debug.Log($"{pokemon.Base.pokemonName} ran successfully: ");
-			//hptrack = (float)pokemon.HP;
-			//Debug.Log(hptrack);
-		}
+            //hptrack = (float)pokemon.HP;
+            //Debug.Log(hptrack);
+            //Debug.Log("This is player name : " + _pokemon.Base.pokemonName);
+            //Debug.Log("This is player maxhp: " + _pokemon.Base.MaxHp);
+            //Debug.Log("This is player phys: " + _pokemon.Base.pokemonPhysicalDmg);
+            //Debug.Log("This is player mag: " + _pokemon.Base.pokemonMagicDmg);
+        }
 		public void SetEnemyData(Pokemon pokemon)
 		{
 			_pokemon = pokemon;
 			nameText.text = pokemon.Base.pokemonName;
 			levelText.text = "Lvl" + pokemon.Level;
 			hpBar.SetHPData((float)(pokemon.HP / pokemon.MaxHP));
-			//hptrack = (float)pokemon.HP;
-			//Debug.Log(hptrack);
-		}
+            //hptrack = (float)pokemon.HP;
+            //Debug.Log(hptrack);
+
+            //Debug.Log("This is monster name : " + _pokemon.Base.pokemonName);
+            //Debug.Log("This is monster maxhp: " + _pokemon.Base.MaxHp);
+            //Debug.Log("This is monster phys: " + _pokemon.Base.pokemonPhysicalDmg);
+            //Debug.Log("This is monster mag: " + _pokemon.Base.pokemonMagicDmg);
+        }
 		public void SetTownData() // for start up only
 		{
 			nameText.text = Game.mainsessionData.actorType;

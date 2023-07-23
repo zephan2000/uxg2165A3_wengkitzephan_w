@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3346834728748060287}
   - component: {fileID: 3079811540224967158}
   m_Layer: 5
-  m_Name: Image
+  m_Name: item20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 3119127333168199322}
   - component: {fileID: 9025847646178548947}
   m_Layer: 5
-  m_Name: item20_BuyButton
+  m_Name: item20_SellButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -787,7 +787,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Buy
+  m_Text: Sell
 --- !u!1 &6793001826275090254
 GameObject:
   m_ObjectHideFlags: 0

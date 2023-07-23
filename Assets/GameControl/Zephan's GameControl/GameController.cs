@@ -13,6 +13,10 @@ namespace pattayaA3
 	{
 		private PlayerScript player;
 		private GameSceneController currentSceneController;
+
+		public GameSceneController testcontroller;
+
+
 		public string initialScene = "StartScreen";
 		public GameObject gameOverScreen;
 		public GameObject pauseScreen;
@@ -48,6 +52,13 @@ namespace pattayaA3
 			//	state = GameState.FreeRoam;
 			//};
 		}
+
+		void Update()
+		{
+
+		}
+
+
 
 		public void LoadScene(string aScene)
 		{

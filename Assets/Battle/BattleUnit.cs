@@ -36,11 +36,21 @@ public class BattleUnit : MonoBehaviour
 		if(actorName == "Dark Wizard")
 		{
 			Pokemon = new Pokemon(_base, Game.GetDarkWizardLevel());
-		}
+
+            Debug.Log("This is monster name : " + Pokemon.Base.pokemonName);
+            Debug.Log("This is monster maxhp: " + Pokemon.MaxHP);
+            Debug.Log("This is monster phys: " + Pokemon.Stats[0]);
+            Debug.Log("This is monster mag: " + Pokemon.Stats[0]);
+        }
 		else if (actorType.Contains("player"))
 		{
 			Pokemon = new Pokemon(_base, level);
-		}
+
+            Debug.Log("This is player name : " + Pokemon.Base.pokemonName);
+            Debug.Log("This is player maxhp: " + Pokemon.MaxHP);
+            Debug.Log("This is player phys: " + Pokemon.Stats[0]);
+            Debug.Log("This is player mag: " + Pokemon.Stats[0]);
+        }
 		else
 		{
 			Debug.Log(Game.GetEnemyPokemonLevel());
@@ -57,8 +67,9 @@ public class BattleUnit : MonoBehaviour
 			hud.SetEnemyData(Pokemon);
 		else
 			 hud.SetData(Pokemon);
-		// pokemon enter animation will be done here
-	}
+        // pokemon enter animation will be done here
+
+    }
 
 	//public void Setup(string actorName, string actorType)
 	//{

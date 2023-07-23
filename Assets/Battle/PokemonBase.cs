@@ -44,6 +44,7 @@ public class PokemonBase
 
 	[SerializeField] List<LearnableSkill> listofskills;
 
+
 	public PokemonBase(string actorName, string actorType, string levelId) // for optimisation, create general functions so that it does not return twice
 	{
 	

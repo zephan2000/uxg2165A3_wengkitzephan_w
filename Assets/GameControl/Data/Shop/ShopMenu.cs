@@ -145,10 +145,11 @@ public class ShopMenu : MonoBehaviour
 
     public void EnableBuy()
     {
-        DisableItemList();
+        //DisableItemList();
         scroll.SetActive(enabled);
         if (!runonce)
         {
+            DisableItemList();
             ShopList = Game.GetItemList();
             List<items> listinventory = ShopList;
             for (int i = 0; i < listinventory.Count; i++)
@@ -156,10 +157,11 @@ public class ShopMenu : MonoBehaviour
                 //ShopList = Game.GetItemList();
                 //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
                 shopItem.ActivateUI(listinventory[i], shop_state);
+                shopItem.UpdateSprite(listinventory[i].displaySpritePath, GameObject.Find(listinventory[i].itemId).GetComponent<Image>());
 
                 //Game.ProcessSaveData(Game.demoData2);
-                Game.ProcessSaveData();
-                Game.GetSave();
+                //Game.ProcessSaveData();
+                //Game.GetSave();
                 //Debug.Log(i);
             }
             //eachItem.ActivateUI(a);
@@ -169,23 +171,26 @@ public class ShopMenu : MonoBehaviour
     }
     public void EnableSell()
     {
-        DisableItemList();
+
         scroll.SetActive(enabled);
         if (!(Game.GetItemsInInventory() == null))
         {
             if (!runonce)
             {
+                DisableItemList();
                 ShopList = Game.GetItemsInInventory();
                 List<items> listinventory = ShopList;
                 for (int i = 0; i < listinventory.Count; i++)
                 {
                     //hopList = Game.GetItemsInInventory();
                     //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
+                    //Debug.Log("this item in inventory : " + listinventory[i].displayName);
                     shopItem.ActivateUI(listinventory[i], shop_state);
+                    shopItem.UpdateSprite(listinventory[i].displaySpritePath, GameObject.Find(listinventory[i].itemId).GetComponent<Image>());
                     //Debug.Log("This is ramadan : ");
                     //Game.ProcessSaveData(Game.demoData2);
-                    Game.ProcessSaveData();
-                    Game.GetSave();
+                    //Game.ProcessSaveData();
+                    //Game.GetSave();
                     //Debug.Log(i);
                 }
                 //eachItem.ActivateUI(a);
@@ -199,8 +204,17 @@ public class ShopMenu : MonoBehaviour
         if (!(CheckItemInventory == Game.mainsessionData.inventory))
         {
             //Debug.Log("lmao");
-            DisableItemList();
             runonce = false;
+            if (shop_state == Shop.Buy)
+            {
+                EnableBuy();
+            }
+            else if (shop_state == Shop.Sell)
+            {
+                //runonce = true;
+                EnableSell();
+            }
+            
             //Debug.Log("lmao");
             CheckItemInventory = Game.mainsessionData.inventory;
             gold.text = "Gold : " + Game.mainsessionData.gold;
