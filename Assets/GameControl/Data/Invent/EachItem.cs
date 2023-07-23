@@ -50,7 +50,14 @@ namespace pattayaA3
             Game.ProcessSaveData();
             Game.GetSave();
 
-            itemListing = GameObject.FindWithTag("ItemList").transform;
+            if (GameObject.FindWithTag("ItemList") == null)
+            {
+                
+            }
+            else
+            {
+                itemListing = GameObject.FindWithTag("ItemList").transform;
+            }
         }
 
         public void GetAllItems()
