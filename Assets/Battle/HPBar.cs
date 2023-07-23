@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace pattayaA3
 {
@@ -26,7 +27,7 @@ namespace pattayaA3
 			//Debug.Log($"this is HpDifference: {HpDifference}");
 			if (HpDifference >= 0)
 			{
-				while (curHp - newHp >= 0) //// for increase of Hp, e.g. 0.5 - 1 = -0.5
+				while (curHp - newHp >= 0) // for decrease of Hp, e.g. 1 - 0.5 = 0.5
 				{
 					curHp += HpDifference * -1 * Time.deltaTime;
 					health.transform.localScale = new Vector3(Mathf.Clamp(curHp, 0, 1), 1f);
@@ -36,13 +37,14 @@ namespace pattayaA3
 			}
 			else
 			{
-				while (curHp - newHp <= 0) // for decrease of Hp, e.g. 1 - 0.5 = 0.5
+				while (curHp - newHp <= 0) // for increase of Hp, e.g. 0.5 - 1 = -0.5
 				{
 					curHp += HpDifference * -1 * Time.deltaTime;
 					health.transform.localScale = new Vector3(Mathf.Clamp(curHp, 0, 1), 1f);
 					yield return null;
 				}
 			}
+			yield break;
 		}
 		//public IEnumerator SetHPSmooth(float newHp)
 		//{

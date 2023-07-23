@@ -192,7 +192,8 @@ public class IntroductionDialogManager : MonoBehaviour
 					break;
 			}
 		}
-		
+		 
+
 
 	}
 	public void UpdateChoiceSelection(int selectedChoice)

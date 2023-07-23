@@ -1,3 +1,4 @@
+using System;
 using pattayaA3;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ public class Portal : MonoBehaviour, Interactable
 			Game.isBossWarning = true;
 			Debug.Log("showing warning");
 			StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
+		}
+		else if (Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) < 15)
+		{
+			StartCoroutine(TownDialogManager.Instance.ShowDialog("LEVEL"));
 		}
 		else
 		{

@@ -234,7 +234,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
             "dialogueText": "Would you like to be a Warrior, Wizard or Archer?",
-            "choices": "I want to be a Warrior.#INTRO0019@I want to be a Magician.#INTRO0020@I want to be an Archer.#INTRO0021@What's a...#INTRO0022"
+            "choices": "INTRO0019@INTRO0020@INTRO0021@INTRO0022"
         },
         {
             "dialogueId": "INTRO0019",
@@ -274,7 +274,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
             "dialogueText": "What's a...",
-            "choices": "What's a Warrior?#INTRO0023@What's a Wizard?#INTRO0024@What's an Archer?#INTRO0025"
+            "choices": "INTRO0023@INTRO0024@INTRO0025"
         },
         {
             "dialogueId": "INTRO0023",
@@ -344,7 +344,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
             "dialogueText": "Are you sure you want to be a Warrior?",
-            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
+            "choices": "INTRO0034@INTRO0032"
         },
         {
             "dialogueId": "INTRO0030",
@@ -354,7 +354,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
             "dialogueText": "Are you sure you want to be a Wizard?",
-            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
+            "choices": "INTRO0034@INTRO0032"
         },
         {
             "dialogueId": "INTRO0031",
@@ -364,7 +364,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "tilemap_packed.png[tilemap_packed_84]",
             "dialogueText": "Are you sure you want to be an Archer?",
-            "choices": "Yes I'm sure.#INTRO0034@Hmm... let me choose again.#INTRO0032"
+            "choices": "INTRO0034@INTRO0032"
         },
         {
             "dialogueId": "INTRO0032",
@@ -414,7 +414,7 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
             "dialogueText": "How can I help you today?",
-            "choices": "Restore Health#QUEST0002@I want a quest.#QUEST0004"
+            "choices": "QUEST0002@QUEST0004"
         },
         {
             "dialogueId": "QUEST0002",
@@ -449,17 +449,27 @@
         {
             "dialogueId": "QUEST0005",
             "nextdialogueId": "-2",
-            "dialogueType": "QUEST",
+            "dialogueType": "QUEST_1",
             "currentSpeakerName": "NPC",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
             "dialogueText": "Alrighty!",
-            "choices": "Win the Bat#QUEST0006@Win the Ghost#QUEST0007@I changed my mind.#QUEST0008"
+            "choices": "QUEST0006@QUEST0007@QUEST0008"
         },
         {
             "dialogueId": "QUEST0006",
-            "nextdialogueId": "QUEST0008",
-            "dialogueType": "QUEST",
+            "nextdialogueId": "QUEST0009",
+            "dialogueType": "QUEST_1",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "I changed my mind.",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0007",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_1",
             "currentSpeakerName": "NPC",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
@@ -467,23 +477,13 @@
             "choices": ""
         },
         {
-            "dialogueId": "QUEST0007",
-            "nextdialogueId": "QUEST0008",
-            "dialogueType": "QUEST",
+            "dialogueId": "QUEST0008",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_1",
             "currentSpeakerName": "NPC",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
             "dialogueText": "Win the Ghost",
-            "choices": ""
-        },
-        {
-            "dialogueId": "QUEST0008",
-            "nextdialogueId": "QUEST0009",
-            "dialogueType": "QUEST",
-            "currentSpeakerName": "NPC",
-            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
-            "displaySpritePathRight": "",
-            "dialogueText": "I changed my mind.",
             "choices": ""
         },
         {
@@ -504,6 +504,156 @@
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
             "dialogueText": "Good luck...",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0011",
+            "nextdialogueId": "-2",
+            "dialogueType": "QUEST_2",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Alrighty!",
+            "choices": "QUEST0006@QUEST0012@QUEST0013"
+        },
+        {
+            "dialogueId": "QUEST0012",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_2",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win 2 Bats",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0013",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_2",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win 2 Ghosts",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0014",
+            "nextdialogueId": "-2",
+            "dialogueType": "QUEST_3",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Alrighty!",
+            "choices": "QUEST0006@QUEST0015@QUEST0016"
+        },
+        {
+            "dialogueId": "QUEST0015",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_3",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win 3 Bats",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0016",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_3",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win 3 Ghosts",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0017",
+            "nextdialogueId": "-2",
+            "dialogueType": "QUEST_4",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Alrighty!",
+            "choices": "QUEST0006@QUEST0018@QUEST0019"
+        },
+        {
+            "dialogueId": "QUEST0018",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_4",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win 4 Bats",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0019",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_4",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win 4 Ghosts",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0020",
+            "nextdialogueId": "-2",
+            "dialogueType": "QUEST_5",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Alrighty!",
+            "choices": "QUEST0006@QUEST0021@QUEST0022"
+        },
+        {
+            "dialogueId": "QUEST0021",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_5",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win 5 Bats",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QUEST0022",
+            "nextdialogueId": "QUEST0010",
+            "dialogueType": "QUEST_5",
+            "currentSpeakerName": "NPC",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "Win 5 Ghosts",
+            "choices": ""
+        },
+        {
+            "dialogueId": "QC0001",
+            "nextdialogueId": "-1",
+            "dialogueType": "QC",
+            "currentSpeakerName": "Game",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "You earned [exp] exp!",
+            "choices": ""
+        },  
+        {
+            "dialogueId": "QW0001",
+            "nextdialogueId": "-1",
+            "dialogueType": "QW",
+            "currentSpeakerName": "Game",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "You already have an active Quest!",
+            "choices": ""
+        },
+        {
+            "dialogueId": "LEVEL0001",
+            "nextdialogueId": "-1",
+            "dialogueType": "LEVEL",
+            "currentSpeakerName": "Game",
+            "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
+            "displaySpritePathRight": "",
+            "dialogueText": "It's too dangerous! You need to be Level 12 to fight the Dark Wizard!",
             "choices": ""
         },
         {
@@ -2263,7 +2413,7 @@
             "vitality": "10",
             "power": "10",
             "intelligence": "10",
-            "attspeed": "100"
+            "attspeed": "10"
         },
         {
             "levelId": "enemyWizard_2",
@@ -2278,7 +2428,7 @@
             "vitality": "10",
             "power": "10",
             "intelligence": "10",
-            "attspeed": "100"
+            "attspeed": "10"
         },
         {
             "levelId": "enemyWizard_3",
@@ -2293,7 +2443,7 @@
             "vitality": "10",
             "power": "10",
             "intelligence": "10",
-            "attspeed": "100"
+            "attspeed": "10"
         },
         {
             "levelId": "enemyWizard_4",
@@ -2329,23 +2479,103 @@
     "quest": [
         {
             "questId": "QUEST1",
-            "questType": "BATTLE",
+            "questType": "BATTLE_1",
             "questName": "Win The Bat",
-            "numberOf": "1",
+            "questReq": "1",
             "actorTypeToSlay": "enemyBat",
-            "expReward": "100",
+            "expReward": "10",
             "goldReward": "30",
-            "questdialogIdTrigger": "QUEST0005"
+            "questdialogIdTrigger": "QUEST0007"
         },
         {
             "questId": "QUEST2",
-            "questType": "BATTLE",
+            "questType": "BATTLE_1",
             "questName": "Win The Ghost",
-            "numberOf": "1",
+            "questReq": "1",
             "actorTypeToSlay": "enemyGhost",
-            "expReward": "130",
+            "expReward": "30",
+            "goldReward": "50",
+            "questdialogIdTrigger": "QUEST0008"
+        },
+        {
+            "questId": "QUEST3",
+            "questType": "BATTLE_2",
+            "questName": "Win 2 Bats",
+            "questReq": "2",
+            "actorTypeToSlay": "enemyBat",
+            "expReward": "20",
             "goldReward": "40",
-            "questdialogIdTrigger": "QUEST0006"
+            "questdialogIdTrigger": "QUEST0012"
+        },
+        {
+            "questId": "QUEST4",
+            "questType": "BATTLE_2",
+            "questName": "Win 2 Ghost",
+            "questReq": "2",
+            "actorTypeToSlay": "enemyGhost",
+            "expReward": "40",
+            "goldReward": "70",
+            "questdialogIdTrigger": "QUEST0013"
+        },
+        {
+            "questId": "QUEST5",
+            "questType": "BATTLE_3",
+            "questName": "Win 3 Bats",
+            "questReq": "3",
+            "actorTypeToSlay": "enemyBat",
+            "expReward": "30",
+            "goldReward": "50",
+            "questdialogIdTrigger": "QUEST0015"
+        },
+        {
+            "questId": "QUEST6",
+            "questType": "BATTLE_3",
+            "questName": "Win 3 Ghosts",
+            "questReq": "3",
+            "actorTypeToSlay": "enemyGhost",
+            "expReward": "50",
+            "goldReward": "90",
+            "questdialogIdTrigger": "QUEST0016"
+        },
+        {
+            "questId": "QUEST7",
+            "questType": "BATTLE_4",
+            "questName": "Win 4 Bats",
+            "questReq": "4",
+            "actorTypeToSlay": "enemyBat",
+            "expReward": "40",
+            "goldReward": "60",
+            "questdialogIdTrigger": "QUEST0018"
+        },
+        {
+            "questId": "QUEST8",
+            "questType": "BATTLE_4",
+            "questName": "Win 4 Ghost",
+            "questReq": "4",
+            "actorTypeToSlay": "enemyGhost",
+            "expReward": "70",
+            "goldReward": "110",
+            "questdialogIdTrigger": "QUEST0019"
+        },
+        {
+            "questId": "QUEST9",
+            "questType": "BATTLE_5",
+            "questName": "Win 5 Bats",
+            "questReq": "5",
+            "actorTypeToSlay": "enemyBat",
+            "expReward": "90",
+            "goldReward": "70",
+            "questdialogIdTrigger": "QUEST0021"
+        },
+        {
+            "questId": "QUEST10",
+            "questType": "BATTLE_5",
+            "questName": "Win 5 Ghosts",
+            "questReq": "5",
+            "actorTypeToSlay": "enemyGhost",
+            "expReward": "120",
+            "goldReward": "130",
+            "questdialogIdTrigger": "QUEST0022"
         }
     ],
     "skills": [
@@ -2358,7 +2588,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2370,7 +2600,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "Yes",
+            "priority": "1",
             "maxuses": "20"
         },
         {
@@ -2382,7 +2612,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "3",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "2"
         },
         {
@@ -2394,7 +2624,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "5",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "5"
         },
         {
@@ -2406,7 +2636,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "5",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "5"
         },
         {
@@ -2418,7 +2648,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "2",
-            "priority": "Yes",
+            "priority": "1",
             "maxuses": "20"
         },
         {
@@ -2430,7 +2660,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "2"
         },
         {
@@ -2442,7 +2672,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "5",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "5"
         },
         {
@@ -2454,7 +2684,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "5",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "5"
         },
         {
@@ -2466,7 +2696,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "3",
-            "priority": "Yes",
+            "priority": "1",
             "maxuses": "20"
         },
         {
@@ -2478,7 +2708,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "4",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "2"
         },
         {
@@ -2487,10 +2717,10 @@
             "category": "Passive",
             "target": "Self",
             "skillname": "Prayer to the Strong",
-            "dmg": "10",
+            "dmg": "-100",
             "hpgain": "100",
             "accuracy": "2",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "1"
         },
         {
@@ -2502,7 +2732,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "2",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "1"
         },
         {
@@ -2514,7 +2744,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2526,7 +2756,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2538,7 +2768,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2550,7 +2780,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2562,7 +2792,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2574,7 +2804,7 @@
             "dmg": "10",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2586,7 +2816,7 @@
             "dmg": "50",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2598,7 +2828,7 @@
             "dmg": "50",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         },
         {
@@ -2610,7 +2840,7 @@
             "dmg": "50",
             "hpgain": "0",
             "accuracy": "1",
-            "priority": "No",
+            "priority": "0",
             "maxuses": "20"
         }
     ]

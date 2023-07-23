@@ -11,6 +11,8 @@ namespace pattayaA3
 		[SerializeField] Text levelText;
 		public HpBar hpBar;
 		public ExpBar expBar;
+		public GameObject HpNumbers;
+		public GameObject ExpNumbers;
 		float hptrack;
 		Pokemon _pokemon;
 		public void SetData(Pokemon pokemon)
@@ -19,8 +21,10 @@ namespace pattayaA3
 			nameText.text = pokemon.Base.pokemonName;
 			levelText.text = "Lvl" + pokemon.Level;
 			hpBar.SetHPSmooth((float)(pokemon.HP / pokemon.MaxHP));
+			HpNumbers.GetComponent<Text>().text = $"{_pokemon.HP} / {_pokemon.MaxHP}";
 			Debug.Log($"{pokemon.Base.pokemonName} did not run successfully: ");
 			expBar.SetEXPSmooth((float)(Game.mainsessionData.exp / Game.currentmaxEXP));
+			ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
 			Debug.Log($"{pokemon.Base.pokemonName} ran successfully: ");
             //hptrack = (float)pokemon.HP;
             //Debug.Log(hptrack);
@@ -48,12 +52,20 @@ namespace pattayaA3
 			nameText.text = Game.mainsessionData.actorType;
 			levelText.text = "Lvl" + Game.playerLevel.ToString();
 			Debug.Log($"this is currentHp from SetTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
+			HpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}";
+			ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
 			StartCoroutine(hpBar.SetHPSmooth((float)(Game.mainsessionData.currenthp / Game.mainsessionData.maxhp)));
 			StartCoroutine(expBar.SetEXPSmooth((float)(Game.mainsessionData.exp / Game.currentmaxEXP)));
 		}
 		public IEnumerator UpdateBattleData()
 		{
 			yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHP);
+			if (!_pokemon.Base.pokemonActorType.Contains("enemy"))
+			{
+				HpNumbers.GetComponent<Text>().text = $"{_pokemon.HP} / {_pokemon.MaxHP}";
+				ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
+			}
+			
 			if (Game.currentPokemonType.Contains("enemy"))
 				yield break;
 			else
@@ -65,7 +77,9 @@ namespace pattayaA3
 		{
 			levelText.text = "Lvl" + Game.playerLevel.ToString();
 			Debug.Log($"this is currentHp from UpdateTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
-			yield return hpBar.SetHPSmooth((float)Game.mainsessionData.currenthp / Game.mainsessionData.maxhp);
+			HpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}";
+			ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
+			yield return hpBar.SetHPSmooth((float)Game.mainsessionData.currenthp / Game.maxHP);
 			yield return expBar.SetEXPSmooth((float)Game.mainsessionData.exp / Game.currentmaxEXP);
 			//hptrack = (float)_pokemon.HP;
 			//Debug.Log(hptrack);
