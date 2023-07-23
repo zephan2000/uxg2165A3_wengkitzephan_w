@@ -22,6 +22,7 @@ public class PokemonBase
 	public int pokemonExpGain { get { return expGain; } }
 	public int pokemonGoldGain { get { return goldGain; } }
 	public List<LearnableSkill> pokemonListOfLearnableSkill { get { return listofskills; } }
+	public string pokemonActorType;
 
 
 
@@ -58,6 +59,7 @@ public class PokemonBase
 		GetPokemonPhysicalDamageFromLevelId(levelId);
 		GetPokemonSpeedFromLevelId(levelId);
 		GetPokemonListOfLSFromActorType(actorType);
+		pokemonActorType = actorType;
 		Debug.Log($"this is LevelId: {levelId}, actorName {actorName}, attspeed: {attspeed}");//getting skill list from actor sheet, don't change
 	}
 

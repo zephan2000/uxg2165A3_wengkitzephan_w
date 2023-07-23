@@ -28,6 +28,7 @@ public class TownDialogManager : MonoBehaviour
 	bool skipOnNext;
 	private bool allowSkip = false;
 	private Dialog currentDialog;
+	private bool ongoingQuest;
 	private Dialog selectedDialog;
 	List<Dialog> dialogList;
 	List<Dialog> dialogChoiceList;
@@ -36,6 +37,8 @@ public class TownDialogManager : MonoBehaviour
 	private int currentChoice;
 	private int numberOfButtons;
 	private bool questCompleteCheck;
+	private bool selectedQuest;
+	private bool specialQuest;
 
 	private void Awake()
 	{
@@ -94,6 +97,7 @@ public class TownDialogManager : MonoBehaviour
 		{
 			yield return new WaitForEndOfFrame();
 			OnShowDialog?.Invoke();
+			ongoingQuest = false;
 			dialogList = Game.GetDialogByType(dialogueType);
 			Debug.Log($"List found {dialogList[0].dialogueText} ");
 			currentDialog = dialogList[0];
@@ -175,9 +179,9 @@ public class TownDialogManager : MonoBehaviour
 
 	void ChoiceDialogSettings()
 	{
-		dialogState = TownDialogState.SelectingChoice;
 		dialogChoiceList = Game.GetListOfChoicesByDialog(currentDialog);
-		//Debug.Log(dialogChoiceList[0].dialogueId);
+		dialogState = TownDialogState.SelectingChoice;
+		Debug.Log(dialogChoiceList[0].dialogueId);
 		dialogText.SetActive(false);
 		SkipText.SetActive(false);
 		NextText.SetActive(true);
@@ -194,7 +198,7 @@ public class TownDialogManager : MonoBehaviour
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[level]", Game.mainsessionData.levelId);
 				break;
 
-			case "QC0001":
+			case "QC00001":
 				int expReward = Game.startedQuest.expReward;
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[exp]", expReward.ToString());
 				Game.startedQuest = null;
@@ -216,13 +220,14 @@ public class TownDialogManager : MonoBehaviour
 	}
 	public void CheckForQuestTrigger(string dialogId)
 	{
+		Debug.Log("this is chosenquest dialogId:" + dialogId);
 		foreach(Quest quest in Game.questList)
 		{
 			if (dialogId == quest.questdialogIdTrigger)
 			{
 				Game.startedQuest = quest;
 				Game.battleQuestProgress = 0;
-				Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + Game.battleQuestProgress.ToString();
+				Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + Game.battleQuestProgress;
 				StartBattleQuest?.Invoke();
 				break;
 			}
@@ -249,7 +254,12 @@ public class TownDialogManager : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Return)) // implement functions now
 		{
+			specialQuest = false;
 			Dialog chosenDialog = dialogChoiceList[currentChoice];
+			foreach (Dialog v in dialogChoiceList)
+			{
+				Debug.Log("this is choice from handle " + v.dialogueId + " this is dialogue Text of choice " + v.dialogueText);
+			}
 			Debug.Log($"this is chosenDialog Id: {chosenDialog.dialogueId}");
 			if (chosenDialog.dialogueText == "Restore Health")
 			{
@@ -258,8 +268,31 @@ public class TownDialogManager : MonoBehaviour
 			}
 			else if (chosenDialog.dialogueText == "I want a quest.")
 			{
+				selectedQuest = true;
 				CheckForQuestInProgress(chosenDialog);
 				CheckForCompletedQuest(chosenDialog);
+				if(Game.mainsessionData.startedQuest == "")
+				{
+					if (Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) > 5) // this if-else differentiates types of quest by level
+					{
+						specialQuest = true;
+						GetQuestsByLevel(chosenDialog);
+					}
+					else // default quests
+					{
+						currentDialog = Game.GetDialogByDialogList(chosenDialog.nextdialogueId, dialogList);
+					}
+				}
+			}
+			else if (chosenDialog.dialogueText == "I changed my mind." || chosenDialog.dialogueText == "Good luck...")
+			{
+				selectedQuest = false;
+			}
+
+			if(selectedQuest && specialQuest != true)
+			{
+				currentDialog = Game.GetDialogByDialogId(chosenDialog.nextdialogueId) ;
+				CheckForQuestInProgress(chosenDialog);
 			}
 			currentChoice = 0;
 			numberOfButtons = 0;	
@@ -296,7 +329,7 @@ public class TownDialogManager : MonoBehaviour
 			if (i < choices.Count)
 			{
 				choiceButtons[i].SetActive(true);
-				//Debug.Log(choices[i].dialogueText);
+				Debug.Log("this is choice Id " + choices[i].dialogueId + " this is dialogue Text of choice " + choices[i].dialogueText);
 				choiceButtons[i].GetComponent<Text>().text = choices[i].dialogueText;
 				numberOfButtons++;
 				//Debug.Log(dialogState);
@@ -309,15 +342,33 @@ public class TownDialogManager : MonoBehaviour
 
 		}
 	}
+	public void GetQuestsByLevel(Dialog chosenDialog)
+	{
+		if (Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) > 5 && Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) <= 10)
+		{
+			currentDialog = Game.GetDialogByDialogId("QUEST0011");
+		}
+		else if (Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) > 10 && Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) <= 15)
+		{
+			currentDialog = Game.GetDialogByDialogId("QUEST0014");
+		}
+		else if (Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) > 15 && Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) <= 20)
+		{
+			currentDialog = Game.GetDialogByDialogId("QUEST0017");
+		}
+		Debug.Log("this is the new chosen dialog " + chosenDialog.nextdialogueId + "and current Dialog " + currentDialog.dialogueId);
+	}
 	public void CheckForQuestInProgress(Dialog chosenDialog)
 	{
 		if (Game.mainsessionData.startedQuest == "")
 		{
 			CheckForQuestTrigger(chosenDialog.dialogueId);
-			currentDialog = Game.GetDialogByDialogList(chosenDialog.nextdialogueId, dialogList);
 		}
 		else
+		{
 			currentDialog = Game.GetDialogByType("QW")[0];
+			ongoingQuest = true;
+		}	
 	}
 
 	public void CheckForCompletedQuest(Dialog chosenDialog)
@@ -340,7 +391,7 @@ public class TownDialogManager : MonoBehaviour
 
 			if (questCompleteCheck == true)
 			{
-				currentDialog = Game.GetDialogByDialogId("QW0002");
+				currentDialog = Game.GetDialogByDialogId("QC0001");
 			}
 		}
 		

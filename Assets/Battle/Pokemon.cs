@@ -122,10 +122,14 @@ public class Pokemon
 	public bool InitMove(Move move, Pokemon attacker)
 	{
 		float attack = (move.moveBase.moveCategory == MoveCategory.Magic)? attacker.MagicDamage : attacker.PhysicalDamage;
+		float heal = move.moveBase.moveHpGain;
 		int damage = move.moveBase.moveDamage + (int)attack;
 		Debug.Log($"This is {this.Base.pokemonName} before MoveHP: {HP}");
-		HP -= damage;
-		//Debug.Log($"This is before Heal: {HP}");
+		if(move.moveBase.moveCategory != MoveCategory.Passive) 
+		{ HP -= damage; }
+		else { HP += (int)heal; }
+		
+		Debug.Log($"This is before Heal: {HP}, and move Hp Gain {move.moveBase.moveHpGain}");
 		HP = Mathf.Clamp(HP + move.moveBase.moveHpGain, 0, this.MaxHP);
 		Debug.Log($"This is {this.Base.pokemonName} current HP: {HP}");
 

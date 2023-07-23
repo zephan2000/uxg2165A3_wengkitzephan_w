@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace pattayaA3
 {
@@ -38,7 +39,7 @@ namespace pattayaA3
 			{
 				while (curExp - newExp <= 0)
 				{
-					curExp += expDifference * -1 * Time.deltaTime;
+					curExp += expDifference * 1 * Time.deltaTime;
 					exp.transform.localScale = new Vector3(Mathf.Clamp(curExp,0,1), 1f);
 					yield return null;
 				}

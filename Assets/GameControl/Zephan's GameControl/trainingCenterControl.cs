@@ -40,7 +40,7 @@ namespace pattayaA3
 		}
 		void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.Return))
+			if (levelInput.text != "")
 			{
 				SetPokemonLevel(levelInput.text);
 				Debug.Log("deactivating input ");

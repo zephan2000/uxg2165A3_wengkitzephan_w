@@ -126,7 +126,17 @@ namespace pattayaA3
 
 		public IEnumerator LevelUp() //do one for cheats and one for normal
 		{
+			yield return new WaitForSeconds(0.3f);
 			levelUpText.SetActive(true);
+			if (Game.playerLevel + 1 >= 20)
+			{
+				levelUpText.GetComponent<Text>().text = "Max Level Reached!";
+				yield return new WaitForSeconds(1f);
+				levelUpText.SetActive(false);
+				yield break;
+			}
+			levelUpText.GetComponent<Text>().text = "Level Up!";
+			
 			Game.playerLevel++;
 			//Game.playerLevel = Game.playerLevel;
 			string newlevelid = Game.mainsessionData.actorType + "_" + Game.playerLevel.ToString();
@@ -154,7 +164,6 @@ namespace pattayaA3
 			}
 			Game.SaveToJSON<save>(Game.saveList);
 			// reset current exp
-
 		}
 		public void RestoreHealth()
 		{
@@ -167,6 +176,7 @@ namespace pattayaA3
 			Game.mainsessionData.currenthp = 50;
 			StartCoroutine(playerHud.UpdateTownData());
 			yield return new WaitForSeconds(1.2f);
+			//StopAllCoroutines();
 		}
         public IEnumerator SetGoldTo500() // for bug testing
         {

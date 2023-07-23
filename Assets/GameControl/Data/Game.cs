@@ -44,7 +44,7 @@ public static class Game
 	public static List<Quest> questList;
 	public static Quest startedQuest;
     public static bool questInProgress;
-	public static int battleQuestProgress;
+	public static int battleQuestProgress = 0;
 	public static bool questComplete;
 
     //Analytics
@@ -545,6 +545,7 @@ public static class Game
         Game.battleQuestProgress = Int32.Parse(questdata[1]);
     }
 
+
     public static void UpdateBattleQuestProgress()
     {
         battleQuestProgress++;
@@ -615,10 +616,9 @@ public static class Game
 		List<Dialog> choices = new List<Dialog>();
 		for (int i = 0; i < textdialogIdArray.Length; i++)
 		{
-			string[] choicedialogArray = textdialogIdArray[i].Split('#');
-			Debug.Log(GetDialogByDialogId(choicedialogArray[1]));
+			Debug.Log("this is choices: " + GetDialogByDialogId(textdialogIdArray[i]).dialogueId);
 			//Debug.Log(choicedialogArray[0]);
-			choices.Add(GetDialogByDialogId(choicedialogArray[1]));
+			choices.Add(GetDialogByDialogId(textdialogIdArray[i]));
 		}
 		return choices;
 	}
@@ -644,14 +644,14 @@ public static class Game
 		else if (!playerRan && !playerWon)
 		{
 			if (mainsessionData.battles == "")
-				mainsessionData.battles = chosenenemyType + '@' + "1";
+				mainsessionData.battles = chosenenemyType + '_' + "1";
 			else
 				mainsessionData.battles = mainsessionData.battles + "@" + chosenenemyType + '_' + "1";
 		}
 		else if (!playerRan && playerWon)
 		{
 			if (mainsessionData.battles == "")
-				mainsessionData.battles = chosenenemyType + '@' + "2";
+				mainsessionData.battles = chosenenemyType + '_' + "2";
 			else
 				mainsessionData.battles = mainsessionData.battles + "@" + chosenenemyType + '_' + "2";
 		}

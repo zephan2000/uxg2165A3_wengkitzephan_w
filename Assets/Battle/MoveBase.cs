@@ -66,6 +66,7 @@ public class MoveBase
 	public void GetMBHpGainFromSkill(string lsID) // need to change to void
 	{
 		Hpgain = Game.GetSkillById(lsID).hpgain;
+		Debug.Log("this is lsID:" + lsID + "hpgain:" + Hpgain);
 	}
 	public void GetMBCategoryFromSkill(string lsID) // need to change to void
 	{
