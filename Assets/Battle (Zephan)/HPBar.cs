@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace pattayaA3
 {
-	public class HpBar : MonoBehaviour
+	public class HPBar : MonoBehaviour
 	{
 		public GameObject health;
 		//private void Start()

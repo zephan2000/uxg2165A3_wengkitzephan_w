@@ -38,7 +38,7 @@ namespace pattayaA3
 		public LayerMask buildingLayer;
 		public LayerMask portalLayer;
 		public Portal portal;
-		public TrainingCenterControl trainingCenter;
+		public trainingCenterControl trainingCenter;
 		public GameObject trainingCenterBackground;
 		public Vector3 currentposition;
 		public Collider2D triggerCol;
@@ -96,16 +96,14 @@ namespace pattayaA3
 			{
 				StartCoroutine(SetHpTo50());
 			}
-            if (Input.GetKeyDown(KeyCode.F3)) //for bug testing
-            {
-                StartCoroutine(SetGoldTo500());
-                //StartCoroutine(playerHud.UpdateTownData());
-            }
+            //if (Input.GetKeyDown(KeyCode.F3)) //for bug testing
+            //{
+            //    StartCoroutine(SetGoldTo500());
+            //}
             if (Input.GetKeyDown(KeyCode.F4)) //for bug testing
             {
                 Game.mainsessionData.gold += 200;
                 Game.SaveToJSON<save>(Game.saveList);
-                //StartCoroutine(playerHud.UpdateTownData());
             }
 			if (Input.GetKeyDown(KeyCode.F5))
             {
@@ -133,7 +131,7 @@ namespace pattayaA3
 		{
 			yield return new WaitForSeconds(0.3f);
 			levelUpText.SetActive(true);
-			if (Game.playerLevel + 1 >= 20)
+			if (Game.playerLevel + 1 > 20)
 			{
 				levelUpText.GetComponent<Text>().text = "Max Level Reached!";
 				yield return new WaitForSeconds(1f);
@@ -151,11 +149,11 @@ namespace pattayaA3
 			Game.SetSessionDataFromLevelId(newlevelid);
 			Game.mainsessionData.exp = 0;
 			Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
-			Game.mainsessionData.exp += 10; // need to adjust this formula
+			Game.mainsessionData.exp += 10; // have to take this out befere submission
 			//Game.mainsessionData.gold += 200;
 			//Game.mainsessionData.attributePoint += 5;
 			Debug.Log(newlevelid);
-			StartCoroutine(playerHud.UpdateTownData());
+			yield return playerHud.UpdateTownData();
 			yield return new WaitForSeconds(1.2f);
 			levelUpText.SetActive(false);
 			if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
@@ -165,7 +163,7 @@ namespace pattayaA3
 				yield return new WaitForSeconds(0.3f);
 				//StartCoroutine(playerHud.UpdateTownData());
 				//playerHud.UpdateTownData();
-				StartCoroutine(LevelUp());
+				yield return LevelUp();
 			}
 			Game.SaveToJSON<save>(Game.saveList);
 			// reset current exp
@@ -183,12 +181,12 @@ namespace pattayaA3
 			yield return new WaitForSeconds(1.2f);
 			//StopAllCoroutines();
 		}
-        public IEnumerator SetGoldTo500() // for bug testing
-        {
-            Game.mainsessionData.gold = 500;
-            //StartCoroutine(playerHud.UpdateTownData());
-            yield return new WaitForSeconds(1.2f);
-        }
+        //public IEnumerator SetGoldTo500() // for bug testing
+        //{
+        //    Game.mainsessionData.gold = 500;
+        //    //StartCoroutine(playerHud.UpdateTownData());
+        //    yield return new WaitForSeconds(1.2f);
+        //}
         public void MovePlayer(Vector2 moveDir) // old movement codes
 		{
 			int count = rb.Cast(moveDir, movementFilter, castCollisions, 5.5f * Time.fixedDeltaTime + collisionOffset);

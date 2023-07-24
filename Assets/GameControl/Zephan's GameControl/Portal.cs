@@ -19,7 +19,7 @@ public class Portal : MonoBehaviour, Interactable
 			Debug.Log("showing warning");
 			StartCoroutine(TownDialogManager.Instance.ShowDialog("WARNING"));
 		}
-		else if (Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) < 15)
+		else if (Int32.Parse(Game.mainsessionData.levelId.Split('_')[1]) < 12)
 		{
 			StartCoroutine(TownDialogManager.Instance.ShowDialog("LEVEL"));
 		}

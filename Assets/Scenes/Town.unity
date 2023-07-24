@@ -1988,8 +1988,9 @@ MonoBehaviour:
     displaySpritePath: 
     startedQuest: 
     completedQuest: 
-    completedAchievement: 
-    runtime: 0
+    totalDamageDealt: 0
+    timeInBattle: 0
+    timeInQuest: 0
     battles: 
   currentcount: 0
   samecount: 0
@@ -2957,7 +2958,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1000550458
 RectTransform:
   m_ObjectHideFlags: 0

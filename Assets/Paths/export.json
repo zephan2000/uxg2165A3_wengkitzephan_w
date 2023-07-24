@@ -483,7 +483,7 @@
             "currentSpeakerName": "NPC",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "Win the Ghost",
+            "dialogueText": "Deal 100 Damage In Battle",
             "choices": ""
         },
         {
@@ -533,7 +533,7 @@
             "currentSpeakerName": "NPC",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "Win 2 Ghosts",
+            "dialogueText": "Deal 200 Damage In Battle",
             "choices": ""
         },
         {
@@ -553,7 +553,7 @@
             "currentSpeakerName": "NPC",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "Win 3 Bats",
+            "dialogueText": "Defeat the Bat in 100 seconds",
             "choices": ""
         },
         {
@@ -563,7 +563,7 @@
             "currentSpeakerName": "NPC",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "Win 3 Ghosts",
+            "dialogueText": "Win a Ghost",
             "choices": ""
         },
         {
@@ -635,7 +635,7 @@
             "displaySpritePathRight": "",
             "dialogueText": "You earned [exp] exp!",
             "choices": ""
-        },  
+        },
         {
             "dialogueId": "QW0001",
             "nextdialogueId": "-1",
@@ -653,7 +653,7 @@
             "currentSpeakerName": "Game",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "It's too dangerous! You need to be Level 12 to fight the Dark Wizard!",
+            "dialogueText": "It's too dangerous! You are Lvl [level]. You need to be Level 12 to fight the Dark Wizard!",
             "choices": ""
         },
         {
@@ -1269,7 +1269,7 @@
             "goldGain": "0",
             "basehp": "100",
             "physicaldmg": "1",
-            "magicdmg": "3",
+            "magicdmg": "200",
             "vitality": "1",
             "power": "1",
             "intelligence": "5",
@@ -2489,10 +2489,10 @@
         },
         {
             "questId": "QUEST2",
-            "questType": "BATTLE_1",
-            "questName": "Win The Ghost",
-            "questReq": "1",
-            "actorTypeToSlay": "enemyGhost",
+            "questType": "DAMAGE_1",
+            "questName": "Deal 100 Damage In Battle",
+            "questReq": "100",
+            "actorTypeToSlay": "",
             "expReward": "30",
             "goldReward": "50",
             "questdialogIdTrigger": "QUEST0008"
@@ -2509,19 +2509,19 @@
         },
         {
             "questId": "QUEST4",
-            "questType": "BATTLE_2",
+            "questType": "DAMAGE_2",
             "questName": "Win 2 Ghost",
-            "questReq": "2",
-            "actorTypeToSlay": "enemyGhost",
+            "questReq": "200",
+            "actorTypeToSlay": "",
             "expReward": "40",
             "goldReward": "70",
-            "questdialogIdTrigger": "QUEST0013"
+            "questdialogIdTrigger": "Deal 200 Damage In Battle"
         },
         {
             "questId": "QUEST5",
-            "questType": "BATTLE_3",
-            "questName": "Win 3 Bats",
-            "questReq": "3",
+            "questType": "TIME_1",
+            "questName": "Defeat the Bat in 100 seconds",
+            "questReq": "100",
             "actorTypeToSlay": "enemyBat",
             "expReward": "30",
             "goldReward": "50",
@@ -2717,7 +2717,7 @@
             "category": "Passive",
             "target": "Self",
             "skillname": "Prayer to the Strong",
-            "dmg": "-100",
+            "dmg": "",
             "hpgain": "100",
             "accuracy": "2",
             "priority": "0",

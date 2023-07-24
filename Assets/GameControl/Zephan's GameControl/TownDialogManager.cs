@@ -39,6 +39,7 @@ public class TownDialogManager : MonoBehaviour
 	private bool questCompleteCheck;
 	private bool selectedQuest;
 	private bool specialQuest;
+	string temporaryText;
 
 	private void Awake()
 	{
@@ -119,8 +120,13 @@ public class TownDialogManager : MonoBehaviour
 		NextText.SetActive(false);
 		EndText.SetActive(false);
 		questCompleteCheck = false;
-		if(currentDialog.dialogueType == "QC")
-			CheckForSpecialDialog();
+		if(currentDialog.dialogueText != "Restore Health")
+		{
+			if (currentDialog.dialogueType == "QC" || currentDialog.dialogueType == "LEVEL")
+				CheckForSpecialDialog();
+		}
+		
+		Debug.Log($"this is the dialogId {currentDialog.dialogueId} after clearing: {currentDialog.dialogueText}");
 		foreach (var letter in currentDialog.dialogueText)
 		{
 			//Debug.Log($"this is the allowSkip state: {allowSkip}, this is the current letter {(string)dialogText.GetComponent<Text>().text} for dialogText {currentDialog.dialogueText}");
@@ -150,6 +156,13 @@ public class TownDialogManager : MonoBehaviour
 			}
 
 		}
+		Debug.Log("this is current Dialog Type" + currentDialog.dialogueType + currentDialog.dialogueId);
+		if(currentDialog.dialogueType == "QC" || currentDialog.dialogueType == "LEVEL")
+		{
+			Debug.Log("this is current Dialog Type" + currentDialog.dialogueType + currentDialog.dialogueId);
+			currentDialog.dialogueText = temporaryText;
+		}
+
 		Debug.Log($"this is currentdialogId's nextDialogId {currentDialog.nextdialogueId}");
 		yield return new WaitForSeconds(0.2f);
 		if (currentDialog.nextdialogueId == "-1")
@@ -192,19 +205,27 @@ public class TownDialogManager : MonoBehaviour
 
 	public void CheckForSpecialDialog()
 	{
-		switch(currentDialog.dialogueId)
+		temporaryText = "";
+		switch (currentDialog.dialogueId)
 		{
 			case "QUEST0001":
+				temporaryText = currentDialog.dialogueText;
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[level]", Game.mainsessionData.levelId);
 				break;
 
-			case "QC00001":
+			case "QC0001":
+				temporaryText = currentDialog.dialogueText;
 				int expReward = Game.startedQuest.expReward;
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[exp]", expReward.ToString());
 				Game.startedQuest = null;
 				Game.mainsessionData.exp += expReward;
 				Game.UpdateCompletedQuest();
 				RewardCollected?.Invoke();
+				break;
+
+			case "LEVEL0001":
+				temporaryText = currentDialog.dialogueText;
+				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[level]", Game.mainsessionData.levelId.Split('_')[1]);
 				break;
 		}
 	}
@@ -256,10 +277,10 @@ public class TownDialogManager : MonoBehaviour
 		{
 			specialQuest = false;
 			Dialog chosenDialog = dialogChoiceList[currentChoice];
-			foreach (Dialog v in dialogChoiceList)
-			{
-				Debug.Log("this is choice from handle " + v.dialogueId + " this is dialogue Text of choice " + v.dialogueText);
-			}
+			//foreach (Dialog v in dialogChoiceList)
+			//{
+			//	Debug.Log("this is choice from handle " + v.dialogueId + " this is dialogue Text of choice " + v.dialogueText);
+			//}
 			Debug.Log($"this is chosenDialog Id: {chosenDialog.dialogueId}");
 			if (chosenDialog.dialogueText == "Restore Health")
 			{
@@ -284,12 +305,13 @@ public class TownDialogManager : MonoBehaviour
 					}
 				}
 			}
-			else if (chosenDialog.dialogueText == "I changed my mind." || chosenDialog.dialogueText == "Good luck...")
+			else if (chosenDialog.dialogueText == "I changed my mind." || chosenDialog.dialogueText == "Good luck...") // if I changed my mind is freezing check this
 			{
 				selectedQuest = false;
+				currentDialog = Game.GetDialogByDialogId(chosenDialog.nextdialogueId);
 			}
 
-			if(selectedQuest && specialQuest != true)
+			if(selectedQuest && specialQuest != true && chosenDialog.dialogueText != "Restore Health") // if dialog is checking for quest in progress check this
 			{
 				currentDialog = Game.GetDialogByDialogId(chosenDialog.nextdialogueId) ;
 				CheckForQuestInProgress(chosenDialog);
@@ -397,5 +419,6 @@ public class TownDialogManager : MonoBehaviour
 		
 	}
 
-	
+
+
 }
