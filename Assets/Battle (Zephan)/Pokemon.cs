@@ -142,7 +142,7 @@ public class Pokemon
 		{
 			Game.damagePerBattle += damage;
 			Game.mainsessionData.totalDamageDealt += damage;
-			Debug.Log("damage dealt :" + Game.mainsessionData.totalDamageDealt);
+			Debug.Log("damage dealt :" + Game.mainsessionData.totalDamageDealt + "damage per battle" + Game.damagePerBattle);
 		}	
 			
 

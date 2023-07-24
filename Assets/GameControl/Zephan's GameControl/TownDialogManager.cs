@@ -208,19 +208,12 @@ public class TownDialogManager : MonoBehaviour
 		temporaryText = "";
 		switch (currentDialog.dialogueId)
 		{
-			case "QUEST0001":
-				temporaryText = currentDialog.dialogueText;
-				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[level]", Game.mainsessionData.levelId);
-				break;
-
 			case "QC0001":
 				temporaryText = currentDialog.dialogueText;
 				int expReward = Game.startedQuest.expReward;
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[exp]", expReward.ToString());
-				Game.startedQuest = null;
+				questCompleteSettings();
 				Game.mainsessionData.exp += expReward;
-				Game.UpdateCompletedQuest();
-				RewardCollected?.Invoke();
 				break;
 
 			case "LEVEL0001":
@@ -228,6 +221,17 @@ public class TownDialogManager : MonoBehaviour
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[level]", Game.mainsessionData.levelId.Split('_')[1]);
 				break;
 		}
+	}
+
+	public void questCompleteSettings()
+	{
+		Game.startedQuest = null;
+		Game.questComplete = false;
+		Game.currentBattleRunTime = 0;
+		Game.damagePerBattle = 0;
+		Game.battleQuestProgress = 0;
+		Game.UpdateCompletedQuest();
+		RewardCollected?.Invoke();
 	}
 
 	public void RestoreHealth(Dialog dialogId)

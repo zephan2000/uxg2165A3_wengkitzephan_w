@@ -154,7 +154,7 @@ namespace pattayaA3
 			//Game.mainsessionData.attributePoint += 5;
 			Debug.Log(newlevelid);
 			yield return playerHud.UpdateTownData();
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(0.5f);
 			levelUpText.SetActive(false);
 			if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
 			{
