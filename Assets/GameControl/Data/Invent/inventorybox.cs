@@ -27,8 +27,18 @@ namespace pattayaA3
 		[SerializeField] Text item1;
 		[SerializeField] Text item2;
 		[SerializeField] Text item3;
-		//Skill text
-		[SerializeField] Text skill1;
+        [SerializeField] Text item4;
+        [SerializeField] Text item5;
+        [SerializeField] Text item6;
+        [SerializeField] Text item7;
+        [SerializeField] Text item8;
+        [SerializeField] Text item9;
+        [SerializeField] Text item10;
+        [SerializeField] Text item11;
+        [SerializeField] Text item12;
+
+        //Skill text
+        [SerializeField] Text skill1;
 		[SerializeField] Text skill2;
 		[SerializeField] Text skill3;
 		[SerializeField] Text skill4;
@@ -161,6 +171,8 @@ namespace pattayaA3
             Game.mainsessionData.power_added += Game.mainsessionData.power;
             Game.mainsessionData.intelligence_added += Game.mainsessionData.intelligence;
             Game.mainsessionData.attspeed_added += Game.mainsessionData.attspeed;
+
+            UpdateEquipment();
 
             item1.text = Game.Getitemsbyid(Game.mainsessionData.weapon).displayName;
             item2.text = Game.Getitemsbyid(Game.mainsessionData.helmet).displayName;
@@ -339,6 +351,16 @@ namespace pattayaA3
             subtract_attspeed_button.SetActive(!enabled);
             subtract_attspeed_text.enabled = !enabled;
 
+            item4.enabled = !enabled;
+            item5.enabled = !enabled;
+            item6.enabled = !enabled;
+            item7.enabled = !enabled;
+            item8.enabled = !enabled;
+            item9.enabled = !enabled;
+            item10.enabled = !enabled;
+            item11.enabled = !enabled;
+            item12.enabled = !enabled;
+
             runonce = false;
         }
         public void EnableSkillMenu(bool enabled)
@@ -423,6 +445,16 @@ namespace pattayaA3
 
             subtract_attspeed_button.SetActive(!enabled);
             subtract_attspeed_text.enabled = !enabled;
+
+            item4.enabled = !enabled;
+            item5.enabled = !enabled;
+            item6.enabled = !enabled;
+            item7.enabled = !enabled;
+            item8.enabled = !enabled;
+            item9.enabled = !enabled;
+            item10.enabled = !enabled;
+            item11.enabled = !enabled;
+            item12.enabled = !enabled;
 
             runonce = false;
         }
@@ -646,9 +678,19 @@ namespace pattayaA3
             stat3.text = "Intelligence: " + Game.mainsessionData.intelligence + " (+" + itemInt + ")";
             stat4.text = "Attack Speed: " + Game.mainsessionData.attspeed;
             added_stat_text.text = "" + Game.mainsessionData.attributePoint;
+
+            item4.enabled = !enabled;
+            item5.enabled = !enabled;
+            item6.enabled = !enabled;
+            item7.enabled = !enabled;
+            item8.enabled = !enabled;
+            item9.enabled = !enabled;
+            item10.enabled = !enabled;
+            item11.enabled = !enabled;
+            item12.enabled = !enabled;
             //added_stat_text.enabled=enabled;
 
-            
+
 
             runonce = false;
         }
@@ -733,6 +775,18 @@ namespace pattayaA3
 
             subtract_attspeed_button.SetActive(!enabled);
             subtract_attspeed_text.enabled = !enabled;
+
+            item4.enabled = enabled;
+            item5.enabled = enabled;
+            item6.enabled = enabled;
+            item7.enabled = enabled;
+            item8.enabled = enabled;
+            item9.enabled = enabled;
+            item10.enabled = enabled;
+            item11.enabled = enabled;
+            item12.enabled = enabled;
+
+            UpdateEquipment();
 
             runonce = false;
         }
@@ -819,7 +873,19 @@ namespace pattayaA3
             subtract_attspeed_button.SetActive(!enabled);
             subtract_attspeed_text.enabled = !enabled;
 
+            item4.enabled = !enabled;
+            item5.enabled = !enabled;
+            item6.enabled = !enabled;
+            item7.enabled = !enabled;
+            item8.enabled = !enabled;
+            item9.enabled = !enabled;
+            item10.enabled = !enabled;
+            item11.enabled = !enabled;
+            item12.enabled = !enabled;
+
             
+
+
             Debug.Log("This is inventory :"+CheckItemInventory);
             Debug.Log("This is inventory session " + Game.mainsessionData.inventory);
 
@@ -1034,7 +1100,7 @@ namespace pattayaA3
                     //CheckMenu();
                     EnableEquipmentMenu(true);
                     DisableItemList();
-                    UpdateEquipment();
+                    //UpdateEquipment();
                     //eachItem.DeActivateInvent();
                     //.text = "Stats";
                     break;
@@ -1104,6 +1170,22 @@ namespace pattayaA3
             //List<string> ListOfSkillsGroup;
             //Debug.Log("Actor Type: " + currentmenu);
             //ListOfSkillsGroup = GetListOfSkillsPartOne(Game.mainsessionData.actorType);
+            eachItem.UpdateSprite(Game.Getitemsbyid(Game.mainsessionData.weapon).displaySpritePath, item1Object.GetComponent<Image>());
+            eachItem.UpdateSprite(Game.Getitemsbyid(Game.mainsessionData.helmet).displaySpritePath, item2Object.GetComponent<Image>());
+            eachItem.UpdateSprite(Game.Getitemsbyid(Game.mainsessionData.armour).displaySpritePath, item3Object.GetComponent<Image>());
+
+            item4.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.weapon).defenseBuff.ToString();
+            item5.text = "Power: +" + Game.Getitemsbyid(Game.mainsessionData.weapon).physicaldmgBuff.ToString();
+            item6.text = "Intelligence: +" + Game.Getitemsbyid(Game.mainsessionData.weapon).magicdmgBuff.ToString();
+
+            item7.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.helmet).defenseBuff.ToString();
+            item8.text = "Power: +" + Game.Getitemsbyid(Game.mainsessionData.helmet).physicaldmgBuff.ToString();
+            item9.text = "Intelligence: +" + Game.Getitemsbyid(Game.mainsessionData.helmet).magicdmgBuff.ToString();
+
+            item10.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.armour).defenseBuff.ToString();
+            item11.text = "Power: +" + Game.Getitemsbyid(Game.mainsessionData.armour).physicaldmgBuff.ToString();
+            item12.text = "Intelligence: +" + Game.Getitemsbyid(Game.mainsessionData.armour).magicdmgBuff.ToString();
+
             item1.text = Game.Getitemsbyid(Game.mainsessionData.weapon).displayName;
             item2.text = Game.Getitemsbyid(Game.mainsessionData.helmet).displayName;
             item3.text = Game.Getitemsbyid(Game.mainsessionData.armour).displayName;
