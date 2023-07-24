@@ -680,7 +680,14 @@ namespace pattayaA3
 		{
 			questHud.SetActive(true);
 			questHud.transform.GetChild(0).GetComponent<Text>().text = $"Quest Requirement: {Game.startedQuest.questName}";
-			questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
+			if(Game.startedQuest.questType.Contains("BATTLE"))
+			{
+				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
+			}
+			else
+			{
+				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.questComplete}";
+			}
 			CheckQuestProgress();
 			Game.questInProgress = true; // tracking for runtime purposes
 			StartCoroutine(RecordSecondsTakenForQuest());
@@ -690,8 +697,15 @@ namespace pattayaA3
 		{
 			questHud.SetActive(true);
 			questHud.transform.GetChild(0).GetComponent<Text>().text = $"Talk to NPC for reward! {Game.startedQuest.questName} completed!";
-			questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
-			Game.mainsessionData.startedQuest = Game.startedQuest.questId;
+			if (Game.startedQuest.questType.Contains("BATTLE"))
+			{
+				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
+			}
+			else
+			{
+				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.questComplete}";
+			}
+			Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 0;
 			Game.mainsessionData.timeInQuest += Game.questRunTime; // timeInQuest tracked from battleRunTime and questRunTime in case the reference it's not passed when in battle
 			Game.questRunTime = 0;
 			Game.SaveToJSON<save>(Game.saveList);

@@ -59,7 +59,7 @@ public static class Game
     public static int damagePerBattle;
     public static int currentBattleRunTime;
     public static string enemyTypeForAnalytics;
-    public static int gameRunTime;
+    //public static int gameRunTime;
     public static Log currentLog;
 
     //Achievement
@@ -540,7 +540,15 @@ public static class Game
     {
         string[] questdata = mainsessionData.startedQuest.Split('_');
         Game.startedQuest = GetQuestByQuestId(questdata[0]);
-        Game.battleQuestProgress = Int32.Parse(questdata[1]);
+        if(Game.startedQuest.questType.Contains("BATTLE"))
+        {
+			Game.battleQuestProgress = Int32.Parse(questdata[1]);
+		}
+        else
+        {
+            Game.battleQuestProgress = 0;
+        }
+       
     }
 
 

@@ -212,7 +212,7 @@ public class TownDialogManager : MonoBehaviour
 				temporaryText = currentDialog.dialogueText;
 				int expReward = Game.startedQuest.expReward;
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[exp]", expReward.ToString());
-				questCompleteSettings();
+				QuestCompleteSettings();
 				Game.mainsessionData.exp += expReward;
 				break;
 
@@ -223,7 +223,7 @@ public class TownDialogManager : MonoBehaviour
 		}
 	}
 
-	public void questCompleteSettings()
+	public void QuestCompleteSettings()
 	{
 		Game.startedQuest = null;
 		Game.questComplete = false;
@@ -253,6 +253,7 @@ public class TownDialogManager : MonoBehaviour
 				Game.startedQuest = quest;
 				Game.battleQuestProgress = 0;
 				Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + Game.battleQuestProgress;
+				Debug.Log("this is startedQuest" + Game.startedQuest.questId + "_" + "with battlequestProgress" + Game.battleQuestProgress);
 				StartBattleQuest?.Invoke();
 				break;
 			}
