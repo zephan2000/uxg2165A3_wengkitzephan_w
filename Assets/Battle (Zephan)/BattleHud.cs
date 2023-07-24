@@ -9,7 +9,7 @@ namespace pattayaA3
 	{
 		[SerializeField] Text nameText;
 		[SerializeField] Text levelText;
-		public HpBar hpBar;
+		public HPBar hpBar;
 		public ExpBar expBar;
 		public GameObject HpNumbers;
 		public GameObject ExpNumbers;

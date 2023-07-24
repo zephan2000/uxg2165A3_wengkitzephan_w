@@ -33,7 +33,8 @@ public class refSave
     public string displaySpritePath;
     public string startedQuest;
     public string completedQuest;
-    public string completedAchievement;
-    public int runtime;
+    public int totalDamageDealt;
+    public int timeInBattle;
+    public int timeInQuest;
     public string battles;
 }

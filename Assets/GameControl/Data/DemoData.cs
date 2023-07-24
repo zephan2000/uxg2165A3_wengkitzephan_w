@@ -10,7 +10,7 @@ public class DemoData
     public List<RefEnemies> enemydummy;
     public List<refActor> actor;
     public List<refSkills> skills;
-    public List<refSession> session;
+    //public List<refSession> session;
     public List<refDialogue> dialogue;
     public List<refLevel> level;
     public List<refQuest> quest;

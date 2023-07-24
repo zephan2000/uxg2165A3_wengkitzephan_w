@@ -137,11 +137,16 @@ public class Pokemon
 		float heal = move.moveBase.moveHpGain;
 		int damage = move.moveBase.moveDamage + (int)attack;
 		Debug.Log($"This is {this.Base.pokemonName} before MoveHP: {HP}");
-		if(move.moveBase.moveCategory != MoveCategory.Passive) 
-		{ HP -= damage; }
-		else { HP += (int)heal; }
-		
-		Debug.Log($"This is before Heal: {HP}, and move Hp Gain {move.moveBase.moveHpGain}");
+		HP -= damage;
+		if (this._base.pokemonActorType.Contains("enemy"))
+		{
+			Game.damagePerBattle += damage;
+			Game.mainsessionData.totalDamageDealt += damage;
+			Debug.Log("damage dealt :" + Game.mainsessionData.totalDamageDealt + "damage per battle" + Game.damagePerBattle);
+		}	
+			
+
+		Debug.Log($"This is before Heal: {HP}, and move Hp Gain {move.moveBase.moveHpGain}, move Name {move.moveBase.moveName}");
 		HP = Mathf.Clamp(HP + move.moveBase.moveHpGain, 0, this.MaxHP);
 		Debug.Log($"This is {this.Base.pokemonName} current HP: {HP}");
 

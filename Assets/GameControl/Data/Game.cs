@@ -32,6 +32,7 @@ public static class Game
 	//Game
 	public static bool isTrainingWarning;
 	public static bool isBossWarning;
+    public static bool darkWizardDefeated;
 	//Save
 	public static DemoData demoData2;
 	public static List<save> saveList;
@@ -47,6 +48,7 @@ public static class Game
     public static bool questInProgress;
 	public static int battleQuestProgress = 0;
 	public static bool questComplete;
+    public static int questRunTime;
 
     //Analytics
     public static string [] battleResultByEnemyType;
@@ -54,8 +56,11 @@ public static class Game
     public static int battlesWon;
 	public static int battlesLost;
 	public static int battlesRan;
+    public static int damagePerBattle;
+    public static int currentBattleRunTime;
     public static string enemyTypeForAnalytics;
-    public static int gameRunTime;
+    //public static int gameRunTime;
+    public static Log currentLog;
 
     //Achievement
 
@@ -296,7 +301,7 @@ public static class Game
 		mainsessionData = new save(saveId, "lewis", "ACTIVE", currentactor.displayName, currentactor.actorType, 
                                    levelid, alevel.basehp, alevel.basehp, alevel.physicaldmg, alevel.magicdmg, alevel.vitality,
                                    alevel.power, alevel.intelligence, alevel.attspeed, 0, 0, 0, 0, 0, 0, 0, "item10", "item14", "item13", "", 
-                                   currentactor.displaySpritePath, "", "", "", 0,"");
+                                   currentactor.displaySpritePath, "", "", 0, 0,0,"");
 
         SaveToJSON<save>(saveList);
 	}
@@ -334,29 +339,6 @@ public static class Game
 	}
 	#endregion
 	#region File Handling (Save System)
-
-	//public static void ProcessSaveData(DemoData demoData2)
-	//{
- //       //string saveString = File.ReadAllText(saveFilePath);
- //       //DemoData saveData = JsonUtility.FromJson<DemoData>(saveString);
-	//	List<save> saveDataList = new List<save>();
-
-	//	foreach (refSave refData in demoData2.save)
-	//	{
- //           //Debug.Log("This is demodata save id : " + refData.saveId);
- //           save savedata = new save(refData.saveId, refData.seshname, refData.saveStatus, refData.actorName,
- //               refData.actorType, refData.levelId, refData.currenthp, refData.maxhp, refData.physicaldmg,
- //               refData.magicdmg, refData.vitality, refData.power,refData.intelligence, refData.attspeed,
- //               refData.vitality_added, refData.power_added, refData.intelligence_added, refData.attspeed_added,
- //               refData.attributePoint, refData.exp, refData.gold, refData.weapon, refData.helmet, refData.armour,
- //               refData.inventory, refData.displaySpritePath, refData.startedQuest, refData.completedQuest, 
- //               refData.completedAchievement, refData.runtime, refData.battles);
-	//		saveDataList.Add(savedata);
-            
- //       }
-	//	Game.saveList = saveDataList;
- //       //Debug.Log("This is demodata save id : " + saveList[0].saveId);
- //   }
     public static void ProcessSaveData()
     {
         string saveString = File.ReadAllText(saveFilePath);
@@ -373,13 +355,54 @@ public static class Game
                 refData.vitality_added, refData.power_added, refData.intelligence_added, refData.attspeed_added,
                 refData.attributePoint, refData.exp, refData.gold, refData.weapon, refData.helmet, refData.armour,
                 refData.inventory, refData.displaySpritePath, refData.startedQuest, refData.completedQuest,
-                refData.completedAchievement, refData.runtime, refData.battles);
+                refData.totalDamageDealt, refData.timeInBattle, refData.timeInQuest, refData.battles);
             saveDataList.Add(savedata);
 
         }
         Game.saveList = saveDataList;
         //Debug.Log("This is demodata save id : " + saveList[0].saveId);
     }
+    public static void HandleSaveLog()
+    {
+        string logPath = Application.persistentDataPath + "/" + mainsessionData.saveId + "_log" + ".json";
+		FileInfo logInfo = new FileInfo(logPath);
+		if (logInfo.Exists)
+		{
+			string logString = File.ReadAllText(logPath);
+			if (logString.Length != 0)
+			{
+                if(!string.IsNullOrEmpty(logString))
+                {
+					Debug.Log("this is saveString " + logString);
+					Debug.Log($"running log Data function");
+					CreateSaveLog(logPath);
+				}
+			}
+		}
+		else
+		{
+			StreamWriter fileWriter = File.CreateText(logPath);
+			fileWriter.WriteLine();
+			fileWriter.Close();
+		}
+	} 
+    public static void CreateSaveLog(string logPath)
+    {
+		var jsonString = new StringBuilder();
+        int numberOfBattles = mainsessionData.battles.Split('@').Length;
+
+		int avgDamageDealtPerBattle = mainsessionData.totalDamageDealt / numberOfBattles;
+        int avgTimeInBattle = mainsessionData.timeInBattle / numberOfBattles;
+
+		int avgMinsInQuest = (mainsessionData.timeInQuest /60) / mainsessionData.completedQuest.Split('@').Length;
+
+		Log newLog = new Log("Log_" + mainsessionData.saveId, mainsessionData.vitality_added, mainsessionData.power_added, mainsessionData.intelligence_added, avgDamageDealtPerBattle, 
+            avgTimeInBattle,mainsessionData.timeInBattle, avgMinsInQuest, mainsessionData.timeInQuest, numberOfBattles, mainsessionData.battles);
+
+		jsonString.Append($"{JsonUtility.ToJson(newLog)}");
+		Debug.Log($"saving log: {jsonString.ToString()}");
+		WriteFile(logPath, jsonString.ToString());
+	}
     public static save GetSave() //for single play (testing purposes)
 	{
         //Debug.Log("This is demodata save id : " + Game.saveList[0].saveId);
@@ -418,6 +441,7 @@ public static class Game
         Debug.Log("this is mainsessionData Id " + mainsessionData.saveId);
         if (toSave != null)
         {
+            HandleSaveLog();
             Debug.Log($"toSave is not null, this is mainsessionData id: {mainsessionData.saveId}");
 			var jsonString = new StringBuilder();
 			save finalObj = toSave.Last();
@@ -468,34 +492,6 @@ public static class Game
 		}
         
     }
-	// public static List<save> SortSaveFile(List<save> saveList)
-	// {
-	//     Debug.Log("running sort ");
-	//     List<save> saveListCopy = new List<save>(saveList);
-	//     List<save> sortedList = new List<save>();
-	//     save finalsaveObj = saveList[0];
-	//     while(saveListCopy.Count != 0)
-	//     {
-	//         finalsaveObj.saveId = "save_0000";
-	//         foreach(save save in saveListCopy)
-	//         {
-	//             if (Int32.Parse(save.saveId.Split('_')[1]) > Int32.Parse(finalsaveObj.saveId.Split('_')[1]))
-	//             {
-	//                 finalsaveObj = save;
-	//	}
-
-	//	Debug.Log("this is finalsaveObj " + finalsaveObj.saveId);//finding max
-	//}
-	//         sortedList.Add(finalsaveObj);
-	//         saveListCopy.Remove(finalsaveObj);
-	//     }
-	//     foreach (save d in sortedList)
-	//     {
-	//         Debug.Log($"this is sortedList {d.saveId}");
-	//     }
-	//     sortedList.Reverse();
-	//     return sortedList;
-	// }
 
 	public static List<save> SortSaveFile(List<save> saveList)
 	{
@@ -544,7 +540,15 @@ public static class Game
     {
         string[] questdata = mainsessionData.startedQuest.Split('_');
         Game.startedQuest = GetQuestByQuestId(questdata[0]);
-        Game.battleQuestProgress = Int32.Parse(questdata[1]);
+        if(Game.startedQuest.questType.Contains("BATTLE"))
+        {
+			Game.battleQuestProgress = Int32.Parse(questdata[1]);
+		}
+        else
+        {
+            Game.battleQuestProgress = 0;
+        }
+       
     }
 
 
@@ -632,7 +636,6 @@ public static class Game
 
 	#region Analytics
 
-	
 
 	public static void AssignBattleResult()
     {
@@ -682,7 +685,7 @@ public static class Game
 
 	#region Achievement
 
-    public static int GetNumberOfBattles()
+	public static int GetNumberOfBattles()
     {
         int noofBattles = 0;
 
@@ -712,7 +715,13 @@ public static class Game
 	}
 	public static int GetDarkWizardLevel()
 	{
-		return darkWizardLevel;
+		int wizardLevel = 1; 
+        foreach(string battle in mainsessionData.battles.Split('@'))
+        {
+            if (battle.Contains("Wizard"))
+                wizardLevel++;
+        }
+		return darkWizardLevel = wizardLevel;
 	}
 	#endregion
 	public static void SetItemList(List<items> alist)

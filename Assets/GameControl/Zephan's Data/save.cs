@@ -34,8 +34,9 @@ public class save
     public string displaySpritePath;
 	public string startedQuest;
 	public string completedQuest;
-	public string completedAchievement;
-    public int runtime;
+	public int totalDamageDealt;
+	public int timeInBattle;
+    public int timeInQuest;
     public string battles;
 
 	public save(string saveId,
@@ -66,8 +67,9 @@ public class save
                 string displaySpritePath,
                 string startedQuest,
                 string completedQuest,
-                string completedAchievement,
-                int runtime,
+                int totalDamageDealt,
+                int timeInBattle,
+                int timeInQuest,
                 string battles)
     {
         this.saveId = saveId;
@@ -98,8 +100,9 @@ public class save
         this.displaySpritePath = displaySpritePath;
         this.startedQuest = startedQuest;
         this.completedQuest = completedQuest;
-        this.completedAchievement = completedAchievement;
-        this.runtime = runtime;
+        this.totalDamageDealt = totalDamageDealt;
+        this.timeInBattle = timeInBattle;
+        this.timeInQuest = timeInQuest;
         this.battles = battles;
     }
 

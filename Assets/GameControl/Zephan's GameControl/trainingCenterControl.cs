@@ -5,7 +5,7 @@ using UnityEngine.UI;
 //Zephan
 namespace pattayaA3
 {
-    public class TrainingCenterControl: MonoBehaviour, Interactable
+    public class trainingCenterControl: MonoBehaviour, Interactable
     {
         //Item text
         [SerializeField] Text enemy1;

@@ -49,10 +49,6 @@ MonoBehaviour:
     m_Address: Assets/Paths
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 91a4d88a5996de74d997982a64137411
-    m_Address: Assets/Paths/export.json
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 65bee4794f171074f9dafd918cb8f177
     m_Address: Assets/Paths/save.json
     m_ReadOnly: 0

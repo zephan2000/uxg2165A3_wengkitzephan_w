@@ -28,6 +28,8 @@ namespace pattayaA3
 		private void Start()
 		{
 			Game.isBattleOver = false;
+			Game.damagePerBattle = 0;
+			Game.currentBattleRunTime = 0;
 			StartCoroutine(RecordSecondsTakenPerBattle());
 			StartCoroutine(SetupBattle());
 		}
@@ -48,7 +50,11 @@ namespace pattayaA3
 			Game.playerRan = false;
 			Debug.Log($"{Game.chosenenemyName},{Game.chosenenemyType}");
 			//playerUnit.BattleUnitSetup(Game.sessionactorName,Game.sessionactorType);
-			playerUnit.BattleUnitSetup(Game.mainsessionData.actorName, Game.mainsessionData.actorType, Game.playerLevel); //need to add an actorName to save class
+			playerUnit.BattleUnitSetup(Game.mainsessionData.actorName, Game.mainsessionData.actorType, Game.playerLevel);
+			if(Game.chosenenemyName.Contains("Wizard"))
+			{
+				enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetEnemyPokemonLevel());
+			}//need to add an actorName to save class
 			enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetEnemyPokemonLevel());
 			dialogBox.SetMoveName(playerUnit.Pokemon.Moves);
 			yield return dialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.pokemonName} has appeared.");
@@ -117,14 +123,11 @@ namespace pattayaA3
 			yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.pokemonName} used {move.moveBase.moveName}");
 			move.UsesLeft--;
 			yield return new WaitForSeconds(1f);
-			if(move.moveBase.moveCategory == MoveCategory.Passive) // status = passive, may remove if no effect since heal function is already done
-			{
-				yield return StartCoroutine(RunMoveEffects(sourceUnit.Pokemon, targetUnit.Pokemon, move)); ;
-			}
-			else
-			{
-				yield return StartCoroutine(CheckForHeal(sourceUnit, targetUnit, move)); 
-			}
+			//if(move.moveBase.moveCategory == MoveCategory.Passive) // status = passive, may remove if no effect since heal function is already done
+			//{
+			//	yield return StartCoroutine(RunMoveEffects(sourceUnit.Pokemon, targetUnit.Pokemon, move)); ;
+			//}
+			yield return StartCoroutine(CheckForHeal(sourceUnit, targetUnit, move)); 
 			
 			if (targetUnit.Pokemon.HP <= 0)
 			{
@@ -139,6 +142,7 @@ namespace pattayaA3
 		{
 			if (move.moveBase.moveTarget == MoveTarget.Self) // for heal
 			{
+				Debug.Log("healing");
 				sourceUnit.Pokemon.InitMove(move, sourceUnit.Pokemon);
 				yield return sourceUnit.Hud.UpdateBattleData();
 			}
@@ -148,18 +152,18 @@ namespace pattayaA3
 				yield return targetUnit.Hud.UpdateBattleData();
 			}
 		}
-		IEnumerator RunMoveEffects( Pokemon sourceUnit, Pokemon targetUnit, Move move) // encapsulation so that status changes can be added
-		{
-			//var effects = move.moveBase.GetEffects();
-			//if (effects.Boosts != null)
-			//{
-			//	if (move.moveBase.GetMoveTargetFromSkill() == MoveTarget.Self)
-			//		sourceUnit.ApplyBoosts(effects.Boosts);
-			//	else
-			//		targetUnit.ApplyBoosts(effects.Boosts);
-			//}
-			yield return null;
-		}
+		//IEnumerator RunMoveEffects( Pokemon sourceUnit, Pokemon targetUnit, Move move) // encapsulation so that status changes can be added
+		//{
+		//	//var effects = move.moveBase.GetEffects();
+		//	//if (effects.Boosts != null)
+		//	//{
+		//	//	if (move.moveBase.GetMoveTargetFromSkill() == MoveTarget.Self)
+		//	//		sourceUnit.ApplyBoosts(effects.Boosts);
+		//	//	else
+		//	//		targetUnit.ApplyBoosts(effects.Boosts);
+		//	//}
+		//	yield return null;
+		//}
 
 		void CheckForBattleOver(BattleUnit faintedUnit)
 		{
@@ -170,6 +174,9 @@ namespace pattayaA3
 			}
 			else
 			{
+				if(faintedUnit.Pokemon.Base.pokemonName == "Dark Wizard")
+					Game.darkWizardDefeated = true;
+
 				BattleOver(true);
 			}
 
@@ -181,7 +188,8 @@ namespace pattayaA3
 			{
 				Debug.Log($"Exp before gain: {Game.mainsessionData.exp}/ {Game.currentmaxEXP}");
 				Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain;
-				if(Game.questInProgress && Game.startedQuest.questType == "BATTLE")
+				Debug.Log("this is battle info :" + Game.questInProgress + " / " + Game.startedQuest.questType);
+				if (Game.questInProgress && Game.startedQuest.questType.Contains("BATTLE"))
 				{
 					CheckBattleQuestProgress();
 				}
@@ -192,7 +200,8 @@ namespace pattayaA3
 				if(Game.playerRan != true)
 					Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain / 2;
 			}
-			Game.mainsessionData.runtime += battleRunTime;
+			Game.mainsessionData.timeInBattle += battleRunTime;
+			Game.mainsessionData.timeInQuest += battleRunTime;
 			Game.AssignBattleResult();
 			Game.SaveToJSON<save>(Game.saveList);
 			Game.isBattleOver = false;
@@ -201,8 +210,10 @@ namespace pattayaA3
 		}
 		void CheckBattleQuestProgress()
 		{
-			if(Game.startedQuest.actorTypeToSlay == Game.chosenenemyType)
+			Debug.Log("this is quest details:" + Game.startedQuest.actorTypeToSlay + " / " + Game.chosenenemyType);
+			if (Game.startedQuest.actorTypeToSlay == Game.chosenenemyType)
 			{
+				
 				Game.UpdateBattleQuestProgress();
 			}
 		}
@@ -245,8 +256,9 @@ namespace pattayaA3
 					Game.playerRan = true;
 					Game.playerWon = false;
 					Game.isBattleOver = true;
-					Debug.Log($"This is battle runtime: {battleRunTime} with mainsessionData runtime: {Game.mainsessionData.runtime}");
-					Game.mainsessionData.runtime += battleRunTime;
+					Debug.Log($"This is battle runtime: {battleRunTime} with mainsessionData runtime: {Game.mainsessionData.timeInBattle}");
+					Game.currentBattleRunTime = battleRunTime;
+					Game.mainsessionData.timeInBattle += battleRunTime;
 					Game.AssignBattleResult();
 					Game.SaveToJSON<save>(Game.saveList);
 					ExitLevel("Town");
@@ -285,8 +297,8 @@ namespace pattayaA3
 			if (Input.GetKeyDown(KeyCode.Return))
 			{
 				StopAllCoroutines();
-				if (!allowNext) return;
-				if (allowNext) allowNext = false;
+				//if (!allowNext) return;
+				//if (allowNext) allowNext = false;
 				Debug.Log("Return receiving input");
 				var move = playerUnit.Pokemon.Moves[currentMove];
 				if (move.UsesLeft == 0) return;

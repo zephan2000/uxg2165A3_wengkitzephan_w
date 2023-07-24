@@ -16,14 +16,8 @@ public class DataManager : MonoBehaviour
 
     public void LoadRefData()
     {
-        //Debug.Log("This is persistent data path : " + Application.persistentDataPath);
-
-        
-
-
         Game.filePath = "Assets/Paths/export.json";
-        //Game.saveFilePath = "Assets/Paths/save.json";
-        //DemoData demoData = null;
+        #region Save System (Zephan)
         Game.saveFilePath = Path.Combine(Application.persistentDataPath, "save.json");
         Debug.Log($"this is the persistentDatapath {Game.saveFilePath}");
 		FileInfo saveFileInfo = new FileInfo(Game.saveFilePath);
@@ -47,11 +41,13 @@ public class DataManager : MonoBehaviour
             fileWriter.WriteLine();
             fileWriter.Close();
         }
-        //string saveString = File.ReadAllText(Game.saveFilePath);
-        //if (saveString != "")
-        //    Game.ProcessSaveData();
+		#endregion 
 
-        AssetManager.LoadFile("export.json", Game.filePath, (TextAsset t) =>
+		//string saveString = File.ReadAllText(Game.saveFilePath);
+		//if (saveString != "")
+		//    Game.ProcessSaveData();
+
+		AssetManager.LoadFile("export.json", Game.filePath, (TextAsset t) =>
         {
             //t.text = 
             DemoData demoData = JsonUtility.FromJson<DemoData>(t.text);
@@ -141,7 +137,7 @@ public class DataManager : MonoBehaviour
         //List<player> playerList = new List<player>();
         List<actor> actorList = new List<actor>();
         List<skills> skillList = new List<skills>();
-        List<session> sessionList = new List<session>();
+        //List<session> sessionList = new List<session>();
         List<Dialog> dialogList = new List<Dialog>();
         List<level> levelList = new List<level>();
         List<Quest> questList = new List<Quest>();
@@ -195,17 +191,18 @@ public class DataManager : MonoBehaviour
         }
         Game.SetActorList(actorList);
 
-        foreach (refLevel reflevel in demoData.level)
-        {
-            level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.expGain, reflevel.goldGain, reflevel.basehp,
-                reflevel.physicaldmg, reflevel.magicdmg, reflevel.vitality, reflevel.power, reflevel.intelligence, reflevel.attspeed);
 
-            levelList.Add(lEvel);
-        }
-        Game.SetLevelList(levelList);
 
-        //Zephan
-        foreach(refDialogue dialogue in demoData.dialogue)
+		#region Zephan's Data
+		foreach (refLevel reflevel in demoData.level)
+		{
+			level lEvel = new level(reflevel.levelId, reflevel.actorType, reflevel.expToGain, reflevel.maxExp, reflevel.expGain, reflevel.goldGain, reflevel.basehp,
+				reflevel.physicaldmg, reflevel.magicdmg, reflevel.vitality, reflevel.power, reflevel.intelligence, reflevel.attspeed);
+
+			levelList.Add(lEvel);
+		}
+		Game.SetLevelList(levelList);
+		foreach (refDialogue dialogue in demoData.dialogue)
         {
             Dialog diAlogue = new Dialog(dialogue.dialogueId, dialogue.nextdialogueId, dialogue.dialogueType, dialogue.currentSpeakerName,
                 dialogue.displaySpritePathLeft, dialogue.displaySpritePathRight, dialogue.dialogueText, dialogue.choices);
@@ -220,6 +217,7 @@ public class DataManager : MonoBehaviour
             //Debug.Log($"this is quEst : {quEst.questId}");
 		}
         Game.questList = questList;
+		#endregion
 
 
 	}

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Burst;
 //using UnityEditor;
 //using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -49,12 +51,14 @@ namespace pattayaA3
 		private bool allowEscape;
 		private bool allowReturn;
 		private bool isProgressMenuOpen;
-		private int PlayTimeHour;
-		private int PlayTimeMinute;
-		private int PlayTimeSecond;
-		private int MyPlayTime;
+		private int questRunTime;
+		//private int PlayTimeHour;
+		//private int PlayTimeMinute;
+		//private int PlayTimeSecond;
+		//private int MyPlayTime;
 
-		void Start()
+
+		void Start() //Zephan
 		{
 			TownDialogManager.Instance.OnShowDialog += () =>
 			{
@@ -104,11 +108,18 @@ namespace pattayaA3
 			//Debug.Log($"finding maxHp by Id: {Game.mainsessionData.maxhp}");
 			trainingCenterBackground.SetActive(false);
 			Game.enemyPokemonLevel = 1;
+			if (Game.darkWizardDefeated)
+			{
+				player.levelUpText.SetActive(true);
+				player.levelUpText.GetComponent<Text>().text = "Game Complete";
+			}
+				
 			if (Game.mainsessionData.startedQuest != "")
 			{
 				questStatus = QuestStatus.Ongoing;
 				Game.questInProgress = true;
 				Game.SetQuestData();
+				StartCoroutine(RecordSecondsTakenForQuest());
 				StartBattleQuestHud();
 				CheckQuestProgress();
 			}
@@ -164,9 +175,10 @@ namespace pattayaA3
 				}
 				
 			}
-			//Raiyan
+			
 			if (Input.GetKeyDown(KeyCode.I) && state == GameState.FreeRoam | state == GameState.Inventory)
             {
+				//Raiyan the rest is Zephan
 				if (!isOpenInventory)
 				{
 					Debug.Log($"this is mainsessionData before inventory: {Game.mainsessionData.saveId}, {Game.mainsessionData.actorName}");
@@ -242,6 +254,8 @@ namespace pattayaA3
 			player.currentposition = player.GetCurrentPosition(); // check what is the current player position
 			gameController.LoadScene(aScene);
 			gameController.RemoveScene(sceneName);
+			Game.mainsessionData.timeInQuest = questRunTime;
+			Game.SaveToJSON<save>(Game.saveList);
 		}
 
 		public PlayerScript GetPlayer()
@@ -254,7 +268,7 @@ namespace pattayaA3
 			return isStarted;
 		}
 
-		#region PauseMenu Settings
+		#region PauseMenu Settings (Zephan)
 		public void TogglePauseMenu()
 		{
 
@@ -375,12 +389,14 @@ namespace pattayaA3
 					break;
 				case "Save":
 					Debug.Log("Saving");
+					Game.mainsessionData.timeInQuest = questRunTime;
 					Game.SaveToJSON<save>(Game.saveList);
 					currentChoice = 0;
 					break;
 				case "Exit":
 					gameController.GoToLevelSelect();
 					currentChoice = 0;
+					Game.mainsessionData.timeInQuest = questRunTime;
 					Game.mainsessionData.saveStatus = "INACTIVE";
 					Debug.Log($"this is mainsessionData's saveId {Game.mainsessionData.saveId} with saveStatus {Game.mainsessionData.saveStatus}");
 					Game.SaveToJSON<save>(Game.saveList);
@@ -396,7 +412,7 @@ namespace pattayaA3
 
 		#endregion
 
-		#region Training Center
+		#region Training Center (Zephan)
 		public void SetTrainingCenter(bool aInventory)
 		{
 			isOpenTrainingCenter = aInventory;
@@ -405,7 +421,7 @@ namespace pattayaA3
 			{
 				state = GameState.Training;
 				Debug.Log($"attempting to interact, state is: {state}");
-				trainingCenterBackground.GetComponent<TrainingCenterControl>().Interact();
+				trainingCenterBackground.GetComponent<trainingCenterControl>().Interact();
 			}
 			else
 			{
@@ -414,7 +430,7 @@ namespace pattayaA3
 				//	TownDialogManager.Instance.dialogBox.SetActive(false);
 				//}
 				state = GameState.FreeRoam;
-				trainingCenterBackground.GetComponent<TrainingCenterControl>().OffTrainingCenter();
+				trainingCenterBackground.GetComponent<trainingCenterControl>().OffTrainingCenter();
 
 				player.isTouchingDoor = false;
 			}
@@ -424,9 +440,9 @@ namespace pattayaA3
 
 			SetTrainingCenter(!isOpenTrainingCenter);
 		}
-		#endregion 
+		#endregion
 
-		#region Progress Menu
+		#region Progress Menu (Zephan)
 		public void ToggleProgressMenu()
 		{
 			SetProgressMenu(!isProgressMenuOpen);
@@ -452,18 +468,18 @@ namespace pattayaA3
 
 					}
 
-					else if (child.gameObject.name == "Quest Ongoing")
+					else if (child.gameObject.name == "Average Damage Per Battle")
 					{
 						Debug.Log($"this is quest ongoing {Game.mainsessionData.startedQuest}");
-						child.gameObject.GetComponent<Text>().text = "Quest Ongoing: " + Game.mainsessionData.startedQuest.Split('_')[0];
+						child.gameObject.GetComponent<Text>().text = "Average Damage Per Battle: " + (Game.mainsessionData.totalDamageDealt / Game.mainsessionData.battles.Split('@').Length);
 					}
-					else if (child.gameObject.name == "Quest Completed")
+					else if (child.gameObject.name == "Quest Info")
 					{
-						child.gameObject.GetComponent<Text>().text = "Quest Completed: " + GetCompletedQuestData();
+						child.gameObject.GetComponent<Text>().text = "Quest Ongoing: " + Game.mainsessionData.startedQuest.Split('_')[0] + " Quest Completed: " + GetCompletedQuestData();
 					}
-					else if (child.gameObject.name == "Achievements Completed")
+					else if (child.gameObject.name == "Average Time Spent Per Completed Quest")
 					{
-						child.gameObject.GetComponent<Text>().text = "Achievement: ";
+						child.gameObject.GetComponent<Text>().text = "Average Time Spent Per Completed Quest:" + (Game.mainsessionData.timeInQuest / Game.mainsessionData.completedQuest.Split('@').Length);
 					}
 					else if (child.gameObject.name == "Return")
 					{
@@ -472,7 +488,7 @@ namespace pattayaA3
 					}
 					else if (child.gameObject.name == "Minutes Per Battle")
 					{
-						child.gameObject.GetComponent<Text>().text = "Average Minutes Per Battle: " + ((Game.mainsessionData.runtime/60)/ Game.mainsessionData.battles.Split('@').Length);
+						child.gameObject.GetComponent<Text>().text = "Average Minutes Per Battle: " + ((Game.mainsessionData.timeInBattle/60)/ Game.mainsessionData.battles.Split('@').Length);
 						Debug.Log("assign run time");
 					}
 					else
@@ -526,20 +542,15 @@ namespace pattayaA3
 		}
 
 		#endregion
-		#region Battle And Quest Analytics
-		public IEnumerator RecordTimeRoutine()
+		#region Battle And Quest Analytics (Zephan)
+		public IEnumerator RecordSecondsTakenForQuest()
 		{
-			TimeSpan ts;
-			while (true)
+			while (Game.questInProgress)
 			{
 				yield return new WaitForSeconds(1);
-				MyPlayTime += 1;
+				questRunTime += 1;
+				Debug.Log($"this is quest run time: {questRunTime}, with battleStatus {Game.questInProgress}");
 
-				ts = TimeSpan.FromSeconds(MyPlayTime);
-
-				PlayTimeHour = (int)ts.TotalHours;
-				PlayTimeMinute = ts.Minutes;
-				PlayTimeSecond = ts.Seconds;
 			}
 		}
 		public string GetCompletedQuestData()
@@ -664,37 +675,79 @@ namespace pattayaA3
 		}
 		#endregion
 
-		#region Quest
+		#region Quest (Zephan)
 		public void StartBattleQuestHud()
 		{
 			questHud.SetActive(true);
 			questHud.transform.GetChild(0).GetComponent<Text>().text = $"Quest Requirement: {Game.startedQuest.questName}";
-			questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
+			if(Game.startedQuest.questType.Contains("BATTLE"))
+			{
+				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
+			}
+			else
+			{
+				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.questComplete}";
+			}
 			CheckQuestProgress();
+			Game.questInProgress = true; // tracking for runtime purposes
+			StartCoroutine(RecordSecondsTakenForQuest());
 			Game.SaveToJSON<save>(Game.saveList);
 		}
 		public void QuestCompleteHud()
 		{
 			questHud.SetActive(true);
 			questHud.transform.GetChild(0).GetComponent<Text>().text = $"Talk to NPC for reward! {Game.startedQuest.questName} completed!";
-			questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
-			Game.mainsessionData.startedQuest = Game.startedQuest.questId;
-
+			if (Game.startedQuest.questType.Contains("BATTLE"))
+			{
+				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.battleQuestProgress}/{Game.startedQuest.questReq}";
+			}
+			else
+			{
+				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.questComplete}";
+			}
+			Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 0;
+			Game.mainsessionData.timeInQuest += Game.questRunTime; // timeInQuest tracked from battleRunTime and questRunTime in case the reference it's not passed when in battle
+			Game.questRunTime = 0;
 			Game.SaveToJSON<save>(Game.saveList);
 		}
 
 		public void RewardCollectedHud()
 		{
 			questHud.SetActive(false);
-			questStatus = QuestStatus.Completed;
+			Game.questInProgress = false;
+			questStatus = QuestStatus.Inactive;
 		}
 		public void CheckQuestProgress()
 		{
-			if (Game.battleQuestProgress == Game.startedQuest.questReq)
+			if(Game.startedQuest.questType.Contains("BATTLE"))
 			{
-				Game.questComplete = true;
-				QuestCompleteHud();
+				if (Game.battleQuestProgress == Game.startedQuest.questReq)
+				{
+					Game.questComplete = true;
+					questStatus = QuestStatus.Completed;
+					QuestCompleteHud();
+				}
 			}
+			else if (Game.startedQuest.questType.Contains("TIME"))
+			{
+				if (Game.currentBattleRunTime <= Game.startedQuest.questReq && Game.chosenenemyType == Game.startedQuest.actorTypeToSlay)
+				{
+					Game.questComplete = true;
+					questStatus = QuestStatus.Completed;
+					QuestCompleteHud();
+				}
+			}
+			else if (Game.startedQuest.questType.Contains("DAMAGE"))
+			{
+				Debug.Log("this is damage dealt:" + Game.damagePerBattle + "questReq: " + Game.startedQuest.questReq);
+				if (Game.damagePerBattle >= Game.startedQuest.questReq)
+				{
+					Game.questComplete = true;
+					questStatus = QuestStatus.Completed;
+					QuestCompleteHud();
+				}
+			}
+
 
 			else Game.questComplete = false;
 		}
