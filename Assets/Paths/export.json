@@ -2491,7 +2491,7 @@
             "questId": "QUEST5",
             "questType": "TIME_1",
             "questName": "Defeat the Bat in 100 seconds",
-            "questReq": "3",
+            "questReq": "100",
             "actorTypeToSlay": "enemyBat",
             "expReward": "30",
             "goldReward": "50",
