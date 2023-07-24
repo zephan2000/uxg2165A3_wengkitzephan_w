@@ -91,6 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd1ab761c9f3ef4b8740d8bbbc1e86b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventorybox: {fileID: 0}
+  inventoryboxObject: {fileID: 0}
   itemListing: {fileID: 0}
   itemListingObject: {fileID: 0}
   itemUi: {fileID: 0}
@@ -134,8 +136,9 @@ MonoBehaviour:
     displaySpritePath: 
     startedQuest: 
     completedQuest: 
-    completedAchievement: 
-    runtime: 0
+    totalDamageDealt: 0
+    timeInBattle: 0
+    timeInQuest: 0
     battles: 
   currentcount: 0
   samecount: 0
@@ -152,7 +155,7 @@ GameObject:
   - component: {fileID: 328589883218474999}
   - component: {fileID: 5207422084171500993}
   m_Layer: 5
-  m_Name: item08_Stat3
+  m_Name: item20_Stat3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -219,7 +222,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +3Intelligence
+  m_Text: +0Intelligence
 --- !u!1001 &5117385393685751699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -533,7 +536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6230736892237825375, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Name
-      value: item08_Stat2
+      value: item20_Stat2
       objectReference: {fileID: 0}
     - target: {fileID: 6590003235538800373, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Name
@@ -541,7 +544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7259553297418648957, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Name
-      value: item08
+      value: item20
       objectReference: {fileID: 0}
     - target: {fileID: 7484238679728443378, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -569,7 +572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7536907413857011137, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Name
-      value: item08_Stat1
+      value: item20_Stat1
       objectReference: {fileID: 0}
     - target: {fileID: 8742998105250348819, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Text
@@ -577,7 +580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8862240794123252038, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Text
-      value: +0Vitality
+      value: +5Vitality
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1830542435655892322, guid: 611b73c868d74c246af996352e0da65d, type: 3}
@@ -819,7 +822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7840749212610713787, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}
       propertyPath: m_Text
-      value: Lightning Wand
+      value: Golden Cuirass
       objectReference: {fileID: 0}
     - target: {fileID: 7840749212610713787, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}
       propertyPath: m_FontData.m_Alignment

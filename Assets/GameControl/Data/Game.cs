@@ -781,18 +781,21 @@ public static class Game
         mainsessionData.weapon = Game.Getitemsbyid(change).displayName;
     }
 
-    public static void AddItemToInventory(string itemid)
+    public static string AddItemToInventory(string itemid, string replaceString)
     {
-        if (mainsessionData.inventory == "")
+        //string itemString = "";
+        if (replaceString == "")
         {
-            mainsessionData.inventory += itemid;
+            replaceString += itemid;
             //eachitem.realcount++;
         }
         else
         {
-            mainsessionData.inventory += "," + itemid;
+            replaceString += "," + itemid;
             //eachitem.realcount++;
         }
+        return replaceString;
+
     }
 
     public static EachItem GetEachItem()

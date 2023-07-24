@@ -21,6 +21,7 @@ TagManager:
   - ShopBG
   - Analytics
   - Return
+  - InventoryBG
   layers:
   - Default
   - TransparentFX

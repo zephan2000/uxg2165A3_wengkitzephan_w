@@ -2439,7 +2439,7 @@ GameObject:
   - component: {fileID: 2709365487112140323}
   m_Layer: 5
   m_Name: inventory_background (1)
-  m_TagString: Untagged
+  m_TagString: InventoryBG
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3993,6 +3993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd1ab761c9f3ef4b8740d8bbbc1e86b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventorybox: {fileID: 2709365487112140323}
   itemListing: {fileID: 8350241295695607749}
   itemListingObject: {fileID: 0}
   itemUi: {fileID: 5091864157648745266, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}
@@ -4036,8 +4037,9 @@ MonoBehaviour:
     displaySpritePath: 
     startedQuest: 
     completedQuest: 
-    completedAchievement: 
-    runtime: 14
+    totalDamageDealt: 0
+    timeInBattle: 0
+    timeInQuest: 0
     battles: enemyWizard_0@enemyGhost_2
   currentcount: 0
   samecount: 0

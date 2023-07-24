@@ -1,3 +1,4 @@
+using pattayaA3;
 using System.Collections;
 using System.Collections.Generic;
 //using UnityEditor;
@@ -84,7 +85,7 @@ public class ShopMenu : MonoBehaviour
     void Update()
     {
         //Debug.Log("This is shop state : "+shop_state);
-        ConstantlyCheck();
+        //ConstantlyCheck();
         if (runonce == false)
         {
             CheckMenu();
@@ -145,6 +146,7 @@ public class ShopMenu : MonoBehaviour
 
     public void EnableBuy()
     {
+        gold.text = "Gold : " + Game.mainsessionData.gold;
         //DisableItemList();
         scroll.SetActive(enabled);
         if (!runonce)
@@ -156,8 +158,11 @@ public class ShopMenu : MonoBehaviour
             {
                 //ShopList = Game.GetItemList();
                 //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
-                shopItem.ActivateUI(listinventory[i], shop_state);
-                shopItem.UpdateSprite(listinventory[i].displaySpritePath, GameObject.Find(listinventory[i].itemId).GetComponent<Image>());
+                GameObject imaging = shopItem.ActivateUI(listinventory[i], shop_state);
+                //shopItem.UpdateSprite(listinventory[i].displaySpritePath, GameObject.Find(listinventory[i].itemId).GetComponent<Image>());'
+                imaging = imaging.transform.GetChild(0).gameObject;
+                imaging = imaging.transform.GetChild(0).gameObject;
+                shopItem.UpdateSprite(listinventory[i].displaySpritePath, imaging.GetComponent<Image>());
 
                 //Game.ProcessSaveData(Game.demoData2);
                 //Game.ProcessSaveData();
@@ -171,12 +176,13 @@ public class ShopMenu : MonoBehaviour
     }
     public void EnableSell()
     {
-
+        gold.text = "Gold : " + Game.mainsessionData.gold;
         scroll.SetActive(enabled);
         if (!(Game.GetItemsInInventory() == null))
         {
             if (!runonce)
             {
+
                 DisableItemList();
                 ShopList = Game.GetItemsInInventory();
                 List<items> listinventory = ShopList;
@@ -185,8 +191,11 @@ public class ShopMenu : MonoBehaviour
                     //hopList = Game.GetItemsInInventory();
                     //Debug.Log("This is Sparta : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
                     //Debug.Log("this item in inventory : " + listinventory[i].displayName);
-                    shopItem.ActivateUI(listinventory[i], shop_state);
-                    shopItem.UpdateSprite(listinventory[i].displaySpritePath, GameObject.Find(listinventory[i].itemId).GetComponent<Image>());
+                    GameObject imaging = shopItem.ActivateUI(listinventory[i], shop_state);
+                    //shopItem.UpdateSprite(listinventory[i].displaySpritePath, GameObject.Find(listinventory[i].itemId).GetComponent<Image>());'
+                    imaging = imaging.transform.GetChild(0).gameObject;
+                    imaging = imaging.transform.GetChild(0).gameObject;
+                    shopItem.UpdateSprite(listinventory[i].displaySpritePath, imaging.GetComponent<Image>());
                     //Debug.Log("This is ramadan : ");
                     //Game.ProcessSaveData(Game.demoData2);
                     //Game.ProcessSaveData();

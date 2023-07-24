@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 //using UnityEditor.Search;
 //using UnityEditor;
 //using UnityEditor.Search;
@@ -10,6 +11,9 @@ namespace pattayaA3
 {
     public class EachItem : MonoBehaviour
     {
+        public inventorybox inventorybox;
+        public GameObject inventoryboxObject;
+
         public Transform itemListing;
         public Transform itemListingObject;
 
@@ -51,7 +55,7 @@ namespace pattayaA3
             Game.ProcessSaveData();
             Game.GetSave();
             inventoryList = Game.GetItemsInInventory();
-
+//
             if (GameObject.FindWithTag("ItemList") == null)
             {
                 
@@ -60,6 +64,21 @@ namespace pattayaA3
             {
                 itemListing = GameObject.FindWithTag("ItemList").transform;
             }
+            if (GameObject.FindWithTag("InventoryBG") == null)
+            {
+                Debug.Log("Nlling");
+            }
+            else
+            {
+                inventoryboxObject = GameObject.FindGameObjectWithTag("InventoryBG");
+            }
+            //inventorybox = GameObject.FindWithTag("InventoryBG").GetComponent<inventorybox>();
+        }
+
+        public void Awake()
+        {
+            //inventorybox = GameObject.FindWithTag("InventoryBG").GetComponent<inventorybox>();
+            //inventoryboxObject = GameObject.FindGameObjectWithTag("InventoryBG");
         }
 
         public void GetAllItems()
@@ -88,18 +107,25 @@ namespace pattayaA3
             });
         }
 
-        public void ActivateUI(items itemIteration)
+        public GameObject ActivateUI(items itemIteration)
         {
-            //Debug.Log("First" + itemGroup_child01_itemUI.name);
+            //Debug.Log("1step");
+            GameObject passOn;
 
             //Get itemUI game object
             itemGroup_child01_itemUI = itemGroup.transform.GetChild(0).gameObject;
+            //Debug.Log("2step");
             //Get itemUI/Image game object
             itemGroup_child01_itemUI = itemGroup_child01_itemUI.transform.GetChild(0).gameObject;
+            //Debug.Log("3step");
             //Setting Item Image
             string itemImage = itemIteration.displaySpritePath;
             //Debug.Log("This is : " + itemIteration.itemId + " With Sprite Path :" + itemImage);
-            UpdateSprite(itemImage, itemGroup_child01_itemUI.GetComponent<Image>());
+            //Debug.Log("4step");
+            //Debug.Log("This object name : " + itemGroup_child01_itemUI.name);
+            //UpdateSprite(itemImage, itemGroup_child01_itemUI.GetComponent<Image>());
+            //eachItem.UpdateSprite(listinventory[i].displaySpritePath, (GameObject.Find(listinventory[i].itemId + "(clone)").GetComponent<Image>()));
+            //Debug.Log("5step");
 
             //AssetManager.LoadSprite(itemImage, (Sprite s) =>
             //{
@@ -154,11 +180,10 @@ namespace pattayaA3
 
             //Instantiation of itemGroup object
             itemGroup.name = itemIteration.itemId;
-
-            itemGroupToBeCreated = Instantiate(itemGroup, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+            passOn = itemGroupToBeCreated = Instantiate(itemGroup, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
             itemGroupToBeCreated.transform.SetParent(GameObject.FindGameObjectWithTag("ItemList").transform, false);
 
-
+            return passOn;
         }
 
         public void DeActivateInvent()
@@ -177,79 +202,105 @@ namespace pattayaA3
             }
         }
 
-        public void AddInventoryfromButton()
-        {
-            string itemEquip = OnClicked(equipButton);
+        //public void AddInventoryfromButton()
+        //{
+        //    string itemEquip = OnClicked(equipButton);
 
-            string[] itemEquipList = itemEquip.Split("(");
-            Game.AddItemToInventory(itemEquipList[0]);
-        }
+        //    string[] itemEquipList = itemEquip.Split("(");
+        //    Game.AddItemToInventory(itemEquipList[0]);
+        //}
+        //public string AddItemToInventory(string itemid, string replaceString)
+        //{
+        //    //string itemString = "";
+        //    if (replaceString == "")
+        //    {
+        //        replaceString += itemid;
+        //        //eachitem.realcount++;
+        //    }
+        //    else
+        //    {
+        //        replaceString += "," + itemid;
+        //        //eachitem.realcount++;
+        //    }
+        //    return replaceString;
 
-        public void ReplaceEquipment()
+        //}
+        public string ReplaceEquipment(string replaceString)
         {
+
             string itemEquip = OnClicked(equipButton);
-            //Debug.Log("Equippin item: "+itemEquip);
+            string FinalString = "";
+            Debug.Log("Equippin item: "+itemEquip);
             //string[] itemEquipList = itemEquip.Split("(");
 
             switch (Game.Getitemsbyid(itemEquip).itemType)
             {
                 case "weapon":
-                    Game.AddItemToInventory(Game.mainsessionData.weapon);
+                    FinalString = Game.AddItemToInventory(Game.mainsessionData.weapon, replaceString);
                     Game.mainsessionData.weapon = itemEquip;
                     Game.SaveToJSON<save>(Game.saveList);
                     //Debug.Log("Equipped item: " + Game.mainsessionData.weapon);
 
                     break;
                 case "helmet":
-                    Game.AddItemToInventory(Game.mainsessionData.helmet);
+                    FinalString = Game.AddItemToInventory(Game.mainsessionData.helmet, replaceString);
                     Game.mainsessionData.helmet = itemEquip;
                     Game.SaveToJSON<save>(Game.saveList);
                     //Debug.Log("Equipped item: " + Game.mainsessionData.helmet);
                     break;
                 case "armour":
-                    Game.AddItemToInventory(Game.mainsessionData.armour);
+                    FinalString = Game.AddItemToInventory(Game.mainsessionData.armour, replaceString);
                     Game.mainsessionData.armour = itemEquip;
                     Game.SaveToJSON<save>(Game.saveList);
                     //Debug.Log("Equipped item: " + Game.mainsessionData.armour);
                     break;
             }
 
-            Debug.Log("items: " + Game.mainsessionData.inventory);
-            Debug.Log("items: " + Game.mainsessionData.weapon);
+            return FinalString;
+            //Debug.Log("items: " + Game.mainsessionData.inventory);
+            //Debug.Log("items: " + Game.mainsessionData.weapon);
         }
         public void RemoveFromItemList()
         {
             string replaceString = "";
             string itemEquip = OnClicked(equipButton);
-            string[] itemEquipList = itemEquip.Split("(");
+            //Debug.Log("This is button clicked: " + itemEquip);
+            //string[] itemEquipList = itemEquip.Split("(");
 
             string inventoryList = Game.mainsessionData.inventory;
             foreach (var a in Game.GetItemsInInventory())
             {
-                Debug.Log("Item : " + a.itemId);
-                if (!(a.itemId == itemEquipList[0]))
+                //Debug.Log("Item : " + a.itemId);
+                if (!(a.itemId == itemEquip))
                 {
-                    Debug.Log("Will be removed");
+                    //Debug.Log("Will be removed");
                     replaceString += a.itemId;
                     replaceString += ",";
 
                 }
+                //Debug.Log("Lsit : " + replaceString);
             }
-            Debug.Log("Finished list : " + replaceString);
-            Debug.Log("Inventory : " + Game.GetItemsInInventory());
-            Game.mainsessionData.inventory = replaceString;
-            Debug.Log("Inventory : " + Game.GetItemsInInventory());
+            //Debug.Log("Finished list : " + replaceString);
+            //Debug.Log("Inventory : " + Game.GetItemsInInventory());
+            //Game.mainsessionData.inventory = replaceString;
+            //Debug.Log("Inventory : " + Game.GetItemsInInventory());
             if (!(replaceString == ""))
             {
                 replaceString = replaceString.Remove(replaceString.Length - 1);
             }
-            
-            ReplaceEquipment();
+            //Debug.Log("Finished  2 : " + replaceString);
+            Game.mainsessionData.inventory = ReplaceEquipment(replaceString);
+            //Debug.Log("Finished list : " + Game.mainsessionData.inventory);
             //DestroyOneItem();
             //DeActivateInvent();
 
             DisableItemList();
-
+            //inventorybox = GameObject.FindWithTag("InventoryBG").GetComponent<inventorybox>();
+            //inventoryboxObject = GameObject.FindGameObjectWithTag("InventoryBG");
+            //Debug.Log("test");
+            inventorybox = GameObject.FindWithTag("InventoryBG").GetComponent<inventorybox>();
+            //Debug.Log("Name of: "+inventorybox.name);
+            inventorybox.runonce = false;
 
             //itemGroup = GameObject.FindWithTag("ItemList");
 

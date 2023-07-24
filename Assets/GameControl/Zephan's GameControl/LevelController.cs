@@ -140,7 +140,9 @@ namespace pattayaA3
 			//{
 			//	TogglePause();
 			//}	
-			if (state == GameState.FreeRoam && player != null)
+			//Debug.Log(Game.mainsessionData.attributePoint);
+
+            if (state == GameState.FreeRoam && player != null)
 			{
 				player.HandleUpdate();
 			}

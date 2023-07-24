@@ -116,7 +116,7 @@ namespace pattayaA3
             }
             if (Input.GetKeyDown(KeyCode.F7))
             {
-                Game.mainsessionData.attributePoint = 0;
+                //Game.mainsessionData.attributePoint = 0;
                 Game.SaveToJSON<save>(Game.saveList);
             }
             if (Input.GetKeyDown(KeyCode.F8))
@@ -149,14 +149,19 @@ namespace pattayaA3
 			Game.SetSessionDataFromLevelId(newlevelid);
 			Game.mainsessionData.exp = 0;
 			Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
+			Game.mainsessionData.attributePoint += 2; //This is for attribute points per level up
 			Game.mainsessionData.exp += 10; // have to take this out befere submission
 			//Game.mainsessionData.gold += 200;
 			//Game.mainsessionData.attributePoint += 5;
 			Debug.Log(newlevelid);
-			yield return playerHud.UpdateTownData();
-			yield return new WaitForSeconds(0.5f);
-			levelUpText.SetActive(false);
-			if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
+            //Debug.Log("Teting save for level up"); //This is where the code stops
+            yield return playerHud.UpdateTownData();
+            //Debug.Log("Teting save for level up");
+            yield return new WaitForSeconds(0.5f);
+            //Debug.Log("Teting save for level up");
+            levelUpText.SetActive(false);
+            //Debug.Log("Teting save for level up");
+            if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
 			{
 				Game.mainsessionData.exp -= Game.currentmaxEXP;
 				Debug.Log("checking for level up");
@@ -165,7 +170,9 @@ namespace pattayaA3
 				//playerHud.UpdateTownData();
 				yield return LevelUp();
 			}
-			Game.SaveToJSON<save>(Game.saveList);
+            //Debug.Log("Teting save for level up");
+            Game.SaveToJSON<save>(Game.saveList);
+			//Debug.Log("Teting save for level up");
 			// reset current exp
 		}
 		public void RestoreHealth()

@@ -1,3 +1,4 @@
+using pattayaA3;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,8 @@ using UnityEngine.UI;
 
 public class ShopItem : MonoBehaviour
 {
+    public ShopMenu shopmenu;
+
     public Transform itemListing;
     public Transform itemListingObject;
 
@@ -88,16 +91,19 @@ public class ShopItem : MonoBehaviour
         Debug.Log("Cost : " + Game.Getitemsbyid(itemEquipList[0]).cost);
         if (Game.mainsessionData.gold >= Game.Getitemsbyid(itemEquipList[0]).cost)
         {
-            Game.AddItemToInventory(itemEquipList[0]);
+            Debug.Log("Buy");
+            Game.mainsessionData.inventory = Game.AddItemToInventory(itemEquipList[0], Game.mainsessionData.inventory);
             Game.mainsessionData.gold = Game.mainsessionData.gold - Game.Getitemsbyid(itemEquipList[0]).cost;
             Game.SaveToJSON<save>(Game.saveList);
         }
+        shopmenu = GameObject.FindWithTag("ShopBG").GetComponent<ShopMenu>();
+        shopmenu.runonce = false;
     }
     public void SellItem(string click)
     {
         //string sellclick = OnClicked(buttonforBuyandSell);
         string[] itemEquipList = click.Split("_");
-
+        //Debug.Log("Sell");
         Game.mainsessionData.gold = Game.mainsessionData.gold + Game.Getitemsbyid(itemEquipList[0]).cost;
         Game.SaveToJSON<save>(Game.saveList);
     }
@@ -119,8 +125,8 @@ public class ShopItem : MonoBehaviour
         string inventoryList = Game.mainsessionData.inventory;
         foreach (var a in Game.GetItemsInInventory())
         {
-            if (!cycleOne)
-            {
+            //if (!cycleOne)
+            //{
                 
                 if (!(a.itemId == itemEquipList[0]))
                 {
@@ -132,29 +138,28 @@ public class ShopItem : MonoBehaviour
                 else
                 {
                     Debug.Log("This Item will be removed : " + a.displayName);
-                    cycleOne = true;
+                    //cycleOne = true;
                 }
-            }
-            else
-            {
-                replaceString += a.itemId;
-                replaceString += ",";
-            }
+            //}
+            //else
+            //{
+            //    replaceString += a.itemId;
+            //    replaceString += ",";
+            //}
             
         }
-        Debug.Log("Finished list : " + replaceString);
-        if (Game.GetItemsInInventory().Count == 1)
-        {
-
-        }
-        else
+        if (!(replaceString == ""))
         {
             replaceString = replaceString.Remove(replaceString.Length - 1);
         }
-        cycleOne = false;
+        Debug.Log("Finished list : " + replaceString);
+
         Game.mainsessionData.inventory = replaceString;
         SellItem(itemEquip);
         DisableItemList();
+
+        shopmenu = GameObject.FindWithTag("ShopBG").GetComponent<ShopMenu>();
+        shopmenu.runonce = false;
         //DestroyOneItem(itemEquipList[0]);
         //DisableItemList();
 
@@ -187,7 +192,7 @@ public class ShopItem : MonoBehaviour
     }
 
 
-    public void ActivateUI(items itemIteration, Shop shopState)
+    public GameObject ActivateUI(items itemIteration, Shop shopState)
     {
         //Debug.Log("First" + itemGroup_child01_itemUI.name);
 
@@ -299,14 +304,15 @@ public class ShopItem : MonoBehaviour
         ////string itemImage = itemIteration.displaySpritePath;
         //itemGroup_child03_itemUI.GetComponent<Text>().text = "+ " + itemIteration.magicdmgBuff.ToString() + " Intelligence";
 
+        GameObject passOn;
 
         //Instantiation of itemGroup object
         //itemGroup.name = itemIteration.itemId;
         itemGroup.name = itemIteration.itemId + "_Group";
 
-        itemGroupToBeCreated = Instantiate(itemGroup, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        passOn = itemGroupToBeCreated = Instantiate(itemGroup, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         itemGroupToBeCreated.transform.SetParent(GameObject.FindGameObjectWithTag("ShopList").transform, false);
 
-
+        return passOn;
     }
 }

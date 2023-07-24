@@ -14,8 +14,21 @@ public class Invent : MonoBehaviour
     public void ActivateInvent()
     {
         Debug.Log($"this is mainsessionData before instantiate: {Game.mainsessionData.saveId}, {Game.mainsessionData.actorName}");
-		test = Instantiate(menu, GameObject.FindGameObjectWithTag("Inventory").transform.position, Quaternion.identity, GameObject.FindGameObjectWithTag("Inventory").transform) as GameObject;
-		Debug.Log($"this is mainsessionData after instantiate: {Game.mainsessionData.saveId}, {Game.mainsessionData.actorName}");
+		//test = Instantiate(menu, GameObject.FindGameObjectWithTag("Inventory").transform.position, Quaternion.identity, GameObject.FindGameObjectWithTag("Inventory").transform) as GameObject;
+        
+        test = Instantiate(menu) as GameObject;
+        test.transform.SetParent(GameObject.FindGameObjectWithTag("Inventory").transform, false);
+
+        if (Game.GetSave() == null)
+        {
+            Debug.Log("Null");
+        }
+        else
+        {
+            Debug.Log("Not Null");
+        }
+        //
+        Debug.Log($"this is mainsessionData after instantiate: {Game.mainsessionData.saveId}, {Game.mainsessionData.actorName}");
 		//test.transform.SetParent(GameObject.FindGameObjectWithTag("Inventory").transform, false);
         //Instantiate(canvas);
     }

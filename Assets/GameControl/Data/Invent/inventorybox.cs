@@ -135,7 +135,7 @@ namespace pattayaA3
 		{
             //CheckMenu();
 			//UpdateEquipment();
-            ConstantlyCheck();
+            //ConstantlyCheck();
 			//Debug.Log("Session Weapon:" + Game.Getitemsbyid(Game.GetitemsbyName(mainsession.weapon).itemId).displayName);
 			//Debug.Log("Inventory: " + mainsession.inventory);
             if (runonce == false)
@@ -177,7 +177,7 @@ namespace pattayaA3
             stat4.text = "Attack Speed: " + Game.mainsessionData.attspeed_added;
 
             //added_stat_text.text = "" + Game.mainsessionData.attributePoint;
-            added_stat_text.text = "TEst";
+            //added_stat_text.text = "TEst";
 
 			switch (currentmenu)
 			{
@@ -828,19 +828,27 @@ namespace pattayaA3
                 if (!runonce)
                 {
                     List<items> listinventory = Game.GetItemsInInventory();
-                    Debug.Log("Counter : " + Game.GetItemsInInventory().Count);
-                    for (int i = 0; i < Game.GetItemsInInventory().Count; i++)
+                    //Debug.Log("Counter : " + listinventory.Count);
+                    for (int i = 0; i < listinventory.Count; i++)
                     {
-                        Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
-                        eachItem.ActivateUI(listinventory[i]);
+                        //Debug.Log("This is : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
+                        //Debug.Log("Counter : " + listinventory.Count);
+                        GameObject imaging = eachItem.ActivateUI(listinventory[i]);
+                        imaging = imaging.transform.GetChild(0).gameObject;
+                        imaging = imaging.transform.GetChild(0).gameObject;
+                        eachItem.UpdateSprite(listinventory[i].displaySpritePath, imaging.GetComponent<Image>());
+                        //Debug.Log("Counter 2: " + listinventory.Count);
+                        //GameObject imaging = eachItem.
                         //eachItem.UpdateSprite(listinventory[i].displaySpritePath, (GameObject.Find(listinventory[i].itemId + "(clone)").GetComponent<Image>()));
+                        //Debug.Log("Counter 3: " + listinventory.Count);
 
+                        //Debug.Log("This is 2 : " + listinventory[i].itemId + " With Sprite Path :" + listinventory[i].displaySpritePath);
                         //Game.ProcessSaveData(Game.demoData2);
-                        Game.ProcessSaveData();
-                        Game.GetSave();
+                        //Game.ProcessSaveData();
+                        //Game.GetSave();
                         //Debug.Log(i);
                     }
-
+                    //Debug.Log("Does this run");
                     runonce = true;
                 }
             }
@@ -1124,12 +1132,12 @@ namespace pattayaA3
 
         //}
 
-        public void AddItem(string itemId)
-        {
-            save currensession = Game.mainsessionData;
-            Game.AddItemToInventory(itemId);
-            //eachItem.ActivateUI();
-        }
+        //public void AddItem(string itemId)
+        //{
+        //    save currensession = Game.mainsessionData;
+        //    Game.AddItemToInventory(itemId);
+        //    //eachItem.ActivateUI();
+        //}
 
         public void ConstantlyCheck()
         {
