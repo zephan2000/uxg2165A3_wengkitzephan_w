@@ -306,19 +306,17 @@ namespace pattayaA3
 
 			if (Input.GetKeyDown(KeyCode.Return))
 			{
-				StopAllCoroutines();
-				//if (!allowNext) return;
-				//if (allowNext) allowNext = false;
-				Debug.Log("Return receiving input");
-				var move = playerUnit.Pokemon.Moves[currentMove];
-				if (move.UsesLeft == 0) return;
-
-				dialogBox.EnableMoveSelector(false);
-				dialogBox.EnableDialogText(true);
-				allowNext = true;
-				StartCoroutine(RunTurns(BattleAction.Move));
-				
-			}
+                StopAllCoroutines();
+                Debug.Log("Return receiving input");
+                var move = playerUnit.Pokemon.Moves[currentMove];
+                if (move.UsesLeft > 0)
+                {
+                    dialogBox.EnableMoveSelector(false);
+                    dialogBox.EnableDialogText(true);
+                    allowNext = true;
+                    StartCoroutine(RunTurns(BattleAction.Move));
+                }
+            }
 		}
 		public void ExitLevel(string aScene)
 		{

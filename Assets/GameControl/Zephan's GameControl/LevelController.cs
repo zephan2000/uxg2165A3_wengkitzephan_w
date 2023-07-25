@@ -757,7 +757,7 @@ namespace pattayaA3
 			Debug.Log("this is currentBattleRunTime from quest progress: " + Game.currentBattleRunTime);
 			if (Game.startedQuest.questType.Contains("BATTLE"))
 			{
-				if (Game.battleQuestProgress == Game.startedQuest.questReq)
+				if (Game.battleQuestProgress >= Game.startedQuest.questReq)
 				{
 					Game.questComplete = true;
 					questStatus = QuestStatus.Completed;
@@ -774,14 +774,14 @@ namespace pattayaA3
 					questStatus = QuestStatus.Completed;
 					QuestCompleteHud();
 				}
-				//else if (Game.mainsessionData.startedQuest.Split('_')[1] == "1")
-				//{
-				//	Debug.Log("this is currentBattleRunTime from time quest: " + Game.currentBattleRunTime);
-				//	Game.questComplete = true;
-				//	Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
-				//	questStatus = QuestStatus.Completed;
-				//	QuestCompleteHud();
-				//}
+				else if (Game.mainsessionData.startedQuest.Split('_')[1] == "1")
+				{
+					Debug.Log("this is currentBattleRunTime from time quest: " + Game.currentBattleRunTime);
+					Game.questComplete = true;
+					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
+					questStatus = QuestStatus.Completed;
+					QuestCompleteHud();
+				}
 			}
 			else if (Game.startedQuest.questType.Contains("DAMAGE"))
 			{
@@ -794,14 +794,14 @@ namespace pattayaA3
 					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
 					QuestCompleteHud();
 				}
-				//else if (Game.mainsessionData.startedQuest.Split('_')[1] == "1")
-				//{
-				//	Game.questComplete = true;
-				//	questStatus = QuestStatus.Completed;
-				//	Debug.Log("appending startedQuest");
-				//	Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
-				//	QuestCompleteHud();
-				//}
+				else if (Game.mainsessionData.startedQuest.Split('_')[1] == "1")
+				{
+					Game.questComplete = true;
+					questStatus = QuestStatus.Completed;
+					Debug.Log("appending startedQuest");
+					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
+					QuestCompleteHud();
+				}
 			}
 
 

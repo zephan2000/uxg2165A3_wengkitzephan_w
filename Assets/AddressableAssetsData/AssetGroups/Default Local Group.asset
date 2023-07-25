@@ -49,6 +49,10 @@ MonoBehaviour:
     m_Address: Assets/Paths
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 91a4d88a5996de74d997982a64137411
+    m_Address: Assets/Paths/export.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 611fc7ae2aceb054e9fd0c1b62e8303a, type: 2}
   m_SchemaSet:

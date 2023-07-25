@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 328589883218474999}
   - component: {fileID: 5207422084171500993}
   m_Layer: 5
-  m_Name: item20_Stat3
+  m_Name: item25_Stat3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,7 +536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6230736892237825375, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Name
-      value: item20_Stat2
+      value: item25_Stat2
       objectReference: {fileID: 0}
     - target: {fileID: 6590003235538800373, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Name
@@ -544,7 +544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7259553297418648957, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Name
-      value: item20
+      value: item25
       objectReference: {fileID: 0}
     - target: {fileID: 7484238679728443378, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -572,7 +572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7536907413857011137, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Name
-      value: item20_Stat1
+      value: item25_Stat1
       objectReference: {fileID: 0}
     - target: {fileID: 8742998105250348819, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Text
@@ -580,7 +580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8862240794123252038, guid: 611b73c868d74c246af996352e0da65d, type: 3}
       propertyPath: m_Text
-      value: +5Vitality
+      value: +22Vitality
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1830542435655892322, guid: 611b73c868d74c246af996352e0da65d, type: 3}
@@ -822,7 +822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7840749212610713787, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}
       propertyPath: m_Text
-      value: Golden Cuirass
+      value: Mymyrdon Helm
       objectReference: {fileID: 0}
     - target: {fileID: 7840749212610713787, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}
       propertyPath: m_FontData.m_Alignment

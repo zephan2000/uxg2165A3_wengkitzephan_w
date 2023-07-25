@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 //using UnityEditor.Search;
 //using UnityEditor;
 //using UnityEditor.Search;
@@ -119,7 +118,7 @@ namespace pattayaA3
             itemGroup_child01_itemUI = itemGroup_child01_itemUI.transform.GetChild(0).gameObject;
             //Debug.Log("3step");
             //Setting Item Image
-            string itemImage = itemIteration.displaySpritePath;
+            //string itemImage = itemIteration.displaySpritePath;
             //Debug.Log("This is : " + itemIteration.itemId + " With Sprite Path :" + itemImage);
             //Debug.Log("4step");
             //Debug.Log("This object name : " + itemGroup_child01_itemUI.name);
