@@ -338,7 +338,7 @@ public static class Game
 		return null;
 	}
 	#endregion
-	#region File Handling (Save System)
+	#region File Handling (Save System) 
     public static void ProcessSaveData()
     {
         string saveString = File.ReadAllText(saveFilePath);
@@ -392,12 +392,12 @@ public static class Game
         int numberOfBattles = mainsessionData.battles.Split('@').Length;
 
 		int avgDamageDealtPerBattle = mainsessionData.totalDamageDealt / numberOfBattles;
-        int avgTimeInBattle = mainsessionData.timeInBattle / numberOfBattles;
+        int avgTimeInBattle = (mainsessionData.timeInBattle) / numberOfBattles;
 
-		int avgMinsInQuest = (mainsessionData.timeInQuest /60) / mainsessionData.completedQuest.Split('@').Length;
+		int avgTimeInQuest = (mainsessionData.timeInQuest) / mainsessionData.completedQuest.Split('@').Length;
 
 		Log newLog = new Log("Log_" + mainsessionData.saveId, mainsessionData.vitality_added, mainsessionData.power_added, mainsessionData.intelligence_added, avgDamageDealtPerBattle, 
-            avgTimeInBattle,mainsessionData.timeInBattle, avgMinsInQuest, mainsessionData.timeInQuest, numberOfBattles, mainsessionData.battles);
+            avgTimeInBattle,mainsessionData.timeInBattle, avgTimeInQuest, mainsessionData.timeInQuest, numberOfBattles, mainsessionData.battles);
 
 		jsonString.Append($"{JsonUtility.ToJson(newLog)}");
 		Debug.Log($"saving log: {jsonString.ToString()}");

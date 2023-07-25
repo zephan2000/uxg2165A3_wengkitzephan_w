@@ -84,6 +84,17 @@ namespace pattayaA3
 			//hptrack = (float)_pokemon.HP;
 			//Debug.Log(hptrack);
 		}
-	}
+        public void setHPTO0()
+        {
+            levelText.text = "Lvl" + Game.playerLevel.ToString();
+            Debug.Log($"this is currentHp from UpdateTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
+            HpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}";
+            ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
+            hpBar.SetHPData((float)Game.mainsessionData.currenthp / Game.maxHP);
+            expBar.SetEXPData((float)Game.mainsessionData.exp / Game.currentmaxEXP);
+            //hptrack = (float)_pokemon.HP;
+            //Debug.Log(hptrack);
+        }
+    }
 }
 

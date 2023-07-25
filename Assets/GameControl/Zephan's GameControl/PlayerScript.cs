@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
@@ -50,6 +51,8 @@ namespace pattayaA3
 		public bool isTouchingDoor;
 		public GameObject levelUpText;
 		public BattleHud playerHud;
+		private bool levelUp;
+
 		private void Start()
 		{
 			rb = GetComponent<Rigidbody2D>();
@@ -90,8 +93,12 @@ namespace pattayaA3
 
 			if(Input.GetKeyDown(KeyCode.F2)) 
 			{
-				StartCoroutine(LevelUp()); //need to run this after quest is done too
-			}
+				levelUp = true;
+                if (!levelUp)
+                    return;
+
+                StartLevelUp(); //need to run this after quest is done too
+            }
 			if(Input.GetKeyDown(KeyCode.F1)) //for bug testing
 			{
 				StartCoroutine(SetHpTo50());
@@ -127,54 +134,107 @@ namespace pattayaA3
 
         }
 
-		public IEnumerator LevelUp() //do one for cheats and one for normal
+		public void StartLevelUp()
+		{
+			Debug.Log("level up function triggered");
+			while(levelUp)
+			{
+                levelUpText.SetActive(true);
+
+                if (Game.playerLevel + 1 > 20)
+                {
+                    StartCoroutine(MaxLevelReachedSettings());
+                    break;
+                }
+                Game.playerLevel++;
+                string newlevelid = Game.mainsessionData.actorType + "_" + Game.playerLevel.ToString();
+                Debug.Log($"this is level id before level up: {newlevelid}");
+                Game.mainsessionData.levelId = newlevelid;
+                Debug.Log($"this is level id after level up: {Game.mainsessionData.levelId}");
+                Game.SetSessionDataFromLevelId(newlevelid);
+                Game.mainsessionData.exp = 0;
+                Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
+                Game.mainsessionData.attributePoint += 2; //This is for attribute points per level up
+                Game.mainsessionData.exp += 10;
+                StartCoroutine(playerHud.UpdateTownData());
+                levelUpText.SetActive(false);
+       
+
+                if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
+                {
+                    Game.mainsessionData.exp -= Game.currentmaxEXP;
+                    Debug.Log("checking for level up");
+					StartCoroutine(levelUpPause());
+					//StartCoroutine(playerHud.UpdateTownData());
+					//playerHud.UpdateTownData();
+					
+                }
+                levelUp = false;
+                Game.SaveToJSON<save>(Game.saveList);
+            }
+		}
+		public IEnumerator MaxLevelReachedSettings()
+		{
+            levelUpText.GetComponent<Text>().text = "Max Level Reached!";
+            yield return new WaitForSeconds(1f);
+            levelUpText.SetActive(false);
+
+        }
+
+		public IEnumerator levelUpPause()
 		{
 			yield return new WaitForSeconds(0.3f);
-			levelUpText.SetActive(true);
-			if (Game.playerLevel + 1 > 20)
-			{
-				levelUpText.GetComponent<Text>().text = "Max Level Reached!";
-				yield return new WaitForSeconds(1f);
-				levelUpText.SetActive(false);
-				yield break;
-			}
-			levelUpText.GetComponent<Text>().text = "Level Up!";
-			
-			Game.playerLevel++;
-			//Game.playerLevel = Game.playerLevel;
-			string newlevelid = Game.mainsessionData.actorType + "_" + Game.playerLevel.ToString();
-			Debug.Log($"this is level id before level up: {newlevelid}");
-			Game.mainsessionData.levelId = newlevelid;
-			Debug.Log($"this is level id after level up: {Game.mainsessionData.levelId}");
-			Game.SetSessionDataFromLevelId(newlevelid);
-			Game.mainsessionData.exp = 0;
-			Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
-			Game.mainsessionData.attributePoint += 2; //This is for attribute points per level up
-			Game.mainsessionData.exp += 10; // have to take this out befere submission
-			//Game.mainsessionData.gold += 200;
-			//Game.mainsessionData.attributePoint += 5;
-			Debug.Log(newlevelid);
-            //Debug.Log("Teting save for level up"); //This is where the code stops
-            yield return playerHud.UpdateTownData();
-            //Debug.Log("Teting save for level up");
-            yield return new WaitForSeconds(0.5f);
-            //Debug.Log("Teting save for level up");
-            levelUpText.SetActive(false);
-            //Debug.Log("Teting save for level up");
-            if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
-			{
-				Game.mainsessionData.exp -= Game.currentmaxEXP;
-				Debug.Log("checking for level up");
-				yield return new WaitForSeconds(0.3f);
-				//StartCoroutine(playerHud.UpdateTownData());
-				//playerHud.UpdateTownData();
-				yield return LevelUp();
-			}
-            //Debug.Log("Teting save for level up");
-            Game.SaveToJSON<save>(Game.saveList);
-			//Debug.Log("Teting save for level up");
-			// reset current exp
-		}
+            levelUp = true;
+        }
+
+		//public IEnumerator LevelUp() //do one for cheats and one for normal
+		//{
+		//	yield return new WaitForSeconds(0.3f);
+		//	levelUpText.SetActive(true);
+		//	if (Game.playerLevel + 1 > 20)
+		//	{
+		//		levelUpText.GetComponent<Text>().text = "Max Level Reached!";
+		//		yield return new WaitForSeconds(1f);
+		//		levelUpText.SetActive(false);
+		//		yield break;
+		//	}
+		//	levelUpText.GetComponent<Text>().text = "Level Up!";
+
+		//	Game.playerLevel++;
+		//	//Game.playerLevel = Game.playerLevel;
+		//	string newlevelid = Game.mainsessionData.actorType + "_" + Game.playerLevel.ToString();
+		//	Debug.Log($"this is level id before level up: {newlevelid}");
+		//	Game.mainsessionData.levelId = newlevelid;
+		//	Debug.Log($"this is level id after level up: {Game.mainsessionData.levelId}");
+		//	Game.SetSessionDataFromLevelId(newlevelid);
+		//	Game.mainsessionData.exp = 0;
+		//	Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
+		//	Game.mainsessionData.attributePoint += 2; //This is for attribute points per level up
+		//	Game.mainsessionData.exp += 10; // have to take this out befere submission
+		//									//Game.mainsessionData.gold += 200;
+		//									//Game.mainsessionData.attributePoint += 5;
+		//	Debug.Log(newlevelid);
+		//	//Debug.Log("Teting save for level up"); //This is where the code stops
+		//	yield return playerHud.UpdateTownData();
+		//	//Debug.Log("Teting save for level up");
+		//	yield return new WaitForSeconds(0.5f);
+		//	//Debug.Log("Teting save for level up");
+		//	levelUpText.SetActive(false);
+		//	//Debug.Log("Teting save for level up");
+		//	if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
+		//	{
+		//		Game.mainsessionData.exp -= Game.currentmaxEXP;
+		//		Debug.Log("checking for level up");
+		//		yield return new WaitForSeconds(0.3f);
+		//		//StartCoroutine(playerHud.UpdateTownData());
+		//		//playerHud.UpdateTownData();
+		//		yield return LevelUp();
+		//	}
+		//	//Debug.Log("Teting save for level up");
+		//	Game.SaveToJSON<save>(Game.saveList);
+		//	//Debug.Log("Teting save for level up");
+		//	// reset current exp
+		//}
 		public void RestoreHealth()
 		{
 			Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
@@ -184,7 +244,8 @@ namespace pattayaA3
 		public IEnumerator SetHpTo50() // for bug testing
 		{
 			Game.mainsessionData.currenthp = 50;
-			StartCoroutine(playerHud.UpdateTownData());
+			//StartCoroutine(playerHud.UpdateTownData());
+			playerHud.setHPTO0();
 			yield return new WaitForSeconds(1.2f);
 			//StopAllCoroutines();
 		}

@@ -247,7 +247,7 @@ namespace pattayaA3
 			if (Game.mainsessionData.exp >= Game.currentmaxEXP)
 			{
 				Debug.Log("checking for level up");
-				StartCoroutine(player.LevelUp());
+                player.StartLevelUp();
 				StartCoroutine(playerHud.UpdateTownData());
 			}
 		}

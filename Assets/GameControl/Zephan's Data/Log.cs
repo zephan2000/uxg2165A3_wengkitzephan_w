@@ -14,14 +14,14 @@ public class Log //not needed
 	public int intelligence_added;
 	public int avgDamageDealtPerBattle;
 	public int avgTimeInBattle;
-	public int totalMinsInBatle;
+	public int totalTimeInBattle;
 	public int avgTimeInQuest;
-	public int totalMinsInQuest;
+	public int totalTimeInQuest;
 	public int totalBattles;
 	public string battleInfo;
 
 
-	public Log(string logId, int vitality_added,int power_added, int intelligence_added, int avgDamageDealtPerBattle, int avgTimeInBattle, int totalMinsInBattle, int avgTimeInQuest, int totalMinsInQuest, int totalBattles, string BattleInfo)
+	public Log(string logId, int vitality_added,int power_added, int intelligence_added, int avgDamageDealtPerBattle, int avgTimeInBattle, int totalTimeInBattle, int avgTimeInQuest, int totalTimeInQuest, int totalBattles, string BattleInfo)
 	{
 		this.logId = logId;
 		this.vitality_added = vitality_added;
@@ -29,9 +29,9 @@ public class Log //not needed
 		this.intelligence_added = intelligence_added;
 		this.avgDamageDealtPerBattle = avgDamageDealtPerBattle;	
 		this.avgTimeInBattle = avgTimeInBattle;
-		this.totalMinsInBatle = totalMinsInBattle;
+		this.totalTimeInBattle = totalTimeInBattle;
 		this.avgTimeInQuest = avgTimeInQuest;
-		this.totalMinsInQuest = totalMinsInQuest;
+		this.totalTimeInQuest = totalTimeInQuest;
 		this.totalBattles = totalBattles;
 		this.battleInfo = BattleInfo;
 		
