@@ -1,15 +1,12 @@
-using pattayaA3;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 // Zephan
 namespace pattayaA3
 {
-	public enum BattleState { Start,ActionSelection,MoveSelection,ExecuteTurn,Busy, BattleOver} //busy is for when either enemy or player are making moves
-	public enum BattleAction {Move, UseItem, Run} //UseItem is able to add potions if needed, can use this state for upgrade skills or view stats during battle
+	public enum BattleState { Start, ActionSelection, MoveSelection, ExecuteTurn, Busy, BattleOver } //busy is for when either enemy or player are making moves
+	public enum BattleAction { Move, UseItem, Run } //UseItem is able to add potions if needed, can use this state for upgrade skills or view stats during battle
 	public class BattleSystem : GameSceneController
 	{
 		private Camera mainCamera;
@@ -51,7 +48,7 @@ namespace pattayaA3
 			Debug.Log($"{Game.chosenenemyName},{Game.chosenenemyType}");
 			//playerUnit.BattleUnitSetup(Game.sessionactorName,Game.sessionactorType);
 			playerUnit.BattleUnitSetup(Game.mainsessionData.actorName, Game.mainsessionData.actorType, Game.playerLevel);
-			if(Game.chosenenemyName.Contains("Wizard"))
+			if (Game.chosenenemyName.Contains("Wizard"))
 			{
 				enemyUnit.BattleUnitSetup(Game.chosenenemyName, Game.chosenenemyType, Game.GetEnemyPokemonLevel());
 			}//need to add an actorName to save class
@@ -76,13 +73,13 @@ namespace pattayaA3
 			dialogBox.EnableActionSelector(false);
 			dialogBox.EnableDialogText(false);
 			dialogBox.EnableMoveSelector(true);
-		}	
+		}
 		IEnumerator RunTurns(BattleAction playerAction)
 		{
 			state = BattleState.ExecuteTurn;
 			isRunningTurn = true;
 
-			if(playerAction == BattleAction.Move)
+			if (playerAction == BattleAction.Move)
 			{
 				playerUnit.Pokemon.CurrentMove = playerUnit.Pokemon.Moves[currentMove];
 				enemyUnit.Pokemon.CurrentMove = enemyUnit.Pokemon.GetRandomMove();
@@ -93,7 +90,7 @@ namespace pattayaA3
 
 				// check who goes first, Replaced ChooseFirstTurn()
 				bool playerGoesFirst = true;
-				if(enemyMovePriority == "Yes") //checking based on priority
+				if (enemyMovePriority == "Yes") //checking based on priority
 				{
 					playerGoesFirst = false;
 				}
@@ -104,13 +101,13 @@ namespace pattayaA3
 				Debug.Log(playerGoesFirst);
 				var fasterUnit = (playerGoesFirst) ? playerUnit : enemyUnit;
 				//slowerUnit is to dictate who goes second to pass into RunMove() not to determine who is faster
-				var slowerUnit = (playerGoesFirst) ? enemyUnit : playerUnit; 
-				
+				var slowerUnit = (playerGoesFirst) ? enemyUnit : playerUnit;
+
 				//First Turn
 				yield return RunMove(fasterUnit, slowerUnit, fasterUnit.Pokemon.CurrentMove);
 				if (state == BattleState.BattleOver) yield break;
 				//Second Turn
-				yield return RunMove(slowerUnit,fasterUnit, slowerUnit.Pokemon.CurrentMove);
+				yield return RunMove(slowerUnit, fasterUnit, slowerUnit.Pokemon.CurrentMove);
 				if (state == BattleState.BattleOver) yield break;
 
 				ActionSelection();
@@ -127,8 +124,8 @@ namespace pattayaA3
 			//{
 			//	yield return StartCoroutine(RunMoveEffects(sourceUnit.Pokemon, targetUnit.Pokemon, move)); ;
 			//}
-			yield return StartCoroutine(CheckForHeal(sourceUnit, targetUnit, move)); 
-			
+			yield return StartCoroutine(CheckForHeal(sourceUnit, targetUnit, move));
+
 			if (targetUnit.Pokemon.HP <= 0)
 			{
 				yield return dialogBox.TypeDialog($"{targetUnit.Pokemon.Base.pokemonName} Fainted");
@@ -174,7 +171,7 @@ namespace pattayaA3
 			}
 			else
 			{
-				if(faintedUnit.Pokemon.Base.pokemonName == "Dark Wizard")
+				if (faintedUnit.Pokemon.Base.pokemonName == "Dark Wizard")
 					Game.darkWizardDefeated = true;
 
 				BattleOver(true);
@@ -184,11 +181,11 @@ namespace pattayaA3
 		void BattleOver(bool battleStatus)
 		{
 			Game.playerWon = battleStatus;
-			if(Game.playerWon == true)
+			if (Game.playerWon == true)
 			{
 				Debug.Log($"Exp before gain: {Game.mainsessionData.exp}/ {Game.currentmaxEXP}");
 				Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain;
-				if(Game.startedQuest != null)
+				if (Game.startedQuest != null)
 				{
 					//Debug.Log("this is battle info :" + Game.questInProgress + " / " + Game.startedQuest.questType);
 					if (Game.questInProgress && Game.startedQuest.questType.Contains("BATTLE"))
@@ -203,12 +200,12 @@ namespace pattayaA3
 					}
 
 				}
-				
+
 				Debug.Log($"Exp after gain: {Game.mainsessionData.exp}/ {Game.currentmaxEXP}");
 			}
 			else if (Game.playerWon == false)
 			{
-				if(Game.playerRan != true)
+				if (Game.playerRan != true)
 					Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain / 2;
 			}
 			Game.mainsessionData.timeInBattle += battleRunTime;
@@ -224,7 +221,7 @@ namespace pattayaA3
 			Debug.Log("this is quest details:" + Game.startedQuest.actorTypeToSlay + " / " + Game.chosenenemyType);
 			if (Game.startedQuest.actorTypeToSlay == Game.chosenenemyType)
 			{
-				
+
 				Game.UpdateBattleQuestProgress();
 			}
 		}
@@ -244,11 +241,11 @@ namespace pattayaA3
 
 		void HandleActionSelection()
 		{
-			if(Input.GetKeyDown(KeyCode.DownArrow))
+			if (Input.GetKeyDown(KeyCode.DownArrow))
 			{
 				if (currentAction < 1)
 					++currentAction;
-			} 
+			}
 			else if (Input.GetKeyDown(KeyCode.UpArrow))
 			{
 				if (currentAction > 0)
@@ -256,9 +253,9 @@ namespace pattayaA3
 			}
 			dialogBox.UpdateActionSelection(currentAction);
 
-			if(Input.GetKeyDown(KeyCode.Return))
+			if (Input.GetKeyDown(KeyCode.Return))
 			{
-				if(currentAction == 0)
+				if (currentAction == 0)
 				{
 					MoveSelection();
 				}
@@ -276,7 +273,7 @@ namespace pattayaA3
 			}
 		}
 		// video #8 done but there something might be wrong with the playerunit or scripatble object do a check, so far so good
-		void HandleMoveSelection() 
+		void HandleMoveSelection()
 		{
 			isRunningTurn = false;
 			if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -285,7 +282,7 @@ namespace pattayaA3
 				{
 					++currentMove;
 				}
-					
+
 			}
 			else if (Input.GetKeyDown(KeyCode.LeftArrow))
 			{
@@ -306,17 +303,21 @@ namespace pattayaA3
 
 			if (Input.GetKeyDown(KeyCode.Return))
 			{
-                StopAllCoroutines();
-                Debug.Log("Return receiving input");
-                var move = playerUnit.Pokemon.Moves[currentMove];
-                if (move.UsesLeft > 0)
-                {
-                    dialogBox.EnableMoveSelector(false);
-                    dialogBox.EnableDialogText(true);
-                    allowNext = true;
-                    StartCoroutine(RunTurns(BattleAction.Move));
-                }
-            }
+				StopAllCoroutines();
+				//if (!allowNext) return;
+				//if (allowNext) allowNext = false;
+				Debug.Log("Return receiving input");
+				var move = playerUnit.Pokemon.Moves[currentMove];
+				if (move.UsesLeft > 0)
+				{
+					dialogBox.EnableMoveSelector(false);
+					dialogBox.EnableDialogText(true);
+					allowNext = true;
+					StartCoroutine(RunTurns(BattleAction.Move));
+				}
+
+
+			}
 		}
 		public void ExitLevel(string aScene)
 		{
