@@ -128,8 +128,9 @@ namespace pattayaA3
 				QuestCompleteHud();
 			}
 
-			playerHud.SetTownData(); 
+			playerHud.SetTownData();
 			//StartCoroutine(playerHud.UpdateTownData());
+			Debug.Log("this is level check: " + Game.mainsessionData.exp + "current max Exp" + Game.currentmaxEXP);
 			CheckForLevelUp();
 
 			//set EXP and HP data on Start()
@@ -248,8 +249,10 @@ namespace pattayaA3
 			if (Game.mainsessionData.exp >= Game.currentmaxEXP)
 			{
 				Debug.Log("checking for level up");
+				player.levelUp = true;
                 player.StartLevelUp();
-				StartCoroutine(playerHud.UpdateTownData());
+				playerHud.SetTownData();
+				//StartCoroutine(playerHud.SetTownData());
 			}
 		}
 		public void StartNewLevel(string aScene)
@@ -563,6 +566,15 @@ namespace pattayaA3
 			string quest1Complete = "Incomplete";
 			string quest2Complete = "Incomplete";
 			string quest3Complete = "Incomplete";
+			string quest4Complete = "Incomplete";
+			string quest5Complete = "Incomplete";
+			string quest6Complete = "Incomplete";
+			string quest7Complete = "Incomplete";
+			string quest8Complete = "Incomplete";
+			string quest9Complete = "Incomplete";
+			string quest10Complete = "Incomplete";
+
+
 
 			foreach (string quest in questData) 
 			{
@@ -572,8 +584,23 @@ namespace pattayaA3
 					quest2Complete = "Complete";
 				else if (quest == "QUEST3")
 					quest3Complete = "Complete";
+				else if (quest == "QUEST4")
+					quest4Complete = "Complete";
+				else if (quest == "QUEST5")
+					quest5Complete = "Complete";
+				else if (quest == "QUEST6")
+					quest6Complete = "Complete";
+				else if (quest == "QUEST7")
+					quest7Complete = "Complete";
+				else if (quest == "QUEST8")
+					quest8Complete = "Complete";
+				else if (quest == "QUEST9")
+					quest9Complete = "Complete";
+				else if (quest == "QUEST10")
+					quest10Complete = "Complete";
 			}
-			questString = $"Quest 1 : {quest1Complete}, Quest 2 : {quest2Complete}, Quest 3: {quest3Complete}";
+			questString = $"Quest 1 : {quest1Complete}, Quest 2 : {quest2Complete}, Quest 3: {quest3Complete} \n Quest 4 : {quest4Complete}, " +
+				$"Quest 5 : {quest5Complete}, Quest 6: {quest6Complete}, Quest 7 : {quest7Complete}, Quest 8 : {quest8Complete}, Quest 9: {quest9Complete}, Quest 10: {quest10Complete}";
 
 			return questString;
 

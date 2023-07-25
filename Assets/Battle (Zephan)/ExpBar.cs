@@ -28,7 +28,7 @@ namespace pattayaA3
 			{
 				while (curExp - newExp >= 0) //mathf.epsilon is the smallest value that a float can have different from zero
 				{
-					curExp += expDifference * 1 * Time.deltaTime;
+					curExp += expDifference * -1 * Time.deltaTime;
 					//curHp -= HpDifference * Time.deltaTime;
 					exp.transform.localScale = new Vector3(Mathf.Clamp(curExp, 0, 1), 1f);
 					//Debug.Log(health.transform.localScale);
@@ -39,7 +39,7 @@ namespace pattayaA3
 			{
 				while (curExp - newExp <= 0)
 				{
-					curExp += expDifference * 1 * Time.deltaTime;
+					curExp += expDifference * -1 * Time.deltaTime;
 					exp.transform.localScale = new Vector3(Mathf.Clamp(curExp,0,1), 1f);
 					yield return null;
 				}
