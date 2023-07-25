@@ -117,20 +117,20 @@ namespace pattayaA3
                 Game.mainsessionData.attributePoint += 3;
                 Game.SaveToJSON<save>(Game.saveList);
             }
-            if (Input.GetKeyDown(KeyCode.F6))
-            {
-                Game.playerLevel++;
-            }
+            //if (Input.GetKeyDown(KeyCode.F6))
+            //{
+            //    Game.playerLevel++;
+            //}
             if (Input.GetKeyDown(KeyCode.F7))
             {
                 //Game.mainsessionData.attributePoint = 0;
                 Game.SaveToJSON<save>(Game.saveList);
             }
-            if (Input.GetKeyDown(KeyCode.F8))
-            {
-                Game.mainsessionData.currenthp = 50;
-                Game.SaveToJSON<save>(Game.saveList);
-            }
+            //if (Input.GetKeyDown(KeyCode.F8))
+            //{
+            //    Game.mainsessionData.currenthp = 50;
+            //    Game.SaveToJSON<save>(Game.saveList);
+            //}
 
         }
 
@@ -245,7 +245,8 @@ namespace pattayaA3
 		{
 			Game.mainsessionData.currenthp = 50;
 			//StartCoroutine(playerHud.UpdateTownData());
-			playerHud.setHPTO0();
+			//playerHud.SetTownData();
+			StartCoroutine (playerHud.UpdateTownData());
 			yield return new WaitForSeconds(1.2f);
 			//StopAllCoroutines();
 		}

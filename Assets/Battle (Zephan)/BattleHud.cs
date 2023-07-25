@@ -47,16 +47,6 @@ namespace pattayaA3
             //Debug.Log("This is monster phys: " + _pokemon.Base.pokemonPhysicalDmg);
             //Debug.Log("This is monster mag: " + _pokemon.Base.pokemonMagicDmg);
         }
-		public void SetTownData() // for start up only
-		{
-			nameText.text = Game.mainsessionData.actorType;
-			levelText.text = "Lvl" + Game.playerLevel.ToString();
-			Debug.Log($"this is currentHp from SetTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
-			HpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}";
-			ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
-			StartCoroutine(hpBar.SetHPSmooth((float)(Game.mainsessionData.currenthp / Game.mainsessionData.maxhp)));
-			StartCoroutine(expBar.SetEXPSmooth((float)(Game.mainsessionData.exp / Game.currentmaxEXP)));
-		}
 		public IEnumerator UpdateBattleData()
 		{
 			yield return hpBar.SetHPSmooth((float)_pokemon.HP / _pokemon.MaxHP);
@@ -75,6 +65,7 @@ namespace pattayaA3
 		}
 		public IEnumerator UpdateTownData()
 		{
+			nameText.text = Game.mainsessionData.actorType;
 			levelText.text = "Lvl" + Game.playerLevel.ToString();
 			Debug.Log($"this is currentHp from UpdateTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
 			HpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}";
@@ -84,17 +75,18 @@ namespace pattayaA3
 			//hptrack = (float)_pokemon.HP;
 			//Debug.Log(hptrack);
 		}
-        public void setHPTO0()
-        {
-            levelText.text = "Lvl" + Game.playerLevel.ToString();
-            Debug.Log($"this is currentHp from UpdateTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
-            HpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}";
-            ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
-            hpBar.SetHPData((float)Game.mainsessionData.currenthp / Game.maxHP);
-            expBar.SetEXPData((float)Game.mainsessionData.exp / Game.currentmaxEXP);
-            //hptrack = (float)_pokemon.HP;
-            //Debug.Log(hptrack);
-        }
-    }
+		public void SetTownData()
+		{
+			nameText.text = Game.mainsessionData.actorType;
+			levelText.text = "Lvl" + Game.playerLevel.ToString();
+			Debug.Log($"this is currentHp from UpdateTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
+			HpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}";
+			ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
+			hpBar.SetHPData((float)Game.mainsessionData.currenthp / Game.maxHP);
+			expBar.SetEXPData((float)Game.mainsessionData.exp / Game.currentmaxEXP);
+			//hptrack = (float)_pokemon.HP;
+			//Debug.Log(hptrack);
+		}
+	}
 }
 

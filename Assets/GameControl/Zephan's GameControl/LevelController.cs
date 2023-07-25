@@ -127,8 +127,9 @@ namespace pattayaA3
 			{
 				QuestCompleteHud();
 			}
-			
-			playerHud.SetTownData(); // set for start up
+
+			playerHud.SetTownData(); 
+			//StartCoroutine(playerHud.UpdateTownData());
 			CheckForLevelUp();
 
 			//set EXP and HP data on Start()
