@@ -841,7 +841,7 @@ public static class Game
     {
         List<int> def = new List<int>();
         items Helmet = Game.Getitemsbyid(Game.mainsessionData.helmet);
-        def.Add(Helmet.defenseBuff);
+        def.Add(Helmet.vitalityBuff);
         def.Add(Helmet.physicaldmgBuff);
         def.Add(Helmet.magicdmgBuff);
         
@@ -851,7 +851,7 @@ public static class Game
     {
         List<int> def = new List<int>();
         items Armour = Game.Getitemsbyid(Game.mainsessionData.armour);
-        def.Add(Armour.defenseBuff);
+        def.Add(Armour.vitalityBuff);
         def.Add(Armour.physicaldmgBuff);
         def.Add(Armour.magicdmgBuff);
 
@@ -861,7 +861,7 @@ public static class Game
     {
         List<int> def = new List<int>();
         items Weapon = Game.Getitemsbyid(Game.mainsessionData.weapon);
-        def.Add(Weapon.defenseBuff);
+        def.Add(Weapon.vitalityBuff);
         def.Add(Weapon.physicaldmgBuff);
         def.Add(Weapon.magicdmgBuff);
 

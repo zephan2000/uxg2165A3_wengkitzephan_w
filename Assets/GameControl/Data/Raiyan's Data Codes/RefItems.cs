@@ -9,7 +9,7 @@ public class RefItems
     public string itemType;
     public string actorType;
     public string displayName;
-    public int defenseBuff;
+    public int vitalityBuff;
     public int physicaldmgBuff;
     public int magicdmgBuff;
     public int cost;

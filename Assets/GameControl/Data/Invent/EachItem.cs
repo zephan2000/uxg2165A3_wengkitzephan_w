@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 //using UnityEditor.Search;
 //using UnityEditor;
 //using UnityEditor.Search;
@@ -155,7 +154,7 @@ namespace pattayaA3
             //Set Item Name
             itemGroup_child02_itemUI.name = itemIteration.itemId + "_Stat1";
             //Setting Item Name
-            itemGroup_child02_itemUI.GetComponent<Text>().text = "+" + itemIteration.defenseBuff.ToString() + "Vitality";
+            itemGroup_child02_itemUI.GetComponent<Text>().text = "+" + itemIteration.vitalityBuff.ToString() + "Vitality";
 
             //Get itemUI game object
             itemGroup_child02_itemUI = itemGroup.transform.GetChild(1).gameObject;

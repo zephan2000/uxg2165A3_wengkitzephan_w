@@ -1174,15 +1174,15 @@ namespace pattayaA3
             eachItem.UpdateSprite(Game.Getitemsbyid(Game.mainsessionData.helmet).displaySpritePath, item2Object.GetComponent<Image>());
             eachItem.UpdateSprite(Game.Getitemsbyid(Game.mainsessionData.armour).displaySpritePath, item3Object.GetComponent<Image>());
 
-            item4.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.weapon).defenseBuff.ToString();
+            item4.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.weapon).vitalityBuff.ToString();
             item5.text = "Power: +" + Game.Getitemsbyid(Game.mainsessionData.weapon).physicaldmgBuff.ToString();
             item6.text = "Intelligence: +" + Game.Getitemsbyid(Game.mainsessionData.weapon).magicdmgBuff.ToString();
 
-            item7.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.helmet).defenseBuff.ToString();
+            item7.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.helmet).vitalityBuff.ToString();
             item8.text = "Power: +" + Game.Getitemsbyid(Game.mainsessionData.helmet).physicaldmgBuff.ToString();
             item9.text = "Intelligence: +" + Game.Getitemsbyid(Game.mainsessionData.helmet).magicdmgBuff.ToString();
 
-            item10.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.armour).defenseBuff.ToString();
+            item10.text = "Vitality: +" + Game.Getitemsbyid(Game.mainsessionData.armour).vitalityBuff.ToString();
             item11.text = "Power: +" + Game.Getitemsbyid(Game.mainsessionData.armour).physicaldmgBuff.ToString();
             item12.text = "Intelligence: +" + Game.Getitemsbyid(Game.mainsessionData.armour).magicdmgBuff.ToString();
 

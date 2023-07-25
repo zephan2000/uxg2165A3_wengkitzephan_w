@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3346834728748060287}
   - component: {fileID: 3079811540224967158}
   m_Layer: 5
-  m_Name: item14
+  m_Name: item20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0 Gold
+  m_Text: 40 Gold
 --- !u!1 &3495560676937888947
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 3119127333168199322}
   - component: {fileID: 9025847646178548947}
   m_Layer: 5
-  m_Name: item14_SellButton
+  m_Name: item20_BuyButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -628,7 +628,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: + 0 Vitality
+  m_Text: + 5 Vitality
 --- !u!1 &6442830062712464249
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,7 +708,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rags
+  m_Text: Golden Cuirass
 --- !u!1 &6565046724474313002
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +788,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Sell
+  m_Text: Buy
 --- !u!1 &6793001826275090254
 GameObject:
   m_ObjectHideFlags: 0

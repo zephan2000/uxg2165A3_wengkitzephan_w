@@ -232,7 +232,7 @@ public class ShopItem : MonoBehaviour
         itemGroup_child03_itemUI = itemGroup_child03_itemUI.transform.GetChild(0).gameObject;
         //Setting Item Image
         //string itemImage = itemIteration.displaySpritePath;
-        itemGroup_child03_itemUI.GetComponent<Text>().text = "+ " + itemIteration.defenseBuff.ToString() + " Vitality";
+        itemGroup_child03_itemUI.GetComponent<Text>().text = "+ " + itemIteration.vitalityBuff.ToString() + " Vitality";
 
         //Get itemUI game object 3RD OBJECT and 2nd SUB-OBJECT
         itemGroup_child03_itemUI = itemGroup.transform.GetChild(0).gameObject;
