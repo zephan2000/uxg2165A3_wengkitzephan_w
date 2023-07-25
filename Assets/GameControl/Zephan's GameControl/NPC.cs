@@ -8,7 +8,7 @@ public class NPC : MonoBehaviour, Interactable
 	//[SerializeField] Dialog dialog;
 	public void Interact()
 	{
-		if(Game.questComplete)
+		if(Game.questComplete && !Game.rewardCollected)
 		{
 			StartCoroutine(TownDialogManager.Instance.ShowDialog("QC"));
 		}

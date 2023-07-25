@@ -155,7 +155,7 @@ public class DataManager : MonoBehaviour
         
         foreach (refSkills refskills in demoData.skills)
         {
-            skills skill = new skills(refskills.skillid, refskills.actorType, refskills.category, refskills.target, refskills.skillname, refskills.dmg, refskills.hpgain, refskills.accuracy, refskills.priority, refskills.maxuses);
+            skills skill = new skills(refskills.skillid, refskills.actorType, refskills.category, refskills.target, refskills.skillname, refskills.dmg, refskills.hpgain, refskills.priority, refskills.maxuses);
 
             skillList.Add(skill);
         }

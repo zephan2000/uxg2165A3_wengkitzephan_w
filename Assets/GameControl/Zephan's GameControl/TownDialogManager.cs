@@ -215,6 +215,7 @@ public class TownDialogManager : MonoBehaviour
 				int goldReward = Game.startedQuest.goldReward;
 				Game.mainsessionData.exp += expReward;
 				Game.mainsessionData.gold += goldReward;
+				Game.rewardCollected = true;
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[exp]", expReward.ToString());
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[gold]", goldReward.ToString());
 				QuestCompleteSettings();
@@ -231,7 +232,7 @@ public class TownDialogManager : MonoBehaviour
 	{
 		Game.startedQuest = null;
 		Game.questComplete = false;
-		Game.currentBattleRunTime = 0;
+		Game.currentBattleRunTime = -1; // to ensure time quest doesn't return true
 		Game.damagePerBattle = 0;
 		Game.battleQuestProgress = 0;
 		Game.UpdateCompletedQuest();
@@ -256,7 +257,16 @@ public class TownDialogManager : MonoBehaviour
 			{
 				Game.startedQuest = quest;
 				Game.battleQuestProgress = 0;
-				Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + Game.battleQuestProgress;
+				Game.rewardCollected = false; // this will allow the rewardCollected to work properly
+				if (Game.questComplete && !Game.rewardCollected) // check this if the started quest is not saving
+				{
+					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
+				}
+				else
+				{
+					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + Game.battleQuestProgress;
+				}
+				
 				Debug.Log("this is startedQuest" + Game.startedQuest.questId + "_" + "with battlequestProgress" + Game.battleQuestProgress);
 				StartBattleQuest?.Invoke();
 				break;
@@ -395,7 +405,7 @@ public class TownDialogManager : MonoBehaviour
 		{
 			CheckForQuestTrigger(chosenDialog.dialogueId);
 		}
-		else
+		else 
 		{
 			currentDialog = Game.GetDialogByType("QW")[0];
 			ongoingQuest = true;

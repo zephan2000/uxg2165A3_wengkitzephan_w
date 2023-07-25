@@ -60,6 +60,8 @@ public class PokemonBase
 		GetPokemonPhysicalDamageFromLevelId(levelId);
 		GetPokemonSpeedFromLevelId(levelId);
 		GetPokemonListOfLSFromActorType(actorType);
+		GetPokemonExpGainFromlevelId(levelId);
+		GetPokemonGoldGainFromLevelId(levelId);
 		pokemonActorType = actorType;
 		Debug.Log($"this is LevelId: {levelId}, actorName {actorName}, attspeed: {attspeed}");//getting skill list from actor sheet, don't change
 	}
@@ -110,7 +112,7 @@ public class PokemonBase
 	{
 		expGain = Game.GetLevelByLevelId(levelId).expGain;
 	}
-	public void GetPokemonGoldGainFromActorType(string levelId)
+	public void GetPokemonGoldGainFromLevelId(string levelId)
 	{
 		goldGain = Game.GetLevelByLevelId(levelId).goldGain;
 	}

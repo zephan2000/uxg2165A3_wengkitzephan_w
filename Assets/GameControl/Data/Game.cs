@@ -52,6 +52,7 @@ public static class Game
 	public static int battleQuestProgress = 0;
 	public static bool questComplete;
     public static int questRunTime;
+    public static bool rewardCollected; // take this out if issue start to arise, takke out the if condition for mainsessionData.startedQuest
 
     //Analytics
     public static string [] battleResultByEnemyType;
@@ -60,7 +61,7 @@ public static class Game
 	public static int battlesLost;
 	public static int battlesRan;
     public static int damagePerBattle;
-    public static int currentBattleRunTime;
+    public static int currentBattleRunTime = -1;
     public static string enemyTypeForAnalytics;
     //public static int gameRunTime;
     public static Log currentLog;
@@ -219,10 +220,10 @@ public static class Game
         }
         return nskills;
     }
-	#region Zephan's Data
+    #region Zephan's Data
 
-	#region Level System
-	public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
+    #region Level System (Zephan)
+    public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
     {
 		List<int> helmet = Game.GetAllBuffsFromHelmet();
 		List<int> armour = Game.GetAllBuffsFromArmour();
@@ -347,8 +348,8 @@ public static class Game
 		return null;
 	}
 	#endregion
-	#region File Handling (Save System) 
-    public static void ProcessSaveData()
+	#region File Handling (Save System) (Zephan)
+	public static void ProcessSaveData()
     {
         string saveString = File.ReadAllText(saveFilePath);
         Debug.Log("This is savestring : " + saveString);
@@ -407,8 +408,10 @@ public static class Game
 
 		Log newLog = new Log("Log_" + mainsessionData.saveId, mainsessionData.vitality_added, mainsessionData.power_added, mainsessionData.intelligence_added, avgDamageDealtPerBattle, 
             avgTimeInBattle,mainsessionData.timeInBattle, avgTimeInQuest, mainsessionData.timeInQuest, numberOfBattles, mainsessionData.battles);
-
+        string saveIdheader = mainsessionData.saveId + "_log";
+		jsonString.Append("{\"" + saveIdheader + "\":[");
 		jsonString.Append($"{JsonUtility.ToJson(newLog)}");
+		jsonString.Append("]}");
 		Debug.Log($"saving log: {jsonString.ToString()}");
 		WriteFile(logPath, jsonString.ToString());
 	}
@@ -543,9 +546,9 @@ public static class Game
     }
 
 	#endregion
-	#region Quest
+	#region Quest (Zephan)
 
-    public static void SetQuestData()
+	public static void SetQuestData()
     {
         string[] questdata = mainsessionData.startedQuest.Split('_');
         Game.startedQuest = GetQuestByQuestId(questdata[0]);
@@ -587,9 +590,9 @@ public static class Game
 		return null;
 	}
 
-	#endregion
+	#endregion (Zephan)
 
-	#region Dialog
+	#region Dialog (Zephan)
 	public static List<Dialog> GetDialogByType(string type)
 	{
 		List<Dialog> ndialog = new List<Dialog>();
@@ -641,9 +644,9 @@ public static class Game
 	{
 		dialogList = adialog;
 	}
-	#endregion Dialog
+	#endregion Dialog (Zephan)
 
-	#region Analytics
+	#region Analytics (Zephan)
 
 
 	public static void AssignBattleResult()
@@ -690,24 +693,26 @@ public static class Game
         return battleResultByEnemyType;
     }
 
-	#endregion
-
-	#region Achievement
-
 	public static int GetNumberOfBattles()
-    {
-        int noofBattles = 0;
+	{
+		int noofBattles = 0;
 
-        string[] battleString = mainsessionData.battles.Split('@');
-        for(int i = 0; i < battleString.Length; i++)
-        {
-            noofBattles++;
-        }
+		string[] battleString = mainsessionData.battles.Split('@');
+		for (int i = 0; i < battleString.Length; i++)
+		{
+			noofBattles++;
+		}
 
-        return noofBattles;
-    }
+		return noofBattles;
+	}
 
 	#endregion
+
+
+
+
+
+
 	public static int SetEnemyPokemonLevel(string pokemonLevel)
     {
         Debug.Log("this is pokemonLevel:" + pokemonLevel);
@@ -733,6 +738,8 @@ public static class Game
 		return darkWizardLevel = wizardLevel;
 	}
 	#endregion
+
+
 	public static void SetItemList(List<items> alist)
     {
         itemlist = alist;

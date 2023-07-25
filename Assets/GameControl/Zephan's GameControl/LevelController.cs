@@ -97,6 +97,7 @@ namespace pattayaA3
 			};
 			TownDialogManager.Instance.RewardCollected += () =>
 			{
+				Debug.Log("reward collected");
 				RewardCollectedHud();
 				CheckForLevelUp();
 			};
@@ -128,6 +129,7 @@ namespace pattayaA3
 			{
 				QuestCompleteHud();
 			}
+			Debug.Log("this is currentbattleruntime from start:" + Game.currentBattleRunTime);
 
 			playerHud.SetTownData();
 			//StartCoroutine(playerHud.UpdateTownData());
@@ -736,7 +738,7 @@ namespace pattayaA3
 			{
 				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.questComplete}";
 			}
-			Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 0;
+			//Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1; // removing this because quest trigger sets this
 			Game.mainsessionData.timeInQuest += Game.questRunTime; // timeInQuest tracked from battleRunTime and questRunTime in case the reference it's not passed when in battle
 			Game.questRunTime = 0;
 			Game.SaveToJSON<save>(Game.saveList);
@@ -745,12 +747,15 @@ namespace pattayaA3
 		public void RewardCollectedHud()
 		{
 			questHud.SetActive(false);
+			Game.rewardCollected = true; // only used to check if player has collected reward
 			Game.questInProgress = false;
+			Game.damagePerBattle = 0;
 			questStatus = QuestStatus.Inactive;
 		}
 		public void CheckQuestProgress()
 		{
-			if(Game.startedQuest.questType.Contains("BATTLE"))
+			Debug.Log("this is currentBattleRunTime from quest progress: " + Game.currentBattleRunTime);
+			if (Game.startedQuest.questType.Contains("BATTLE"))
 			{
 				if (Game.battleQuestProgress == Game.startedQuest.questReq)
 				{
@@ -761,13 +766,22 @@ namespace pattayaA3
 			}
 			else if (Game.startedQuest.questType.Contains("TIME"))
 			{
-				if (Game.currentBattleRunTime <= Game.startedQuest.questReq && Game.chosenenemyType == Game.startedQuest.actorTypeToSlay)
+				if (Game.currentBattleRunTime <= Game.startedQuest.questReq && Game.currentBattleRunTime >= 0 && Game.chosenenemyType == Game.startedQuest.actorTypeToSlay)
 				{
+					Debug.Log("this is currentBattleRunTime from time quest: " + Game.currentBattleRunTime );
 					Game.questComplete = true;
-					questStatus = QuestStatus.Completed;
 					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
+					questStatus = QuestStatus.Completed;
 					QuestCompleteHud();
 				}
+				//else if (Game.mainsessionData.startedQuest.Split('_')[1] == "1")
+				//{
+				//	Debug.Log("this is currentBattleRunTime from time quest: " + Game.currentBattleRunTime);
+				//	Game.questComplete = true;
+				//	Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
+				//	questStatus = QuestStatus.Completed;
+				//	QuestCompleteHud();
+				//}
 			}
 			else if (Game.startedQuest.questType.Contains("DAMAGE"))
 			{
@@ -776,9 +790,18 @@ namespace pattayaA3
 				{
 					Game.questComplete = true;
 					questStatus = QuestStatus.Completed;
+					Debug.Log("appending startedQuest");
 					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
 					QuestCompleteHud();
 				}
+				//else if (Game.mainsessionData.startedQuest.Split('_')[1] == "1")
+				//{
+				//	Game.questComplete = true;
+				//	questStatus = QuestStatus.Completed;
+				//	Debug.Log("appending startedQuest");
+				//	Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
+				//	QuestCompleteHud();
+				//}
 			}
 
 

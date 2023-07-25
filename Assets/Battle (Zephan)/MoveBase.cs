@@ -10,7 +10,7 @@ public class MoveBase
 
 	public string moveName { get { return nameText; } }
 	public int moveDamage { get { return damage; } }
-	public int moveAccuracy { get { return accuracy; } }
+	//public int moveAccuracy { get { return accuracy; } }
 	public string movePriority { get { return priority; } }
 	public int moveMaxUses { get { return MaxUses; } }
 	public int moveHpGain { get { return Hpgain; } }
@@ -22,7 +22,7 @@ public class MoveBase
 	[SerializeField] string description;
 	[SerializeField] int damage;
 	[SerializeField] int Hpgain;
-	[SerializeField] int accuracy;
+	//[SerializeField] int accuracy;
 	[SerializeField] string priority;
 	[SerializeField] int MaxUses;
 	[SerializeField] MoveCategory category;
@@ -35,7 +35,7 @@ public class MoveBase
 		GetMBNameFromSkill(lsID);
 		GetMBDamageFromSkill(lsID);
 		GetMBHpGainFromSkill(lsID);
-		GetMBAccuracyFromSkill(lsID);
+		//GetMBAccuracyFromSkill(lsID);
 		GetMBPriorityFromSkill(lsID);
 		GetMBMaxUsesFromSkill(lsID);
 		GetMBCategoryFromSkill(lsID);
@@ -51,10 +51,10 @@ public class MoveBase
 	{
 		damage = Game.GetSkillById(lsID).dmg;
 	}
-	public void GetMBAccuracyFromSkill(string lsID) // need to change to void
-	{
-		accuracy = Game.GetSkillById(lsID).accuracy;
-	}
+	//public void GetMBAccuracyFromSkill(string lsID) // need to change to void
+	//{
+	//	accuracy = Game.GetSkillById(lsID).accuracy;
+	//}
 	public void GetMBPriorityFromSkill(string lsID) // need to change to void
 	{
 		priority = Game.GetSkillById(lsID).priority;

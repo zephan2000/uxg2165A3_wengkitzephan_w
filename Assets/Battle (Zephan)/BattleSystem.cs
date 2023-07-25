@@ -188,11 +188,22 @@ namespace pattayaA3
 			{
 				Debug.Log($"Exp before gain: {Game.mainsessionData.exp}/ {Game.currentmaxEXP}");
 				Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain;
-				Debug.Log("this is battle info :" + Game.questInProgress + " / " + Game.startedQuest.questType);
-				if (Game.questInProgress && Game.startedQuest.questType.Contains("BATTLE"))
+				if(Game.startedQuest != null)
 				{
-					CheckBattleQuestProgress();
+					//Debug.Log("this is battle info :" + Game.questInProgress + " / " + Game.startedQuest.questType);
+					if (Game.questInProgress && Game.startedQuest.questType.Contains("BATTLE"))
+					{
+						CheckBattleQuestProgress();
+					}
+					if (Game.startedQuest.questType.Contains("TIME") && Game.currentBattleRunTime <= Game.startedQuest.questReq && Game.chosenenemyType == Game.startedQuest.actorTypeToSlay)
+					{
+						//condition for time quest
+						Debug.Log("Running");
+						Game.currentBattleRunTime = battleRunTime;
+					}
+
 				}
+				
 				Debug.Log($"Exp after gain: {Game.mainsessionData.exp}/ {Game.currentmaxEXP}");
 			}
 			else if (Game.playerWon == false)
@@ -257,7 +268,6 @@ namespace pattayaA3
 					Game.playerWon = false;
 					Game.isBattleOver = true;
 					Debug.Log($"This is battle runtime: {battleRunTime} with mainsessionData runtime: {Game.mainsessionData.timeInBattle}");
-					Game.currentBattleRunTime = battleRunTime;
 					Game.mainsessionData.timeInBattle += battleRunTime;
 					Game.AssignBattleResult();
 					Game.SaveToJSON<save>(Game.saveList);

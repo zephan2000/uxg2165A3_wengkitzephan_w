@@ -2567,7 +2567,7 @@
             "category": "Physical",
             "target": "Foe",
             "skillname": "Quick Attack",
-            "dmg": "10",
+            "dmg": "300",
             "hpgain": "0",
             "accuracy": "1",
             "priority": "Yes",
