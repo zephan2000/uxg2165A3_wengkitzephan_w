@@ -603,7 +603,7 @@
             "currentSpeakerName": "Game",
             "displaySpritePathLeft": "tilemap_packed.png[tilemap_packed_88]",
             "displaySpritePathRight": "",
-            "dialogueText": "You earned [exp] exp!",
+            "dialogueText": "You earned [exp] exp and [gold] gold!",
             "choices": ""
         },
         {
@@ -2461,7 +2461,7 @@
             "questId": "QUEST2",
             "questType": "DAMAGE_1",
             "questName": "Deal 100 Damage In Battle",
-            "questReq": "1",
+            "questReq": "100",
             "actorTypeToSlay": "enemyGhost",
             "expReward": "30",
             "goldReward": "50",
@@ -2481,7 +2481,7 @@
             "questId": "QUEST4",
             "questType": "DAMAGE_2",
             "questName": "Deal 200 Damage In Battle",
-            "questReq": "2",
+            "questReq": "200",
             "actorTypeToSlay": "enemyGhost",
             "expReward": "40",
             "goldReward": "70",

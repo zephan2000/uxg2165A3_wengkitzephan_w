@@ -158,7 +158,7 @@ namespace pattayaA3
 				playerHud.SetTownData();
 				levelUpText.SetActive(false);
 
-
+				levelUp = false;
 				if (Game.mainsessionData.exp >= Game.currentmaxEXP) // if multiple level ups
 				{
 					Game.mainsessionData.exp -= Game.currentmaxEXP;
@@ -166,9 +166,8 @@ namespace pattayaA3
 					levelUp = true;
 					//StartCoroutine(playerHud.UpdateTownData());
 					//playerHud.UpdateTownData();
-
 				}
-				levelUp = false;
+				
 				Game.SaveToJSON<save>(Game.saveList);
 			}
 		}

@@ -98,6 +98,7 @@ namespace pattayaA3
 			TownDialogManager.Instance.RewardCollected += () =>
 			{
 				RewardCollectedHud();
+				CheckForLevelUp();
 			};
 			//Game.ProcessSaveData(Game.demoData2);
             Game.ProcessSaveData();
@@ -764,6 +765,7 @@ namespace pattayaA3
 				{
 					Game.questComplete = true;
 					questStatus = QuestStatus.Completed;
+					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
 					QuestCompleteHud();
 				}
 			}
@@ -774,6 +776,7 @@ namespace pattayaA3
 				{
 					Game.questComplete = true;
 					questStatus = QuestStatus.Completed;
+					Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1;
 					QuestCompleteHud();
 				}
 			}

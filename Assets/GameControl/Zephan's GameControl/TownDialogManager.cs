@@ -90,7 +90,8 @@ public class TownDialogManager : MonoBehaviour
 			}
 		}
 
-	}
+	} 
+
 	public IEnumerator ShowDialog(string dialogueType)
 	{
 		Debug.Log($"Reading Dialog, checking dialog state: {dialogState}");
@@ -211,7 +212,9 @@ public class TownDialogManager : MonoBehaviour
 			case "QC0001":
 				temporaryText = currentDialog.dialogueText;
 				int expReward = Game.startedQuest.expReward;
+				int goldReward = Game.startedQuest.goldReward;
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[exp]", expReward.ToString());
+				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[gold]", goldReward.ToString());
 				QuestCompleteSettings();
 				Game.mainsessionData.exp += expReward;
 				break;
