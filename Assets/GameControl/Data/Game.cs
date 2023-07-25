@@ -33,6 +33,9 @@ public static class Game
 	public static bool isTrainingWarning;
 	public static bool isBossWarning;
     public static bool darkWizardDefeated;
+	public static int itemVit;
+	public static int itemPower;
+	public static int itemInt;
 	//Save
 	public static DemoData demoData2;
 	public static List<save> saveList;
@@ -221,14 +224,20 @@ public static class Game
 	#region Level System
 	public static void SetSessionDataFromLevelId(string levelid) // triggers when you level up
     {
-        level alevel = GetLevelByLevelId(levelid);
+		List<int> helmet = Game.GetAllBuffsFromHelmet();
+		List<int> armour = Game.GetAllBuffsFromArmour();
+		List<int> weapon = Game.GetAllBuffsFromWeapon();
+		Game.itemVit = helmet[0] + armour[0] + weapon[0];
+		Game.itemPower = helmet[1] + armour[1] + weapon[1];
+		Game.itemInt = helmet[2] + armour[2] + weapon[2];
+		level alevel = GetLevelByLevelId(levelid);
         Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}");
-        mainsessionData.maxhp = alevel.basehp;
-		mainsessionData.physicaldmg = alevel.physicaldmg;
-		mainsessionData.magicdmg = alevel.magicdmg;
-		mainsessionData.vitality = alevel.vitality;
-		mainsessionData.power = alevel.power;
-		mainsessionData.intelligence = alevel.intelligence;
+        mainsessionData.maxhp = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * Game.playerLevel) - alevel.vitality)) + (alevel.basehp + Game.itemVit));
+		mainsessionData.physicaldmg = (((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.physicaldmg)) + alevel.power + Game.mainsessionData.power_added + itemPower));
+		mainsessionData.magicdmg = ((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.magicdmg)) + (alevel.intelligence + Game.mainsessionData.intelligence_added + Game.itemInt));
+		mainsessionData.vitality = alevel.vitality + Game.mainsessionData.vitality_added;
+		mainsessionData.power = alevel.power + Game.mainsessionData.power_added;
+		mainsessionData.intelligence = alevel.intelligence + Game.mainsessionData.intelligence_added;
 		mainsessionData.attspeed = alevel.attspeed;
         playerLevel = int.Parse(levelid.Split('_')[1]);
         currentmaxEXP = GetLevelByLevelId(mainsessionData.levelId).maxExp;

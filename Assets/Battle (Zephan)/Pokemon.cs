@@ -51,25 +51,25 @@ public class Pokemon
 	// CalculateStats() is for optimisation purposes, Calculates once and stores value, SpAttack = Intelligence
 	void CalculateStats()
 	{
-		int itemPower = 0, itemVit = 0, itemInt = 0;
-		List<int> helmet = Game.GetAllBuffsFromHelmet();
-        List<int> armour = Game.GetAllBuffsFromArmour();
-        List<int> weapon = Game.GetAllBuffsFromWeapon();
-		itemVit = helmet[0] + armour[0] + weapon[0];
-        itemPower = helmet[1] + armour[1] + weapon[1];
-        itemInt = helmet[2] + armour[2] + weapon[2];
+		//int itemPower = 0, itemVit = 0, itemInt = 0;
+		//List<int> helmet = Game.GetAllBuffsFromHelmet();
+  //      List<int> armour = Game.GetAllBuffsFromArmour();
+  //      List<int> weapon = Game.GetAllBuffsFromWeapon();
+		//itemVit = helmet[0] + armour[0] + weapon[0];
+  //      itemPower = helmet[1] + armour[1] + weapon[1];
+  //      itemInt = helmet[2] + armour[2] + weapon[2];
 
         Stats = new Dictionary<Stat,int>();
-		Stats.Add(Stat.PhysicalDamage, (int)Mathf.Pow(1.015f , ((15*level)+ _base.pokemonPhysicalDmg)) + (_base.pokemonPower + itemPower)); // calculate physicaldamage based on pokemon power 
-		Stats.Add(Stat.MagicDamage, (int)Mathf.Pow(1.015f, ((15 * level) + _base.pokemonMagicDmg)) + (_base.pokemonIntelligence + itemInt));     // calculate magicdmg based on pokemon intelligence
-		Stats.Add(Stat.Vitality, _base.pokemonVitality);
-		Stats.Add(Stat.Power, _base.pokemonPower);
-		Stats.Add(Stat.Intelligence, _base.pokemonIntelligence);
+		Stats.Add(Stat.PhysicalDamage, (int)Mathf.Pow(1.015f , ((15*level)+ _base.pokemonPhysicalDmg)) + (_base.pokemonPower + Game.mainsessionData.power_added + Game.itemPower)); // calculate physicaldamage based on pokemon power 
+		Stats.Add(Stat.MagicDamage, (int)Mathf.Pow(1.015f, ((15 * level) + _base.pokemonMagicDmg)) + (_base.pokemonIntelligence + Game.mainsessionData.intelligence_added + Game.itemInt));     // calculate magicdmg based on pokemon intelligence
+		Stats.Add(Stat.Vitality, _base.pokemonVitality + Game.mainsessionData.vitality_added);
+		Stats.Add(Stat.Power, _base.pokemonPower + Game.mainsessionData.power_added);
+		Stats.Add(Stat.Intelligence, _base.pokemonIntelligence + Game.mainsessionData.intelligence_added);
 		Stats.Add(Stat.Speed, _base.pokemonAttSpeed);
 		Stats.Add(Stat.ExpGain,_base.pokemonExpGain);
 		Stats.Add(Stat.GoldGain,_base.pokemonGoldGain);
 
-		MaxHP = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * level) - _base.pokemonVitality)) + (_base.MaxHp + itemVit)); //take in items also
+		MaxHP = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * level) - _base.pokemonVitality)) + (_base.MaxHp + Game.itemVit)); //take in items also
 
 		
 

@@ -213,10 +213,11 @@ public class TownDialogManager : MonoBehaviour
 				temporaryText = currentDialog.dialogueText;
 				int expReward = Game.startedQuest.expReward;
 				int goldReward = Game.startedQuest.goldReward;
+				Game.mainsessionData.exp += expReward;
+				Game.mainsessionData.gold += goldReward;
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[exp]", expReward.ToString());
 				currentDialog.dialogueText = currentDialog.dialogueText.Replace("[gold]", goldReward.ToString());
 				QuestCompleteSettings();
-				Game.mainsessionData.exp += expReward;
 				break;
 
 			case "LEVEL0001":
