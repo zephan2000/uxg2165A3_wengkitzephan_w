@@ -659,7 +659,7 @@ namespace pattayaA3
 
             added_point_text.enabled = enabled;
             added_stat_text.enabled = enabled;
-            //Debug.Log(Game.mainsessionData.attributePoint);
+            Debug.Log(Game.mainsessionData.attributePoint);
             //stat1.text = "Vitality: " + Game.mainsessionData.vitality_added;
             //stat2.text = "Power: " + Game.mainsessionData.power_added;
             //stat3.text = "Intelligence: " + Game.mainsessionData.intelligence_added;
