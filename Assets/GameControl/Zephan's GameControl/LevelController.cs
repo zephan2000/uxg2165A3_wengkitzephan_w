@@ -271,7 +271,7 @@ namespace pattayaA3
 		public void StartNewLevel(string aScene)
 		{
 			player.currentposition = player.GetCurrentPosition();
-			if (Game.questInProgress) { Game.persistQuestTime += (int)questRunTime; questRunTime = 0; }// check what is the current player position
+			if (Game.questInProgress) { Debug.Log("adding questRunTime" + Game.mainsessionData.timeInQuest + "this is questruntime" + Game.questRunTime); Game.mainsessionData.timeInQuest += (int)questRunTime; questRunTime = 0; }// check what is the current player position
 			gameController.LoadScene(aScene);
 			gameController.RemoveScene(sceneName);
 			Game.SaveToJSON<save>(Game.saveList);

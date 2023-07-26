@@ -209,7 +209,7 @@ namespace pattayaA3
 					Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain / 2;
 			}
 			Game.mainsessionData.timeInBattle += (int)battleRunTime;
-			if (Game.questInProgress) { Debug.Log("adding to questRunTime" + Game.mainsessionData.timeInQuest + "this is battleRunTime" + battleRunTime);  Game.mainsessionData.timeInQuest += (int)battleRunTime; }
+			if (Game.questInProgress) { Debug.Log("adding questRunTime" + Game.mainsessionData.timeInQuest + "this is battleRunTime" + battleRunTime);  Game.mainsessionData.timeInQuest += (int)battleRunTime; }
 			Game.AssignBattleResult();
 			Game.SaveToJSON<save>(Game.saveList);
 			Game.isBattleOver = false;
@@ -271,7 +271,7 @@ namespace pattayaA3
 					Game.isBattleOver = true;
 					Debug.Log($"This is battle runtime: {battleRunTime} with mainsessionData runtime: {Game.mainsessionData.timeInBattle}");
 					Game.mainsessionData.currenthp = playerUnit.Pokemon.HP;
-					if (Game.questInProgress) { Debug.Log("adding to questRunTime" + Game.mainsessionData.timeInQuest + "this is battleRunTime" + battleRunTime); Game.mainsessionData.timeInQuest += (int)battleRunTime; }
+					if (Game.questInProgress) { Debug.Log("adding questRunTime" + Game.mainsessionData.timeInQuest + "this is battleRunTime" + battleRunTime); Game.mainsessionData.timeInQuest += (int)battleRunTime; }
 					Game.mainsessionData.timeInBattle += (int)battleRunTime;
 					Game.AssignBattleResult();
 					Game.SaveToJSON<save>(Game.saveList);
