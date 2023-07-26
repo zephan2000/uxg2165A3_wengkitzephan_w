@@ -51,7 +51,7 @@ namespace pattayaA3
 		private bool allowEscape;
 		private bool allowReturn;
 		private bool isProgressMenuOpen;
-		private int questRunTime;
+		private float questRunTime;
 		//private int PlayTimeHour;
 		//private int PlayTimeMinute;
 		//private int PlayTimeSecond;
@@ -125,7 +125,7 @@ namespace pattayaA3
 				questStatus = QuestStatus.Ongoing;
 				Game.questInProgress = true;
 				Game.SetQuestData();
-				StartCoroutine(RecordSecondsTakenForQuest());
+				//RecordSecondsTakenForQuest();
 				StartBattleQuestHud();
 				CheckQuestProgress();
 			}
@@ -225,6 +225,11 @@ namespace pattayaA3
 			{
 				HandleProgressMenuSelection();
 			}
+
+			if(Game.questInProgress)
+			{
+				RecordSecondsTakenForQuest();
+			}
             
             //inventorybox.CheckMenu();			
         }
@@ -265,10 +270,10 @@ namespace pattayaA3
 		}
 		public void StartNewLevel(string aScene)
 		{
-			player.currentposition = player.GetCurrentPosition(); // check what is the current player position
+			player.currentposition = player.GetCurrentPosition();
+			if (Game.questInProgress) { Game.persistQuestTime += (int)questRunTime; questRunTime = 0; }// check what is the current player position
 			gameController.LoadScene(aScene);
 			gameController.RemoveScene(sceneName);
-			Game.mainsessionData.timeInQuest = questRunTime;
 			Game.SaveToJSON<save>(Game.saveList);
 		}
 
@@ -402,15 +407,16 @@ namespace pattayaA3
 					currentChoice = 0;
 					break;
 				case "Save":
-					Debug.Log("Saving");
-					Game.mainsessionData.timeInQuest = questRunTime;
+					Debug.Log("Saving this is questRunTime:" + questRunTime + "mainsessionData quest Time" + Game.mainsessionData.timeInQuest);
+					if (Game.questInProgress) { Game.mainsessionData.timeInQuest += (int)questRunTime; questRunTime = 0; }
 					Game.SaveToJSON<save>(Game.saveList);
 					currentChoice = 0;
 					break;
 				case "Exit":
 					gameController.GoToLevelSelect();
 					currentChoice = 0;
-					Game.mainsessionData.timeInQuest = questRunTime;
+					Debug.Log("this is questRunTime: " + questRunTime);
+					if (Game.questInProgress) { Game.mainsessionData.timeInQuest +=	(int)questRunTime; questRunTime = 0; }
 					Game.mainsessionData.saveStatus = "INACTIVE";
 					Debug.Log($"this is mainsessionData's saveId {Game.mainsessionData.saveId} with saveStatus {Game.mainsessionData.saveStatus}");
 					Game.SaveToJSON<save>(Game.saveList);
@@ -557,15 +563,9 @@ namespace pattayaA3
 
 		#endregion
 		#region Battle And Quest Analytics (Zephan)
-		public IEnumerator RecordSecondsTakenForQuest()
+		public void RecordSecondsTakenForQuest()
 		{
-			while (Game.questInProgress)
-			{
-				yield return new WaitForSeconds(1);
-				questRunTime += 1;
-				Debug.Log($"this is quest run time: {questRunTime}, with battleStatus {Game.questInProgress}");
-
-			}
+			questRunTime += Time.deltaTime;
 		}
 		public string GetCompletedQuestData()
 		{
@@ -728,7 +728,7 @@ namespace pattayaA3
 			}
 			CheckQuestProgress();
 			Game.questInProgress = true; // tracking for runtime purposes
-			StartCoroutine(RecordSecondsTakenForQuest());
+			//RecordSecondsTakenForQuest();
 			Game.SaveToJSON<save>(Game.saveList);
 		}
 		public void QuestCompleteHud()
@@ -743,8 +743,7 @@ namespace pattayaA3
 			{
 				questHud.transform.GetChild(1).GetComponent<Text>().text = $"Progress: {Game.questComplete}";
 			}
-			//Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1; // removing this because quest trigger sets this
-			Game.mainsessionData.timeInQuest += Game.questRunTime; // timeInQuest tracked from battleRunTime and questRunTime in case the reference it's not passed when in battle
+			//Game.mainsessionData.startedQuest = Game.startedQuest.questId + "_" + 1; // removing this because quest trigger sets this// timeInQuest tracked from battleRunTime and questRunTime in case the reference it's not passed when in battle
 			Game.questRunTime = 0;
 			Game.SaveToJSON<save>(Game.saveList);
 		}
@@ -752,7 +751,9 @@ namespace pattayaA3
 		public void RewardCollectedHud()
 		{
 			questHud.SetActive(false);
-			Game.rewardCollected = true; // only used to check if player has collected reward
+			Game.rewardCollected = true;
+			Game.mainsessionData.timeInQuest += (int)questRunTime; 
+			questRunTime = 0; // only used to check if player has collected reward
 			Game.questInProgress = false;
 			Game.damagePerBattle = 0;
 			questStatus = QuestStatus.Inactive;

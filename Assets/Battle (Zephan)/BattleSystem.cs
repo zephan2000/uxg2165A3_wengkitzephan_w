@@ -16,6 +16,7 @@ namespace pattayaA3
 		[SerializeField] Image battleBackground;
 		private bool isStarted;
 		private int battleRunTime;
+		private float battleRunTime;
 
 		BattleState state;
 		int currentAction;
@@ -28,6 +29,7 @@ namespace pattayaA3
 			Game.damagePerBattle = 0;
 			Game.currentBattleRunTime = 0;
 			StartCoroutine(RecordSecondsTakenPerBattle());
+			battleRunTime = 0;
 			StartCoroutine(SetupBattle());
 		}
 
@@ -196,7 +198,7 @@ namespace pattayaA3
 					{
 						//condition for time quest
 						Debug.Log("Running");
-						Game.currentBattleRunTime = battleRunTime;
+						Game.currentBattleRunTime = (int)battleRunTime;
 					}
 
 				}
@@ -208,8 +210,8 @@ namespace pattayaA3
 				if (Game.playerRan != true)
 					Game.mainsessionData.exp += enemyUnit.Pokemon.Base.pokemonExpGain / 2;
 			}
-			Game.mainsessionData.timeInBattle += battleRunTime;
-			Game.mainsessionData.timeInQuest += battleRunTime;
+			Game.mainsessionData.timeInBattle += (int)battleRunTime;
+			if (Game.questInProgress) { Debug.Log("adding to questRunTime" + Game.mainsessionData.timeInQuest + "this is battleRunTime" + battleRunTime);  Game.mainsessionData.timeInQuest += (int)battleRunTime; }
 			Game.AssignBattleResult();
 			Game.SaveToJSON<save>(Game.saveList);
 			Game.isBattleOver = false;
@@ -236,6 +238,11 @@ namespace pattayaA3
 			else if (state == BattleState.MoveSelection)
 			{
 				HandleMoveSelection();
+			}
+
+			if(!Game.isBattleOver)
+			{
+				battleRunTime += Time.deltaTime;
 			}
 		}
 
@@ -266,7 +273,8 @@ namespace pattayaA3
 					Game.isBattleOver = true;
 					Debug.Log($"This is battle runtime: {battleRunTime} with mainsessionData runtime: {Game.mainsessionData.timeInBattle}");
 					Game.mainsessionData.currenthp = playerUnit.Pokemon.HP;
-					Game.mainsessionData.timeInBattle += battleRunTime;
+					if (Game.questInProgress) { Debug.Log("adding to questRunTime" + Game.mainsessionData.timeInQuest + "this is battleRunTime" + battleRunTime); Game.mainsessionData.timeInQuest += (int)battleRunTime; }
+					Game.mainsessionData.timeInBattle += (int)battleRunTime;
 					Game.AssignBattleResult();
 					Game.SaveToJSON<save>(Game.saveList);
 					ExitLevel("Town");
@@ -324,16 +332,6 @@ namespace pattayaA3
 		{
 			gameController.LoadScene(aScene);
 			gameController.RemoveScene(sceneName);
-		}
-		public IEnumerator RecordSecondsTakenPerBattle()
-		{
-			while (!Game.isBattleOver)
-			{
-				yield return new WaitForSeconds(1);
-				battleRunTime += 1;
-				Debug.Log($"this is battle run time: {battleRunTime}, with battleStatus {!Game.isBattleOver}");
-
-			}
 		}
 
 	}

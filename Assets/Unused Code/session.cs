@@ -3,7 +3,6 @@
 //using System.Collections.Generic;
 //using UnityEngine;
 
-////Zephan
 //public class session //not needed
 //{
 //	public string saveId;

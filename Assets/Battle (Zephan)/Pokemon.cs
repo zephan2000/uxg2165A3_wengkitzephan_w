@@ -69,7 +69,7 @@ public class Pokemon
 		Stats.Add(Stat.ExpGain,_base.pokemonExpGain);
 		Stats.Add(Stat.GoldGain,_base.pokemonGoldGain);
 
-		MaxHP = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * level) - _base.pokemonVitality)) + (_base.MaxHp + Game.itemVit)); //take in items also
+		MaxHP = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * level) + _base.pokemonVitality)) + (_base.MaxHp + Game.itemVit)); //take in items also
 
 		
 

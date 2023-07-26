@@ -1945,6 +1945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd1ab761c9f3ef4b8740d8bbbc1e86b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventorybox: {fileID: 0}
+  inventoryboxObject: {fileID: 0}
   itemListing: {fileID: 0}
   itemListingObject: {fileID: 0}
   itemUi: {fileID: 5091864157648745266, guid: 27340a78fc4e5114ba8f16642fecc6e0, type: 3}

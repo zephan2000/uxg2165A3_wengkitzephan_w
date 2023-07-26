@@ -65,6 +65,7 @@ public static class Game
     public static int damagePerBattle;
     public static int currentBattleRunTime = -1;
     public static string enemyTypeForAnalytics;
+    public static float persistQuestTime;
     //public static int gameRunTime;
     public static Log currentLog;
 
@@ -235,7 +236,7 @@ public static class Game
 		Game.itemInt = helmet[2] + armour[2] + weapon[2];
 		level alevel = GetLevelByLevelId(levelid);
         Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}, newsessionStatus {newSession}");
-		mainsessionData.maxhp = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * Game.playerLevel) - alevel.vitality)) + (alevel.basehp + Game.itemVit));
+		mainsessionData.maxhp = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * Game.playerLevel) + alevel.vitality)) + (alevel.basehp + Game.itemVit));
 		mainsessionData.physicaldmg = (((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.physicaldmg)) + alevel.power + Game.mainsessionData.power_added + itemPower));
 		mainsessionData.magicdmg = ((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.magicdmg)) + (alevel.intelligence + Game.mainsessionData.intelligence_added + Game.itemInt));
 		mainsessionData.vitality = alevel.vitality + Game.mainsessionData.vitality_added;
@@ -408,7 +409,7 @@ public static class Game
 
 		int avgTimeInQuest = (mainsessionData.timeInQuest) / mainsessionData.completedQuest.Split('@').Length;
 
-		Log newLog = new Log("Log_" + mainsessionData.saveId, mainsessionData.vitality_added, mainsessionData.power_added, mainsessionData.intelligence_added, avgDamageDealtPerBattle, 
+		Log newLog = new Log(mainsessionData.saveId + "_log", mainsessionData.vitality_added, mainsessionData.power_added, mainsessionData.intelligence_added, avgDamageDealtPerBattle, 
             avgTimeInBattle,mainsessionData.timeInBattle, avgTimeInQuest, mainsessionData.timeInQuest, numberOfBattles, mainsessionData.battles);
         string saveIdheader = mainsessionData.saveId + "_log";
 		jsonString.Append("{\"" + saveIdheader + "\":[");
