@@ -145,7 +145,7 @@ public class DataManager : MonoBehaviour
         foreach (RefItems refItem in demoData.items)
         {
             items item = new items(refItem.itemId, refItem.itemType,
-                refItem.actorType, refItem.displayName, refItem.vitalityBuff,
+                refItem.displayName, refItem.vitalityBuff,
                 refItem.physicaldmgBuff, refItem.magicdmgBuff, refItem.cost,
                 refItem.displaySpritePath);
 
