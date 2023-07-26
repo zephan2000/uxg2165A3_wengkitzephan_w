@@ -60,6 +60,10 @@ namespace pattayaA3
 
 		void Start() //Zephan
 		{
+			Game.ProcessSaveData();
+
+			Game.GetSave();
+			player.UpdatePlayerSprite();
 			TownDialogManager.Instance.OnShowDialog += () =>
 			{
 				state = GameState.Dialog;
@@ -102,8 +106,8 @@ namespace pattayaA3
 				CheckForLevelUp();
 			};
 			//Game.ProcessSaveData(Game.demoData2);
-            Game.ProcessSaveData();
-            Game.GetSave(); //why does the game data disappear after writing?
+           
+			//why does the game data disappear after writing?
 
 			//Debug.Log($"finding Id {Game.mainsessionData.levelId}, otherData: {Game.mainsessionData.actorName}, {Game.mainsessionData.actorType} ");
 			Game.SetSessionDataFromLevelId(Game.mainsessionData.levelId);
@@ -132,6 +136,7 @@ namespace pattayaA3
 			Debug.Log("this is currentbattleruntime from start:" + Game.currentBattleRunTime);
 
 			playerHud.SetTownData();
+
 			//StartCoroutine(playerHud.UpdateTownData());
 			Debug.Log("this is level check: " + Game.mainsessionData.exp + "current max Exp" + Game.currentmaxEXP);
 			CheckForLevelUp();

@@ -44,6 +44,8 @@ public static class Game
 	public static string testFilePath;
 	public static save mainsessionData;
 	public static int enemyPokemonLevel = 1;
+    public static string playerImage;
+    public static bool newSession = false;
 
 	//Quest
 	public static List<Quest> questList;
@@ -232,8 +234,8 @@ public static class Game
 		Game.itemPower = helmet[1] + armour[1] + weapon[1];
 		Game.itemInt = helmet[2] + armour[2] + weapon[2];
 		level alevel = GetLevelByLevelId(levelid);
-        Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}");
-        mainsessionData.maxhp = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * Game.playerLevel) - alevel.vitality)) + (alevel.basehp + Game.itemVit));
+        Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}, newsessionStatus {newSession}");
+		mainsessionData.maxhp = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * Game.playerLevel) - alevel.vitality)) + (alevel.basehp + Game.itemVit));
 		mainsessionData.physicaldmg = (((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.physicaldmg)) + alevel.power + Game.mainsessionData.power_added + itemPower));
 		mainsessionData.magicdmg = ((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.magicdmg)) + (alevel.intelligence + Game.mainsessionData.intelligence_added + Game.itemInt));
 		mainsessionData.vitality = alevel.vitality + Game.mainsessionData.vitality_added;
@@ -312,7 +314,7 @@ public static class Game
                                    levelid, alevel.basehp, alevel.basehp, alevel.physicaldmg, alevel.magicdmg, alevel.vitality,
                                    alevel.power, alevel.intelligence, alevel.attspeed, 0, 0, 0, 0, 0, 0, 0, "item10", "item14", "item13", "", 
                                    currentactor.displaySpritePath, "", "", 0, 0,0,"");
-
+        newSession = true;
         SaveToJSON<save>(saveList);
 	}
 	public static int GetLevelFromLevelId(string levelid)
@@ -442,7 +444,7 @@ public static class Game
 				Debug.Log($"this is the saveId found: {savedata.saveId}");
 				mainsessionData = savedata;
 				mainsessionData.saveStatus = "ACTIVE";
-                SaveToJSON<save>(saveList);
+				SaveToJSON<save>(saveList);
                 Debug.Log($"This is soemthing done /////////////////////////////////////////////");
 			}
                 Debug.Log($"================================================\n{savedata.saveId}");

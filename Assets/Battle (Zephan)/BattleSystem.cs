@@ -265,6 +265,7 @@ namespace pattayaA3
 					Game.playerWon = false;
 					Game.isBattleOver = true;
 					Debug.Log($"This is battle runtime: {battleRunTime} with mainsessionData runtime: {Game.mainsessionData.timeInBattle}");
+					Game.mainsessionData.currenthp = playerUnit.Pokemon.HP;
 					Game.mainsessionData.timeInBattle += battleRunTime;
 					Game.AssignBattleResult();
 					Game.SaveToJSON<save>(Game.saveList);

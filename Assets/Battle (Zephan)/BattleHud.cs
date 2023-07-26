@@ -79,7 +79,12 @@ namespace pattayaA3
 		{
 			nameText.text = Game.mainsessionData.actorType;
 			levelText.text = "Lvl" + Game.playerLevel.ToString();
-			Debug.Log($"this is currentHp from UpdateTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
+			if(Game.newSession)
+			{
+				Game.mainsessionData.currenthp = Game.mainsessionData.maxhp;
+				Game.newSession = false;
+			}
+			Debug.Log($"this is currentHp from UpdateTownData: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, with newSession status {Game.newSession}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
 			HpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}";
 			ExpNumbers.GetComponent<Text>().text = $"{Game.mainsessionData.exp} / {Game.currentmaxEXP}";
 			hpBar.SetHPData((float)Game.mainsessionData.currenthp / Game.maxHP);

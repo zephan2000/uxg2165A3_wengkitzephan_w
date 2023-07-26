@@ -309,6 +309,7 @@ public class TownDialogManager : MonoBehaviour
 			else if (chosenDialog.dialogueText == "I want a quest.")
 			{
 				selectedQuest = true;
+				Game.damagePerBattle = 0;
 				CheckForQuestInProgress(chosenDialog);
 				CheckForCompletedQuest(chosenDialog);
 				if(Game.mainsessionData.startedQuest == "")

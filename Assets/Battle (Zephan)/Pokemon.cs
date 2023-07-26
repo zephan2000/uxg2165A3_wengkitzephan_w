@@ -15,7 +15,7 @@ public class Pokemon
 	public int Level { get { return level; } }	
 	public Move CurrentMove { get; set; }
 	public int HP { get; set; } // creates a private variable behind the scenes, 10:54 of part 6
-    public Dictionary<Stat,int> Stats { get; private set; }	
+    public Dictionary<Stat,int> Stats { get; set; }	
 	public Dictionary<Stat, int> StatBoosts { get; private set; }
 	public Pokemon(PokemonBase pbase, int plevel) //pass in actorName, actorType and, Pokemon level
 	{

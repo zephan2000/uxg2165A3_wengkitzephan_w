@@ -177,7 +177,7 @@ public class IntroductionDialogManager : MonoBehaviour
 				case "I want to be a Warrior.":
 					chosenClassText = "playerWarrior_1";
 					break;
-				case "I want to be a Magician.":
+				case "I want to be a Wizard.":
 					chosenClassText = "playerWizard_1";
 					break;
 				case "I want to be an Archer.":

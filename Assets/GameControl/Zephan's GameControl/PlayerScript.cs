@@ -224,6 +224,7 @@ namespace pattayaA3
         }
 		public void RestoreHealth()
 		{
+			Game.SetSessionDataFromLevelId(Game.mainsessionData.levelId);
 			Game.mainsessionData.currenthp = (int)Game.mainsessionData.maxhp;
 			Debug.Log($"this is currentHp from RestoreHealth: {Game.mainsessionData.currenthp} / {Game.mainsessionData.maxhp}, currentexp: {Game.mainsessionData.exp} / {Game.currentmaxEXP}");
 			StartCoroutine(playerHud.UpdateTownData());
@@ -307,27 +308,29 @@ namespace pattayaA3
 		{
 			levelController = aController;
 			this.transform.position = initialPosition.transform.position;
-			UpdatePlayerStats();
+			//UpdatePlayerStats();
 		}
 
 		
 		//Raiyan's Code
 		
-		public void UpdatePlayerStats() 
+		public void UpdatePlayerSprite() 
 		{
 			//player.UpdateStats();
 			//Debug.Log("Running");
 			//Debug.Log(Game.Getactorbytype("Player").displaySpritePath);
-            playerImage = Game.GetActorByActorType("playerWizard").displaySpritePath ;
+			playerImage = Game.mainsessionData.displaySpritePath;
+			Debug.Log("this is session actorType:" + Game.mainsessionData.actorType + "id" + Game.mainsessionData.saveId + "sprite Path" + Game.mainsessionData.displaySpritePath);
+			Game.playerImage = Game.GetActorByActorType(Game.mainsessionData.actorType).displaySpritePath;
 			Debug.Log(playerImage);
 
-			//Sprite tileSprite = Resources.Load(playerImage) as Sprite;
 
 			AssetManager.LoadSprite(playerImage, (Sprite s) =>
 			{
 				this.GetComponent<SpriteRenderer>().sprite = s;
 			});
-        }
+		}
 		
     }
 }
+
