@@ -59,9 +59,10 @@ public class Pokemon
   //      itemPower = helmet[1] + armour[1] + weapon[1];
   //      itemInt = helmet[2] + armour[2] + weapon[2];
 
+
         Stats = new Dictionary<Stat,int>();
-		Stats.Add(Stat.PhysicalDamage, (int)Mathf.Pow(1.015f , ((15*level)+ _base.pokemonPhysicalDmg)) + (_base.pokemonPower + Game.mainsessionData.power_added + Game.itemPower)); // calculate physicaldamage based on pokemon power 
-		Stats.Add(Stat.MagicDamage, (int)Mathf.Pow(1.015f, ((15 * level) + _base.pokemonMagicDmg)) + (_base.pokemonIntelligence + Game.mainsessionData.intelligence_added + Game.itemInt));     // calculate magicdmg based on pokemon intelligence
+		Stats.Add(Stat.PhysicalDamage, (int)Mathf.Pow(1.015f , ((15*level)+ _base.pokemonPower ) + _base.pokemonPhysicalDmg )); // calculate physicaldamage based on pokemon power 
+		Stats.Add(Stat.MagicDamage, (int)Mathf.Pow(1.015f, ((15 * level) + _base.pokemonIntelligence + Game.mainsessionData.intelligence_added + Game.itemInt) + _base.pokemonMagicDmg));     // calculate magicdmg based on pokemon intelligence
 		Stats.Add(Stat.Vitality, _base.pokemonVitality + Game.mainsessionData.vitality_added);
 		Stats.Add(Stat.Power, _base.pokemonPower + Game.mainsessionData.power_added);
 		Stats.Add(Stat.Intelligence, _base.pokemonIntelligence + Game.mainsessionData.intelligence_added);

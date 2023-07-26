@@ -268,6 +268,7 @@ namespace pattayaA3
 				//StartCoroutine(playerHud.SetTownData());
 			}
 		}
+
 		public void StartNewLevel(string aScene)
 		{
 			player.currentposition = player.GetCurrentPosition();

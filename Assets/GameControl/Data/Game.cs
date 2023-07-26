@@ -237,8 +237,8 @@ public static class Game
 		level alevel = GetLevelByLevelId(levelid);
         Debug.Log($"this is levelid {levelid}, this is mainsessiondata level {mainsessionData.levelId}, newsessionStatus {newSession}");
 		mainsessionData.maxhp = Mathf.FloorToInt((int)Mathf.Pow(1.015f, ((25 * Game.playerLevel) + alevel.vitality)) + (alevel.basehp + Game.itemVit));
-		mainsessionData.physicaldmg = (((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.physicaldmg)) + alevel.power + Game.mainsessionData.power_added + itemPower));
-		mainsessionData.magicdmg = ((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.magicdmg)) + (alevel.intelligence + Game.mainsessionData.intelligence_added + Game.itemInt));
+		mainsessionData.physicaldmg = (((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.power)) + alevel.physicaldmg + Game.mainsessionData.power_added + itemPower));
+		mainsessionData.magicdmg = ((int)Mathf.Pow(1.015f, ((15 * Game.playerLevel) + alevel.intelligence)) + (alevel.magicdmg+ Game.mainsessionData.intelligence_added + Game.itemInt));
 		mainsessionData.vitality = alevel.vitality + Game.mainsessionData.vitality_added;
 		mainsessionData.power = alevel.power + Game.mainsessionData.power_added;
 		mainsessionData.intelligence = alevel.intelligence + Game.mainsessionData.intelligence_added;
