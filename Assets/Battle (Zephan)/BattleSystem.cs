@@ -15,7 +15,6 @@ namespace pattayaA3
 		[SerializeField] BattleDialogBox dialogBox;
 		[SerializeField] Image battleBackground;
 		private bool isStarted;
-		private int battleRunTime;
 		private float battleRunTime;
 
 		BattleState state;
@@ -28,7 +27,6 @@ namespace pattayaA3
 			Game.isBattleOver = false;
 			Game.damagePerBattle = 0;
 			Game.currentBattleRunTime = 0;
-			StartCoroutine(RecordSecondsTakenPerBattle());
 			battleRunTime = 0;
 			StartCoroutine(SetupBattle());
 		}
